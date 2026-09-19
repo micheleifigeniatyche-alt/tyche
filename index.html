@@ -3,23 +3,45 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>M i c h e l e   I f i g e n i a  /  T y c h e</title>
+<title>Michele Ifigenia / Tyche</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
-body{background:#fff;color:#000;font-family:Arial,sans-serif;margin:0;padding:60px 40px;letter-spacing:.05em;line-height:1.6;position:relative}
-body::before{content:"";position:fixed;inset:0;width:100vw;height:100vh;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px 200px;opacity:.3;pointer-events:none;z-index:9999}
-header{display:flex;flex-direction:column;align-items:center;justify-content:center;position:sticky;top:0;background:rgba(255,255,255,.95);padding:30px 0;margin-bottom:80px;z-index:1000;border-bottom:1px solid #f5f5f5}
-.site-title{display:flex;flex-direction:column;align-items:center;text-align:center;width:100%;max-width:500px;margin:0 auto}
-.title-matrix{position:absolute;left:0;right:0;bottom:calc(50% + 1px - .2em);text-align:center;font-size:1.15rem;line-height:1;font-weight:bold;text-transform:uppercase;letter-spacing:.5em;text-indent:.5em;z-index:15}
-.title-brand{font-size:1.15rem;font-weight:bold;text-transform:uppercase;letter-spacing:.25em;line-height:1;position:relative;display:inline-block;padding:10px 0;text-indent:.25em;white-space:nowrap;margin-top:1.9rem}
-.title-brand::after{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);width:100%;height:2px;background:#000;z-index:10}
-.nav-links{display:flex;gap:30px;align-items:center;margin-top:25px;justify-content:center;width:100%}
-.nav-item{font-size:.85rem;color:#000;text-decoration:none;text-transform:uppercase}
-section{margin-bottom:140px;max-width:1100px;margin-left:auto;margin-right:auto;scroll-margin-top:170px}
-h2{font-size:.85rem;text-transform:uppercase;letter-spacing:.15em;margin-bottom:50px;font-weight:bold;border-bottom:1px solid #000;padding-bottom:4px;width:fit-content}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#fff;color:#000;font-family:'Inter Tight','Helvetica Neue',Helvetica,Arial,sans-serif;margin:0;line-height:1.5;position:relative}
+body::before{content:"";position:fixed;inset:0;width:100vw;height:100vh;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px 200px;opacity:.16;pointer-events:none;z-index:9999}
+
+/* HERO + ANIMAZIONE */
+.hero{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 20px;overflow:hidden}
+.name-wrap{position:relative;display:inline-block;font-size:clamp(2.1rem,9vw,8rem);margin-top:.5em;--y:16%}
+.name{margin:0;font-size:1em;font-weight:800;line-height:1;letter-spacing:-.035em;text-transform:uppercase;white-space:nowrap;animation:fadeUp .9s .2s both}
+.lance{position:absolute;left:-6%;top:var(--y);height:4px;margin-top:-2px;width:0;background:#000;z-index:2;animation:shoot .8s 1.4s cubic-bezier(.7,0,.3,1) both}
+.lance::after{content:"";position:absolute;right:-18px;top:50%;transform:translateY(-50%);border-left:18px solid #000;border-top:8px solid transparent;border-bottom:8px solid transparent}
+.tyche{position:absolute;left:0;right:0;bottom:calc(100% - var(--y) + .16em);text-align:center;font-size:.5em;font-weight:800;line-height:1;letter-spacing:.02em;text-transform:uppercase;animation:dropIn .7s 2.4s both}
+.hero-nav{margin-top:clamp(2rem,6vw,4rem);display:flex;gap:12px 32px;flex-wrap:wrap;justify-content:center;animation:fadeUp .8s 3.2s both}
+.hero-nav a,.bar-links a{color:#000;text-decoration:none;font-size:1rem;font-weight:600;text-transform:uppercase;letter-spacing:.02em;border-bottom:2px solid transparent}
+.hero-nav a:hover,.bar-links a:hover{border-bottom-color:#000}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes dropIn{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:none}}
+@keyframes shoot{to{width:112%}}
+@media(prefers-reduced-motion:reduce){.name,.lance,.tyche,.hero-nav{animation:none!important}.lance{width:112%}}
+
+/* BARRA FISSA (compare scorrendo) */
+#bar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px 24px;background:#fff;border-bottom:2px solid #000;transform:translateY(-100%);transition:transform .3s}
+#bar.show{transform:none}
+.bar-name{color:#000;text-decoration:none;font-weight:800;text-transform:uppercase;letter-spacing:-.02em;font-size:1.05rem;white-space:nowrap}
+.bar-links{display:flex;gap:6px 22px;flex-wrap:wrap;justify-content:flex-end}
+.bar-links a{font-size:.8rem}
+
+/* SEZIONI */
+section{max-width:1100px;margin:0 auto 140px;padding:0 40px;scroll-margin-top:90px}
+h2{font-size:clamp(1.6rem,4vw,2.6rem);font-weight:800;text-transform:uppercase;letter-spacing:-.02em;line-height:1;margin:0 0 40px}
 .archive-selector{display:flex;gap:40px;margin-bottom:60px;justify-content:center}
-.selector-btn{font-size:1.3rem;font-weight:300;text-transform:uppercase;cursor:pointer;color:#888;border-bottom:1px dashed #e5e5e5;padding-bottom:4px;transition:all .2s}
+.selector-btn{font-size:1.3rem;font-weight:600;text-transform:uppercase;cursor:pointer;color:#999;border-bottom:2px solid transparent;padding-bottom:4px;transition:all .2s}
 .selector-btn:hover{color:#000}
-.selector-btn.active{color:#000;font-weight:bold;border-bottom:2px solid #000}
+.selector-btn.active{color:#000;border-bottom-color:#000}
 .archive-list-container{display:none}
 .archive-list-container.active{display:block}
 .board-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:60px 45px;padding:10px 0}
@@ -28,60 +50,75 @@ h2{font-size:.85rem;text-transform:uppercase;letter-spacing:.15em;margin-bottom:
 .board-grid .board-item:nth-child(odd){transform:rotate(-.5deg)}
 .board-grid .board-item:nth-child(even){transform:rotate(.6deg)}
 .image-wrapper{position:relative;width:100%;aspect-ratio:3/4;overflow:hidden;background:#fafafa;border:1px solid #f0f0f0}
-.image-wrapper[data-missing]::before{content:attr(data-missing);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:monospace;font-size:.8rem;color:#999;text-align:center}
+.image-wrapper[data-missing]::before{content:attr(data-missing);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.8rem;color:#999;text-align:center}
 .board-img{width:100%;height:100%;object-fit:cover;filter:grayscale(15%);display:block}
-.board-meta{margin-top:15px;display:flex;justify-content:space-between;align-items:baseline;font-family:monospace;padding:0 4px}
-.board-title{font-size:1.05rem;font-weight:bold;text-transform:uppercase}
-.board-tag{font-size:.78rem;color:#666;text-transform:uppercase}
-.project-page{display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:#fff;z-index:2000;overflow-y:auto;padding:60px 40px;box-sizing:border-box}
+.board-meta{margin-top:15px;display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:0 4px}
+.board-title{font-size:1.15rem;font-weight:800;text-transform:uppercase;letter-spacing:-.01em}
+.board-tag{font-size:.8rem;color:#666;text-transform:uppercase;font-weight:600}
+.collab-item{display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap;padding:24px 0;border-top:2px solid #000;cursor:pointer}
+.collab-item:last-child{border-bottom:2px solid #000}
+.collab-title{font-size:clamp(1.4rem,4.5vw,2.8rem);font-weight:800;text-transform:uppercase;letter-spacing:-.025em;line-height:1}
+.collab-item:hover .collab-title{text-decoration:underline;text-decoration-thickness:3px}
+.about-text{font-size:1.15rem;font-weight:400;line-height:1.7;margin:0 0 50px}
+.contact-links{display:flex;flex-direction:column;gap:12px}
+.contact-link{color:#000;text-decoration:none;font-weight:800;font-size:1.2rem;width:fit-content;border-bottom:2px solid #000}
+
+/* PAGINA PROGETTO */
+.project-page{display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:#fff;z-index:2000;overflow-y:auto;padding:50px 40px}
 .project-page.active{display:block}
-.back-btn{font-size:.85rem;text-transform:uppercase;font-weight:bold;cursor:pointer;display:inline-block;margin-bottom:40px;border-bottom:1px solid #000;padding-bottom:2px}
-.project-layout{display:grid;grid-template-columns:1fr 1fr;gap:60px;max-width:1200px;margin-top:20px;align-items:start}
-.project-info-side{display:flex;flex-direction:column;gap:30px}
-.project-title-large{font-size:2.2rem;font-weight:bold;text-transform:uppercase;letter-spacing:.15em;margin:0}
-.project-duration{font-family:monospace;color:#666;font-size:.9rem}
-.project-quote{margin:0;padding-left:20px;border-left:2px solid #000;font-size:1.05rem;font-weight:300;font-style:italic;line-height:1.8}
-.project-quote .quote-by{margin-top:10px;font-style:normal;font-family:monospace;font-size:.85rem;color:#666}
+.back-btn{font-size:.9rem;text-transform:uppercase;font-weight:800;cursor:pointer;display:inline-block;margin-bottom:40px;border-bottom:2px solid #000;padding-bottom:2px}
+.project-layout{display:grid;grid-template-columns:1fr 1fr;gap:60px;max-width:1200px;align-items:start}
+.project-info-side{display:flex;flex-direction:column;gap:28px}
+.project-title-large{font-size:clamp(1.8rem,5vw,3.4rem);font-weight:800;text-transform:uppercase;letter-spacing:-.03em;line-height:1;margin:0}
+.project-duration{color:#666;font-size:.95rem;font-weight:600;text-transform:uppercase}
+.project-quote{margin:0;padding-left:20px;border-left:3px solid #000;font-size:1.05rem;font-style:italic;line-height:1.7}
+.project-quote .quote-by{margin-top:10px;font-style:normal;font-size:.85rem;font-weight:600;color:#666}
 .project-quote:empty{display:none}
-.project-description{font-size:1.1rem;font-weight:300;line-height:1.8;text-align:justify;white-space:pre-line}
-.project-credits{font-family:monospace;font-size:.85rem;border-top:1px solid #e5e5e5;padding-top:20px;display:flex;flex-direction:column;gap:8px}
-.video-container-large{width:100%;aspect-ratio:16/9;background:#000;border:1px solid #eee}
+.project-description{font-size:1.1rem;line-height:1.7}
+.project-credits{font-size:.9rem;border-top:2px solid #000;padding-top:18px;display:flex;flex-direction:column;gap:6px}
+.video-container-large{width:100%;aspect-ratio:16/9;background:#000}
 .video-container-large iframe{width:100%;height:100%;border:0}
 .project-img-large{width:100%;display:block}
-.yti-text{font-size:1.25rem;font-weight:300;text-transform:uppercase;letter-spacing:.08em}
-.about-text{font-size:1.15rem;font-weight:300;line-height:1.8;text-align:justify;margin-bottom:50px}
-.contact-links{display:flex;flex-direction:column;gap:12px}
-.contact-link{color:#000;text-decoration:none;font-weight:bold;font-size:1.1rem;width:fit-content;border-bottom:1px solid #000}
+
 @media(max-width:768px){
-body{padding:20px}
-header{padding:25px 0;margin-bottom:40px}
-.title-matrix{font-size:.95rem;letter-spacing:.35em;text-indent:.35em}
-.title-brand{font-size:.85rem;letter-spacing:.15em;text-indent:.15em;padding:4px 0;margin-top:1.6rem}
-.nav-links{gap:15px;flex-wrap:wrap;margin-top:20px}
-.nav-item{font-size:.75rem}
-section{margin-bottom:90px}
+section{padding:0 20px;margin-bottom:90px}
+#bar{padding:10px 16px}
+.bar-name{font-size:.9rem}
+.bar-links a{font-size:.7rem}
+.hero-nav{gap:10px 20px}
+.hero-nav a{font-size:.9rem}
 .archive-selector{gap:25px;margin-bottom:40px}
 .selector-btn{font-size:1.1rem}
 .board-grid{grid-template-columns:1fr;gap:45px}
 .project-layout{grid-template-columns:1fr;gap:40px}
-.project-page{padding:40px 20px}
-.project-title-large{font-size:1.6rem}
+.project-page{padding:30px 20px}
 }
 </style>
 </head><body>
-<header>
-  <div class="site-title">
-    <div class="title-brand"><span class="title-matrix">T y c h e</span>M i c h e l e   I f i g e n i a</div>
-  </div>
-  <nav class="nav-links">
-    <a href="#archive-section" class="nav-item">Archivio</a>
-    <a href="#yti-section" class="nav-item">YTI</a>
-    <a href="#about" class="nav-item">Percorso &amp; Contatti</a>
+<div id="bar">
+  <a class="bar-name" href="#top">Michele Ifigenia</a>
+  <nav class="bar-links">
+    <a href="#lavori">Lavori</a>
+    <a href="#collaborazioni">Collaborazioni</a>
+    <a href="#about">Percorso e Contatti</a>
   </nav>
-</header>
+</div>
 
-<section id="archive-section">
-  <h2>Archivio</h2>
+<div class="hero" id="top">
+  <div class="name-wrap">
+    <div class="tyche">Tyche</div>
+    <h1 class="name">Michele Ifigenia</h1>
+    <div class="lance"></div>
+  </div>
+  <nav class="hero-nav">
+    <a href="#lavori">Lavori</a>
+    <a href="#collaborazioni">Collaborazioni</a>
+    <a href="#about">Percorso e Contatti</a>
+  </nav>
+</div>
+
+<section id="lavori">
+  <h2>Lavori</h2>
   <div class="archive-selector">
     <div class="selector-btn" data-tab="perf">Performance</div>
     <div class="selector-btn" data-tab="short">Short Film</div>
@@ -90,13 +127,13 @@ section{margin-bottom:90px}
   <div id="list-short" class="archive-list-container"><div class="board-grid"></div></div>
 </section>
 
-<section id="yti-section">
-  <h2>YTI</h2>
-  <p class="yti-text">Testo YTI da inserire.</p>
+<section id="collaborazioni">
+  <h2>Collaborazioni</h2>
+  <div id="collab-list"></div>
 </section>
 
 <section id="about">
-  <h2>Percorso &amp; Contatti</h2>
+  <h2>Percorso e Contatti</h2>
   <p class="about-text">Michele Ifigenia / Tyche è un gruppo di ricerca coreografica fondato e diretto da Michele Ifigenia Colturi, nato all’interno della Civica Scuola di Teatro Paolo Grassi di Milano e della Scuola Conia di Claudia Castellucci. Riunisce interpreti, drammaturghi, musicisti e artisti di diverse discipline in un organismo che sostiene e sviluppa la visione di Colturi. La ricerca, di natura profondamente visiva, esplora il corpo come materia plastica, un campo scultoreo modellato da luce e suono: elementi che ridefiniscono lo spazio e trasformano il gesto in immagine. Al centro della poetica c’è il mito, inteso non come narrazione chiusa ma come matrice fluida e generativa, da cui emergono figure e simboli in costante metamorfosi. Le creazioni prendono forma tanto in spazi teatrali quanto in contesti non convenzionali, intrecciando linguaggi visivi, sonori e corporei. Il gruppo è artista associato di Ariella Vidach / AiEP.</p>
   <div class="contact-links">
     <a class="contact-link" href="mailto:micheleifigeniatyche@gmail.com">micheleifigeniatyche@gmail.com</a>
@@ -120,36 +157,43 @@ section{margin-bottom:90px}
 /* ====== MODIFICA QUI I CONTENUTI ====== */
 var YT = "https://www.youtube.com/embed/y9s2hwdmAYI";
 var PROJECTS = [
-  { id:"amadriadi", title:"A M A D R I A D I", category:"perf", tag:"[Performance]", img:"amadriadi.png",
+  { title:"Amadriadi", category:"perf", tag:"[Performance]", img:"amadriadi.png",
     duration:"15 minuti",
     description:"Un’evocazione visiva si intreccia allo spazio urbano contemporaneo: la figura delle Amadriadi diventa un espediente per offrire allo spettatore un momento di sospensione. Le Amadriadi, creature mitologiche indissolubilmente legate agli alberi, vivono e muoiono con essi. Tra il verde emerge così un corpo capace di ondeggiare al vento, di radicarsi, di trasfigurarsi, portando con sé un fascino antico eppure sorprendentemente presente. Forse è proprio in questa apparizione, in questa possibilità di metamorfosi, che si rinnova continuamente la relazione entre l’uomo e la natura.",
     credits:["Autore / Coreografo: Michele Ifigenia Colturi","Dramaturg: Ciro Ciancio, Riccardo Vanetta","Performers: Enzina Cappelli, Valeria Petroni, Federica D’Aversa","Suono: Tarek Bouguerra","Produzione: Aiep Ariella Vidach / Triennale Teatro Milano"], video:"" },
-  { id:"cuma", title:"C U M A", category:"perf", tag:"[Performance]", img:"cuma.png",
+  { title:"Cuma", category:"perf", tag:"[Performance]", img:"cuma.png",
     duration:"15 minuti",
     description:"Cuma è un solo coreografico attorno alla figura della sibilla. Gli elementi che appartengono al suo archetipo vengono ricostruiti per portare in vita un ultimo messaggio divinatorio. La sibilla, suo malgrado, intona un canto di fine accompagnato da una possessione, la manìa del dio. Il messaggio è talmente elevato che il corpo della sibilla viene dilaniato dalla profezia stessa.",
     credits:["Autore / Coreografo: Michele Ifigenia Colturi","Danzatrice: Federica D’Aversa","Dramaturg: Riccardo Vanetta, Ciro Ciancio","Musiche: Tarek Bouguerra","Filmmaker: Lorenzo Basili","Produzione: Aiep Ariella Vidach, Anghiari Dance Hub"], video:"" },
-  { id:"citerone", title:"C I T E R O N E", category:"perf", tag:"[Performance]", img:"citerone.png",
+  { title:"Citerone", category:"perf", tag:"[Performance]", img:"citerone.png",
     duration:"25 minuti",
     description:"Un canto corporeo, una preghiera di gesti e suoni che rinnova un’antica ritualità per ascendere al monte Citerone. Il cammino performativo diventa evocazione dei simboli dionisiaci, spazio di passaggio tra umano e divino. Il mito di Dioniso e le Baccanti di Euripide si intrecciano per celebrare il mistero, l’estasi e la forza trasformativa del rito.",
     credits:["Autore / Coreografo: Michele Ifigenia Colturi","Dramaturg: Ciro Ciancio, Riccardo Vanetta","Performers: Enzina Cappelli, Andreyna Dela Soledad","Co-produzione: Aiep Ariella Vidach"], video:"" },
-  { id:"atteone", title:"A T T E O N E", category:"perf", tag:"[Debutto 2027]", img:"atteone.png",
+  { title:"Atteone", category:"perf", tag:"[Debutto 2027]", img:"atteone.png",
     duration:"In fase di sviluppo",
     description:"Il lavoro è centrato su un’unica figura danzante che, nel corso della performance, incarna una metamorfosi tragica: da essere umano a cervo.",
     credits:["Ideazione e coreografia: Michele Ifigenia Colturi","Interpretazione: Enzina Cappelli","Musica: Tarek Bouguerra","Dramaturg: Riccardo Vanetta","Scenografia: Alice Vanini","2D/3D Artist: Andrea Rebecca Marchini","Produzione: AIEP (Milano)","Coproduzione: Hangartfest (Pesaro)","Con il sostegno di: ResiDance – azione del Network Anticorpi XL, Centro di Residenza della Toscana (Armunia – Capo Travo / Kilowatt)"], video:"" },
-  { id:"salmace", title:"S A L M A C E", category:"perf", tag:"[w.i.p.]", img:"salmace.png",
+  { title:"Salmace", category:"perf", tag:"[w.i.p.]", img:"salmace.png",
     duration:"Work in progress",
     quote:"«Crea una stretta tenace: come il serpente rapito dall'aquila regale, che mentre viene trasportato in alto avvolge la testa e le zampe del rapace e con la coda gli lega le ali spiegate; o come l'edera che suole circondare i lunghi tronchi degli alberi; o come la piovra che stringe il nemico catturato sul fondo del mare, allungando i suoi tentacoli da ogni lato.»",
     quoteBy:"Ovidio, Metamorfosi",
     description:"Studio coreografico sulla fluidità dei corpi e la fusione degli opposti materici.",
     credits:["Ricerca artistica: Michele Ifigenia Colturi"], video:"" },
-  { id:"cuma-short", title:"C U M A", category:"short", tag:"[Short Film]", img:"cuma_short.png",
+  { title:"Cuma", category:"short", tag:"[Short Film]", img:"cuma_short.png",
     duration:"Cortometraggio / Video Art",
     description:"Trasposizione filmica dell'archetipo divinatorio. Il corpo performativo viene sezionato dall'occhio della camera per generare un organismo autonomo di immagini e luce.",
     credits:["Regia e Coreografia: Michele Ifigenia Colturi","Filmmaker: Lorenzo Basili","Musiche: Tarek Bouguerra"], video:YT },
-  { id:"citerno-short", title:"C I T E R N O", category:"short", tag:"[Short Film]", img:"citerone_short.png",
+  { title:"Citerno", category:"short", tag:"[Short Film]", img:"citerone_short.png",
     duration:"Cortometraggio",
     description:"Sguardo cinematografico sull'ascesa rituale al monte Citerone. L'estasi dionisiaca incontra la grana digitale in un montaggio ritmico e scultoreo.",
     credits:["Regia: Michele Ifigenia Colturi","Performers: Enzina Cappelli, Andreyna Dela Soledad"], video:YT }
+];
+
+var COLLABS = [
+  { title:"YTI — Your Tactile Identity", tag:"[Con YoY Performing Arts, IVONA]",
+    duration:"Kilowatt Festival · 24 luglio 2026",
+    description:"YTI è insieme un progetto di ricerca e un manifesto artistico, nato dall’incontro tra tre compagnie: YoY Performing Arts, IVONA e Michele Ifigenia / Tyche. In un tempo segnato da distanze e polarizzazioni, il lavoro sceglie la vicinanza: abitare le differenze e farne materia di creazione collettiva. Tre linguaggi coreografici si intrecciano in un unico tessuto, dove il movimento diventa ascolto e la contaminazione un atto insieme politico e creativo.",
+    credits:["Di: YoY Performing Arts, IVONA, Michele Ifigenia/Tyche","Interpreti: Emma Zani, Roberto Doveri, Pablo Girolami, Guilherme Leal, Federica D’Aversa","Dramaturg: Riccardo Vanetta","Musiche: Tarek Bouguerra, Timoteo Carbone","Disegno luci: Gianni Staropoli","Costumi: Patricia Villirillo","Progetto vincitore di: Giovane Danza Italiana 2025, Bando CURA 2025","Con il sostegno di: MiC e SIAE – Per Chi Crea"], video:"" }
 ];
 /* ====== FINE CONTENUTI ====== */
 
@@ -162,6 +206,14 @@ PROJECTS.forEach(function(p){
     '<div class="board-meta"><span class="board-title">'+esc(p.title)+'</span><span class="board-tag">'+esc(p.tag)+'</span></div>';
   el.addEventListener("click", function(){ openProject(p); });
   document.querySelector("#list-"+p.category+" .board-grid").appendChild(el);
+});
+
+COLLABS.forEach(function(p){
+  var el = document.createElement("div");
+  el.className = "collab-item";
+  el.innerHTML = '<span class="collab-title">'+esc(p.title)+'</span><span class="board-tag">'+esc(p.tag)+'</span>';
+  el.addEventListener("click", function(){ openProject(p); });
+  document.getElementById("collab-list").appendChild(el);
 });
 
 function closeArchive(){
@@ -178,7 +230,12 @@ document.querySelectorAll(".selector-btn").forEach(function(b){
     }
   });
 });
-document.querySelector('a[href="#archive-section"]').addEventListener("click", closeArchive);
+document.querySelectorAll('a[href="#lavori"]').forEach(function(a){ a.addEventListener("click", closeArchive); });
+
+var bar = document.getElementById("bar");
+function onScroll(){ bar.classList.toggle("show", window.scrollY > window.innerHeight * 0.6); }
+window.addEventListener("scroll", onScroll);
+onScroll();
 
 var page = document.getElementById("project-page");
 function openProject(p){
@@ -189,7 +246,7 @@ function openProject(p){
   document.getElementById("p-credits").innerHTML = p.credits.map(function(c){return "<div>"+esc(c)+"</div>";}).join("");
   document.getElementById("p-media").innerHTML = p.video
     ? '<div class="video-container-large"><iframe src="'+p.video+'" allowfullscreen></iframe></div>'
-    : '<img class="project-img-large" src="'+p.img+'" alt="'+esc(p.title)+'">';
+    : (p.img ? '<img class="project-img-large" src="'+p.img+'" alt="'+esc(p.title)+'">' : "");
   page.classList.add("active");
   page.scrollTop = 0;
   document.body.style.overflow = "hidden";

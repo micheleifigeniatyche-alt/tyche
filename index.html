@@ -35,4 +35,172 @@ h2{font-size:.85rem;text-transform:uppercase;letter-spacing:.15em;margin-bottom:
 .board-tag{font-size:.78rem;color:#666;text-transform:uppercase}
 .project-page{display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:#fff;z-index:2000;overflow-y:auto;padding:60px 40px;box-sizing:border-box}
 .project-page.active{display:block}
-.back-btn{font-size:.85rem;text-transform:uppercase;font-weight:bold;cursor:pointer;display:inline-block;margin-
+.back-btn{font-size:.85rem;text-transform:uppercase;font-weight:bold;cursor:pointer;display:inline-block;margin-bottom:40px;border-bottom:1px solid #000;padding-bottom:2px}
+.project-layout{display:grid;grid-template-columns:1fr 1fr;gap:60px;max-width:1200px;margin-top:20px;align-items:start}
+.project-info-side{display:flex;flex-direction:column;gap:30px}
+.project-title-large{font-size:2.2rem;font-weight:bold;text-transform:uppercase;letter-spacing:.15em;margin:0}
+.project-duration{font-family:monospace;color:#666;font-size:.9rem}
+.project-quote{margin:0;padding-left:20px;border-left:2px solid #000;font-size:1.05rem;font-weight:300;font-style:italic;line-height:1.8}
+.project-quote .quote-by{margin-top:10px;font-style:normal;font-family:monospace;font-size:.85rem;color:#666}
+.project-quote:empty{display:none}
+.project-description{font-size:1.1rem;font-weight:300;line-height:1.8;text-align:justify;white-space:pre-line}
+.project-credits{font-family:monospace;font-size:.85rem;border-top:1px solid #e5e5e5;padding-top:20px;display:flex;flex-direction:column;gap:8px}
+.video-container-large{width:100%;aspect-ratio:16/9;background:#000;border:1px solid #eee}
+.video-container-large iframe{width:100%;height:100%;border:0}
+.project-img-large{width:100%;display:block}
+.yti-text{font-size:1.25rem;font-weight:300;text-transform:uppercase;letter-spacing:.08em}
+.about-text{font-size:1.15rem;font-weight:300;line-height:1.8;text-align:justify;margin-bottom:50px}
+.contact-links{display:flex;flex-direction:column;gap:12px}
+.contact-link{color:#000;text-decoration:none;font-weight:bold;font-size:1.1rem;width:fit-content;border-bottom:1px solid #000}
+@media(max-width:768px){
+body{padding:20px}
+header{padding:25px 0;margin-bottom:40px}
+.title-matrix{font-size:.95rem;letter-spacing:.35em;text-indent:.35em}
+.title-brand{font-size:.85rem;letter-spacing:.15em;text-indent:.15em;padding:4px 0;margin-top:1.6rem}
+.nav-links{gap:15px;flex-wrap:wrap;margin-top:20px}
+.nav-item{font-size:.75rem}
+section{margin-bottom:90px}
+.archive-selector{gap:25px;margin-bottom:40px}
+.selector-btn{font-size:1.1rem}
+.board-grid{grid-template-columns:1fr;gap:45px}
+.project-layout{grid-template-columns:1fr;gap:40px}
+.project-page{padding:40px 20px}
+.project-title-large{font-size:1.6rem}
+}
+</style>
+</head><body>
+<header>
+  <div class="site-title">
+    <div class="title-brand"><span class="title-matrix">T y c h e</span>M i c h e l e   I f i g e n i a</div>
+  </div>
+  <nav class="nav-links">
+    <a href="#archive-section" class="nav-item">Archivio</a>
+    <a href="#yti-section" class="nav-item">YTI</a>
+    <a href="#about" class="nav-item">Percorso &amp; Contatti</a>
+  </nav>
+</header>
+
+<section id="archive-section">
+  <h2>Archivio</h2>
+  <div class="archive-selector">
+    <div class="selector-btn" data-tab="perf">Performance</div>
+    <div class="selector-btn" data-tab="short">Short Film</div>
+  </div>
+  <div id="list-perf" class="archive-list-container"><div class="board-grid"></div></div>
+  <div id="list-short" class="archive-list-container"><div class="board-grid"></div></div>
+</section>
+
+<section id="yti-section">
+  <h2>YTI</h2>
+  <p class="yti-text">Testo YTI da inserire.</p>
+</section>
+
+<section id="about">
+  <h2>Percorso &amp; Contatti</h2>
+  <p class="about-text">Michele Ifigenia / Tyche è un gruppo di ricerca coreografica fondato e diretto da Michele Ifigenia Colturi, nato all’interno della Civica Scuola di Teatro Paolo Grassi di Milano e della Scuola Conia di Claudia Castellucci. Riunisce interpreti, drammaturghi, musicisti e artisti di diverse discipline in un organismo che sostiene e sviluppa la visione di Colturi. La ricerca, di natura profondamente visiva, esplora il corpo come materia plastica, un campo scultoreo modellato da luce e suono: elementi che ridefiniscono lo spazio e trasformano il gesto in immagine. Al centro della poetica c’è il mito, inteso non come narrazione chiusa ma come matrice fluida e generativa, da cui emergono figure e simboli in costante metamorfosi. Le creazioni prendono forma tanto in spazi teatrali quanto in contesti non convenzionali, intrecciando linguaggi visivi, sonori e corporei. Il gruppo è artista associato di Ariella Vidach / AiEP.</p>
+  <div class="contact-links">
+    <a class="contact-link" href="mailto:micheleifigeniatyche@gmail.com">micheleifigeniatyche@gmail.com</a>
+    <a class="contact-link" href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a>
+  </div>
+</section>
+
+<div class="project-page" id="project-page">
+  <div class="back-btn" id="back-btn">← Indietro</div>
+  <div class="project-layout">
+    <div class="project-info-side">
+      <h1 class="project-title-large" id="p-title"></h1>
+      <div class="project-duration" id="p-duration"></div>
+      <blockquote class="project-quote" id="p-quote"></blockquote>
+      <div class="project-description" id="p-desc"></div>
+      <div class="project-credits" id="p-credits"></div>
+    </div>
+    <div id="p-media"></div>
+  </div>
+</div><script>
+/* ====== MODIFICA QUI I CONTENUTI ====== */
+var YT = "https://www.youtube.com/embed/y9s2hwdmAYI";
+var PROJECTS = [
+  { id:"amadriadi", title:"A M A D R I A D I", category:"perf", tag:"[Performance]", img:"amadriadi.png",
+    duration:"15 minuti",
+    description:"Un’evocazione visiva si intreccia allo spazio urbano contemporaneo: la figura delle Amadriadi diventa un espediente per offrire allo spettatore un momento di sospensione. Le Amadriadi, creature mitologiche indissolubilmente legate agli alberi, vivono e muoiono con essi. Tra il verde emerge così un corpo capace di ondeggiare al vento, di radicarsi, di trasfigurarsi, portando con sé un fascino antico eppure sorprendentemente presente. Forse è proprio in questa apparizione, in questa possibilità di metamorfosi, che si rinnova continuamente la relazione entre l’uomo e la natura.",
+    credits:["Autore / Coreografo: Michele Ifigenia Colturi","Dramaturg: Ciro Ciancio, Riccardo Vanetta","Performers: Enzina Cappelli, Valeria Petroni, Federica D’Aversa","Suono: Tarek Bouguerra","Produzione: Aiep Ariella Vidach / Triennale Teatro Milano"], video:"" },
+  { id:"cuma", title:"C U M A", category:"perf", tag:"[Performance]", img:"cuma.png",
+    duration:"15 minuti",
+    description:"Cuma è un solo coreografico attorno alla figura della sibilla. Gli elementi che appartengono al suo archetipo vengono ricostruiti per portare in vita un ultimo messaggio divinatorio. La sibilla, suo malgrado, intona un canto di fine accompagnato da una possessione, la manìa del dio. Il messaggio è talmente elevato che il corpo della sibilla viene dilaniato dalla profezia stessa.",
+    credits:["Autore / Coreografo: Michele Ifigenia Colturi","Danzatrice: Federica D’Aversa","Dramaturg: Riccardo Vanetta, Ciro Ciancio","Musiche: Tarek Bouguerra","Filmmaker: Lorenzo Basili","Produzione: Aiep Ariella Vidach, Anghiari Dance Hub"], video:"" },
+  { id:"citerone", title:"C I T E R O N E", category:"perf", tag:"[Performance]", img:"citerone.png",
+    duration:"25 minuti",
+    description:"Un canto corporeo, una preghiera di gesti e suoni che rinnova un’antica ritualità per ascendere al monte Citerone. Il cammino performativo diventa evocazione dei simboli dionisiaci, spazio di passaggio tra umano e divino. Il mito di Dioniso e le Baccanti di Euripide si intrecciano per celebrare il mistero, l’estasi e la forza trasformativa del rito.",
+    credits:["Autore / Coreografo: Michele Ifigenia Colturi","Dramaturg: Ciro Ciancio, Riccardo Vanetta","Performers: Enzina Cappelli, Andreyna Dela Soledad","Co-produzione: Aiep Ariella Vidach"], video:"" },
+  { id:"atteone", title:"A T T E O N E", category:"perf", tag:"[Debutto 2027]", img:"atteone.png",
+    duration:"In fase di sviluppo",
+    description:"Il lavoro è centrato su un’unica figura danzante che, nel corso della performance, incarna una metamorfosi tragica: da essere umano a cervo.",
+    credits:["Ideazione e coreografia: Michele Ifigenia Colturi","Interpretazione: Enzina Cappelli","Musica: Tarek Bouguerra","Dramaturg: Riccardo Vanetta","Scenografia: Alice Vanini","2D/3D Artist: Andrea Rebecca Marchini","Produzione: AIEP (Milano)","Coproduzione: Hangartfest (Pesaro)","Con il sostegno di: ResiDance – azione del Network Anticorpi XL, Centro di Residenza della Toscana (Armunia – Capo Travo / Kilowatt)"], video:"" },
+  { id:"salmace", title:"S A L M A C E", category:"perf", tag:"[w.i.p.]", img:"salmace.png",
+    duration:"Work in progress",
+    quote:"«Crea una stretta tenace: come il serpente rapito dall'aquila regale, che mentre viene trasportato in alto avvolge la testa e le zampe del rapace e con la coda gli lega le ali spiegate; o come l'edera che suole circondare i lunghi tronchi degli alberi; o come la piovra che stringe il nemico catturato sul fondo del mare, allungando i suoi tentacoli da ogni lato.»",
+    quoteBy:"Ovidio, Metamorfosi",
+    description:"Studio coreografico sulla fluidità dei corpi e la fusione degli opposti materici.",
+    credits:["Ricerca artistica: Michele Ifigenia Colturi"], video:"" },
+  { id:"cuma-short", title:"C U M A", category:"short", tag:"[Short Film]", img:"cuma_short.png",
+    duration:"Cortometraggio / Video Art",
+    description:"Trasposizione filmica dell'archetipo divinatorio. Il corpo performativo viene sezionato dall'occhio della camera per generare un organismo autonomo di immagini e luce.",
+    credits:["Regia e Coreografia: Michele Ifigenia Colturi","Filmmaker: Lorenzo Basili","Musiche: Tarek Bouguerra"], video:YT },
+  { id:"citerno-short", title:"C I T E R N O", category:"short", tag:"[Short Film]", img:"citerone_short.png",
+    duration:"Cortometraggio",
+    description:"Sguardo cinematografico sull'ascesa rituale al monte Citerone. L'estasi dionisiaca incontra la grana digitale in un montaggio ritmico e scultoreo.",
+    credits:["Regia: Michele Ifigenia Colturi","Performers: Enzina Cappelli, Andreyna Dela Soledad"], video:YT }
+];
+/* ====== FINE CONTENUTI ====== */
+
+function esc(s){var d=document.createElement("div");d.textContent=s;return d.innerHTML;}
+
+PROJECTS.forEach(function(p){
+  var el = document.createElement("div");
+  el.className = "board-item";
+  el.innerHTML = '<div class="image-wrapper"><img src="'+p.img+'" class="board-img" alt="'+esc(p.title)+'" onerror="this.parentNode.setAttribute(\'data-missing\',this.getAttribute(\'src\'));this.style.display=\'none\'"></div>'+
+    '<div class="board-meta"><span class="board-title">'+esc(p.title)+'</span><span class="board-tag">'+esc(p.tag)+'</span></div>';
+  el.addEventListener("click", function(){ openProject(p); });
+  document.querySelector("#list-"+p.category+" .board-grid").appendChild(el);
+});
+
+function closeArchive(){
+  document.querySelectorAll(".selector-btn").forEach(function(x){x.classList.remove("active");});
+  document.querySelectorAll(".archive-list-container").forEach(function(x){x.classList.remove("active");});
+}
+document.querySelectorAll(".selector-btn").forEach(function(b){
+  b.addEventListener("click", function(){
+    var wasOpen = b.classList.contains("active");
+    closeArchive();
+    if(!wasOpen){
+      b.classList.add("active");
+      document.getElementById("list-"+b.dataset.tab).classList.add("active");
+    }
+  });
+});
+document.querySelector('a[href="#archive-section"]').addEventListener("click", closeArchive);
+
+var page = document.getElementById("project-page");
+function openProject(p){
+  document.getElementById("p-title").textContent = p.title;
+  document.getElementById("p-duration").textContent = p.duration;
+  document.getElementById("p-quote").innerHTML = p.quote ? esc(p.quote)+'<div class="quote-by">'+esc(p.quoteBy)+'</div>' : "";
+  document.getElementById("p-desc").textContent = p.description;
+  document.getElementById("p-credits").innerHTML = p.credits.map(function(c){return "<div>"+esc(c)+"</div>";}).join("");
+  document.getElementById("p-media").innerHTML = p.video
+    ? '<div class="video-container-large"><iframe src="'+p.video+'" allowfullscreen></iframe></div>'
+    : '<img class="project-img-large" src="'+p.img+'" alt="'+esc(p.title)+'">';
+  page.classList.add("active");
+  page.scrollTop = 0;
+  document.body.style.overflow = "hidden";
+}
+function closeProject(){
+  page.classList.remove("active");
+  document.getElementById("p-media").innerHTML = "";
+  document.body.style.overflow = "";
+}
+document.getElementById("back-btn").addEventListener("click", closeProject);
+document.addEventListener("keydown", function(e){ if(e.key==="Escape") closeProject(); });
+</script>
+</body>
+</html>

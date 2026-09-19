@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ opera.titolo }}</title>
+    <style>
+        body {
+            background-color: #ffffff;
+            color: #000000;
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 60px 40px;
+            letter-spacing: 0.05em;
+            line-height: 1.6;
+        }
+
+        /* Effetto Pellicola / Grana Analogica */
+        body::before {
+            content: ""; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://w3.org id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.04; pointer-events: none; z-index: 9999;
+        }
+
+        .back-link {
+            font-size: 0.85rem; color: #000000; text-decoration: none;
+            text-transform: uppercase; display: inline-block; margin-bottom: 60px;
+            font-weight: bold;
+        }
+        .back-link:hover { opacity: 0.5; }
+
+        h1 {
+            font-size: 2.2rem; font-weight: bold; letter-spacing: 0.15em;
+            margin: 0 0 40px 0; text-transform: uppercase;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            max-width: 1200px;
+            margin-bottom: 60px;
+        }
+
+        .video-side video {
+            width: 100%; height: auto; display: block;
+        }
+
+        .info-side {
+            display: flex; flex-direction: column; gap: 40px;
+        }
+
+        .description-text {
+            font-size: 1.1rem; font-weight: 300; line-height: 1.8;
+            white-space: pre-line; text-align: justify;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 30px 20px; }
+            h1 { font-size: 1.6rem; margin-bottom: 30px; }
+            .project-grid { grid-template-columns: 1fr; gap: 40px; }
+            .description-text { text-align: left; font-size: 1.05rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="/" class="back-link">← Archivio</a>
+
+    <h1>{{ opera.titolo }}</h1>
+
+    <div class="project-grid">
+        <!-- COLONNA MULTIMEDIALE -->
+        <div class="video-side">
+            <div style="background: #f5f5f5; width: 100%; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; color: #888; text-transform: uppercase; letter-spacing: 0.1em;">
+                [ Archivio Multimediale in Corso di Allestimento ]
+            </div>
+        </div>
+
+        <!-- COLONNA TESTI -->
+        <div class="info-side">
+            <div class="description-text">
+                <!-- Python caricherà qui le descrizioni in base alla pagina cliccata -->
+                {% if opera.id == 'amadriadi' %}
+                    Un’evocazione visiva si intreccia allo spazio urbano contemporaneo: la figura delle Amadriadi diventa un espediente per offrire allo spettatore un momento di sospensione. Le Amadriadi, creature mitologiche indissolubilmente legate agli alberi, vivono e muoiono con essi. Tra il verde emerge così un corpo capace di ondeggiare al vento, di radicarsi, di trasfigurarsi, portando con sé un fascino antico eppure sorprendentemente presente. Forse è proprio in questa apparizione, in questa possibilità di metamorfosi, che si rinnova continuamente la relazione tra l’uomo e la natura.
+                {% elif opera.id == 'cuma' %}
+                    Cuma è un solo coreografic o attorno alla figura della sibilla. Gli elementi che appartengono al suo archetipo vengono ri costruiti per portare in vita un ultimo messaggio divinatorio. La sibilla, suo malgrado, intona un canto di fine. Un canto gestuale che matura in un vagito. I suoi vati c ini sono accompagnati da una possessione, la manìa del dio. Il messaggio è talmente elevato che il corpo della sibilla, dopo questa visione, viene dilaniato dalla profezia stessa.
+                {% elif opera.id == 'citerone' %}
+                    Un canto corporeo, una preghiera di gesti e suoni che rinnova un’antica ritualità per ascendere al monte Citerone. Il cammino performativo diventa evocazione dei simboli dionisiaci, spazio di passaggio tra umano e divino. In una visione personale, il mito di Dioniso e le Baccanti di Euripide si intrecciano per celebrare il mistero, l’estasi e la forza trasformativa del rito.
+                {% else %}
+                    [ Documentazione e materiali d'archivio in corso di aggiornamento ]
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

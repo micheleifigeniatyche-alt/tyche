@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ lang }}">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,79 +11,142 @@
         .site-title { font-size: 1.1rem; font-weight: bold; text-transform: uppercase; }
         .nav-links { display: flex; gap: 30px; align-items: center; }
         .nav-item { font-size: 0.85rem; color: #000000; text-decoration: none; text-transform: uppercase; }
-        .lang-switch { font-size: 0.85rem; font-weight: bold; text-decoration: none; color: #000; margin-left: 20px; border: 1px solid #000; padding: 2px 6px; }
-        section { margin-bottom: 140px; max-width: 900px; }
+        section { margin-bottom: 140px; max-width: 1100px; }
         h2 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 40px; font-weight: bold; border-bottom: 1px solid #000; padding-bottom: 4px; width: fit-content; }
-        .works-container { display: flex; flex-direction: column; }
-        .work-row { display: flex; justify-content: space-between; align-items: center; padding: 22px 0; border-bottom: 1px solid #e5e5e5; text-decoration: none; color: #000000; transition: all 0.2s ease; }
-        .work-title { font-size: 1.25rem; font-weight: 300; }
-        .work-year { font-size: 1.1rem; color: #888888; }
-        .work-row:hover { padding-left: 10px; border-bottom: 1px solid #000; }
-        .collab-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 15px; }
-        .collab-item { font-size: 1.1rem; font-weight: 300; text-transform: uppercase; }
+        
+        .archive-selector { display: flex; gap: 40px; margin-bottom: 60px; }
+        .selector-btn { font-size: 1.4rem; font-weight: 300; text-transform: uppercase; cursor: pointer; color: #888888; border-bottom: 1px dashed #e5e5e5; padding-bottom: 4px; transition: all 0.2s ease; }
+        .selector-btn:hover { color: #000; }
+        .selector-btn.active { color: #000000; font-weight: bold; border-bottom: 2px solid #000000; }
+
+        .archive-list-container { display: none; }
+        .archive-list-container.active { display: block; }
+
+        .board-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 50px 40px; background-color: #ffffff; padding: 20px 0; }
+        
+        .board-item { position: relative; background: #ffffff; display: flex; flex-direction: column; text-decoration: none; color: #000; transition: transform 0.2s ease; }
+        .board-item:hover { transform: translateY(-4px); }
+
+        .board-item::after {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 20px;
+            background-color: rgba(0, 0, 0, 0.07);
+            z-index: 10;
+        }
+
+        .image-wrapper { width: 100%; aspect-ratio: 3/4; overflow: hidden; background: #f9f9f9; border: 1px solid #eeeeee; position: relative; }
+        .board-img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(20%); transition: filter 0.3s ease; }
+        .board-item:hover .board-img { filter: grayscale(0%); }
+
+        .board-meta { margin-top: 15px; display: flex; justify-content: space-between; align-items: baseline; font-family: monospace; }
+        .board-title { font-size: 1.1rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; }
+        .board-tag { font-size: 0.8rem; color: #666666; text-transform: uppercase; }
+
+        .yti-text { font-size: 1.25rem; font-weight: 300; text-transform: uppercase; letter-spacing: 0.08em; }
         .about-text { font-size: 1.15rem; font-weight: 300; line-height: 1.8; color: #000000; text-align: justify; margin-bottom: 50px; }
         .contact-links { display: flex; flex-direction: column; gap: 12px; }
         .contact-link { color: #000000; text-decoration: none; font-weight: bold; font-size: 1.1rem; width: fit-content; border-bottom: 1px solid #000000; }
+        
         .press-container { display: flex; flex-direction: column; gap: 15px; }
         .press-row { display: grid; grid-template-columns: 150px 220px auto; gap: 20px; padding: 12px 0; border-bottom: 1px dashed #e0e0e0; align-items: baseline; }
-        @media (max-width: 768px) { body { padding: 20px; } header { flex-direction: column; gap: 15px; margin-bottom: 50px; } .nav-links { gap: 15px; flex-wrap: wrap; } .lang-switch { margin-left: 0; margin-top: 10px; display: inline-block; } section { margin-bottom: 90px; } .work-title { font-size: 1.1rem; } .about-text { text-align: left; font-size: 1.05rem; } .press-row { grid-template-columns: 1fr; gap: 5px; } }
+        .press-link { color: #000; border-bottom: 1px solid #000; text-decoration: none; font-weight: 300; }
+        .press-link:hover { opacity: 0.5; }
+        
+        @media (max-width: 768px) { body { padding: 20px; } header { flex-direction: column; gap: 15px; margin-bottom: 50px; } .nav-links { gap: 15px; flex-wrap: wrap; } section { margin-bottom: 90px; } .about-text { text-align: left; font-size: 1.05rem; } .press-row { grid-template-columns: 1fr; gap: 5px; } .archive-selector { gap: 20px; margin-bottom: 40px; } .selector-btn { font-size: 1.1rem; } .board-grid { grid-template-columns: 1fr; gap: 40px; } }
     </style>
 </head>
 <body>
     <header>
         <div class="site-title">M i c h e l e  I f i g e n i a  /  T y c h e</div>
         <nav class="nav-links">
-            <a href="#works" class="nav-item">{% if lang == 'it' %}Archivio{% else %}Archive{% endif %}</a>
-            <a href="#collaborations" class="nav-item">{% if lang == 'it' %}Collaborazioni{% else %}Collaborations{% endif %}</a>
+            <a href="#archive-section" class="nav-item">Archivio</a>
+            <a href="#yti-section" class="nav-item">YTI</a>
             <a href="#press" class="nav-item">Press</a>
-            <a href="#about" class="nav-item">{% if lang == 'it' %}Percorso & Contatti{% else %}Journey & Contact{% endif %}</a>
-            {% if lang == 'it' %}<a href="/en" class="lang-switch">EN</a>{% else %}<a href="/" class="lang-switch">ITA</a>{% endif %}
+            <a href="#about" class="nav-item">Percorso & Contatti</a>
         </nav>
     </header>
-    <section id="works">
-        <h2>{% if lang == 'it' %}Archivio{% else %}Archive{% endif %}</h2>
-        <div class="works-container">
-            {% for opera in opere %}
-            <a href="/progetto/{{ opera.id }}" class="work-row">
-                <span class="work-title">{{ opera.titolo }}</span>
-                <span class="work-year">{% if lang == 'it' %}[{{ opera.nota_it }}]{% else %}[{{ opera.nota_en }}]{% endif %}</span>
-            </a>
-            {% endfor %}
+
+    <section id="archive-section">
+        <h2>Archivio</h2>
+        
+        <div class="archive-selector">
+            <div class="selector-btn active" onclick="switchArchive('perf')">Performance</div>
+            <div class="selector-btn" onclick="switchArchive('short')">Short Film</div>
+        </div>
+        
+        <!-- Tabellone Performance -->
+        <div id="list-perf" class="archive-list-container active">
+            <div class="board-grid">
+                
+                <div class="board-item">
+                    <div class="image-wrapper"><img src="amadriadi.jpg" class="board-img" alt="Amadriadi" onerror="this.parentNode.style.display='none'"></div>
+                    <div class="board-meta"><span class="board-title">A M A D R I A D I</span><span class="board-tag">[Performance]</span></div>
+                </div>
+
+                <div class="board-item">
+                    <div class="image-wrapper"><img src="cuma.jpg" class="board-img" alt="Cuma" onerror="this.parentNode.style.display='none'"></div>
+                    <div class="board-meta"><span class="board-title">C U M A</span><span class="board-tag">[Performance]</span></div>
+                </div>
+
+                <div class="board-item">
+                    <div class="image-wrapper"><img src="citerone.jpg" class="board-img" alt="Citerone" onerror="this.parentNode.style.display='none'"></div>
+                    <div class="board-meta"><span class="board-title">C I T E R O N E</span><span class="board-tag">[Performance]</span></div>
+                </div>
+
+                <div class="board-item">
+                    <div class="image-wrapper"><img src="atteone.jpg" class="board-img" alt="Atteone" onerror="this.parentNode.style.display='none'"></div>
+                    <div class="board-meta"><span class="board-title">A T T E O N E</span><span class="board-tag">[Debutto 2027]</span></div>
+                </div>
+
+                <div class="board-item">
+                    <div class="image-wrapper"><img src="salmace.jpg" class="board-img" alt="Salmace" onerror="this.parentNode.style.display='none'"></div>
+                    <div class="board-meta"><span class="board-title">S A L M A C E</span><span class="board-tag">[w.i.p.]</span></div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Tabellone Short Film -->
+        <div id="list-short" class="archive-list-container">
+            <div class="board-grid">
+                
+                <div class="board-item">
+                    <div class="image-wrapper"><img src="cuma_short.jpg" class="board-img" alt="Cuma Short" onerror="this.parentNode.style.display='none'"></div>
+                    <div class="board-meta"><span class="board-title">C U M A</span><span class="board-tag">[Short Film]</span></div>
+                </div>
+
+                <div class="board-item">
+                    <div class="image-wrapper"><img src="citerone_short.jpg" class="board-img" alt="Citerone Short" onerror="this.parentNode.style.display='none'"></div>
+                    <div class="board-meta"><span class="board-title">C I T E R O N E</span><span class="board-tag">[Short Film]</span></div>
+                </div>
+
+            </div>
         </div>
     </section>
-    <section id="collaborations">
-        <h2>{% if lang == 'it' %}Collaborazioni{% else %}Collaborations{% endif %}</h2>
-        <ul class="collab-list">
-            <li class="collab-item">— Civica Scuola di Teatro Paolo Grassi</li>
-            <li class="collab-item">— Scuola Conia / Claudia Castellucci</li>
-            <li class="collab-item">— Ariella Vidach / AiEP</li>
-        </ul>
+
+    <section id="yti-section">
+        <h2>YTI</h2>
+        <div class="yti-text">Your Tactile Identity</div>
     </section>
+
     <section id="press">
         <h2>Press</h2>
         <div class="press-container">
-            <div class="press-row"><span style="font-weight: bold; text-transform: uppercase;">Sipario</span><span style="color: #666; font-size: 0.85rem;">CUMA</span><a href="https://sipario.it" target="_blank" style="color: #000; border-bottom: 1px solid #000; text-decoration: none;">Cuma / Le Sacre du Printemps →</a></div>
-            <div class="press-row"><span style="font-weight: bold; text-transform: uppercase;">Sipario</span><span style="color: #666; font-size: 0.85rem;">CUMA / CITERONE</span><a href="https://sipario.it" target="_blank" style="color: #000; border-bottom: 1px solid #000; text-decoration: none;">Citerone / Cuma →</a></div>
-            <div class="press-row"><span style="font-weight: bold; text-transform: uppercase;">Paneacquaculture</span><span style="color: #666; font-size: 0.85rem;">AMADRIADI</span><a href="https://paneacquaculture.net" target="_blank" style="color: #000; border-bottom: 1px solid #000; text-decoration: none;">InTeatro Polverigi →</a></div>
-            <div class="press-row"><span style="font-weight: bold; text-transform: uppercase;">KLP Teatro</span><span style="color: #666; font-size: 0.85rem;">AMADRIADI</span><a href="https://klpteatro.it" target="_blank" style="color: #000; border-bottom: 1px solid #000; text-decoration: none;">For Gods Only / Sacre #3 →</a></div>
-        </div>
-    </section>
-    <section id="about">
-        <h2>{% if lang == 'it' %}Percorso & Contatti{% else %}Journey & Contact{% endif %}</h2>
-        <p class="about-text">
-            {% if lang == 'it' %}
-                Michele Ifigenia / Tyche è un gruppo di ricerca coreografica fondato e diretto da Michele Ifigenia Colturi, nato all’interno della Civica Scuola di Teatro Paolo Grassi di Milano e della Scuola Conia di Claudia Castellucci. Riunisce interpreti, drammaturghi, musicisti e artisti di diverse discipline in un organismo che sostiene e sviluppa la visione di Colturi. La ricerca, di natura profondamente visiva, esplora il corpo come materia plastica, un campo scultoreo modellato da luce e suono: elementi che ridefiniscono lo spazio e trasformano il gesto in immagine. Al centro della poetica c’è il mito, inteso non come narrazione chiusa ma come matrice fluida e generativa, da cui emergono figure e simboli in costante metamorfosi. Le creazioni prendono forma tanto in spazi teatrali quanto in contesti non convenzionali, intrecciando linguaggi visivi, sonori e corporei. Il gruppo è artista associato di Ariella Vidach / AiEP.
-            {% else %}
-                Michele Ifigenia / Tyche is a choreographic research group founded and directed by Michele Ifigenia Colturi, born within the Civica Scuola di Teatro Paolo Grassi in Milan and Claudia Castellucci’s Scuola Conia. It brings together performers, dramaturgs, musicians and artists from different disciplines into an ensemble that supports and develops Colturi’s artistic vision. The work, deeply visual in nature, explores the body as plastic material, a sculptural field shaped by light and sound—elements that redefine space and turn gesture into image. At the heart of the group’s poetic language lies myth, understood not as a closed narrative but as a fluid, generative matrix from which figures and symbols emerge in continuous metamorphosis. The creations take shape both in conventional theatre spaces and in non‑traditional contexts, weaving together visual, sonic and bodily languages. The group is an associated artist of Ariella Vidach / AiEP.
-            {% endif %}
-        </p>
-        <div class="contact-links">
-            <a href="mailto:micheleifigeniatyche@gmail.com" class="contact-link">micheleifigeniatyche@gmail.com</a>
-            <a href="https://instagram.com" target="_blank" class="contact-link">Instagram</a>
-        </div>
-    </section>
-    <script>
-        document.querySelectorAll('.nav-item').forEach(anchor => { anchor.addEventListener('click', function (e) { const targetId = this.getAttribute('href'); if(targetId.startsWith('#')) { e.preventDefault(); document.querySelector(targetId).scrollIntoView({ behavior: 'smooth' }); } }); });
-    </script>
-</body>
-</html>
+            <div class="press-row">
+                <span style="font-weight: bold; text-transform: uppercase;">Sipario</span>
+                <span style="color: #666; font-size: 0.85rem;">CUMA</span>
+                <a href="https://sipario.it" target="_blank" class="press-link">Cuma / Le Sacre du Printemps →</a>
+            </div>
+            <div class="press-row">
+                <span style="font-weight: bold; text-transform: uppercase;">Sipario</span>
+                <span style="color: #666; font-size: 0.85rem;">CUMA / CITERONE</span>
+                <a href="https://sipario.it" target="_blank" class="press-link">Citerone / Cuma →</a>
+            </div>
+            <div class="press-row">
+                <span style="font-weight: bold; text-transform: uppercase;">L'Oca Critica</span>
+                <span style="color: #666; font-size: 0.85rem;">CUMA / CITERONE</span>

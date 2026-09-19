@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M i c h e l e  I f i g e n i a  /  T y c h e</title>
+    <style>
+        body { background-color: #ffffff; color: #000000; font-family: Arial, sans-serif; margin: 0; padding: 60px 40px; letter-spacing: 0.05em; line-height: 1.6; }
+        body::before { content: ""; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://w3.org id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); opacity: 0.04; pointer-events: none; z-index: 9999; }
+        header { display: flex; justify-content: space-between; align-items: baseline; position: sticky; top: 0; background-color: rgba(255, 255, 255, 0.9); padding: 20px 0; margin-bottom: 100px; z-index: 1000; border-bottom: 1px solid #f5f5f5; }
+        .site-title { font-size: 1.1rem; font-weight: bold; text-transform: uppercase; }
+        .nav-links { display: flex; gap: 30px; align-items: center; }
+        .nav-item { font-size: 0.85rem; color: #000000; text-decoration: none; text-transform: uppercase; }
+        section { margin-bottom: 140px; max-width: 900px; }
+        h2 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 40px; font-weight: bold; border-bottom: 1px solid #000; padding-bottom: 4px; width: fit-content; }
+        .works-container { display: flex; flex-direction: column; }
+        .work-row { display: flex; justify-content: space-between; align-items: center; padding: 22px 0; border-bottom: 1px solid #e5e5e5; text-decoration: none; color: #000000; transition: all 0.2s ease; }
+        .work-title { font-size: 1.25rem; font-weight: 300; }
+        .work-year { font-size: 1.1rem; color: #888888; }
+        .work-row:hover { padding-left: 10px; border-bottom: 1px solid #000; }
+        .collab-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 15px; }
+        .collab-item { font-size: 1.1rem; font-weight: 300; text-transform: uppercase; }
+        .about-text { font-size: 1.15rem; font-weight: 300; line-height: 1.8; color: #000000; text-align: justify; margin-bottom: 50px; }
+        .contact-links { display: flex; flex-direction: column; gap: 12px; }
+        .contact-link { color: #000000; text-decoration: none; font-weight: bold; font-size: 1.1rem; width: fit-content; border-bottom: 1px solid #000000; }
+        .press-container { display: flex; flex-direction: column; gap: 15px; }
+        .press-row { display: grid; grid-template-columns: 150px 220px auto; gap: 20px; padding: 12px 0; border-bottom: 1px dashed #e0e0e0; align-items: baseline; }
+        @media (max-width: 768px) { body { padding: 20px; } header { flex-direction: column; gap: 15px; margin-bottom: 50px; } .nav-links { gap: 15px; flex-wrap: wrap; } section { margin-bottom: 90px; } .work-title { font-size: 1.1rem; } .about-text { text-align: left; font-size: 1.05rem; } .press-row { grid-template-columns: 1fr; gap: 5px; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="site-title">M i c h e l e  I f i g e n i a  /  T y c h e</div>
+        <nav class="nav-links">
+            <a href="#works" class="nav-item">Archivio</a>
+            <a href="#collaborations" class="nav-item">Collaborazioni</a>
+            <a href="#press" class="nav-item">Press</a>
+            <a href="#about" class="nav-item">Percorso & Contatti</a>
+        </nav>
+    </header>
+    <section id="works">
+        <h2>Archivio</h2>
+        <div class="works-container">
+            <a href="#press" class="work-row"><span class="work-title">A M A D R I A D I</span><span class="work-year">[Performance]</span></a>
+            <a href="#press" class="work-row"><span class="work-title">C U M A</span><span class="work-year">[Performance / Video Art]</span></a>
+            <a href="#press" class="work-row"><span class="work-title">C I T E R O N E</span><span class="work-year">[Performance / Short Film]</span></a>
+            <div class="work-row"><span class="work-title">A T T E O N E</span><span class="work-year">[Debutto 2027]</span></div>
+            <div class="work-row"><span class="work-title">S A L M A C E</span><span class="work-year">[work in progress]</span></div>
+        </div>
+    </section>
+    <section id="collaborations">
+        <h2>Collaborazioni</h2>
+        <ul class="collab-list">
+            <li class="collab-item">— Civica Scuola di Teatro Paolo Grassi</li>
+            <li class="collab-item">— Scuola Conia / Claudia Castellucci</li>
+            <li class="collab-item">— Ariella Vidach / AiEP</li>
+        </ul>
+    </section>
+    <section id="press">
+        <h2>Press</h2>
+        <div class="press-container">
+            <div class="press-row"><span style="font-weight: bold; text-transform: uppercase;">Sipario</span><span style="color: #666; font-size: 0.85rem;">CUMA</span><a href="https://sipario.it" target="_blank" style="color: #000; border-bottom: 1px solid #000; text-decoration: none;">Cuma / Le Sacre du Printemps →</a></div>
+            <div class="press-row"><span style="font-weight: bold; text-transform: uppercase;">Sipario</span><span style="color: #666; font-size: 0.85rem;">CUMA / CITERONE</span><a href="https://sipario.it" target="_blank" style="color: #000; border-bottom: 1px solid #000; text-decoration: none;">Citerone / Cuma →</a></div>
+            <div class="press-row"><span style="font-weight: bold; text-transform: uppercase;">Paneacquaculture</span><span style="color: #666; font-size: 0.85rem;">AMADRIADI</span><a href="https://paneacquaculture.net" target="_blank" style="color: #000; border-bottom: 1px solid #000; text-decoration: none;">InTeatro Polverigi →</a></div>
+            <div class="press-row"><span style="font-weight: bold; text-transform: uppercase;">KLP Teatro</span><span style="color: #666; font-size: 0.85rem;">AMADRIADI</span><a href="https://klpteatro.it" target="_blank" style="color: #000; border-bottom: 1px solid #000; text-decoration: none;">For Gods Only / Sacre #3 →</a></div>
+        </div>
+    </section>
+    <section id="about">
+        <h2>Percorso & Contatti</h2>
+        <p class="about-text">
+            Michele Ifigenia / Tyche è un gruppo di ricerca coreografica fondato e diretto da Michele Ifigenia Colturi, nato all’interno della Civica Scuola di Teatro Paolo Grassi di Milano e della Scuola Conia di Claudia Castellucci. Riunisce interpreti, drammaturghi, musicisti e artisti di diverse discipline in un organismo che sostiene e sviluppa la visione di Colturi. La ricerca, di natura profondamente visiva, esplora il corpo come materia plastica, un campo scultoreo modellato da luce e suono: elementi che ridefiniscono lo spazio e trasformano il gesto in immagine. Al centro della poetica c’è il mito, inteso non come narrazione chiusa ma come matrice fluida e generativa, da cui emergono figure e simboli in costante metamorfosi. Le creazioni prendono forma tanto in spazi teatrali quanto in contesti non convenzionali, intrecciando linguaggi visivi, sonori e corporei. Il gruppo è artista associato di Ariella Vidach / AiEP.
+        </p>
+        <div class="contact-links">
+            <a href="mailto:micheleifigeniatyche@gmail.com" class="contact-link">micheleifigeniatyche@gmail.com</a>
+            <a href="https://instagram.com" target="_blank" class="contact-link">Instagram</a>
+        </div>
+    </section>
+    <script>
+        document.querySelectorAll('.nav-item').forEach(anchor => { anchor.addEventListener('click', function (e) { const targetId = this.getAttribute('href'); if(targetId.startsWith('#')) { e.preventDefault(); document.querySelector(targetId).scrollIntoView({ behavior: 'smooth' }); } }); });
+    </script>
+</body>
+</html>

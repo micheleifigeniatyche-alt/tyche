@@ -8,7 +8,7 @@
         body { background-color: #ffffff; color: #000000; font-family: Arial, sans-serif; margin: 0; padding: 60px 40px; letter-spacing: 0.05em; line-height: 1.6; }
         body::before { content: ""; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://w3.org id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); opacity: 0.04; pointer-events: none; z-index: 9999; }
         header { display: flex; justify-content: space-between; align-items: baseline; position: sticky; top: 0; background-color: rgba(255, 255, 255, 0.9); padding: 20px 0; margin-bottom: 100px; z-index: 1000; border-bottom: 1px solid #f5f5f5; }
-        .site-title { font-size: 1.1rem; font-weight: bold; text-transform: uppercase; }
+        .site-title { font-size: 1.1rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; }
         .nav-links { display: flex; gap: 30px; align-items: center; }
         .nav-item { font-size: 0.85rem; color: #000000; text-decoration: none; text-transform: uppercase; }
         section { margin-bottom: 140px; max-width: 1100px; }
@@ -84,27 +84,28 @@
             <div class="board-grid">
                 
                 <div class="board-item">
-                    <div class="image-wrapper"><img src="amadriadi.jpg" class="board-img" alt="Amadriadi" onerror="this.parentNode.style.display='none'"></div>
+                    <div class="image-wrapper"><img src="amadriadi.png" class="board-img" alt="Amadriadi" onerror="this.parentNode.style.display='none'"></div>
                     <div class="board-meta"><span class="board-title">A M A D R I A D I</span><span class="board-tag">[Performance]</span></div>
                 </div>
 
                 <div class="board-item">
-                    <div class="image-wrapper"><img src="cuma.jpg" class="board-img" alt="Cuma" onerror="this.parentNode.style.display='none'"></div>
+                    <div class="image-wrapper"><img src="cuma.png" class="board-img" alt="Cuma" onerror="this.parentNode.style.display='none'"></div>
                     <div class="board-meta"><span class="board-title">C U M A</span><span class="board-tag">[Performance]</span></div>
                 </div>
 
                 <div class="board-item">
-                    <div class="image-wrapper"><img src="citerone.jpg" class="board-img" alt="Citerone" onerror="this.parentNode.style.display='none'"></div>
+                    <div class="image-wrapper"><img src="citerone.png" class="board-img" alt="Citerone" onerror="this.parentNode.style.display='none'"></div>
                     <div class="board-meta"><span class="board-title">C I T E R O N E</span><span class="board-tag">[Performance]</span></div>
                 </div>
 
+                <!-- Modificato chirurgicamente qui: Atteone cerca un file .jpg -->
                 <div class="board-item">
                     <div class="image-wrapper"><img src="atteone.jpg" class="board-img" alt="Atteone" onerror="this.parentNode.style.display='none'"></div>
                     <div class="board-meta"><span class="board-title">A T T E O N E</span><span class="board-tag">[Debutto 2027]</span></div>
                 </div>
 
                 <div class="board-item">
-                    <div class="image-wrapper"><img src="salmace.jpg" class="board-img" alt="Salmace" onerror="this.parentNode.style.display='none'"></div>
+                    <div class="image-wrapper"><img src="salmace.png" class="board-img" alt="Salmace" onerror="this.parentNode.style.display='none'"></div>
                     <div class="board-meta"><span class="board-title">S A L M A C E</span><span class="board-tag">[w.i.p.]</span></div>
                 </div>
 
@@ -116,12 +117,12 @@
             <div class="board-grid">
                 
                 <div class="board-item">
-                    <div class="image-wrapper"><img src="cuma_short.jpg" class="board-img" alt="Cuma Short" onerror="this.parentNode.style.display='none'"></div>
+                    <div class="image-wrapper"><img src="cuma_short.png" class="board-img" alt="Cuma Short" onerror="this.parentNode.style.display='none'"></div>
                     <div class="board-meta"><span class="board-title">C U M A</span><span class="board-tag">[Short Film]</span></div>
                 </div>
 
                 <div class="board-item">
-                    <div class="image-wrapper"><img src="citerone_short.jpg" class="board-img" alt="Citerone Short" onerror="this.parentNode.style.display='none'"></div>
+                    <div class="image-wrapper"><img src="citerone_short.png" class="board-img" alt="Citerone Short" onerror="this.parentNode.style.display='none'"></div>
                     <div class="board-meta"><span class="board-title">C I T E R O N E</span><span class="board-tag">[Short Film]</span></div>
                 </div>
 
@@ -149,4 +150,3 @@
             </div>
             <div class="press-row">
                 <span style="font-weight: bold; text-transform: uppercase;">L'Oca Critica</span>
-                <span style="color: #666; font-size: 0.85rem;">CUMA / CITERONE</span>

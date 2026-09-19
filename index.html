@@ -13,13 +13,23 @@
         .nav-item { font-size: 0.85rem; color: #000000; text-decoration: none; text-transform: uppercase; }
         section { margin-bottom: 140px; max-width: 900px; }
         h2 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 40px; font-weight: bold; border-bottom: 1px solid #000; padding-bottom: 4px; width: fit-content; }
-        .archive-category { margin-bottom: 40px; }
-        .category-title { font-size: 0.9rem; text-transform: uppercase; color: #888888; letter-spacing: 0.1em; margin-bottom: 15px; font-weight: bold; }
+        
+        /* I due grandi pulsanti di scelta Archivio */
+        .archive-selector { display: flex; gap: 40px; margin-bottom: 40px; }
+        .selector-btn { font-size: 1.4rem; font-weight: 300; text-transform: uppercase; cursor: pointer; color: #888888; border-bottom: 1px dashed #e5e5e5; padding-bottom: 4px; transition: all 0.2s ease; }
+        .selector-btn:hover { color: #000; }
+        .selector-btn.active { color: #000000; font-weight: bold; border-bottom: 2px solid #000000; }
+
+        /* Contenitori Liste (nascosti all'inizio, gestiti via javascript) */
+        .archive-list-container { display: none; }
+        .archive-list-container.active { display: flex; flex-direction: column; }
+
         .works-container { display: flex; flex-direction: column; }
         .work-row { display: flex; justify-content: space-between; align-items: center; padding: 22px 0; border-bottom: 1px solid #e5e5e5; text-decoration: none; color: #000000; transition: all 0.2s ease; }
         .work-title { font-size: 1.25rem; font-weight: 300; }
         .work-year { font-size: 1.1rem; color: #888888; }
         .work-row:hover { padding-left: 10px; border-bottom: 1px solid #000; }
+        
         .collab-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 15px; }
         .collab-item { font-size: 1.1rem; font-weight: 300; text-transform: uppercase; }
         .about-text { font-size: 1.15rem; font-weight: 300; line-height: 1.8; color: #000000; text-align: justify; margin-bottom: 50px; }
@@ -29,27 +39,32 @@
         .press-row { display: grid; grid-template-columns: 150px 220px auto; gap: 20px; padding: 12px 0; border-bottom: 1px dashed #e0e0e0; align-items: baseline; }
         .press-link { color: #000; border-bottom: 1px solid #000; text-decoration: none; font-weight: 300; }
         .press-link:hover { opacity: 0.5; }
-        @media (max-width: 768px) { body { padding: 20px; } header { flex-direction: column; gap: 15px; margin-bottom: 50px; } .nav-links { gap: 15px; flex-wrap: wrap; } section { margin-bottom: 90px; } .work-title { font-size: 1.1rem; } .about-text { text-align: left; font-size: 1.05rem; } .press-row { grid-template-columns: 1fr; gap: 5px; } }
+        @media (max-width: 768px) { body { padding: 20px; } header { flex-direction: column; gap: 15px; margin-bottom: 50px; } .nav-links { gap: 15px; flex-wrap: wrap; } section { margin-bottom: 90px; } .work-title { font-size: 1.1rem; } .about-text { text-align: left; font-size: 1.05rem; } .press-row { grid-template-columns: 1fr; gap: 5px; } .archive-selector { gap: 20px; } .selector-btn { font-size: 1.1rem; } }
     </style>
 </head>
 <body>
     <header>
         <div class="site-title">M i c h e l e  I f i g e n i a  /  T y c h e</div>
         <nav class="nav-links">
-            <a href="#archive" class="nav-item">Archivio</a>
+            <a href="#archive-section" class="nav-item">Archivio</a>
             <a href="#collaborations" class="nav-item">Collaborazioni</a>
             <a href="#press" class="nav-item">Press</a>
             <a href="#about" class="nav-item">Percorso & Contatti</a>
         </nav>
     </header>
 
-    <!-- SEZIONE ARCHIVIO DIVISO -->
-    <section id="archive">
+    <!-- SEZIONE ARCHIVIO INTERATTIVO -->
+    <section id="archive-section">
         <h2>Archivio</h2>
         
-        <!-- Sotto-categoria Performance -->
-        <div class="archive-category">
-            <div class="category-title">// Performance</div>
+        <!-- Pulsanti di Scelta -->
+        <div class="archive-selector">
+            <div class="selector-btn active" onclick="switchArchive('perf')">Performance</div>
+            <div class="selector-btn" onclick="switchArchive('short')">Short Film</div>
+        </div>
+        
+        <!-- Lista 1: Performance -->
+        <div id="list-perf" class="archive-list-container active">
             <div class="works-container">
                 <div class="work-row"><span class="work-title">A M A D R I A D I</span><span class="work-year">[Performance]</span></div>
                 <div class="work-row"><span class="work-title">C U M A</span><span class="work-year">[Performance]</span></div>
@@ -59,11 +74,10 @@
             </div>
         </div>
 
-        <!-- Sotto-categoria Short Film -->
-        <div class="archive-category" style="margin-top: 50px;">
-            <div class="category-title">// Short Film & Video Art</div>
+        <!-- Lista 2: Short Film -->
+        <div id="list-short" class="archive-list-container">
             <div class="works-container">
-                <div class="work-row"><span class="work-title">C U M A</span><span class="work-year">[Video Art]</span></div>
+                <div class="work-row"><span class="work-title">C U M A</span><span class="work-year">[Short Film]</span></div>
                 <div class="work-row"><span class="work-title">C I T E R O N E</span><span class="work-year">[Short Film]</span></div>
             </div>
         </div>
@@ -118,13 +132,3 @@
                 <a href="https://paneacquaculture.net" target="_blank" class="press-link">InTeatro Polverigi →</a>
             </div>
             <div class="press-row">
-                <span style="font-weight: bold; text-transform: uppercase;">KLP Teatro</span>
-                <span style="color: #666; font-size: 0.85rem;">AMADRIADI</span>
-                <a href="https://klpteatro.it" target="_blank" class="press-link">For Gods Only / Sacre #3 →</a>
-            </div>
-        </div>
-    </section>
-
-    <section id="about">
-        <h2>Percorso & Contatti</h2>
-        <p class="about-text">

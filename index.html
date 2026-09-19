@@ -14,13 +14,11 @@
         section { margin-bottom: 140px; max-width: 900px; }
         h2 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 40px; font-weight: bold; border-bottom: 1px solid #000; padding-bottom: 4px; width: fit-content; }
         
-        /* I due grandi pulsanti di scelta Archivio */
         .archive-selector { display: flex; gap: 40px; margin-bottom: 40px; }
         .selector-btn { font-size: 1.4rem; font-weight: 300; text-transform: uppercase; cursor: pointer; color: #888888; border-bottom: 1px dashed #e5e5e5; padding-bottom: 4px; transition: all 0.2s ease; }
         .selector-btn:hover { color: #000; }
         .selector-btn.active { color: #000000; font-weight: bold; border-bottom: 2px solid #000000; }
 
-        /* Contenitori Liste (nascosti all'inizio, gestiti via javascript) */
         .archive-list-container { display: none; }
         .archive-list-container.active { display: flex; flex-direction: column; }
 
@@ -30,8 +28,7 @@
         .work-year { font-size: 1.1rem; color: #888888; }
         .work-row:hover { padding-left: 10px; border-bottom: 1px solid #000; }
         
-        .collab-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 15px; }
-        .collab-item { font-size: 1.1rem; font-weight: 300; text-transform: uppercase; }
+        .yti-text { font-size: 1.25rem; font-weight: 300; text-transform: uppercase; letter-spacing: 0.08em; }
         .about-text { font-size: 1.15rem; font-weight: 300; line-height: 1.8; color: #000000; text-align: justify; margin-bottom: 50px; }
         .contact-links { display: flex; flex-direction: column; gap: 12px; }
         .contact-link { color: #000000; text-decoration: none; font-weight: bold; font-size: 1.1rem; width: fit-content; border-bottom: 1px solid #000000; }
@@ -47,7 +44,7 @@
         <div class="site-title">M i c h e l e  I f i g e n i a  /  T y c h e</div>
         <nav class="nav-links">
             <a href="#archive-section" class="nav-item">Archivio</a>
-            <a href="#collaborations" class="nav-item">Collaborazioni</a>
+            <a href="#yti-section" class="nav-item">YTI</a>
             <a href="#press" class="nav-item">Press</a>
             <a href="#about" class="nav-item">Percorso & Contatti</a>
         </nav>
@@ -57,13 +54,11 @@
     <section id="archive-section">
         <h2>Archivio</h2>
         
-        <!-- Pulsanti di Scelta -->
         <div class="archive-selector">
             <div class="selector-btn active" onclick="switchArchive('perf')">Performance</div>
             <div class="selector-btn" onclick="switchArchive('short')">Short Film</div>
         </div>
         
-        <!-- Lista 1: Performance -->
         <div id="list-perf" class="archive-list-container active">
             <div class="works-container">
                 <div class="work-row"><span class="work-title">A M A D R I A D I</span><span class="work-year">[Performance]</span></div>
@@ -74,7 +69,6 @@
             </div>
         </div>
 
-        <!-- Lista 2: Short Film -->
         <div id="list-short" class="archive-list-container">
             <div class="works-container">
                 <div class="work-row"><span class="work-title">C U M A</span><span class="work-year">[Short Film]</span></div>
@@ -83,16 +77,13 @@
         </div>
     </section>
 
-    <section id="collaborations">
-        <h2>Collaborazioni</h2>
-        <ul class="collab-list">
-            <li class="collab-item">— Civica Scuola di Teatro Paolo Grassi</li>
-            <li class="collab-item">— Scuola Conia / Claudia Castellucci</li>
-            <li class="collab-item">— Ariella Vidach / AiEP</li>
-        </ul>
+    <!-- NUOVA SEZIONE YTI -->
+    <section id="yti-section">
+        <h2>YTI</h2>
+        <div class="yti-text">Your Tactile Identity</div>
     </section>
 
-    <!-- SEZIONE PRESS CON LINK SPECIFICI CORRETTI -->
+    <!-- SEZIONE PRESS -->
     <section id="press">
         <h2>Press</h2>
         <div class="press-container">
@@ -132,3 +123,13 @@
                 <a href="https://paneacquaculture.net" target="_blank" class="press-link">InTeatro Polverigi →</a>
             </div>
             <div class="press-row">
+                <span style="font-weight: bold; text-transform: uppercase;">KLP Teatro</span>
+                <span style="color: #666; font-size: 0.85rem;">AMADRIADI</span>
+                <a href="https://klpteatro.it" target="_blank" class="press-link">For Gods Only / Sacre #3 →</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <h2>Percorso & Contatti</h2>
+        <p class="about-text">

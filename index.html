@@ -1,122 +1,38 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M i c h e l e   I f i g e n i a  /  T y c h e</title>
-    <style>
-        body { background-color: #ffffff; color: #000000; font-family: Arial, sans-serif; margin: 0; padding: 60px 40px; letter-spacing: 0.05em; line-height: 1.6; position: relative; }
-        
-        /* FILTRO GRANA REALISTICO ALL'8% (STRUTTURA RIPARATA) */
-        body::before { content: ""; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://w3.org id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); opacity: 0.08; pointer-events: none; z-index: 9999; }
-        
-        header { display: flex; flex-direction: column; align-items: center; justify-content: center; position: sticky; top: 0; background-color: rgba(255, 255, 255, 0.95); padding: 30px 0; margin-bottom: 80px; z-index: 1000; border-bottom: 1px solid #f5f5f5; }
-        
-        /* ARCHEAL LOGO CENTRATO ASSIALE: TYCHE APPOGGIATO SULLA LINEA */
-        .site-title { display: flex; flex-direction: column; align-items: center; text-align: center; cursor: default; width: 100%; max-width: 500px; margin: 0 auto; position: relative; }
-        .title-matrix { font-size: 0.9rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5em; color: #000000; margin-bottom: -5px; z-index: 15; text-indent: 0.5em; }
-        .title-brand { font-size: 1.15rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.25em; line-height: 1; position: relative; display: inline-block; padding: 10px 0; text-indent: 0.25em; white-space: nowrap; margin-top: 2px; }
-        
-        /* La sbarra di cancellatura che fa da pavimento a Tyche e taglia Michele Ifigenia */
-        .title-brand::after { content: ""; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 100%; height: 2px; background-color: #000000; z-index: 10; }
-        
-        .nav-links { display: flex; gap: 30px; align-items: center; margin-top: 25px; justify-content: center; width: 100%; }
-        .nav-item { font-size: 0.85rem; color: #000000; text-decoration: none; text-transform: uppercase; }
-        
-        section { margin-bottom: 140px; max-width: 1100px; margin-left: auto; margin-right: auto; }
-        h2 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 50px; font-weight: bold; border-bottom: 1px solid #000; padding-bottom: 4px; width: fit-content; }
-        
-        .archive-selector { display: flex; gap: 40px; margin-bottom: 60px; justify-content: center; }
-        .selector-btn { font-size: 1.3rem; font-weight: 300; text-transform: uppercase; cursor: pointer; color: #888888; border-bottom: 1px dashed #e5e5e5; padding-bottom: 4px; transition: all 0.2s ease; }
-        .selector-btn:hover { color: #000; }
-        .selector-btn.active { color: #000000; font-weight: bold; border-bottom: 2px solid #000000; }
-        .archive-list-container { display: none; }
-        .archive-list-container.active { display: block; }
-        
-        /* Griglia delle stampe fotografiche ridotta ed elegante */
-        .board-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 60px 45px; background-color: #ffffff; padding: 10px 0; }
-        
-        /* EFFETTO TRIDIMENSIONALE: FOTO APPESE REALI CON OMBRE COMPATTE */
-        .board-item { position: relative; background: #ffffff; display: flex; flex-direction: column; text-decoration: none; color: #000; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: transform 0.3s ease, box-shadow 0.3s ease; padding: 0; box-shadow: 0 4px 15px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.02); }
-        .board-item::after { content: ""; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 70px; height: 20px; background-color: rgba(0, 0, 0, 0.06); z-index: 10; }
-        
-        /* Rotazioni asimmetriche impercettibili per dare realismo organico */
-        .board-grid .board-item:nth-child(odd) { transform: rotate(-0.5deg); }
-        .board-grid .board-item:nth-child(even) { transform: rotate(0.6deg); }
-        .board-grid .board-item:hover { transform: translateY(-6px) rotate(0deg) !important; box-shadow: 0 12px 25px rgba(0,0,0,0.07), 0 3px 8px rgba(0,0,0,0.03); }
-        
-        .image-wrapper { width: 100%; aspect-ratio: 3/4; overflow: hidden; background: #fafafa; border: 1px solid #f0f0f0; position: relative; }
-        .board-img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(15%); display: block; transition: filter 0.3s ease; }
-        .board-item:hover .board-img { filter: grayscale(0%); }
-        
-        .board-meta { margin-top: 15px; display: flex; justify-content: space-between; align-items: baseline; font-family: monospace; padding: 0 4px; }
-        .board-title { font-size: 1.05rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; }
-        .board-tag { font-size: 0.78rem; color: #666666; text-transform: uppercase; }
-        
-        /* SCHERMATA DEDICATA A TUTTO SCHERMO (OVERLAY) */
-        .project-page { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #ffffff; z-index: 2000; overflow-y: auto; padding: 60px 40px; box-sizing: border-box; }
-        .project-page.active { display: block; }
-        .back-btn { font-size: 0.85rem; text-transform: uppercase; font-weight: bold; cursor: pointer; display: inline-block; margin-bottom: 40px; border-bottom: 1px solid #000; padding-bottom: 2px; }
-        .project-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; max-width: 1200px; margin-top: 20px; align-items: start; }
-        .project-info-side { display: flex; flex-direction: column; gap: 30px; }
-        .project-title-large { font-size: 2.2rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.15em; margin: 0; }
-        .project-duration { font-family: monospace; color: #666; font-size: 0.9rem; }
-        .project-description { font-size: 1.1rem; font-weight: 300; line-height: 1.8; text-align: justify; white-space: pre-line; }
-        .project-credits { font-family: monospace; font-size: 0.85rem; border-top: 1px solid #e5e5e5; padding-top: 20px; display: flex; flex-direction: column; gap: 8px; }
-        .video-container-large { width: 100%; aspect-ratio: 16/9; background: #000; border: 1px solid #eee; }
-        .video-container-large iframe { width: 100%; height: 100%; border: 0; }
-        
-        .yti-text { font-size: 1.25rem; font-weight: 300; text-transform: uppercase; letter-spacing: 0.08em; }
-        .about-text { font-size: 1.15rem; font-weight: 300; line-height: 1.8; color: #000000; text-align: justify; margin-bottom: 50px; }
-        .contact-links { display: flex; flex-direction: column; gap: 12px; }
-        .contact-link { color: #000000; text-decoration: none; font-weight: bold; font-size: 1.1rem; width: fit-content; border-bottom: 1px solid #000000; }
-        .press-container { display: flex; flex-direction: column; gap: 15px; }
-        .press-row { display: grid; grid-template-columns: 150px 220px auto; gap: 20px; padding: 12px 0; border-bottom: 1px dashed #e0e0e0; align-items: baseline; }
-        .press-link { color: #000; border-bottom: 1px solid #000; text-decoration: none; font-weight: 300; }
-        
-        @media (max-width: 768px) { 
-            body { padding: 20px; } 
-            header { padding: 25px 0; margin-bottom: 40px; } 
-            .title-matrix { font-size: 0.75rem; letter-spacing: 0.35em; text-indent: 0.35em; }
-            .title-brand { font-size: 0.85rem; letter-spacing: 0.15em; text-indent: 0.15em; padding: 4px 0; }
-            .nav-links { gap: 15px; flex-wrap: wrap; margin-top: 20px; } 
-            .nav-item { font-size: 0.75rem; }
-            section { margin-bottom: 90px; } 
-            .press-row { grid-template-columns: 1fr; gap: 5px; } 
-            .archive-selector { gap: 25px; margin-bottom: 40px; } 
-            .selector-btn { font-size: 1.1rem; }
-            .board-grid { grid-template-columns: 1fr; gap: 45px; } 
-            .project-layout { grid-template-columns: 1fr; gap: 40px; } 
-            .project-page { padding: 40px 20px; } 
-            .project-title-large { font-size: 1.6rem; }
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <div class="site-title">
-            <div class="title-matrix">T y c h e</div>
-            <div class="title-brand">M i c h e l e   I f i g e n i a</div>
-        </div>
-        <nav class="nav-links">
-            <a href="#archive-section" class="nav-item">Archivio</a>
-            <a href="#yti-section" class="nav-item">YTI</a>
-            <a href="#press" class="nav-item">Press</a>
-            <a href="#about" class="nav-item">Percorso & Contatti</a>
-        </nav>
-    </header>
-
-    <section id="archive-section">
-        <h2>Archivio</h2>
-        <div class="archive-selector">
-            <div class="selector-btn active" onclick="switchArchive('perf')">Performance</div>
-            <div class="selector-btn" onclick="switchArchive('short')">Short Film</div>
-        </div>
-        
-        <!-- Tabellone Performance -->
-        <div id="list-perf" class="archive-list-container active">
-            <div class="board-grid">
-                <div class="board-item" data-id="amadriadi">
-                    <div class="image-wrapper"><img src="amadriadi.png" class="board-img" alt="Amadriadi" onerror="this.parentNode.style.backgroundColor='#f9f9f9'"></div>
-                    <div class="board-meta"><span class="board-title">A M A D R I A D I</span><span class="board-tag">[Performance]</span></div>
-                </div>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M i c h e l e   I f i g e n i a  /  T y c h e</title>
+<style>
+body{background:#fff;color:#000;font-family:Arial,sans-serif;margin:0;padding:60px 40px;letter-spacing:.05em;line-height:1.6;position:relative}
+body::before{content:"";position:fixed;inset:0;width:100vw;height:100vh;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px 200px;opacity:.3;pointer-events:none;z-index:9999}
+header{display:flex;flex-direction:column;align-items:center;justify-content:center;position:sticky;top:0;background:rgba(255,255,255,.95);padding:30px 0;margin-bottom:80px;z-index:1000;border-bottom:1px solid #f5f5f5}
+.site-title{display:flex;flex-direction:column;align-items:center;text-align:center;width:100%;max-width:500px;margin:0 auto}
+.title-matrix{position:absolute;left:0;right:0;bottom:calc(50% + 1px - .2em);text-align:center;font-size:1.15rem;line-height:1;font-weight:bold;text-transform:uppercase;letter-spacing:.5em;text-indent:.5em;z-index:15}
+.title-brand{font-size:1.15rem;font-weight:bold;text-transform:uppercase;letter-spacing:.25em;line-height:1;position:relative;display:inline-block;padding:10px 0;text-indent:.25em;white-space:nowrap;margin-top:1.9rem}
+.title-brand::after{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);width:100%;height:2px;background:#000;z-index:10}
+.nav-links{display:flex;gap:30px;align-items:center;margin-top:25px;justify-content:center;width:100%}
+.nav-item{font-size:.85rem;color:#000;text-decoration:none;text-transform:uppercase}
+section{margin-bottom:140px;max-width:1100px;margin-left:auto;margin-right:auto;scroll-margin-top:170px}
+h2{font-size:.85rem;text-transform:uppercase;letter-spacing:.15em;margin-bottom:50px;font-weight:bold;border-bottom:1px solid #000;padding-bottom:4px;width:fit-content}
+.archive-selector{display:flex;gap:40px;margin-bottom:60px;justify-content:center}
+.selector-btn{font-size:1.3rem;font-weight:300;text-transform:uppercase;cursor:pointer;color:#888;border-bottom:1px dashed #e5e5e5;padding-bottom:4px;transition:all .2s}
+.selector-btn:hover{color:#000}
+.selector-btn.active{color:#000;font-weight:bold;border-bottom:2px solid #000}
+.archive-list-container{display:none}
+.archive-list-container.active{display:block}
+.board-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:60px 45px;padding:10px 0}
+.board-item{position:relative;background:#fff;display:flex;flex-direction:column;color:#000;cursor:pointer;-webkit-tap-highlight-color:transparent;box-shadow:0 4px 15px rgba(0,0,0,.04),0 1px 3px rgba(0,0,0,.02)}
+.board-item::after{content:"";position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:70px;height:20px;background:rgba(0,0,0,.06);z-index:10}
+.board-grid .board-item:nth-child(odd){transform:rotate(-.5deg)}
+.board-grid .board-item:nth-child(even){transform:rotate(.6deg)}
+.image-wrapper{position:relative;width:100%;aspect-ratio:3/4;overflow:hidden;background:#fafafa;border:1px solid #f0f0f0}
+.image-wrapper[data-missing]::before{content:attr(data-missing);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:monospace;font-size:.8rem;color:#999;text-align:center}
+.board-img{width:100%;height:100%;object-fit:cover;filter:grayscale(15%);display:block}
+.board-meta{margin-top:15px;display:flex;justify-content:space-between;align-items:baseline;font-family:monospace;padding:0 4px}
+.board-title{font-size:1.05rem;font-weight:bold;text-transform:uppercase}
+.board-tag{font-size:.78rem;color:#666;text-transform:uppercase}
+.project-page{display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:#fff;z-index:2000;overflow-y:auto;padding:60px 40px;box-sizing:border-box}
+.project-page.active{display:block}
+.back-btn{font-size:.85rem;text-transform:uppercase;font-weight:bold;cursor:pointer;display:inline-block;margin-

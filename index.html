@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -26,7 +25,7 @@ img{max-width:100%}
 /* GRANA leggerissima: un'immagine di rumore come sfondo (puntini scuri sulla carta, chiari sul nero).
    Sta dietro al contenuto, non sopra: non costa nulla durante lo scorrimento e non tocca foto e ricami. */
 :root{--gp:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n' x='0' y='0' width='100%25' height='100%25'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.11 0 0 0 -0.055'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");--gb:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n' x='0' y='0' width='100%25' height='100%25'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  -0.11 0 0 0 0.055'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>")}
-body,#top-bar,#frames,#fx-count{background-size:240px 240px}
+body,#top-bar,#frames{background-size:240px 240px}
 .band,#top-bar.dark,#detail,.d-top,.d-screen{background-size:240px 240px}
 
 /* BARRA IN ALTO (cambia colore da sola sulle fasce scure) */
@@ -58,18 +57,15 @@ body,#top-bar,#frames,#fx-count{background-size:240px 240px}
 .seen *{animation:none!important}
 
 
-/* RICAMI: fiori, uccellino, sole, cervo. Sono immagini SVG: compaiono con una dissolvenza appena pronte. */
+/* RICAMI: fiori (inizio e fondo pagina) e sole. Sono immagini SVG: compaiono con una dissolvenza appena pronte. */
 .embroid{position:absolute;inset:0;pointer-events:none;z-index:0}
 .name-wrap{z-index:1}
-.fl,.bird,.sun,.deer{position:absolute;pointer-events:none;opacity:0;transition:opacity .9s ease}
-.fl.on,.bird.on,.sun.on,.deer.on{opacity:1}
-.fl img,.bird img,.sun img,.deer img{display:block;width:100%;height:100%}
+.fl,.sun{position:absolute;pointer-events:none;opacity:0;transition:opacity .9s ease}
+.fl.on,.sun.on{opacity:1}
+.fl img,.sun img{display:block;width:100%;height:100%}
 .fl{left:0;top:0}
-.bird{right:clamp(28px,8vw,130px);top:clamp(110px,21vh,210px);width:clamp(48px,4.6vw,70px);aspect-ratio:64/30}
 .sun{right:clamp(30px,4.2vw,70px);top:clamp(118px,17svh,172px);width:clamp(60px,5.6vw,92px);aspect-ratio:1}
-.deer{width:clamp(60px,6.2vw,96px);aspect-ratio:120/116}
-#collaborazioni .band-head{position:relative}
-@media(prefers-reduced-motion:reduce){.fl,.bird,.sun,.deer{transition:none}}
+@media(prefers-reduced-motion:reduce){.fl,.sun{transition:none}}
 
 /* FASCE SCURE CON PELLICOLA SCORREVOLE */
 .band{background:var(--ink) var(--gb);color:#e9e8e4;padding:84px 0 60px;position:relative}
@@ -99,16 +95,14 @@ body,#top-bar,#frames,#fx-count{background-size:240px 240px}
 .scrub i{position:absolute;top:-1px;height:4px;background:#e9e8e4;left:0;width:20%}
 .reel:not(.can) .scrub{display:none}
 
-/* FRAMES: foglio editoriale statico, senza fisica né animazione; si sviluppa in lunghezza */
+/* FRAMES: foglio editoriale statico, senza fisica né animazione, senza testi; si sviluppa in lunghezza */
 #frames{position:relative;background:var(--paper) var(--gp);color:var(--ink);padding:84px 0 0}
 #frames h2{margin:0;font-size:clamp(1.8rem,4vw,3rem);font-weight:600;letter-spacing:-.04em;line-height:1}
 .fx-head{padding:0 24px}
 .fx-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 28px}
-.fx-h .count{color:var(--mute)}
 .fx-years{display:flex;flex-wrap:wrap;gap:4px 22px;margin-top:16px;font-size:.92rem;font-weight:600}
 .fx-years a{color:var(--red);text-decoration:none;font-variant-numeric:tabular-nums;border-bottom:1px solid transparent}
 .fx-years a:hover,.fx-years a:focus-visible{border-bottom-color:currentColor}
-#fx-count{display:none;position:sticky;top:var(--tbh,52px);z-index:20;justify-content:space-between;gap:16px;margin-top:18px;padding:9px 24px;background:var(--paper) var(--gp);border-bottom:1px solid rgba(11,11,12,.16);font:.76rem/1.3 var(--mono)}
 .fx-ch{scroll-margin-top:calc(var(--tbh,52px) + 14px)}
 .fx-ch:nth-child(odd){margin-top:clamp(90px,15vw,220px)}
 .fx-ch:nth-child(even){margin-top:clamp(40px,7vw,100px)}
@@ -116,49 +110,40 @@ body,#top-bar,#frames,#fx-count{background-size:240px 240px}
 .fx-yr span{display:block;width:max-content;margin-left:calc((100% - var(--w))*var(--f,0))}
 .fx-yr i{font-style:normal}
 .fx-yr::after{content:"";position:absolute;left:0;right:0;top:var(--ly);height:var(--lh);transform:translateY(-50%);background:var(--red)}
-.fx-yr .o{color:transparent;-webkit-text-stroke:2px var(--red)}
 #frames{overflow-x:clip}
 .fx-ph{position:relative;z-index:1}
-/* ogni capitolo ha un carattere diverso: dimensione, pieno o contorno, posizione, sovrapposizione alle foto */
+/* ogni capitolo ha un carattere diverso: dimensione, posizione, sovrapposizione alle foto (numeri sempre pieni di rosso) */
 .fx-ch[data-v="0"] .fx-yr{font-size:clamp(6rem,27vw,25rem)}
 .fx-ch[data-v="1"] .fx-yr{font-size:clamp(2.8rem,8vw,7rem);--ly:50%}
-.fx-ch[data-v="2"] .fx-yr{font-size:clamp(5.5rem,22vw,20rem);margin-bottom:-.3em;color:transparent;-webkit-text-stroke:2px var(--red)}
+.fx-ch[data-v="2"] .fx-yr{font-size:clamp(5.5rem,22vw,20rem);margin-bottom:-.3em}
 .fx-ch[data-v="3"] .fx-yr{font-size:clamp(5rem,17vw,15rem);--w:1.2em;--ly:50%;line-height:.78}
 .fx-ch[data-v="3"] .fx-yr i{display:block}
 .fx-ch[data-v="4"] .fx-yr{font-size:clamp(3.4rem,11vw,10rem);--ly:52%}
 .fx-ch[data-v="5"] .fx-yr{font-size:clamp(6.5rem,30vw,28rem);margin-bottom:-.14em}
-.fx-ph{display:grid;grid-template-columns:repeat(12,1fr);gap:0 24px;padding:0 24px}
-.fx-fig{display:block;width:100%;text-align:left;color:inherit}
-.fx-n{display:block;margin-bottom:9px;font:.74rem/1 var(--mono);color:var(--mute)}
-.fx-img{display:block;position:relative;aspect-ratio:3/4;background:#dcdad4;overflow:hidden}
+.fx-ph{display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(28px,4.5vw,64px) 24px;padding:0 24px}
+.fx-fig{display:block;width:82%;align-self:start;text-align:left;color:inherit}
+.p-rs,.p-lr,.p-wr{justify-self:end}
+.p-mc,.p-wc,.p-wm{justify-self:center}
+.fx-img{display:block;position:relative;aspect-ratio:var(--ar,3/4);background:#dcdad4;overflow:hidden}
 .fx-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.9) contrast(1.03)}
 .fx-img::after{content:"";position:absolute;inset:0;background:var(--tint);pointer-events:none}
 .fx-img[data-missing]::before{color:#cfcdc6}
-.fx-cap{display:block;margin-top:12px}
-.fx-t{display:block;font-size:clamp(1.05rem,1.7vw,1.4rem);font-weight:600;letter-spacing:-.03em;line-height:1.05}
-.fx-m{display:block;margin-top:6px;font:.74rem/1.4 var(--mono);color:var(--mute)}
+div.fx-fig{cursor:default}
 .fx-fig:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
 .p-rs{grid-column:10 / span 2}
-.p-ll{grid-column:1 / span 4;grid-row:1}
+.p-ll{grid-column:1 / span 4}
 .p-ls{grid-column:2 / span 2}
 .p-mc{grid-column:5 / span 3}
 .p-lr{grid-column:8 / span 4}
-.p-rs2{grid-column:8 / span 2;grid-row:1;align-self:end}
-@media(hover:hover){.fx-fig:hover .fx-t{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}}
+.p-wl{grid-column:1 / span 5}
+.p-wr{grid-column:8 / span 5}
+.p-wm{grid-column:9 / span 3}
+.p-wc{grid-column:4 / span 4}
+@media(hover:hover){button.fx-fig:hover{opacity:.86}}
+.fx-fig{transition:opacity .25s}
 
 
-/* ricami piccoli che poggiano sulla linea rossa dell'anno: pino (2026, a destra) e cervo marrone (2025) */
-.fx-ch{position:relative}
-.fx-emb{position:absolute;z-index:2;top:var(--ly);pointer-events:none;opacity:0;transition:opacity .9s ease}
-.fx-emb.on{opacity:1}
-.fx-emb img{display:block;width:100%;height:100%}
-.fx-emb.pine{right:8%;width:clamp(28px,3.4vw,50px);aspect-ratio:80/130;transform:translateY(calc(-100% + 3%))}
-.fx-emb.bird{top:38%;right:14%;width:clamp(40px,4.6vw,66px);aspect-ratio:64/30}
-.fx-emb.flower{left:12%;width:clamp(40px,4.4vw,64px);aspect-ratio:200/248;transform:translateY(calc(-100% + 2%))}
-.fx-emb.deer2{left:58%;width:clamp(46px,5.4vw,78px);aspect-ratio:120/116;transform:translateY(calc(-100% + 8.6%))}
-@media(prefers-reduced-motion:reduce){.fx-emb{transition:none}}
 .fx-note{position:relative;margin:clamp(90px,14vw,200px) 24px 0;padding:22px 0 40px;min-height:150px;border-top:1px solid rgba(11,11,12,.18)}
-.fx-note p{margin:0;max-width:34ch;font:.68rem/1.8 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--mute)}
 .fx-note .sun{top:20px;right:0}
 
 /* ABOUT */
@@ -186,10 +171,10 @@ footer>span{position:relative;z-index:1}
 .d-thumbs button{width:48px;height:48px;position:relative;opacity:.45;background:#161616;overflow:hidden}
 .d-thumbs button.on{opacity:1;outline:1px solid #e9e8e4;outline-offset:2px}
 .d-thumbs img{width:100%;height:100%;object-fit:cover;display:block}
-/* il titolo sale a cavallo del bordo inferiore della foto; dove passa sulla foto i colori si invertono (bianco sul nero) */
+/* il titolo sale a cavallo del bordo inferiore della foto, davanti alla foto, sempre bianco */
 .d-info{--tf:clamp(2.4rem,8vw,7rem);position:relative;padding:0 24px 40px;display:grid;grid-template-columns:repeat(12,1fr);gap:0 24px;max-width:1500px;margin:calc(var(--tf)*-.55) auto 0}
 .d-meta{grid-column:1 / span 4;font-size:.85rem;color:#8b8a86;font-weight:600;display:flex;flex-direction:column;gap:4px}
-.d-info h1{grid-column:1 / -1;order:-1;margin:0 0 42px;color:#fff;mix-blend-mode:difference;font-size:var(--tf);font-weight:600;letter-spacing:-.055em;line-height:.9;pointer-events:none}
+.d-info h1{grid-column:1 / -1;order:-1;margin:0 0 42px;color:#fff;font-size:var(--tf);font-weight:600;letter-spacing:-.055em;line-height:.9;pointer-events:none}
 .d-text{grid-column:5 / span 4}
 .d-text p{margin:0;font-size:1.05rem;line-height:1.6}
 .d-text blockquote{margin:0 0 26px;padding-left:18px;border-left:1px solid #555;font-size:1rem;line-height:1.6;color:#c9c8c3}
@@ -211,17 +196,16 @@ footer>span{position:relative;z-index:1}
 
 /* FRAMES su tablet (tocco): foto più larghe, nessun effetto al passaggio */
 @media((hover:none) and (min-width:641px)),((min-width:641px) and (max-width:1000px)){
+.fx-fig{width:88%}
 .p-rs{grid-column:7 / span 6}
 .p-ll{grid-column:1 / span 9}
 .p-ls{grid-column:1 / span 6}
 .p-mc{grid-column:3 / span 8}
 .p-lr{grid-column:4 / span 9}
-.p-rs2{grid-column:7 / span 6;grid-row:2;margin-top:44px}
-}
-/* contatore fisso in alto su tablet e telefono */
-@media(hover:none),(max-width:640px){
-#fx-count{display:flex}
-.fx-ch{scroll-margin-top:calc(var(--tbh,52px) + 56px)}
+.p-wl{grid-column:1 / span 9}
+.p-wr{grid-column:4 / span 9}
+.p-wm{grid-column:6 / span 6}
+.p-wc{grid-column:3 / span 8}
 }
 @media(max-width:900px){
 .d-text{grid-column:1 / -1;margin-top:26px}
@@ -242,22 +226,19 @@ footer>span{position:relative;z-index:1}
 .card{width:62vw}
 /* FRAMES su telefono: una colonna a sfalsamento, foto alternate a sinistra e a destra */
 .fx-head{padding:0 16px}
-#fx-count{padding:9px 16px}
 .fx-yr{padding:0 16px}
 .fx-ph{display:block;padding:0 16px}
-.fx-fig{width:60%}
-.p-ll,.p-lr{width:88%}
-.p-mc{width:76%}
-.p-ls{width:66%}
-.p-rs,.p-rs2{width:58%}
+.fx-fig{width:54%;justify-self:auto}
+.p-ll,.p-lr{width:78%}
+.p-mc{width:66%}
+.p-ls{width:58%}
+.p-rs{width:50%}
+.p-wl,.p-wr,.p-wc{width:84%}
+.p-wm{width:64%}
 .fx-fig[data-side="r"]{margin-left:auto}
 .fx-fig[data-side="l"]{margin-right:auto}
 .fx-fig+.fx-fig{margin-top:44px}
 .fx-note{margin-left:16px;margin-right:16px}
-.fx-emb.pine{width:11vw}
-.fx-emb.deer2{width:16vw}
-.fx-emb.flower{width:13vw}
-.fx-emb.bird{top:auto;bottom:-34px;right:24%;width:14vw}
 .d-top{padding:12px 16px}
 .d-screen{height:60vh;height:60svh}
 .d-thumbs{right:16px}
@@ -326,12 +307,11 @@ footer{padding:0 16px 26px}
 
 <section id="frames">
   <div class="fx-head">
-    <div class="fx-h"><h2 data-i="frames">Frames</h2><span class="count" id="fr-count"></span></div>
+    <div class="fx-h"><h2 data-i="frames">Frames</h2></div>
     <nav class="fx-years" id="fx-years" aria-label="Anni"></nav>
   </div>
-  <div id="fx-count" aria-hidden="true"></div>
   <div id="fx-sheet"></div>
-  <div class="fx-note"><p id="fx-note-t"></p></div>
+  <div class="fx-note"></div>
 </section>
 
 <section id="about">
@@ -370,8 +350,8 @@ footer{padding:0 16px 26px}
 </div><script>
 /* ============ TESTI ============ */
 var UI={
- it:{nav_works:"Lavori",nav_collab:"Collaborazioni",nav_frames:"Frames",nav_about:"Percorso e contatti",works:"Lavori",collab:"Collaborazioni",frames:"Frames",about:"Percorso e contatti",f_perf:"Performance",f_short:"Short Film",scroll:"Scorri",back:"← Indietro",next:"Prossimo",video:"Video",foot:"Coreografia · Performance · Short film",works_n:"lavori",work_1:"lavoro"},
- en:{nav_works:"Works",nav_collab:"Collaborations",nav_frames:"Frames",nav_about:"About & contact",works:"Works",collab:"Collaborations",frames:"Frames",about:"About & contact",f_perf:"Performance",f_short:"Short Film",scroll:"Scroll",back:"← Back",next:"Next",video:"Video",foot:"Choreography · Performance · Short film",works_n:"works",work_1:"work"}
+ it:{nav_works:"Lavori",nav_collab:"Collaborazioni",nav_frames:"Frames",nav_about:"Percorso e contatti",works:"Lavori",collab:"Collaborazioni",frames:"Frames",about:"Percorso e contatti",f_perf:"Performance",f_short:"Short Film",scroll:"Scorri",back:"← Indietro",next:"Prossimo",video:"Video",foot:"Coreografia · Performance · Short film",works_n:"lavori",work_1:"lavoro",ph_n:"foto",ph_1:"foto"},
+ en:{nav_works:"Works",nav_collab:"Collaborations",nav_frames:"Frames",nav_about:"About & contact",works:"Works",collab:"Collaborations",frames:"Frames",about:"About & contact",f_perf:"Performance",f_short:"Short Film",scroll:"Scroll",back:"← Back",next:"Next",video:"Video",foot:"Choreography · Performance · Short film",works_n:"works",work_1:"work",ph_n:"photos",ph_1:"photo"}
 };
 var BIO={
  it:"Michele Ifigenia / Tyche è un gruppo di ricerca coreografica fondato e diretto da Michele Ifigenia Colturi, nato all’interno della Civica Scuola di Teatro Paolo Grassi di Milano e della Scuola Conia di Claudia Castellucci. Riunisce interpreti, drammaturghi, musicisti e artisti di diverse discipline in un organismo che sostiene e sviluppa la visione di Colturi. La ricerca, di natura profondamente visiva, esplora il corpo come materia plastica, un campo scultoreo modellato da luce e suono: elementi che ridefiniscono lo spazio e trasformano il gesto in immagine. Al centro della poetica c’è il mito, inteso non come narrazione chiusa ma come matrice fluida e generativa, da cui emergono figure e simboli in costante metamorfosi. Le creazioni prendono forma tanto in spazi teatrali quanto in contesti non convenzionali, intrecciando linguaggi visivi, sonori e corporei. Il gruppo è artista associato di Ariella Vidach / AiEP.",
@@ -380,8 +360,7 @@ var BIO={
 var RM={"Autore / Coreografo":"Author / Choreographer","Autore":"Author","Dramaturg":"Dramaturg","Performers":"Performers","Suono":"Sound","Produzione":"Production","Danzatrice":"Dancer","Musiche":"Music","Musica":"Music","Filmmaker":"Filmmaker","Co-produzione":"Co-production","Coproduzione":"Co-production","Ideazione e coreografia":"Concept and choreography","Interpretazione":"Performance","Scenografia":"Scenography","Con il sostegno di":"With the support of","Ricerca artistica":"Artistic research","Filmmaking":"Filmmaking","Di":"By","Interpreti":"Performers","Disegno luci":"Lighting design","Costumi":"Costumes","Progetto vincitore di":"Winner of"};
 function X(it,en){ return {it:it,en:en}; }
 
-/* ============ LAVORI ============
-   year = anno del capitolo in Frames (gli anni sono ipotesi: cambia year e il capitolo si sposta da solo) */
+/* ============ LAVORI ============ */
 var YT="https://www.youtube.com/embed/3AB6vL3wngI?start=7";
 var WORKS=[
  {cat:"perf",title:"Amadriadi",year:2024,cover:"amadriadi.png",extra:[],
@@ -464,14 +443,13 @@ var RM_ = window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").mat
 })();
 
 
-/* ============ RICAMI: fiori, uccellino, sole, cervo, pino ============
+/* ============ RICAMI: fiori e sole ============
    Ogni ricamo è generato filo per filo (punto raso, nodi francesi, punto steli) e trasformato in un'immagine SVG:
    il browser la disegna una volta sola, senza migliaia di elementi vivi nella pagina. I ricami si costruiscono
    quando la pagina è già visibile e compaiono con una dissolvenza. Su telefono e dispositivi modesti (LITE)
    ci sono meno fili e un filtro più semplice. */
 (function(){
   var hero=document.querySelector(".hero"), ring=document.getElementById("embroid"); if(!hero||!ring) return;
-  var SHOW_BIRD=false;      /* metti true per rimettere l'uccellino a "m" in alto a destra */
   var DEG=Math.PI/180, LIGHT=225*DEG, NS='xmlns="http://www.w3.org/2000/svg" ';
   var LITE=!!((window.matchMedia&&matchMedia("(max-width:820px)").matches)||(navigator.hardwareConcurrency||8)<=4||(navigator.deviceMemory||8)<=4||(navigator.connection&&navigator.connection.saveData));
   var TYPES=[
@@ -512,9 +490,6 @@ var RM_ = window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").mat
       +sh+'<feMerge><feMergeNode in="sh"/><feMergeNode in="tx"/></feMerge></filter>';
   }
   var FLT={bf:"1.4 1.4",disp:".7",sf:".9",dx:".7",dy:"1.4",sd:"1.15",a:".36",c:[.2,.15,.1]};
-  var BIRDF={bf:"1.1 1.1",disp:".5",sf:".8",dx:".4",dy:".9",sd:".6",a:".34",c:[.2,.15,.1]};
-  var DEERF={bf:"1.2 1.2",disp:".55",sf:".9",dx:".5",dy:"1",sd:".7",a:".5",c:[0,0,0]};
-
   /* ---- fiore: petali a punto raso, centro a nodi francesi, gambo curvo a punto steli ---- */
   function flower(idx,T,uid){
     var R=rng(11+idx*97); function rr(a,b){ return a+(b-a)*R(); }
@@ -564,19 +539,6 @@ var RM_ = window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").mat
     return '<svg '+NS+'viewBox="0 0 200 '+(246+E)+'" fill="none" stroke-linecap="round" stroke-linejoin="round">'+defs+'<g filter="url(#t'+uid+')">'+g+'</g></svg>';
   }
 
-  /* ---- uccellino: una "m" in punto steli (nero) ---- */
-  function birdSVG(){
-    var R=rng(41), out=[], thr=threader(out,.4,.55,-.35,-.4), n=LITE?16:24;
-    function cub(p,t){ var u=1-t; return [u*u*u*p[0][0]+3*u*u*t*p[1][0]+3*u*t*t*p[2][0]+t*t*t*p[3][0], u*u*u*p[0][1]+3*u*u*t*p[1][1]+3*u*t*t*p[2][1]+t*t*t*p[3][1]]; }
-    [[[3,23],[8,4],[22,2],[31,17]],[[31,17],[38,3],[53,5],[61,22]]].forEach(function(wg){
-      for(var i=0;i<n;i++){
-        var a=cub(wg,i/n), b=cub(wg,Math.min(1,(i+2.1)/n)), o=(i%2?1:-1)*.5, w=1.5+1.25*Math.sin(Math.PI*(i+.5)/n);
-        thr('M'+f(a[0]+o)+' '+f(a[1])+' L'+f(b[0]-o)+' '+f(b[1]),0,0,8+R()*5,w);
-      }
-    });
-    return '<svg '+NS+'viewBox="0 0 64 30" fill="none" stroke-linecap="round" stroke-linejoin="round"><defs>'+filt("tbird",9,BIRDF)+'</defs><g filter="url(#tbird)">'+out.join("")+'</g></svg>';
-  }
-
   /* ---- sole: raggi a punto raso (lunghi e corti), centro a nodi francesi ---- */
   function sunSVG(){
     var R=rng(23); function rr(a,b){ return a+(b-a)*R(); }
@@ -599,69 +561,6 @@ var RM_ = window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").mat
     }
     var defs='<defs><radialGradient id="ksun" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="hsl(38 95% 66%)"/><stop offset=".55" stop-color="hsl(30 92% 50%)"/><stop offset="1" stop-color="hsl(22 85% 36%)"/></radialGradient>'+filt("tsun",17,FLT)+'</defs>';
     return '<svg '+NS+'viewBox="0 0 200 200" fill="none" stroke-linecap="round" stroke-linejoin="round">'+defs+'<g filter="url(#tsun)">'+out.join("")+'</g></svg>';
-  }
-
-  /* ---- cervo: quasi solo linee. Un unico contorno continuo (schiena, testa, gola, petto, pancia), quattro zampe dritte e due corna a "Y", tutto a punto steli ---- */
-  function deerSVG(){
-    var R=rng(77); function rr(a,b){ return a+(b-a)*R(); }
-    var out=[], thr=threader(out,.45,.6,-.4,-.45);
-    function smooth(p,n){ for(var k=0;k<n;k++){ var q=[p[0]]; for(var i=0;i<p.length-1;i++){ var a=p[i], b=p[i+1]; q.push([.75*a[0]+.25*b[0],.75*a[1]+.25*b[1]],[.25*a[0]+.75*b[0],.25*a[1]+.75*b[1]]); } q.push(p[p.length-1]); p=q; } return p; }
-    function line(pts,w,l){
-      var ss=[], i, k, st=LITE?2.4:1.9;
-      for(i=0;i<pts.length-1;i++){ var a=pts[i], b=pts[i+1], len=Math.hypot(b[0]-a[0],b[1]-a[1]), n=Math.max(1,Math.round(len/st)); for(k=0;k<n;k++){ var t=k/n; ss.push([a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t]); } }
-      ss.push(pts[pts.length-1]);
-      for(i=0;i<ss.length-2;i++){
-        var p=ss[i], q=ss[i+2], nx=-(q[1]-p[1]), ny=(q[0]-p[0]), nl=Math.hypot(nx,ny)||1, o=(i%2?1:-1)*.4;
-        thr('M'+f(p[0]+nx/nl*o)+' '+f(p[1]+ny/nl*o)+' L'+f(q[0]-nx/nl*o)+' '+f(q[1]-ny/nl*o),25,46,l+rr(-2,2),w);
-      }
-    }
-    line([[99,14],[102,3]],1.9,34); line([[102,3],[98,-6]],1.7,34); line([[102,3],[108,-5]],1.7,34);     /* corna lontane */
-    line([[70,62],[70,88]],2.8,24); line([[31,56],[31,88]],2.8,24);                                        /* zampe lontane */
-    line(smooth([[27,47],[40,42],[58,41],[72,40],[77,36],[83,26],[88,17],[93,13],[98,15],[104,21],[105,25],[99,26],[93,25],[90,33],[86,44],[82,54],[76,60],[62,63],[46,63],[36,60],[28,55],[26,49],[27,47]],2),2.7,31);   /* contorno */
-    line([[78,59],[78,90]],3.2,29); line([[38,60],[38,90]],3.2,29);                                        /* zampe vicine */
-    line([[95,15],[93,2]],2.1,40); line([[93,2],[88,-8]],1.9,40); line([[93,2],[99,-8]],1.9,40);          /* corna vicine */
-    return '<svg '+NS+'viewBox="0 -16 120 116" fill="none" stroke-linecap="round" stroke-linejoin="round"><defs>'+filt("tdeer",13,DEERF)+'</defs><g filter="url(#tdeer)">'+out.join("")+'</g></svg>';
-  }
-
-  /* ---- filo a punto steli lungo una spezzata (usato da pino, cervo marrone ed erbetta) ---- */
-  function stemLine(thr,rr,pts,h,s,l,w){
-    var ss=[], i, k, st=LITE?2.4:1.9;
-    for(i=0;i<pts.length-1;i++){ var a=pts[i], b=pts[i+1], len=Math.hypot(b[0]-a[0],b[1]-a[1]), n=Math.max(1,Math.round(len/st)); for(k=0;k<n;k++){ var t=k/n; ss.push([a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t]); } }
-    ss.push(pts[pts.length-1]);
-    for(i=0;i<ss.length-2;i++){
-      var p=ss[i], q=ss[i+2], nx=-(q[1]-p[1]), ny=(q[0]-p[0]), nl=Math.hypot(nx,ny)||1, o=(i%2?1:-1)*.4;
-      thr('M'+f(p[0]+nx/nl*o)+' '+f(p[1]+ny/nl*o)+' L'+f(q[0]-nx/nl*o)+' '+f(q[1]-ny/nl*o),h+rr(-2,2),s,l+rr(-2,2),w);
-    }
-  }
-  function smoothPts(p,n){ for(var k=0;k<n;k++){ var q=[p[0]]; for(var i=0;i<p.length-1;i++){ var a=p[i], b=p[i+1]; q.push([.75*a[0]+.25*b[0],.75*a[1]+.25*b[1]],[.25*a[0]+.75*b[0],.25*a[1]+.75*b[1]]); } q.push(p[p.length-1]); p=q; } return p; }
-
-  /* ---- pino: un tronco e cinque "V" di rami a punto steli, poche linee ---- */
-  function pineSVG(){
-    var R=rng(61); function rr(a,b){ return a+(b-a)*R(); }
-    var out=[], thr=threader(out,.45,.6,-.4,-.45), i;
-    stemLine(thr,rr,[[40,126],[40,10]],24,42,24,2.7);
-    for(i=0;i<5;i++){ var ay=14+i*22, hw=11+i*6; stemLine(thr,rr,[[40-hw,ay+24],[40,ay],[40+hw,ay+24]],148,34,24+i*1.5,2.4); }
-    return '<svg '+NS+'viewBox="0 0 80 130" fill="none" stroke-linecap="round" stroke-linejoin="round"><defs>'+filt("tpine",21,DEERF)+'</defs><g filter="url(#tpine)">'+out.join("")+'</g></svg>';
-  }
-  /* ---- cervo marrone, ancora più stilizzato: un solo contorno, quattro zampe, due linee di corna. Guarda a sinistra ---- */
-  function deerBrownSVG(){
-    var R=rng(83); function rr(a,b){ return a+(b-a)*R(); }
-    var out=[], thr=threader(out,.45,.6,-.4,-.45), H=26, S=46;
-    stemLine(thr,rr,smoothPts([[24,50],[28,44],[44,41],[64,40],[76,39],[83,28],[89,16],[97,14],[104,20],[106,26],[99,26],[93,25],[88,36],[82,52],[70,60],[48,63],[32,58],[24,50]],2),H,S,30,2.7);
-    stemLine(thr,rr,[[36,59],[36,90]],H,S,28,3);  stemLine(thr,rr,[[44,61],[44,88]],H,S,28,3);
-    stemLine(thr,rr,[[71,60],[71,90]],H,S,28,3);  stemLine(thr,rr,[[79,55],[79,88]],H,S,28,3);
-    stemLine(thr,rr,[[91,14],[89,0],[84,-10]],30,42,38,2);  stemLine(thr,rr,[[89,0],[96,-9]],30,42,38,1.9);
-    return '<svg '+NS+'viewBox="0 -16 120 116" fill="none" stroke-linecap="round" stroke-linejoin="round"><defs>'+filt("tdeer2",29,DEERF)+'</defs><g filter="url(#tdeer2)"><g transform="translate(120 0) scale(-1 1)">'+out.join("")+'</g></g></svg>';
-  }
-  /* ---- fiorellino colorato con un po' di erbetta ricamata attorno alla base ---- */
-  function flowerGrassSVG(){
-    var R=rng(97); function rr(a,b){ return a+(b-a)*R(); }
-    var T=Object.assign({},TYPES[1],{ext:0,lean:0,flip:false,ls:0}), inner=flower(1,T,"fw"), out=[], thr=threader(out,.4,.5,-.3,-.35), xs=[60,70,79,87,103,111,120,130,140], i;
-    for(i=0;i<xs.length;i++){
-      var x=xs[i]+rr(-2,2), len=rr(15,30)*(1-Math.abs(xs[i]-97)/95*.35), lean=(xs[i]-97)/45*rr(.5,1.1);
-      stemLine(thr,rr,smoothPts([[x,244],[x+lean*len*.3,244-len*.6],[x+lean*len*.75,244-len]],1),rr(96,122),36,24+rr(0,9),2.7);
-    }
-    return '<svg '+NS+'viewBox="0 0 200 248" fill="none" stroke-linecap="round" stroke-linejoin="round"><defs>'+filt("tgr",31,DEERF)+'</defs>'+inner.replace('<svg ','<svg x="0" y="0" width="200" height="246" ')+'<g filter="url(#tgr)">'+out.join("")+'</g></svg>';
   }
 
   /* ---- costruzione a rate, quando il browser è libero; l'immagine compare con una dissolvenza ---- */
@@ -711,32 +610,9 @@ var RM_ = window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").mat
       {type:3,ext:46,wk:1,  dx:0,  lean:22, rot:2, flip:false,ls:1,dy:0},
       {type:4,ext:20,wk:.8, dx:.4, lean:-28,rot:-3,flip:true, ls:0,dy:3}],-1,"u");
   }
-  /* uccellino, in alto a destra nell'hero */
-  if(SHOW_BIRD){ var bird=document.createElement("div"); bird.className="bird"; hero.appendChild(bird); Q.push(function(){ put(bird,birdSVG()); }); }
   /* sole, nella nota finale di Frames (a destra) */
   var pin=document.querySelector(".fx-note");
   if(pin){ var sun=document.createElement("div"); sun.className="sun"; pin.appendChild(sun); Q.push(function(){ put(sun,sunSVG()); }); }
-  /* cervo: cammina sulla linea di base del titolo "Collaborazioni" */
-  var head=document.querySelector("#collaborazioni .band-head"), h2=head&&head.querySelector("h2"), cnt=document.getElementById("count-collab");
-  if(head&&h2){
-    var deer=document.createElement("div"); deer.className="deer"; head.appendChild(deer);
-    Q.push(function(){ put(deer,deerSVG()); });
-    var placeDeer=function(){
-      var w=deer.offsetWidth||90, h=w*116/120, hr=h2.getBoundingClientRect(), br=head.getBoundingClientRect(), fs=parseFloat(getComputedStyle(h2).fontSize)||40;
-      var base=hr.top-br.top+.85*fs, x0=hr.right-br.left, x1=cnt&&cnt.textContent?cnt.getBoundingClientRect().left-br.left:br.width-24;
-      deer.style.left=Math.round(Math.max(x0+8,x1-w-18))+"px"; deer.style.top=Math.round(base-.914*h+1)+"px";
-    };
-    placeDeer(); requestAnimationFrame(placeDeer); window.addEventListener("load",placeDeer); window.addEventListener("resize",placeDeer);
-    if(document.fonts&&document.fonts.ready) document.fonts.ready.then(placeDeer);
-  }
-  /* pino, cervo marrone, uccellino e fiorellino negli spazi di Frames: li richiama fxBuild ogni volta che ricostruisce i capitoli */
-  var embCache={};
-  window.fxEmb=function(){
-    [].forEach.call(document.querySelectorAll(".fx-emb"),function(box){
-      Q.push(function(){ var k=box.getAttribute("data-e"); if(!embCache[k]) embCache[k]=({pine:pineSVG,deer2:deerBrownSVG,bird:birdSVG,flower:flowerGrassSVG})[k](); put(box,embCache[k]); });
-    });
-    idle(pump);
-  };
   idle(pump);
 })();
 
@@ -870,55 +746,54 @@ document.addEventListener("keydown",function(e){
   function tone(){ tq=0; var dark=false; for(var i=0;i<bands.length;i++){ var r=bands[i].getBoundingClientRect(); if(r.top<=24 && r.bottom>=24){ dark=true; break; } } tb.classList.toggle("dark",dark); }
   window.addEventListener("scroll",function(){ if(!tq) tq=requestAnimationFrame(tone); },{passive:true});
   tone();
-  /* altezza della barra: serve al contatore fisso e allo scorrimento agli anni */
+  /* altezza della barra: serve allo scorrimento agli anni di Frames */
   function tbh(){ document.documentElement.style.setProperty("--tbh",tb.offsetHeight+"px"); }
   tbh(); window.addEventListener("resize",tbh); window.addEventListener("load",tbh);
   if(document.fonts&&document.fonts.ready) document.fonts.ready.then(tbh);
 })();
 
-/* ============ FRAMES: foglio editoriale statico che si sviluppa in lunghezza ============
-   Nessuna fisica, nessuna animazione. Un capitolo per anno (dal più recente): il numero dell'anno passa da
-   sinistra a destra a ogni capitolo e la linea rossa lo attraversa, un po' più grassa a ogni anno. Le pause tra
-   i capitoli si alternano lunghe e corte. Le composizioni dei capitoli con una foto ruotano: piccola a destra,
-   grande a sinistra, piccola a sinistra, media al centro, grande a destra. Con più foto nello stesso anno la
-   composizione cambia. Per spostare un lavoro in un altro anno basta cambiare "year" nella sua scheda in LAVORI.
-   PC (mouse): 12 colonne, sottolineatura al passaggio. Tablet (tocco): foto più larghe e contatore fisso.
-   Telefono: una colonna a sfalsamento e contatore fisso. */
+/* ============ FRAMES: foglio editoriale statico, senza testi ============
+   Nessuna fisica, nessuna animazione. Un capitolo per anno (dal più recente): il numero dell'anno è pieno di rosso, passa da
+   sinistra a destra a ogni capitolo e la linea rossa lo attraversa, un po' più grassa a ogni anno. Le pause tra i capitoli
+   si alternano lunghe e corte. Per spostare una foto in un altro anno basta cambiare "year" nella sua riga in FRAMES. */
 var PERF=WORKS.filter(function(w){ return w.cat==="perf"; }), SHORT=WORKS.filter(function(w){ return w.cat==="short"; });
-var FRW=WORKS.concat(COLLABS).sort(function(a,b){ return b.year-a.year; });
-var FRY=[]; FRW.forEach(function(w){ var g=FRY[FRY.length-1]; if(g&&g.y===w.year) g.items.push(w); else FRY.push({y:w.year,items:[w]}); });
-var FX_SINGLE=["rs","ll","ls","mc","lr"], fxFigs=[], fxQ=0, fxCnt=document.getElementById("fx-count");
-function fxYear(y,v){ var s=""+y; if(v===3) return '<i>'+s.slice(0,2)+'</i><i>'+s.slice(2)+'</i>'; if(v===4) return '<i class="o">'+s.slice(0,2)+'</i><i>'+s.slice(2)+'</i>'; return s; }
+/* Foto di Frames: una riga per foto, nessun testo. "year" decide il capitolo (l'anno è nel nome del file),
+   "ar" è larghezza/altezza (poi corretta dal vero file appena carica, così la foto non viene mai ritagliata),
+   "work" collega la foto alla scheda del lavoro (senza "work" è una foto di gruppo e non si apre).
+   I nomi dei file sono esattamente quelli caricati: attenzione, 2025atteone è .jpeg. */
+var FRAMES=[
+ {year:2025,file:"2025amadriadi.png",ar:0.667,work:["Amadriadi","perf"]},
+ {year:2025,file:"2025atteone.jpeg",ar:0.8,work:["Atteone","perf"]},
+ {year:2024,file:"2024cuma.png",ar:0.667,work:["Cuma","perf"]},
+ {year:2023,file:"2023amadriadi.png",ar:1.5,work:["Amadriadi","perf"]},
+ {year:2023,file:"2023amadriadi1.png",ar:1.5,work:["Amadriadi","perf"]},
+ {year:2023,file:"2023gruppo.png",ar:1.499},
+ {year:2022,file:"citerone2022.png",ar:1.778,work:["Citerone","perf"]},
+ {year:2022,file:"2022gruppo.png",ar:1.5},
+ {year:2021,file:"citerone2021.png",ar:0.687,work:["Citerone","short"]},
+ {year:2021,file:"2021gruppo.png",ar:1.25}
+];
+function fxWork(a){ return (a[1]==="short"?SHORT:PERF).filter(function(w){ return w.title===a[0]; })[0]; }
+function fxAr(im){ if(im.naturalWidth&&im.naturalHeight) im.parentNode.style.setProperty("--ar",(im.naturalWidth/im.naturalHeight).toFixed(3)); }
+window.fxAr=fxAr;
+var FRY=[]; FRAMES.slice().sort(function(a,b){ return b.year-a.year; }).forEach(function(f){ var g=FRY[FRY.length-1]; if(g&&g.y===f.year) g.items.push(f); else FRY.push({y:f.year,items:[f]}); });
+var FX_P=["rs","ll","ls","mc","lr"], FX_W=["wl","wr","wm","wc"];
+function fxYear(y,v){ var s=""+y; return v===3 ? '<i>'+s.slice(0,2)+'</i><i>'+s.slice(2)+'</i>' : s; }
 function fxBuild(){
-  var html="", idx=0, si=0, nY=FRY.length;
+  var html="", idx=0, ip=0, iw=0, nY=FRY.length;
   FRY.forEach(function(g,ci){
-    var pos = g.items.length>1 ? ["ll","rs2"] : [FX_SINGLE[si++%FX_SINGLE.length]];
-    html+='<section class="fx-ch" id="fx-'+g.y+'" data-v="'+(ci%6)+'"><h3 class="fx-yr" aria-label="'+g.y+'" style="--f:'+(nY>1?(ci/(nY-1)).toFixed(3):0)+';--lh:'+(1+ci*.7).toFixed(1)+'px"><span>'+fxYear(g.y,ci%6)+'</span>'+(ci===0?'<div class="fx-emb pine" data-e="pine" aria-hidden="true"></div>':ci===1?'<div class="fx-emb deer2" data-e="deer2" aria-hidden="true"></div>':ci===4?'<div class="fx-emb flower" data-e="flower" aria-hidden="true"></div>':'')+'</h3><div class="fx-ph">';
-    g.items.forEach(function(w,j){
+    html+='<section class="fx-ch" id="fx-'+g.y+'" data-v="'+(ci%6)+'"><h3 class="fx-yr" aria-label="'+g.y+'" style="--f:'+(nY>1?(ci/(nY-1)).toFixed(3):0)+';--lh:'+(1+ci*.7).toFixed(1)+'px"><span>'+fxYear(g.y,ci%6)+'</span></h3><div class="fx-ph">';
+    g.items.forEach(function(f){
       idx++;
-      html+='<button class="fx-fig p-'+pos[Math.min(j,pos.length-1)]+'" data-k="'+FRW.indexOf(w)+'" data-side="'+(idx%2?"l":"r")+'"><span class="fx-n">('+pad2(idx)+'.)</span><span class="fx-img">'+(w.cover?'<img src="'+thumb(w.cover)+'" data-full="'+w.cover+'" alt="" loading="lazy" decoding="async" onerror="thumbErr(this)">':'')+'</span><span class="fx-cap"><span class="fx-t">'+esc(w.title)+'</span><span class="fx-m">'+esc(L(w.tag))+' · '+esc(L(w.dur))+'</span></span></button>';
+      var pos = f.ar>=1.05 ? FX_W[iw++%FX_W.length] : FX_P[ip++%FX_P.length], el = f.work ? "button" : "div", lab = f.work ? ' aria-label="'+esc(f.work[0])+'"' : '';
+      html+='<'+el+' class="fx-fig p-'+pos+'" data-k="'+FRAMES.indexOf(f)+'" data-side="'+(idx%2?"l":"r")+'"'+lab+'><span class="fx-img" style="--ar:'+f.ar+'"><img src="'+thumb(f.file)+'" data-full="'+f.file+'" alt="" loading="lazy" decoding="async" onload="fxAr(this)" onerror="thumbErr(this)"></span></'+el+'>';
     });
-    html+='</div>'+(ci===2?'<div class="fx-emb bird" data-e="bird" aria-hidden="true"></div>':'')+'</section>';
+    html+='</div></section>';
   });
   var sheet=document.getElementById("fx-sheet"); sheet.innerHTML=html;
-  fxFigs=[].slice.call(sheet.querySelectorAll(".fx-fig"));
-  fxFigs.forEach(function(b){ b.onclick=function(){ openWork(FRW[+b.dataset.k]); }; });
+  [].forEach.call(sheet.querySelectorAll("button.fx-fig"),function(b){ var f=FRAMES[+b.dataset.k]; b.onclick=function(){ var w=fxWork(f.work); if(w) openWork(w); }; });
   document.getElementById("fx-years").innerHTML=FRY.map(function(g){ return '<a href="#fx-'+g.y+'">'+g.y+'</a>'; }).join("");
-  document.getElementById("fr-count").textContent=cnt(FRW.length);
-  document.getElementById("fx-note-t").textContent="Frames ("+FRY[FRY.length-1].y+"–"+FRY[0].y+") · Michele Ifigenia / Tyche · "+ui("foot");
-  if(window.fxEmb) window.fxEmb();
-  fxCur();
 }
-/* contatore fisso (tablet e telefono): "(04 / 07.) titolo" e anno del lavoro che stai scorrendo */
-function fxCur(){
-  fxQ=0; if(!fxFigs.length||fxCnt.offsetParent===null) return;
-  var mid=window.innerHeight*.45, best=0, bd=1e9;
-  fxFigs.forEach(function(f,i){ var r=f.getBoundingClientRect(), d=Math.abs((r.top+r.bottom)/2-mid); if(d<bd){ bd=d; best=i; } });
-  var w=FRW[+fxFigs[best].dataset.k];
-  fxCnt.innerHTML='<span>('+pad2(best+1)+' / '+pad2(fxFigs.length)+'.) '+esc(w.title)+'</span><span>'+w.year+'</span>';
-}
-window.addEventListener("scroll",function(){ if(!fxQ) fxQ=requestAnimationFrame(fxCur); },{passive:true});
-window.addEventListener("resize",fxCur);
 
 /* ============ LINGUA ============ */
 function renderAll(){

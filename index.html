@@ -4,346 +4,472 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Michele Ifigenia / Tyche</title>
+<meta name="description" content="Michele Ifigenia / Tyche — coreografia, performance, short film.">
+<meta name="theme-color" content="#f4f3ef">
 <link rel="icon" href="favicon.png">
+<link rel="preload" as="image" href="logo-tyche-linee.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;600&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;600&display=swap"></noscript>
 <style>
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{background:#fff;color:#000;font-family:'Inter Tight','Helvetica Neue',Helvetica,Arial,sans-serif;margin:0;line-height:1.5;position:relative}
-body::before{content:"";position:fixed;inset:0;width:100vw;height:100vh;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px 200px;opacity:.16;pointer-events:none;z-index:9999}
-.hero{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 20px;overflow:hidden}
-.name-wrap{position:relative;display:inline-block;font-size:clamp(1.25rem,3.6vw,2.9rem);--logo:clamp(110px,15vw,170px);margin-top:calc(var(--logo) - .1em);--y:27%}
-.name{margin:0;font-size:1em;font-weight:800;line-height:1;text-transform:uppercase;white-space:nowrap;overflow:hidden;letter-spacing:-.035em;animation:track 1.9s .2s cubic-bezier(.2,.7,.2,1) both}
-.ch{display:inline-block;transform:translateY(105%);animation:rise .9s cubic-bezier(.2,.8,.2,1) both}
-.lance{position:absolute;left:-5%;width:110%;top:var(--y);height:12px;margin-top:-6px;overflow:visible;z-index:2;clip-path:inset(-10px 100% -10px 0);animation:drawline 1.7s 2s cubic-bezier(.55,.1,.3,1) both}
-.tyche-logo{position:absolute;left:50%;bottom:calc(100% - var(--y) + .14em);height:var(--logo);width:auto;transform:translateX(-50%);-webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 38%,transparent 46%);mask-image:linear-gradient(to bottom,#000 0%,#000 38%,transparent 46%);-webkit-mask-size:100% 260%;mask-size:100% 260%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:0 100%;mask-position:0 100%;animation:drawlogo 2.6s 3.4s cubic-bezier(.45,.05,.25,1) both}
-.hero-nav{margin-top:clamp(2rem,6vw,4rem);display:flex;gap:12px 32px;flex-wrap:wrap;justify-content:center;animation:fadeUp .9s 6s both}
-.hero-nav a,.bar-links a{color:#000;text-decoration:none;font-size:1rem;font-weight:600;text-transform:uppercase;letter-spacing:.02em;border-bottom:2px solid transparent}
-.hero-nav a:hover,.bar-links a:hover{border-bottom-color:#000}
-@keyframes track{from{letter-spacing:.07em}to{letter-spacing:-.035em}}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+:root{--ink:#0b0b0c;--paper:#f4f3ef;--mute:#8d8b85;--tint:rgba(70,100,140,.11)}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'Inter Tight','Helvetica Neue',Helvetica,Arial,sans-serif;line-height:1.5;overflow-wrap:anywhere}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+a{color:inherit}
+img{max-width:100%}
+
+/* BARRA IN ALTO (cambia colore da sola sulle fasce scure) */
+#top-bar{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 24px;padding:14px 24px;background:var(--paper);color:#0b0b0c;font-size:.92rem;font-weight:600;letter-spacing:-.005em;transition:color .25s,background-color .25s}
+#top-bar.dark{background:var(--ink);color:#fff}
+.brand{text-decoration:none}
+#nav{display:flex;gap:6px 26px;flex-wrap:wrap}
+#nav a{text-decoration:none}
+.lang button{opacity:.55;padding:0 2px}
+.lang button.on{opacity:1;border-bottom:1px solid currentColor}
+
+/* HERO */
+.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:0 20px;overflow:hidden}
+.name-wrap{position:relative;display:inline-block;font-size:clamp(1.3rem,3.4vw,2.7rem);--logo:clamp(120px,17vw,190px);margin-top:calc(var(--logo) - .1em);--y:27%}
+.name{margin:0;font-size:1em;font-weight:600;line-height:1;text-transform:uppercase;white-space:nowrap;letter-spacing:-.03em}
+.ch{display:inline-block;transform:translateY(105%);animation:rise .8s cubic-bezier(.2,.8,.2,1) both}
+.name{overflow:hidden}
+.lance{position:absolute;left:-5%;width:110%;top:var(--y);height:2px;margin-top:-1px;background:#000;z-index:2;transform:scaleX(0);transform-origin:left;animation:line .9s 1s cubic-bezier(.65,0,.25,1) both}
+.tyche-logo{position:absolute;left:50%;bottom:calc(100% - var(--y) + .14em);height:var(--logo);width:auto;aspect-ratio:900/853;transform:translateX(-50%);overflow:visible}
+.tyche-logo .d{stroke-dasharray:1 1;stroke-dashoffset:1;animation:dr var(--t) var(--d) cubic-bezier(.45,.05,.3,1) both}
+.cue{position:absolute;left:0;right:0;bottom:22px;text-align:center;font-size:.8rem;font-weight:600;color:var(--mute);animation:fade .8s 4.2s both}
 @keyframes rise{to{transform:translateY(0)}}
-@keyframes drawline{to{clip-path:inset(-10px 0 -10px 0)}}
-@keyframes drawlogo{to{-webkit-mask-position:0 0;mask-position:0 0}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-@media(prefers-reduced-motion:reduce){.name,.ch,.lance,.tyche-logo,.hero-nav{animation:none!important}.tyche-logo{-webkit-mask-image:none;mask-image:none}.ch{transform:none}.lance{clip-path:none}}
-#bar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;padding:10px 24px 12px;background:#fff;border-bottom:2px solid #000;transform:translateY(-100%);transition:transform .3s}
-#bar.show{transform:none}
-.mark{position:relative;display:inline-block;font-size:1.05rem;margin-top:.7em;color:#000;text-decoration:none;font-weight:800;text-transform:uppercase;letter-spacing:-.02em;line-height:1;white-space:nowrap;--y:27%}
-.mark-tyche{position:absolute;left:0;right:0;bottom:calc(100% - var(--y) + .16em);text-align:center;font-size:.48em;letter-spacing:.02em}
-.mark-line{position:absolute;left:-5%;width:110%;top:var(--y);height:2px;margin-top:-1px;background:#000}
-.bar-links{display:flex;gap:6px 22px;flex-wrap:wrap;justify-content:flex-end}
-.bar-links a{font-size:.8rem}
-section{max-width:1100px;margin:0 auto 140px;padding:0 40px;scroll-margin-top:100px}
-h2{font-size:clamp(1.6rem,4vw,2.6rem);font-weight:800;text-transform:uppercase;letter-spacing:-.02em;line-height:1;margin:0 0 40px}
-.archive-selector{display:flex;gap:40px;margin-bottom:60px;justify-content:center}
-.selector-btn{font-size:1.15rem;font-weight:400;text-transform:uppercase;letter-spacing:.16em;cursor:pointer;color:#952a18;border-bottom:2px solid transparent;padding-bottom:4px;transition:all .2s}
-.selector-btn:hover{color:#5c150a}
-.selector-btn.active{color:#5c150a;border-bottom-color:#5c150a}
-.archive-list-container{display:none}
-.archive-list-container.active{display:block}
-.board-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:60px 45px;padding:10px 0}
-.board-item{width:calc((100% - 90px)/3)}
-@media(max-width:900px){.board-item{width:calc((100% - 45px)/2)}}
-.board-item{position:relative;background:#fff;display:flex;flex-direction:column;color:#000;cursor:pointer;-webkit-tap-highlight-color:transparent;box-shadow:0 4px 15px rgba(0,0,0,.04),0 1px 3px rgba(0,0,0,.02)}
-.board-item::after{content:"";position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:70px;height:20px;background:rgba(0,0,0,.06);z-index:10}
-.board-grid .board-item:nth-child(odd){transform:rotate(-.5deg)}
-.board-grid .board-item:nth-child(even){transform:rotate(.6deg)}
-.image-wrapper{position:relative;width:100%;aspect-ratio:3/4;overflow:hidden;background:#fafafa;border:1px solid #f0f0f0}
-.image-wrapper[data-missing]::before{content:attr(data-missing);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.8rem;color:#999;text-align:center}
-.board-img{width:100%;height:100%;object-fit:cover;filter:grayscale(15%);display:block}
-.board-meta{margin-top:15px;display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:0 4px}
-.board-title{font-size:1.15rem;font-weight:800;text-transform:uppercase;letter-spacing:-.01em}
-.board-tag{font-size:.78rem;color:#666;text-transform:uppercase;letter-spacing:.14em;font-weight:400}
-.collab-item{display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap;padding:24px 0;border-top:2px solid #000;cursor:pointer}
-.collab-item:last-child{border-bottom:2px solid #000}
-.collab-title{font-size:clamp(1.4rem,4.5vw,2.8rem);font-weight:800;text-transform:uppercase;letter-spacing:-.025em;line-height:1}
-.collab-item:hover .collab-title{text-decoration:underline;text-decoration-thickness:3px}
-.about-text{font-size:1.15rem;font-weight:400;line-height:1.7;margin:0 0 50px}
-.contact-links{display:flex;flex-direction:column;gap:12px}
-.contact-link{color:#000;text-decoration:none;font-weight:800;font-size:1.2rem;width:fit-content;border-bottom:2px solid #000}
-.project-page{display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:#fff;z-index:2000;overflow-y:auto;padding:50px 40px}
-.project-page.active{display:block}
-.back-btn{font-size:.9rem;text-transform:uppercase;font-weight:800;cursor:pointer;display:inline-block;margin-bottom:40px;border-bottom:2px solid #000;padding-bottom:2px}
-.project-layout{display:grid;grid-template-columns:1fr 1fr;gap:60px;max-width:1200px;align-items:start}
-.project-info-side{display:flex;flex-direction:column;gap:28px}
-.project-title-large{font-size:clamp(1.8rem,5vw,3.4rem);font-weight:800;text-transform:uppercase;letter-spacing:-.03em;line-height:1;margin:0}
-.project-duration{color:#666;font-size:.9rem;font-weight:400;text-transform:uppercase;letter-spacing:.14em}
-.project-quote{margin:0;padding-left:20px;border-left:3px solid #000;font-size:1.05rem;font-style:italic;line-height:1.7}
-.project-quote .quote-by{margin-top:10px;font-style:normal;font-size:.85rem;font-weight:400;color:#666;text-transform:uppercase;letter-spacing:.14em}
-.project-quote:empty{display:none}
-.project-description{font-size:1.1rem;line-height:1.7}
-.project-credits{font-size:.9rem;border-top:2px solid #000;padding-top:18px;display:flex;flex-direction:column;gap:6px}
-.video-container-large{width:100%;aspect-ratio:16/9;background:#000}
-.video-container-large iframe{width:100%;height:100%;border:0}
-.project-img-large{width:100%;display:block}
-@media(max-width:768px){
-section{padding:0 20px;margin-bottom:90px}
-#bar{padding:8px 16px 10px}
-.mark{font-size:.85rem}
-.bar-links a{font-size:.7rem}
-.hero-nav{gap:10px 20px}
-.hero-nav a{font-size:.9rem}
-.archive-selector{gap:25px;margin-bottom:40px}
-.board-grid{gap:45px}
-.board-item{width:100%}
-.project-layout{grid-template-columns:1fr;gap:40px}
-.project-page{padding:30px 20px}
+@keyframes line{to{transform:scaleX(1)}}
+@keyframes dr{to{stroke-dashoffset:0}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.seen .ch{transform:none}
+.seen .lance{transform:none}
+.seen .tyche-logo .d{stroke-dashoffset:0}
+.seen *{animation:none!important}
+
+/* FASCE SCURE CON PELLICOLA SCORREVOLE */
+.band{background:var(--ink);color:#e9e8e4;padding:84px 0 60px;position:relative}
+.band-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 28px;padding:0 24px 34px}
+.band h2{margin:0;font-size:clamp(1.8rem,4vw,3rem);font-weight:600;letter-spacing:-.04em;line-height:1}
+.sub{display:flex;align-items:baseline;gap:20px;padding:6px 24px 0}
+.sub h3{margin:0;font-size:1.05rem;font-weight:600;letter-spacing:-.01em;color:#e9e8e4}
+.sub2{margin-top:26px;padding-top:38px;border-top:1px solid #232325}
+.count{margin-left:auto;font-size:.85rem;color:#8b8a86;font-weight:600}
+.reel{position:relative}
+.reel-scroll{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;padding:46px 0}
+.reel-scroll::-webkit-scrollbar{display:none}
+.track{list-style:none;margin:0;padding:0 10vw;display:flex;gap:34px;align-items:flex-start;width:max-content}
+.card{width:clamp(190px,21vw,300px);flex:0 0 auto;transform:scale(.88);opacity:.5;transform-origin:50% 40%;transition:transform .4s cubic-bezier(.2,.7,.2,1),opacity .4s}
+.card.on{transform:scale(1.1);opacity:1;position:relative;z-index:2}
+.card[hidden]{display:none}
+.c-btn{display:block;width:100%;text-align:left;color:inherit}
+.c-n{display:block;font-size:.8rem;font-weight:600;color:#8b8a86;margin-bottom:9px}
+.c-img{display:block;position:relative;aspect-ratio:3/4;background:#1b1b1d;overflow:hidden}
+.c-img img,.d-screen img{filter:saturate(.86) contrast(1.05)}
+.c-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.c-img::after,.d-screen::after{content:"";position:absolute;inset:0;background:var(--tint);pointer-events:none}
+[data-missing]::before{content:attr(data-missing);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:8px;font-size:.72rem;color:#77756f;text-align:center}
+.c-t{display:block;margin-top:12px;font-size:1.05rem;font-weight:600;letter-spacing:-.015em;line-height:1.15}
+.c-tag{display:block;margin-top:4px;font-size:.78rem;color:#8b8a86;line-height:1.3}
+.scrub{position:relative;height:2px;background:#2a2a2c;margin:8px 10vw 0;cursor:pointer}
+.scrub i{position:absolute;top:-1px;height:4px;background:#e9e8e4;left:0;width:20%}
+.reel:not(.can) .scrub{display:none}
+
+/* ABOUT */
+#about{padding:96px 24px 90px;display:grid;grid-template-columns:repeat(12,1fr);gap:0 24px;content-visibility:auto;contain-intrinsic-size:auto 640px}
+#about h2{grid-column:1 / span 4;margin:0;font-size:clamp(1.8rem,4vw,3rem);font-weight:600;letter-spacing:-.04em;line-height:1}
+.about-body{grid-column:6 / span 6}
+.about-body p{margin:0 0 42px;font-size:1.15rem;line-height:1.6;max-width:62ch}
+.links{display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.links a{font-weight:600;font-size:1.1rem;text-decoration:none;border-bottom:1px solid currentColor}
+footer{padding:0 24px 34px;font-size:.8rem;color:var(--mute);font-weight:600;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+/* SCHEDA DEL LAVORO: foto intera proiettata su nero, nessun ritaglio */
+#detail{display:none;position:fixed;inset:0;z-index:80;background:#000;color:#e9e8e4;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+#detail.on{display:block}
+.d-top{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:16px 24px;background:#000;font-size:.92rem;font-weight:600}
+.d-top>*{white-space:nowrap}
+.d-nav{display:flex;gap:20px}
+.d-top button:hover{opacity:.7}
+.d-screen{position:relative;height:min(80vh,880px);height:min(80svh,880px);background:#000;display:flex;align-items:center;justify-content:center}
+.d-screen img{max-width:100%;max-height:100%;width:auto;height:auto;display:block;transition:opacity .25s}
+.d-screen img.f{opacity:0}
+.d-thumbs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;padding:16px 24px 0}
+.d-thumbs button{width:60px;height:60px;position:relative;opacity:.45;background:#161616;overflow:hidden}
+.d-thumbs button.on{opacity:1;outline:1px solid #e9e8e4;outline-offset:2px}
+.d-thumbs img{width:100%;height:100%;object-fit:cover;display:block}
+.d-info{padding:64px 24px 40px;display:grid;grid-template-columns:repeat(12,1fr);gap:0 24px;max-width:1500px;margin:0 auto}
+.d-meta{grid-column:1 / span 4;font-size:.85rem;color:#8b8a86;font-weight:600;display:flex;flex-direction:column;gap:4px}
+.d-info h1{grid-column:1 / -1;order:-1;margin:0 0 42px;font-size:clamp(2.4rem,8vw,7rem);font-weight:600;letter-spacing:-.055em;line-height:.9}
+.d-text{grid-column:5 / span 4}
+.d-text p{margin:0;font-size:1.05rem;line-height:1.6}
+.d-text blockquote{margin:0 0 26px;padding-left:18px;border-left:1px solid #555;font-size:1rem;line-height:1.6;color:#c9c8c3}
+.d-text blockquote small{display:block;margin-top:8px;font-size:.78rem;color:#8b8a86}
+#d-credits{grid-column:9 / span 4;margin:0;display:grid;gap:14px}
+#d-credits div{border-top:1px solid #2c2c2e;padding-top:8px}
+#d-credits dt{font-size:.72rem;color:#8b8a86;font-weight:600}
+#d-credits dd{margin:2px 0 0;font-size:.95rem;font-weight:600;line-height:1.3}
+.d-video{padding:20px 24px 0;max-width:1500px;margin:0 auto}
+.d-video:empty{display:none}
+.d-video .lbl{font-size:.85rem;color:#8b8a86;font-weight:600;margin-bottom:12px}
+.d-video .fr{aspect-ratio:16/9;background:#111}
+.d-video iframe{width:100%;height:100%;border:0}
+.d-next{display:block;width:100%;text-align:left;padding:70px 24px 60px;max-width:1500px;margin:0 auto}
+.d-next:empty{display:none}
+.d-next small{display:block;font-size:.85rem;color:#8b8a86;font-weight:600}
+.d-next b{display:block;margin-top:10px;font-size:clamp(2rem,7vw,5.5rem);font-weight:600;letter-spacing:-.05em;line-height:.95}
+.d-next:hover b{opacity:.7}
+
+@media(max-width:900px){
+.d-text{grid-column:1 / -1;margin-top:26px}
+.d-meta{grid-column:1 / -1}
+#d-credits{grid-column:1 / -1;margin-top:34px}
+#about h2{grid-column:1 / -1;margin-bottom:26px}
+.about-body{grid-column:1 / -1}
 }
-.pen{display:inline-block;height:1.35em;vertical-align:-.28em;overflow:visible;fill:none;stroke:currentColor;stroke-width:4.8;stroke-linecap:round;stroke-linejoin:round;filter:url(#penfx)}
-.board-tag,.project-duration,.project-quote .quote-by{color:#222;font-size:.8rem;letter-spacing:0}
-.project-duration{font-size:.9rem}
-.selector-btn{font-size:1.05rem;letter-spacing:0}
-.selector-btn .pen{stroke-width:3.8}
+@media(max-width:640px){
+#top-bar{display:grid;grid-template-columns:1fr auto;grid-template-areas:"b l" "n n";gap:0 12px;padding:8px 16px 6px;font-size:.82rem}
+.brand{grid-area:b}
+.lang{grid-area:l}
+#nav{grid-area:n;justify-content:space-between;gap:0}
+.hero{padding:0 14px}
+.band{padding:70px 0 44px}
+.band-head{padding:0 16px 22px}
+.track{padding:0 8vw;gap:22px}
+.card{width:62vw}
+.d-top{padding:12px 16px}
+.d-screen{height:60vh;height:60svh}
+.d-info,.d-video,.d-next{padding-left:16px;padding-right:16px}
+#about{padding:70px 16px 60px}
+footer{padding:0 16px 26px}
+}
+@media(hover:none){.reel-scroll{scroll-snap-type:x proximity}.card{scroll-snap-align:center}}
+.slow .card,.slow .d-screen img{transition:none}
+@media(max-width:640px){#nav a,.lang button{padding:7px 2px}.d-top button{padding:8px 4px}.d-top{gap:8px}.d-nav{gap:10px}.c-btn{-webkit-touch-callout:none}}
 </style>
 </head><body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
-<filter id="penfx" x="-4%" y="-10%" width="108%" height="120%" color-interpolation-filters="sRGB">
-<feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" seed="4" result="lo"/>
-<feDisplacementMap in="SourceGraphic" in2="lo" scale="2.2" xChannelSelector="R" yChannelSelector="G" result="w"/>
-<feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="2" seed="8" result="n"/>
-<feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  1.6 0 0 0 0.4" result="grain"/>
-<feComposite in="w" in2="grain" operator="in"/>
-</filter></defs></svg>
-<div id="bar">
-  <a class="mark" href="#top"><span class="mark-tyche">Tyche</span>Michele Ifigenia<span class="mark-line"></span></a>
-  <nav class="bar-links">
-    <a href="#lavori">Lavori</a>
-    <a href="#collaborazioni">Collaborazioni</a>
-    <a href="#about">Percorso e Contatti</a>
+<header id="top-bar">
+  <a class="brand" href="#top">Michele Ifigenia / Tyche</a>
+  <nav id="nav">
+    <a href="#lavori" data-i="nav_works">Lavori</a>
+    <a href="#collaborazioni" data-i="nav_collab">Collaborazioni</a>
+    <a href="#about" data-i="nav_about">Percorso e contatti</a>
   </nav>
-</div>
+  <div class="lang" role="group" aria-label="Lingua"><button data-l="it">IT</button> / <button data-l="en">EN</button></div>
+</header>
 
-<div class="hero" id="top">
+<main>
+<section class="hero" id="top">
   <div class="name-wrap">
-    <img class="tyche-logo" alt="Tyche" src="logo-tyche-linee.png">
-    <h1 class="name" id="name">Michele Ifigenia</h1>
-    <svg class="lance" viewBox="0 0 1000 12" preserveAspectRatio="none" aria-hidden="true">
-      <defs><filter id="pencil" filterUnits="userSpaceOnUse" x="0" y="-10" width="1000" height="32"><feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4"/></filter></defs>
-      <g filter="url(#pencil)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M3 6.6 C 130 5.4, 270 7.6, 410 6.3 S 690 5.2, 840 7 S 960 6.2, 997 6.5" stroke-width="2.2" vector-effect="non-scaling-stroke"/>
-        <path d="M6 7.4 C 150 6.6, 300 8, 450 7.1 S 720 6.2, 860 7.6 S 950 7, 990 7.2" stroke-width="1" opacity=".55" vector-effect="non-scaling-stroke"/>
-      </g>
+    <svg class="tyche-logo" viewBox="0 0 900 853" role="img" aria-label="Tyche">
+      <defs><mask id="lm" maskUnits="userSpaceOnUse" x="0" y="0" width="900" height="853">
+      <g fill="none" stroke="#fff" stroke-width="40" stroke-linecap="round" stroke-linejoin="round">
+<path class="d" pathLength="1" style="--d:1.70s;--t:0.60s" d="M335 295 L300 210 L265 130 L238 45 L250 15 L330 10 L450 15"/>
+<path class="d" pathLength="1" style="--d:2.21s;--t:0.42s" d="M415 208 L400 165 L408 100 L422 48"/>
+<path class="d" pathLength="1" style="--d:2.57s;--t:0.24s" d="M425 65 L470 118 M448 88 L466 118 M488 80 L500 112"/>
+<path class="d" pathLength="1" style="--d:2.77s;--t:0.36s" d="M492 62 L525 88 L545 150 L541 205"/>
+<path class="d" pathLength="1" style="--d:3.08s;--t:0.15s" d="M450 160 L451 161 M500 158 L501 159"/>
+<path class="d" pathLength="1" style="--d:3.20s;--t:0.60s" d="M468 228 L470 300 L470 400 L488 540 L505 600"/>
+<path class="d" pathLength="1" style="--d:3.71s;--t:0.48s" d="M505 600 L555 572 L590 440 L615 350 L632 300 L612 266"/>
+<path class="d" pathLength="1" style="--d:4.12s;--t:0.30s" d="M478 228 L472 290 M492 226 L497 290 M512 268 L516 362"/>
+<path class="d" pathLength="1" style="--d:4.38s;--t:0.27s" d="M5 688 L175 688 M95 688 L97 850"/>
+<path class="d" pathLength="1" style="--d:4.61s;--t:0.33s" d="M228 684 L288 752 L291 850 M350 676 L288 750"/>
+<path class="d" pathLength="1" style="--d:4.89s;--t:0.27s" d="M517 682 L440 686 L406 742 L412 802 L452 846 L516 848"/>
+<path class="d" pathLength="1" style="--d:5.12s;--t:0.33s" d="M590 678 L590 846 M595 760 L710 760 M712 670 L712 850"/>
+<path class="d" pathLength="1" style="--d:5.40s;--t:0.36s" d="M785 674 L785 850 M785 672 L895 672 M785 748 L890 748 M785 848 L895 848"/>
+      </g></mask></defs>
+      <image href="logo-tyche-linee.png" width="900" height="853" mask="url(#lm)"/>
     </svg>
+    <h1 class="name" id="name">Michele Ifigenia</h1>
+    <div class="lance"></div>
   </div>
-  <nav class="hero-nav">
-    <a href="#lavori">Lavori</a>
-    <a href="#collaborazioni">Collaborazioni</a>
-    <a href="#about">Percorso e Contatti</a>
-  </nav>
-</div>
-
-<section id="lavori">
-  <h2>Lavori</h2>
-  <div class="archive-selector">
-    <div class="selector-btn" data-tab="perf">Performance</div>
-    <div class="selector-btn" data-tab="short">Short Film</div>
-  </div>
-  <div id="list-perf" class="archive-list-container"><div class="board-grid"></div></div>
-  <div id="list-short" class="archive-list-container"><div class="board-grid"></div></div>
+  <div class="cue" data-i="scroll">Scorri</div>
 </section>
 
-<section id="collaborazioni">
-  <h2>Collaborazioni</h2>
-  <div id="collab-list"></div>
+<section class="band" id="lavori">
+  <div class="band-head"><h2 data-i="works">Lavori</h2></div>
+  <div class="sub"><h3 data-i="f_perf">Performance</h3><span class="count" id="count-perf"></span></div>
+  <div class="reel" id="reel-perf"><div class="reel-scroll"><ul class="track"></ul></div><div class="scrub"><i></i></div></div>
+  <div class="sub sub2"><h3 data-i="f_short">Short Film</h3><span class="count" id="count-short"></span></div>
+  <div class="reel" id="reel-short"><div class="reel-scroll"><ul class="track"></ul></div><div class="scrub"><i></i></div></div>
+</section>
+
+<section class="band" id="collaborazioni">
+  <div class="band-head"><h2 data-i="collab">Collaborazioni</h2><span class="count" id="count-collab"></span></div>
+  <div class="reel" id="reel-collab"><div class="reel-scroll"><ul class="track"></ul></div><div class="scrub"><i></i></div></div>
 </section>
 
 <section id="about">
-  <h2>Percorso e Contatti</h2>
-  <p class="about-text">Michele Ifigenia / Tyche è un gruppo di ricerca coreografica fondato e diretto da Michele Ifigenia Colturi, nato all’interno della Civica Scuola di Teatro Paolo Grassi di Milano e della Scuola Conia di Claudia Castellucci. Riunisce interpreti, drammaturghi, musicisti e artisti di diverse discipline in un organismo che sostiene e sviluppa la visione di Colturi. La ricerca, di natura profondamente visiva, esplora il corpo come materia plastica, un campo scultoreo modellato da luce e suono: elementi che ridefiniscono lo spazio e trasformano il gesto in immagine. Al centro della poetica c’è il mito, inteso non come narrazione chiusa ma come matrice fluida e generativa, da cui emergono figure e simboli in costante metamorfosi. Le creazioni prendono forma tanto in spazi teatrali quanto in contesti non convenzionali, intrecciando linguaggi visivi, sonori e corporei. Il gruppo è artista associato di Ariella Vidach / AiEP.</p>
-  <div class="contact-links">
-    <a class="contact-link" href="mailto:micheleifigeniatyche@gmail.com">micheleifigeniatyche@gmail.com</a>
-    <a class="contact-link" href="https://www.instagram.com/tyche_paculla/" target="_blank" rel="noopener">Instagram</a>
-    <a class="contact-link" href="https://www.youtube.com/@micheleifigeniatyche6062" target="_blank" rel="noopener">YouTube</a>
+  <h2 data-i="about">Percorso e contatti</h2>
+  <div class="about-body">
+    <p id="bio"></p>
+    <div class="links">
+      <a href="mailto:micheleifigeniatyche@gmail.com">micheleifigeniatyche@gmail.com</a>
+      <a href="https://www.instagram.com/tyche_paculla/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.youtube.com/@micheleifigeniatyche6062" target="_blank" rel="noopener">YouTube</a>
+    </div>
   </div>
 </section>
+</main>
+<footer><span>Michele Ifigenia / Tyche</span><span data-i="foot">Coreografia · Performance · Short film</span></footer>
 
-<div class="project-page" id="project-page">
-  <div class="back-btn" id="back-btn">← Indietro</div>
-  <div class="project-layout">
-    <div class="project-info-side">
-      <h1 class="project-title-large" id="p-title"></h1>
-      <div class="project-duration" id="p-duration"></div>
-      <blockquote class="project-quote" id="p-quote"></blockquote>
-      <div class="project-description" id="p-desc"></div>
-      <div class="project-credits" id="p-credits"></div>
-    </div>
-    <div id="p-media"></div>
+<div id="detail" role="dialog" aria-modal="true" aria-label="Scheda del lavoro">
+  <div class="d-top">
+    <button id="d-back" data-i="back">← Indietro</button>
+    <span id="d-count"></span>
+    <div class="lang"><button data-l="it">IT</button> / <button data-l="en">EN</button></div>
+    <div class="d-nav"><button id="d-prev" aria-label="Precedente">←</button><button id="d-next" aria-label="Successivo">→</button></div>
   </div>
+  <div class="d-screen" id="d-screen"><img id="d-img" alt=""></div>
+  <div class="d-thumbs" id="d-thumbs"></div>
+  <div class="d-info">
+    <h1 id="d-title"></h1>
+    <div class="d-meta"><span id="d-tag"></span><span id="d-dur"></span></div>
+    <div class="d-text"><blockquote id="d-quote"></blockquote><p id="d-desc"></p></div>
+    <dl id="d-credits"></dl>
+  </div>
+  <div class="d-video" id="d-video"></div>
+  <button class="d-next" id="d-nextlink"></button>
 </div><script>
-var YT = "https://www.youtube.com/embed/3AB6vL3wngI?start=7";
-var PROJECTS = [
-  { title:"Amadriadi", category:"perf", tag:"[Performance]", img:"amadriadi.png",
-    duration:"15 minuti",
-    description:"Un’evocazione visiva si intreccia allo spazio urbano contemporaneo: la figura delle Amadriadi diventa un espediente per offrire allo spettatore un momento di sospensione. Le Amadriadi, creature mitologiche indissolubilmente legate agli alberi, vivono e muoiono con essi. Tra il verde emerge così un corpo capace di ondeggiare al vento, di radicarsi, di trasfigurarsi, portando con sé un fascino antico eppure sorprendentemente presente. Forse è proprio in questa apparizione, in questa possibilità di metamorfosi, che si rinnova continuamente la relazione entre l’uomo e la natura.",
-    credits:["Autore / Coreografo: Michele Ifigenia Colturi","Dramaturg: Ciro Ciancio, Riccardo Vanetta","Performers: Enzina Cappelli, Valeria Petroni, Federica D’Aversa","Suono: Tarek Bouguerra","Produzione: Aiep Ariella Vidach / Triennale Teatro Milano"], video:"" },
-  { title:"Cuma", category:"perf", tag:"[Performance]", img:"cuma.png",
-    duration:"15 minuti",
-    description:"Cuma è un solo coreografico attorno alla figura della sibilla. Gli elementi che appartengono al suo archetipo vengono ricostruiti per portare in vita un ultimo messaggio divinatorio. La sibilla, suo malgrado, intona un canto di fine accompagnato da una possessione, la manìa del dio. Il messaggio è talmente elevato che il corpo della sibilla viene dilaniato dalla profezia stessa.",
-    credits:["Autore / Coreografo: Michele Ifigenia Colturi","Danzatrice: Federica D’Aversa","Dramaturg: Riccardo Vanetta, Ciro Ciancio","Musiche: Tarek Bouguerra","Filmmaker: Lorenzo Basili","Produzione: Aiep Ariella Vidach, Anghiari Dance Hub"], video:"" },
-  { title:"Citerone", category:"perf", tag:"[Performance]", img:"citerone.png",
-    duration:"25 minuti",
-    description:"Un canto corporeo, una preghiera di gesti e suoni che rinnova un’antica ritualità per ascendere al monte Citerone. Il cammino performativo diventa evocazione dei simboli dionisiaci, spazio di passaggio tra umano e divino. Il mito di Dioniso e le Baccanti di Euripide si intrecciano per celebrare il mistero, l’estasi e la forza trasformativa del rito.",
-    credits:["Autore / Coreografo: Michele Ifigenia Colturi","Dramaturg: Ciro Ciancio, Riccardo Vanetta","Performers: Enzina Cappelli, Andreyna Dela Soledad","Co-produzione: Aiep Ariella Vidach"], video:"https://drive.google.com/file/d/1KHY7KPD8Vkiq-AekBu8naYRAY4va0mgQ/preview" },
-  { title:"Atteone", category:"perf", tag:"[Debutto 2027]", img:"atteone.png",
-    duration:"In fase di sviluppo",
-    description:"Il lavoro è centrato su un’unica figura danzante che, nel corso della performance, incarna una metamorfosi tragica: da essere umano a cervo.",
-    credits:["Ideazione e coreografia: Michele Ifigenia Colturi","Interpretazione: Enzina Cappelli","Musica: Tarek Bouguerra","Dramaturg: Riccardo Vanetta","Scenografia: Alice Vanini","2D/3D Artist: Andrea Rebecca Marchini","Produzione: AIEP (Milano)","Coproduzione: Hangartfest (Pesaro)","Con il sostegno di: ResiDance – azione del Network Anticorpi XL, Centro di Residenza della Toscana (Armunia – Capo Travo / Kilowatt)"], video:"" },
-  { title:"Salmace", category:"perf", tag:"[w.i.p.]", img:"salmace.png",
-    duration:"Work in progress",
-    quote:"«Crea una stretta tenace: come il serpente rapito dall'aquila regale, che mentre viene trasportato in alto avvolge la testa e le zampe del rapace e con la coda gli lega le ali spiegate; o come l'edera che suole circondare i lunghi tronchi degli alberi; o come la piovra che stringe il nemico catturato sul fondo del mare, allungando i suoi tentacoli da ogni lato.»",
-    quoteBy:"Ovidio, Metamorfosi",
-    description:"Studio coreografico sulla fluidità dei corpi e la fusione degli opposti materici.",
-    credits:["Ricerca artistica: Michele Ifigenia Colturi"], video:"" },
-  { title:"Citerone", category:"short", tag:"[Short Film]", img:"citerone_short.png",
-    duration:"Cortometraggio",
-    description:"Sguardo cinematografico sull'ascesa rituale al monte Citerone.",
-    credits:["Autore: Michele Ifigenia Colturi","Filmmaking: Lorenzo Basili"], video:YT }
-];
-var COLLABS = [
-  { title:"YTI — Your Tactile Identity", tag:"[Con YoY Performing Arts, IVONA]",
-    duration:"Kilowatt Festival · 24 luglio 2026",
-    description:"YTI è insieme un progetto di ricerca e un manifesto artistico, nato dall’incontro tra tre compagnie: YoY Performing Arts, IVONA e Michele Ifigenia / Tyche. In un tempo segnato da distanze e polarizzazioni, il lavoro sceglie la vicinanza: abitare le differenze e farne materia di creazione collettiva. Tre linguaggi coreografici si intrecciano in un unico tessuto, dove il movimento diventa ascolto e la contaminazione un atto insieme politico e creativo.",
-    credits:["Di: YoY Performing Arts, IVONA, Michele Ifigenia/Tyche","Interpreti: Emma Zani, Roberto Doveri, Pablo Girolami, Guilherme Leal, Federica D’Aversa","Dramaturg: Riccardo Vanetta","Musiche: Tarek Bouguerra, Timoteo Carbone","Disegno luci: Gianni Staropoli","Costumi: Patricia Villirillo","Progetto vincitore di: Giovane Danza Italiana 2025, Bando CURA 2025","Con il sostegno di: MiC e SIAE – Per Chi Crea"], img:"yti.png", video:"" }
-];
-
-function esc(s){var d=document.createElement("div");d.textContent=s;return d.innerHTML;}
-
-/* ALFABETO A MATITA (ricalcato sulle lettere del logo: linea sottile, maiuscole larghe) */
-var GL={
-"A":[56,"M0 70 L28 0 L56 70 M10 46 L46 46"],
-"B":[54,"M0 70 L0 0 L34 0 C54 0 54 32 34 32 L0 32 M34 32 C60 32 60 70 34 70 L0 70"],
-"C":[56,"M52 12 C40 -4 6 -4 4 35 C6 74 40 74 52 58"],
-"D":[58,"M0 70 L0 0 L22 0 C64 0 64 70 22 70 L0 70"],
-"E":[52,"M50 0 L0 0 L0 70 L50 70 M0 35 L40 35"],
-"F":[52,"M50 0 L0 0 L0 70 M0 35 L40 35"],
-"G":[56,"M52 12 C40 -4 6 -4 4 35 C6 74 44 74 52 50 L52 36 L30 36"],
-"H":[52,"M0 0 L0 70 M52 0 L52 70 M0 35 L52 35"],
-"I":[0,"M0 0 L0 70"],
-"J":[42,"M40 0 L40 52 C40 78 4 78 2 52"],
-"K":[52,"M0 0 L0 70 M50 0 L0 40 M14 30 L52 70"],
-"L":[48,"M0 0 L0 70 L46 70"],
-"M":[68,"M0 70 L0 0 L34 46 L68 0 L68 70"],
-"N":[52,"M0 70 L0 0 L52 70 L52 0"],
-"O":[56,"M28 0 C-8 0 -8 70 28 70 C64 70 64 0 28 0 Z"],
-"P":[54,"M0 70 L0 0 L34 0 C56 0 56 38 34 38 L0 38"],
-"Q":[58,"M28 0 C-8 0 -8 70 28 70 C64 70 64 0 28 0 Z M38 52 L56 74"],
-"R":[54,"M0 70 L0 0 L34 0 C56 0 56 38 34 38 L0 38 M30 38 L52 70"],
-"S":[54,"M50 10 C40 -4 6 -2 6 18 C6 38 50 30 50 52 C50 74 10 76 2 60"],
-"T":[56,"M0 0 L56 0 M28 0 L28 70"],
-"U":[52,"M0 0 L0 50 C0 78 52 78 52 50 L52 0"],
-"V":[56,"M0 0 L28 70 L56 0"],
-"W":[68,"M0 0 L16 70 L34 14 L52 70 L68 0"],
-"X":[52,"M0 0 L52 70 M52 0 L0 70"],
-"Y":[56,"M0 0 L28 36 L56 0 M28 36 L28 70"],
-"Z":[52,"M0 0 L52 0 L0 70 L52 70"],
-"0":[44,"M22 0 C-6 0 -6 70 22 70 C50 70 50 0 22 0 Z"],
-"1":[28,"M4 16 L26 0 L26 70"],
-"2":[46,"M2 16 C4 -6 46 -4 44 20 C42 40 6 52 0 70 L46 70"],
-"3":[46,"M2 8 C20 -8 46 6 40 22 C36 34 20 34 16 34 C44 32 50 52 40 62 C28 78 6 72 0 60"],
-"4":[52,"M38 70 L38 0 L0 50 L52 50"],
-"5":[46,"M42 0 L6 0 L2 32 C28 22 50 34 46 52 C42 78 8 76 0 60"],
-"6":[46,"M42 6 C22 -6 -2 20 2 48 C6 78 46 76 46 52 C46 30 14 28 2 48"],
-"7":[46,"M0 0 L46 0 L14 70"],
-"8":[46,"M22 0 C-2 0 -2 34 22 34 C50 34 50 0 22 0 M22 34 C-8 34 -8 70 22 70 C54 70 54 34 22 34"],
-"9":[46,"M4 64 C24 76 48 50 44 22 C40 -8 0 -6 0 18 C0 40 32 42 44 22"],
-"[":[12,"M10 -6 L2 -6 L2 76 L10 76"],
-"]":[12,"M2 -6 L10 -6 L10 76 L2 76"],
-".":[0,"M0 69 L0.1 69"],
-",":[0,"M2 66 L-2 78"],
-"·":[0,"M0 35 L0.1 35"],
-"/":[26,"M0 74 L26 -4"],
-"-":[26,"M0 40 L24 40"],
-"—":[40,"M0 40 L40 40"]
+/* ============ TESTI ============ */
+var UI={
+ it:{nav_works:"Lavori",nav_collab:"Collaborazioni",nav_about:"Percorso e contatti",works:"Lavori",collab:"Collaborazioni",about:"Percorso e contatti",f_perf:"Performance",f_short:"Short Film",scroll:"Scorri",back:"← Indietro",next:"Prossimo",video:"Video",foot:"Coreografia · Performance · Short film",works_n:"lavori",work_1:"lavoro"},
+ en:{nav_works:"Works",nav_collab:"Collaborations",nav_about:"About & contact",works:"Works",collab:"Collaborations",about:"About & contact",f_perf:"Performance",f_short:"Short Film",scroll:"Scroll",back:"← Back",next:"Next",video:"Video",foot:"Choreography · Performance · Short film",works_n:"works",work_1:"work"}
 };
-function pen(str){
-  var t=String(str).toUpperCase(), x=0, d="", i, g;
-  for(i=0;i<t.length;i++){
-    var c=t.charAt(i);
-    if(c===" "){ x+=34; continue; }
-    g=GL[c]; if(!g){ x+=20; continue; }
-    d+='<path transform="translate('+x+' 0)" d="'+g[1]+'"/>';
-    x+=g[0]+20;
-  }
-  var w=x+8;
-  return '<svg class="pen" role="img" aria-label="'+esc(str)+'" viewBox="-6 -8 '+w+' 86" style="width:'+(w/86*1.35).toFixed(2)+'em">'+d+'</svg>';
-}
+var BIO={
+ it:"Michele Ifigenia / Tyche è un gruppo di ricerca coreografica fondato e diretto da Michele Ifigenia Colturi, nato all’interno della Civica Scuola di Teatro Paolo Grassi di Milano e della Scuola Conia di Claudia Castellucci. Riunisce interpreti, drammaturghi, musicisti e artisti di diverse discipline in un organismo che sostiene e sviluppa la visione di Colturi. La ricerca, di natura profondamente visiva, esplora il corpo come materia plastica, un campo scultoreo modellato da luce e suono: elementi che ridefiniscono lo spazio e trasformano il gesto in immagine. Al centro della poetica c’è il mito, inteso non come narrazione chiusa ma come matrice fluida e generativa, da cui emergono figure e simboli in costante metamorfosi. Le creazioni prendono forma tanto in spazi teatrali quanto in contesti non convenzionali, intrecciando linguaggi visivi, sonori e corporei. Il gruppo è artista associato di Ariella Vidach / AiEP.",
+ en:"Michele Ifigenia / Tyche is a choreographic research group founded and directed by Michele Ifigenia Colturi, born within the Civica Scuola di Teatro Paolo Grassi in Milan and Claudia Castellucci’s Scuola Conia. It brings together performers, dramaturgs, musicians and artists from different disciplines in an organism that supports and develops Colturi’s vision. The research, profoundly visual in nature, explores the body as plastic matter, a sculptural field shaped by light and sound: elements that redefine space and turn gesture into image. At the heart of the poetics is myth, understood not as a closed narrative but as a fluid, generative matrix from which figures and symbols emerge in constant metamorphosis. The creations take shape both in theatrical spaces and in unconventional contexts, interweaving visual, sonic and bodily languages. The group is an associated artist of Ariella Vidach / AiEP."
+};
+var RM={"Autore / Coreografo":"Author / Choreographer","Autore":"Author","Dramaturg":"Dramaturg","Performers":"Performers","Suono":"Sound","Produzione":"Production","Danzatrice":"Dancer","Musiche":"Music","Musica":"Music","Filmmaker":"Filmmaker","Co-produzione":"Co-production","Coproduzione":"Co-production","Ideazione e coreografia":"Concept and choreography","Interpretazione":"Performance","Scenografia":"Scenography","Con il sostegno di":"With the support of","Ricerca artistica":"Artistic research","Filmmaking":"Filmmaking","Di":"By","Interpreti":"Performers","Disegno luci":"Lighting design","Costumi":"Costumes","Progetto vincitore di":"Winner of"};
+function X(it,en){ return {it:it,en:en}; }
 
-/* titolo: ogni lettera sale in sequenza */
-var nm = document.getElementById("name");
-var nameText = nm.textContent;
-nm.setAttribute("aria-label", nameText);
-nm.textContent = "";
-nameText.split("").forEach(function(c, i){
-  var s = document.createElement("span");
-  s.className = "ch";
-  s.setAttribute("aria-hidden", "true");
-  s.textContent = c === " " ? "\u00A0" : c;
-  s.style.animationDelay = (0.25 + i * 0.05) + "s";
-  nm.appendChild(s);
-});
+/* ============ LAVORI ============ */
+var YT="https://www.youtube.com/embed/3AB6vL3wngI?start=7";
+var WORKS=[
+ {cat:"perf",title:"Amadriadi",cover:"amadriadi.png",extra:[],
+  tag:X("Performance","Performance"),dur:X("15 minuti","15 minutes"),
+  desc:X("Un’evocazione visiva si intreccia allo spazio urbano contemporaneo: la figura delle Amadriadi diventa un espediente per offrire allo spettatore un momento di sospensione. Le Amadriadi, creature mitologiche indissolubilmente legate agli alberi, vivono e muoiono con essi. Tra il verde emerge così un corpo capace di ondeggiare al vento, di radicarsi, di trasfigurarsi, portando con sé un fascino antico eppure sorprendentemente presente. Forse è proprio in questa apparizione, in questa possibilità di metamorfosi, che si rinnova continuamente la relazione entre l’uomo e la natura.",
+   "A visual evocation weaves into contemporary urban space: the figure of the Hamadryads becomes a device to offer the viewer a moment of suspension. The Hamadryads, mythological creatures inseparably bound to trees, live and die with them. Among the green emerges a body able to sway in the wind, to take root, to transfigure itself, carrying an ancient yet surprisingly present charm. Perhaps it is precisely in this apparition, in this possibility of metamorphosis, that the relationship between humans and nature is continually renewed."),
+  credits:["Autore / Coreografo: Michele Ifigenia Colturi","Dramaturg: Ciro Ciancio, Riccardo Vanetta","Performers: Enzina Cappelli, Valeria Petroni, Federica D’Aversa","Suono: Tarek Bouguerra","Produzione: Aiep Ariella Vidach / Triennale Teatro Milano"]},
+ {cat:"perf",title:"Cuma",cover:"cuma.png",extra:[],
+  tag:X("Performance","Performance"),dur:X("15 minuti","15 minutes"),
+  desc:X("Cuma è un solo coreografico attorno alla figura della sibilla. Gli elementi che appartengono al suo archetipo vengono ricostruiti per portare in vita un ultimo messaggio divinatorio. La sibilla, suo malgrado, intona un canto di fine accompagnato da una possessione, la manìa del dio. Il messaggio è talmente elevato che il corpo della sibilla viene dilaniato dalla profezia stessa.",
+   "Cuma is a choreographic solo around the figure of the sibyl. The elements belonging to her archetype are reconstructed to bring to life one last divinatory message. The sibyl, despite herself, intones a song of the end, accompanied by a possession, the mania of the god. The message is so elevated that the sibyl’s body is torn apart by the prophecy itself."),
+  credits:["Autore / Coreografo: Michele Ifigenia Colturi","Danzatrice: Federica D’Aversa","Dramaturg: Riccardo Vanetta, Ciro Ciancio","Musiche: Tarek Bouguerra","Filmmaker: Lorenzo Basili","Produzione: Aiep Ariella Vidach, Anghiari Dance Hub"]},
+ {cat:"perf",title:"Citerone",cover:"citerone_2.jpg",extra:[],
+  tag:X("Performance","Performance"),dur:X("25 minuti","25 minutes"),
+  desc:X("Un canto corporeo, una preghiera di gesti e suoni che rinnova un’antica ritualità per ascendere al monte Citerone. Il cammino performativo diventa evocazione dei simboli dionisiaci, spazio di passaggio tra umano e divino. Il mito di Dioniso e le Baccanti di Euripide si intrecciano per celebrare il mistero, l’estasi e la forza trasformativa del rito.",
+   "A bodily chant, a prayer of gestures and sounds that renews an ancient ritual to ascend Mount Cithaeron. The performative path becomes an evocation of Dionysian symbols, a space of passage between human and divine. The myth of Dionysus and Euripides’ Bacchae intertwine to celebrate mystery, ecstasy and the transformative force of ritual."),
+  credits:["Autore / Coreografo: Michele Ifigenia Colturi","Dramaturg: Ciro Ciancio, Riccardo Vanetta","Performers: Enzina Cappelli, Andreyna Dela Soledad","Co-produzione: Aiep Ariella Vidach"],
+  video:"https://drive.google.com/file/d/1KHY7KPD8Vkiq-AekBu8naYRAY4va0mgQ/preview"},
+ {cat:"perf",title:"Atteone",cover:"atteone.png",extra:[],
+  tag:X("Debutto 2027","Debut 2027"),dur:X("In fase di sviluppo","In development"),
+  desc:X("Il lavoro è centrato su un’unica figura danzante che, nel corso della performance, incarna una metamorfosi tragica: da essere umano a cervo.",
+   "The work centres on a single dancing figure who, over the course of the performance, embodies a tragic metamorphosis: from human being to stag."),
+  credits:["Ideazione e coreografia: Michele Ifigenia Colturi","Interpretazione: Enzina Cappelli","Musica: Tarek Bouguerra","Dramaturg: Riccardo Vanetta","Scenografia: Alice Vanini","2D/3D Artist: Andrea Rebecca Marchini","Produzione: AIEP (Milano)","Coproduzione: Hangartfest (Pesaro)","Con il sostegno di: ResiDance – azione del Network Anticorpi XL, Centro di Residenza della Toscana (Armunia – Capo Travo / Kilowatt)"]},
+ {cat:"perf",title:"Salmace",cover:"salmace.png",extra:[],
+  tag:X("Work in progress","Work in progress"),dur:X("Work in progress","Work in progress"),
+  quote:X("«Crea una stretta tenace: come il serpente rapito dall'aquila regale, che mentre viene trasportato in alto avvolge la testa e le zampe del rapace e con la coda gli lega le ali spiegate; o come l'edera che suole circondare i lunghi tronchi degli alberi; o come la piovra che stringe il nemico catturato sul fondo del mare, allungando i suoi tentacoli da ogni lato.»",
+   "“It forms a tenacious grip: like the serpent seized by the royal eagle, which, as it is carried aloft, coils around the raptor’s head and feet and binds its spread wings with its tail; or like the ivy that winds around tall tree trunks; or like the octopus that clutches its captured enemy on the seabed, stretching its tentacles on every side.”"),
+  quoteBy:"Ovidio, Metamorfosi / Ovid, Metamorphoses",
+  desc:X("Studio coreografico sulla fluidità dei corpi e la fusione degli opposti materici.","A choreographic study on the fluidity of bodies and the fusion of material opposites."),
+  credits:["Ricerca artistica: Michele Ifigenia Colturi"]},
+ {cat:"short",title:"Citerone",cover:"citerone_2.jpg",extra:[],
+  tag:X("Short Film","Short Film"),dur:X("Cortometraggio","Short film"),
+  desc:X("Sguardo cinematografico sull'ascesa rituale al monte Citerone.","A cinematic gaze on the ritual ascent of Mount Cithaeron."),
+  credits:["Autore: Michele Ifigenia Colturi","Filmmaking: Lorenzo Basili"],video:YT}
+];
+var COLLABS=[
+ {cat:"collab",title:"YTI — Your Tactile Identity",cover:"yti.png",extra:[],
+  tag:X("Con YoY Performing Arts, IVONA","With YoY Performing Arts, IVONA"),dur:X("Kilowatt Festival · 24 luglio 2026","Kilowatt Festival · 24 July 2026"),
+  desc:X("YTI è insieme un progetto di ricerca e un manifesto artistico, nato dall’incontro tra tre compagnie: YoY Performing Arts, IVONA e Michele Ifigenia / Tyche. In un tempo segnato da distanze e polarizzazioni, il lavoro sceglie la vicinanza: abitare le differenze e farne materia di creazione collettiva. Tre linguaggi coreografici si intrecciano in un unico tessuto, dove il movimento diventa ascolto e la contaminazione un atto insieme politico e creativo.",
+   "YTI is both a research project and an artistic manifesto, born from the meeting of three companies: YoY Performing Arts, IVONA and Michele Ifigenia / Tyche. In a time marked by distance and polarization, the work chooses proximity: inhabiting differences and making them the matter of collective creation. Three choreographic languages are woven into a single fabric, where movement becomes listening and contamination becomes an act at once political and creative."),
+  credits:["Di: YoY Performing Arts, IVONA, Michele Ifigenia/Tyche","Interpreti: Emma Zani, Roberto Doveri, Pablo Girolami, Guilherme Leal, Federica D’Aversa","Dramaturg: Riccardo Vanetta","Musiche: Tarek Bouguerra, Timoteo Carbone","Disegno luci: Gianni Staropoli","Costumi: Patricia Villirillo","Progetto vincitore di: Giovane Danza Italiana 2025, Bando CURA 2025","Con il sostegno di: MiC e SIAE – Per Chi Crea"]}
+];
 
-PROJECTS.forEach(function(p){
-  var el = document.createElement("div");
-  el.className = "board-item";
-  el.innerHTML = '<div class="image-wrapper"><img src="'+p.img+'" class="board-img" alt="'+esc(p.title)+'" onerror="this.parentNode.setAttribute(\'data-missing\',this.getAttribute(\'src\'));this.style.display=\'none\'"></div>'+
-    '<div class="board-meta"><span class="board-title">'+esc(p.title)+'</span><span class="board-tag">'+pen(p.tag)+'</span></div>';
-  el.addEventListener("click", function(){ openProject(p); });
-  document.querySelector("#list-"+p.category+" .board-grid").appendChild(el);
-});
+/* ============ UTILITÀ ============ */
+var LANG="it";
+try{ var sv=localStorage.getItem("lang"); if(sv==="it"||sv==="en") LANG=sv; }catch(e){}
+function ui(k){ return (UI[LANG]&&UI[LANG][k]) || UI.it[k] || k; }
+function L(o){ return (o && typeof o==="object") ? (o[LANG]||o.it) : o; }
+function esc(s){ var d=document.createElement("div"); d.textContent=s; return d.innerHTML; }
+function pad2(n){ return (n<10?"0":"")+n; }
+function miss(im){ im.style.display="none"; im.parentNode.setAttribute("data-missing",(im.getAttribute("src")||"").slice(0,40)); }
+window.miss=miss;
+var slow = navigator.connection && (navigator.connection.saveData || /2g/.test(navigator.connection.effectiveType||""));
 
-COLLABS.forEach(function(p){
-  var el = document.createElement("div");
-  el.className = "collab-item";
-  el.innerHTML = '<span class="collab-title">'+esc(p.title)+'</span><span class="board-tag">'+pen(p.tag)+'</span>';
-  el.addEventListener("click", function(){ openProject(p); });
-  document.getElementById("collab-list").appendChild(el);
-});
+/* intro solo la prima volta della sessione (o con connessione lenta) */
+(function(){
+  var seen=false; try{ seen = sessionStorage.getItem("seen")==="1"; sessionStorage.setItem("seen","1"); }catch(e){}
+  if(seen || slow) document.documentElement.classList.add("seen");
+  if(slow) document.documentElement.classList.add("slow");
+})();
 
-document.querySelectorAll(".selector-btn").forEach(function(b){ b.innerHTML = pen(b.textContent); });
-function closeArchive(){
-  document.querySelectorAll(".selector-btn").forEach(function(x){x.classList.remove("active");});
-  document.querySelectorAll(".archive-list-container").forEach(function(x){x.classList.remove("active");});
-}
-document.querySelectorAll(".selector-btn").forEach(function(b){
-  b.addEventListener("click", function(){
-    var wasOpen = b.classList.contains("active");
-    closeArchive();
-    if(!wasOpen){
-      b.classList.add("active");
-      document.getElementById("list-"+b.dataset.tab).classList.add("active");
-    }
+/* titolo: le lettere salgono una dopo l'altra */
+(function(){
+  var nm=document.getElementById("name"), tx=nm.textContent;
+  nm.setAttribute("aria-label",tx); nm.textContent="";
+  tx.split("").forEach(function(c,i){
+    var s=document.createElement("span"); s.className="ch"; s.setAttribute("aria-hidden","true");
+    s.textContent = c===" " ? "\u00A0" : c; s.style.animationDelay=(0.2+i*0.04)+"s"; nm.appendChild(s);
   });
+})();
+
+/* ============ PELLICOLA SCORREVOLE ============ */
+function Reel(root,items,onOpen){
+  var sc=root.querySelector(".reel-scroll"), track=root.querySelector(".track"), thumb=root.querySelector(".scrub i"), scrub=root.querySelector(".scrub");
+  var cards=[], rate=0, raf=0, lastX=null, hover=false;
+  this.build=function(){
+    track.innerHTML=""; cards=[];
+    items.forEach(function(w,i){
+      var li=document.createElement("li"); li.className="card"; li.dataset.cat=w.cat;
+      li.innerHTML='<button class="c-btn"><span class="c-n">'+pad2(i+1)+'</span><span class="c-img">'+(w.cover?'<img src="'+w.cover+'" alt="" loading="lazy" decoding="async" onerror="miss(this)">':'')+'</span><span class="c-t">'+esc(w.title)+'</span><span class="c-tag">'+esc(L(w.tag))+' · '+esc(L(w.dur))+'</span></button>';
+      li.querySelector("button").onclick=function(){ onOpen(w); };
+      li.querySelector("button").onfocus=function(){ setActive(li); };
+      track.appendChild(li); cards.push(li);
+    });
+    update();
+  };
+  function vis(){ return cards.filter(function(c){ return !c.hidden; }); }
+  function setActive(el){ cards.forEach(function(c){ c.classList.toggle("on",c===el); }); }
+  function nearest(x){
+    var best=null,bd=1e9; vis().forEach(function(c){ var r=c.getBoundingClientRect(), d=Math.abs(r.left+r.width/2-x); if(d<bd){bd=d;best=c;} });
+    return best;
+  }
+  function update(){
+    var max=sc.scrollWidth-sc.clientWidth;
+    root.classList.toggle("can",max>4);
+    var w=sc.scrollWidth||1;
+    thumb.style.width=Math.max(8,sc.clientWidth/w*100)+"%";
+    thumb.style.left=(sc.scrollLeft/w*100)+"%";
+    if(!hover){ var r=sc.getBoundingClientRect(); setActive(nearest(r.left+r.width/2)); }
+    else if(lastX!==null) setActive(nearest(lastX));
+  }
+  function tick(){
+    raf=0; if(!rate) return;
+    var max=sc.scrollWidth-sc.clientWidth;
+    sc.scrollLeft+=rate;
+    if((rate>0&&sc.scrollLeft>=max-1)||(rate<0&&sc.scrollLeft<=1)){ rate=0; update(); return; }
+    update(); raf=requestAnimationFrame(tick);
+  }
+  function go(){ if(!raf && rate) raf=requestAnimationFrame(tick); }
+  root.addEventListener("pointermove",function(e){
+    if(e.pointerType!=="mouse") return;
+    hover=true; lastX=e.clientX;
+    var r=root.getBoundingClientRect(), d=((e.clientX-r.left)/r.width-.5)*2, a=Math.abs(d), dz=.26;
+    rate = a<dz ? 0 : Math.sign(d)*Math.pow((a-dz)/(1-dz),1.6)*24;
+    setActive(nearest(e.clientX)); go();
+  });
+  root.addEventListener("pointerleave",function(e){
+    if(e.pointerType!=="mouse") return;
+    hover=false;
+    var r=root.getBoundingClientRect();
+    if(e.clientX>=r.right-3){ rate=Math.max(Math.abs(rate),10); }
+    else if(e.clientX<=r.left+3){ rate=-Math.max(Math.abs(rate),10); }
+    else rate=0;
+    if(!rate) update(); go();
+  });
+  ["wheel","touchstart","pointerdown"].forEach(function(ev){ root.addEventListener(ev,function(){ rate=0; },{passive:true}); });
+  var st=0;
+  sc.addEventListener("scroll",function(){ if(st) return; st=requestAnimationFrame(function(){ st=0; update(); }); },{passive:true});
+  var rz=0; window.addEventListener("resize",function(){ if(rz) return; rz=requestAnimationFrame(function(){ rz=0; update(); }); });
+  function scrubTo(e){ var r=scrub.getBoundingClientRect(); sc.scrollLeft=((e.clientX-r.left)/r.width)*(sc.scrollWidth-sc.clientWidth); }
+  var drag=false;
+  scrub.addEventListener("pointerdown",function(e){ drag=true; scrub.setPointerCapture(e.pointerId); scrubTo(e); });
+  scrub.addEventListener("pointermove",function(e){ if(drag) scrubTo(e); });
+  scrub.addEventListener("pointerup",function(){ drag=false; });
+  this.update=update; this.cards=function(){ return cards; };
+}
+var reelP, reelS, reelC;
+function cnt(n){ return n+" "+(n===1?ui("work_1"):ui("works_n")); }
+
+/* ============ SCHEDA (foto intera su nero) ============ */
+var det=document.getElementById("detail"), cur=null, pi=0, group=[];
+function photosOf(w){ var a=[]; if(w.cover) a.push(w.cover); return a.concat(w.extra||[]); }
+function showPhoto(k){
+  var ph=photosOf(cur); if(!ph.length) return;
+  pi=(k+ph.length)%ph.length;
+  var im=document.getElementById("d-img"), sc=document.getElementById("d-screen");
+  im.classList.add("f");
+  setTimeout(function(){
+    sc.removeAttribute("data-missing"); im.style.display="block";
+    im.onerror=function(){ miss(im); }; im.fetchPriority="high"; im.src=ph[pi]; im.classList.remove("f");
+  },120);
+  document.querySelectorAll("#d-thumbs button").forEach(function(b,i){ b.classList.toggle("on",i===pi); });
+}
+function fillDetail(){
+  var w=cur, i=group.indexOf(w), n=group.length, ph=photosOf(w);
+  document.getElementById("d-count").textContent=pad2(i+1)+" / "+pad2(n);
+  document.getElementById("d-title").textContent=w.title;
+  document.getElementById("d-tag").textContent=L(w.tag);
+  document.getElementById("d-dur").textContent=L(w.dur);
+  document.getElementById("d-desc").textContent=L(w.desc);
+  var q=document.getElementById("d-quote");
+  q.innerHTML = w.quote ? esc(L(w.quote))+'<small>'+esc(w.quoteBy)+'</small>' : ""; q.style.display = w.quote ? "block" : "none";
+  document.getElementById("d-credits").innerHTML=w.credits.map(function(c){
+    var k=c.indexOf(": "), role=k>0?c.slice(0,k):"", names=k>0?c.slice(k+2):c;
+    if(LANG==="en") role=RM[role]||role;
+    return '<div><dt>'+esc(role)+'</dt><dd>'+esc(names)+'</dd></div>';
+  }).join("");
+  document.getElementById("d-thumbs").innerHTML = ph.length>1 ? ph.map(function(f,k){
+    return '<button aria-label="Foto '+(k+1)+'"><img src="'+f+'" alt="" loading="lazy" decoding="async" onerror="miss(this)"></button>';
+  }).join("") : "";
+  document.querySelectorAll("#d-thumbs button").forEach(function(b,k){ b.onclick=function(){ showPhoto(k); }; });
+  document.getElementById("d-video").innerHTML = w.video ? '<div class="lbl">'+ui("video")+'</div><div class="fr"><iframe src="'+w.video+'" loading="lazy" allowfullscreen></iframe></div>' : "";
+  var nx=group[(i+1)%n], nl=document.getElementById("d-nextlink");
+  nl.innerHTML = n>1 ? '<small>'+ui("next")+'</small><b>'+esc(nx.title)+' →</b>' : "";
+  nl.onclick=function(){ openWork(nx); };
+  document.getElementById("d-prev").style.visibility=document.getElementById("d-next").style.visibility = n>1 ? "visible" : "hidden";
+  document.getElementById("d-prev").onclick=function(){ openWork(group[(i-1+n)%n]); };
+  document.getElementById("d-next").onclick=function(){ openWork(nx); };
+  document.getElementById("d-back").textContent=ui("back");
+}
+function openWork(w){
+  cur=w; pi=0;
+  group = w.cat==="collab" ? COLLABS : WORKS.filter(function(x){ return x.cat===w.cat; });
+  fillDetail(); showPhoto(0);
+  det.classList.add("on"); det.scrollTop=0; document.body.style.overflow="hidden";
+}
+function closeWork(){ det.classList.remove("on"); document.getElementById("d-video").innerHTML=""; document.body.style.overflow=""; cur=null; }
+document.getElementById("d-back").onclick=closeWork;
+document.addEventListener("keydown",function(e){
+  if(!det.classList.contains("on")) return;
+  if(e.key==="Escape") closeWork();
+  else if(e.key==="ArrowRight") showPhoto(pi+1);
+  else if(e.key==="ArrowLeft") showPhoto(pi-1);
 });
-document.querySelectorAll('a[href="#lavori"]').forEach(function(a){ a.addEventListener("click", closeArchive); });
 
-var bar = document.getElementById("bar");
-function onScroll(){ bar.classList.toggle("show", window.scrollY > window.innerHeight * 0.6); }
-window.addEventListener("scroll", onScroll);
-onScroll();
+/* barra in alto: nera sul chiaro, bianca sulle fasce scure (senza effetti pesanti) */
+(function(){
+  var bands=[].slice.call(document.querySelectorAll(".band")), tb=document.getElementById("top-bar"), tq=0;
+  function tone(){ tq=0; var dark=false; for(var i=0;i<bands.length;i++){ var r=bands[i].getBoundingClientRect(); if(r.top<=24 && r.bottom>=24){ dark=true; break; } } tb.classList.toggle("dark",dark); }
+  window.addEventListener("scroll",function(){ if(!tq) tq=requestAnimationFrame(tone); },{passive:true});
+  tone();
+})();
 
-var page = document.getElementById("project-page");
-function openProject(p){
-  document.getElementById("p-title").textContent = p.title;
-  document.getElementById("p-duration").innerHTML = pen(p.duration);
-  document.getElementById("p-quote").innerHTML = p.quote ? esc(p.quote)+'<div class="quote-by">'+pen(p.quoteBy)+'</div>' : "";
-  document.getElementById("p-desc").textContent = p.description;
-  document.getElementById("p-credits").innerHTML = p.credits.map(function(c){return "<div>"+esc(c)+"</div>";}).join("");
-  document.getElementById("p-media").innerHTML = p.video
-    ? '<div class="video-container-large"><iframe src="'+p.video+'" allowfullscreen></iframe></div>'
-    : (p.img ? '<img class="project-img-large" src="'+p.img+'" alt="'+esc(p.title)+'">' : "");
-  page.classList.add("active");
-  page.scrollTop = 0;
-  document.body.style.overflow = "hidden";
+/* ============ LINGUA ============ */
+function renderAll(){
+  document.documentElement.lang=LANG;
+  document.querySelectorAll("[data-i]").forEach(function(el){ el.textContent=ui(el.dataset.i); });
+  document.getElementById("bio").textContent=BIO[LANG];
+  document.querySelectorAll(".lang button").forEach(function(b){ b.classList.toggle("on",b.dataset.l===LANG); });
+  reelP.build(); reelS.build(); reelC.build();
+  document.getElementById("count-perf").textContent=cnt(PERF.length);
+  document.getElementById("count-short").textContent=cnt(SHORT.length);
+  document.getElementById("count-collab").textContent=cnt(COLLABS.length);
+  if(cur) fillDetail();
 }
-function closeProject(){
-  page.classList.remove("active");
-  document.getElementById("p-media").innerHTML = "";
-  document.body.style.overflow = "";
-}
-document.getElementById("back-btn").addEventListener("click", closeProject);
-document.addEventListener("keydown", function(e){ if(e.key==="Escape") closeProject(); });
+document.querySelectorAll(".lang button").forEach(function(b){
+  b.onclick=function(){ LANG=b.dataset.l; try{ localStorage.setItem("lang",LANG); }catch(e){} renderAll(); };
+});
+
+var PERF=WORKS.filter(function(w){ return w.cat==="perf"; }), SHORT=WORKS.filter(function(w){ return w.cat==="short"; });
+reelP=new Reel(document.getElementById("reel-perf"),PERF,openWork);
+reelS=new Reel(document.getElementById("reel-short"),SHORT,openWork);
+reelC=new Reel(document.getElementById("reel-collab"),COLLABS,openWork);
+renderAll();
 </script>
 </body>
 </html>

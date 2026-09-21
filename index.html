@@ -1,18 +1,24 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<!-- VERSIONE 21-09 notte: booster foto (miniature thumbs/ + med/, precaricamento, frecce da tastiera). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
+<!-- VERSIONE 21-09 leggera-2: immagini a 3 misure (img + photos.js), fiore giallo solo nella schermata iniziale, nome e linea con ombre 3D. Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Michele Ifigenia / Tyche</title>
 <meta name="description" content="Michele Ifigenia / Tyche — coreografia, performance, short film.">
 <meta name="theme-color" content="#f4f3ef">
 <link rel="icon" href="favicon.png">
-<link rel="preload" as="image" href="logo-tyche-linee.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;600&display=swap" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;600&display=swap"></noscript>
+<link rel="preload" as="image" href="logo-tyche-linee.webp" fetchpriority="high">
+<script>
+/* RETE: se la connessione e' lenta (2g/3g) o c'e' il risparmio dati, il sito non scarica il carattere web, non precarica nulla
+   e usa solo le foto piccole. Con una rete buona carica tutto come prima. */
+var NET=navigator.connection||{}, SAVE=!!NET.saveData, SLOWNET=SAVE||/(^|-)(2g|3g)$/.test(NET.effectiveType||"");
+if(!SLOWNET){
+  var pc=document.createElement("link"); pc.rel="preconnect"; pc.href="https://fonts.googleapis.com"; document.head.appendChild(pc);
+  var pg=document.createElement("link"); pg.rel="preconnect"; pg.href="https://fonts.gstatic.com"; pg.crossOrigin=""; document.head.appendChild(pg);
+  var ff=document.createElement("link"); ff.rel="stylesheet"; ff.href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;600&display=swap"; document.head.appendChild(ff);
+}
+</script>
 <style>
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
@@ -24,7 +30,7 @@ img{max-width:100%}
 
 
 /* GRANA leggerissima: un'immagine di rumore come sfondo (puntini scuri sulla carta, chiari sul nero).
-   Sta dietro al contenuto, non sopra: non costa nulla durante lo scorrimento e non tocca foto e ricami. Su telefono è spenta. */
+   Sta dietro al contenuto, non sopra: non costa nulla durante lo scorrimento e non tocca foto e ricami. */
 :root{--gp:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n' x='0' y='0' width='100%25' height='100%25'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.11 0 0 0 -0.055'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");--gb:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n' x='0' y='0' width='100%25' height='100%25'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  -0.11 0 0 0 0.055'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>")}
 body,#top-bar{background-size:240px 240px}
 .band,#top-bar.dark,#detail,.d-top,.d-screen{background-size:240px 240px}
@@ -41,10 +47,11 @@ body,#top-bar{background-size:240px 240px}
 /* HERO */
 .hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:0 20px;overflow:hidden}
 .name-wrap{position:relative;display:inline-block;font-size:clamp(1.3rem,3.4vw,2.7rem);--logo:clamp(120px,17vw,190px);margin-top:calc(var(--logo) - .1em);--y:27%}
-.name{margin:0;font-size:1em;font-weight:600;line-height:1;text-transform:uppercase;white-space:nowrap;letter-spacing:-.03em}
-.ch{display:inline-block;transform:translateY(105%);animation:rise .8s cubic-bezier(.2,.8,.2,1) both}
+.name{margin:-.1em -.25em -.65em;padding:.1em .25em .65em;font-size:1em;font-weight:600;line-height:1;text-transform:uppercase;white-space:nowrap;letter-spacing:-.03em}
+.name .ch{text-shadow:0 .02em 0 rgba(255,255,255,.6),.02em .04em 0 rgba(70,55,46,.36),.06em .1em .12em rgba(24,16,12,.26),.13em .3em .4em rgba(24,16,12,.14)}
+.ch{display:inline-block;transform:translateY(190%);animation:rise .8s cubic-bezier(.2,.8,.2,1) both}
 .name{overflow:hidden}
-.lance{position:absolute;left:-5%;width:110%;top:var(--y);height:2px;margin-top:-1px;background:#7a1520;z-index:2;transform:scaleX(0);transform-origin:left;animation:line .9s 1s cubic-bezier(.65,0,.25,1) both}
+.lance{position:absolute;left:-5%;width:110%;top:var(--y);height:2.4px;margin-top:-1.2px;border-radius:1.2px;background:linear-gradient(#a52735,#6a131c 70%);box-shadow:inset 0 .4px 0 rgba(255,210,210,.4),0 1.5px 1.6px rgba(24,12,12,.4),0 5px 8px rgba(24,12,12,.18);z-index:2;transform:scaleX(0);transform-origin:left;animation:line .9s 1s cubic-bezier(.65,0,.25,1) both}
 .tyche-logo{position:absolute;left:50%;bottom:calc(100% - var(--y) + .14em);height:var(--logo);width:auto;aspect-ratio:900/853;transform:translateX(-50%);overflow:visible}
 .tyche-logo .d{stroke-dasharray:1 1;stroke-dashoffset:1;animation:dr var(--t) var(--d) cubic-bezier(.45,.05,.3,1) both}
 .cue{position:absolute;left:0;right:0;bottom:22px;text-align:center;font-size:.8rem;font-weight:600;color:var(--mute);opacity:0;transition:opacity .8s}
@@ -63,12 +70,14 @@ html.wait #nav{pointer-events:none;opacity:.35}
 .lite .tyche-logo .d{animation:none;stroke-dashoffset:0}
 
 
-/* RICAMI: fiori (inizio e fondo pagina) e sole (in Percorso e contatti). Sono immagini SVG: compaiono con una dissolvenza appena pronte. */
+/* RICAMI: fiori, uccellino, sole, cervo. Sono immagini SVG: compaiono con una dissolvenza appena pronte. */
 .embroid{position:absolute;inset:0;pointer-events:none;z-index:0}
 .name-wrap{z-index:1}
 .fl,.sun{position:absolute;pointer-events:none;opacity:0;transition:opacity .9s ease}
 .fl.on,.sun.on{opacity:1}
 .fl img,.sun img{display:block;width:100%;height:100%}
+/* ombre dei ricami: a contatto, portata e morbida lontana (luce da in alto a sinistra) */
+.fl{filter:drop-shadow(0 .5px .5px rgba(28,18,10,.4)) drop-shadow(1.2px 2.6px 2.4px rgba(28,18,10,.26)) drop-shadow(3.6px 8.5px 8px rgba(28,18,10,.14))}
 .fl{left:0;top:0}
 .sun{right:clamp(30px,4.2vw,70px);top:clamp(118px,17svh,172px);width:clamp(60px,5.6vw,92px);aspect-ratio:1}
 @media(prefers-reduced-motion:reduce){.fl,.sun{transition:none}}
@@ -93,6 +102,9 @@ html.wait #nav{pointer-events:none;opacity:.35}
 .c-img{display:block;position:relative;aspect-ratio:3/4;background:#1b1b1d;overflow:hidden}
 .c-img img,.d-screen img{filter:saturate(.86) contrast(1.05)}
 .c-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+/* le foto compaiono con una dissolvenza sopra la loro anteprima sfocata (che arriva subito, dentro photos.js) */
+.c-img img,.g-img img{opacity:0;transition:opacity .45s ease}
+.c-img img.ld,.g-img img.ld{opacity:1}
 .c-img::after,.d-screen::after{content:"";position:absolute;inset:0;background:var(--tint);pointer-events:none}
 [data-missing]::before{content:attr(data-missing);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:8px;font-size:.72rem;color:#77756f;text-align:center}
 .c-t{display:block;margin-top:12px;font-size:1.05rem;font-weight:600;letter-spacing:-.015em;line-height:1.15}
@@ -171,6 +183,7 @@ footer>span{position:relative;z-index:1}
 }
 @media(max-width:640px){
 :root{--gp:none;--gb:none}
+.fl{filter:drop-shadow(0 .5px .5px rgba(28,18,10,.36)) drop-shadow(1.4px 3px 3px rgba(28,18,10,.22))}
 #about .sun{left:16px;top:26px}
 #top-bar{display:grid;grid-template-columns:1fr auto;grid-template-areas:"b l" "n n";gap:0 12px;padding:8px 16px 6px;font-size:.82rem}
 .brand{grid-area:b}
@@ -195,6 +208,9 @@ footer{padding:0 16px 26px}
 @media(hover:none){.reel-scroll{scroll-snap-type:none;padding:30px 0}.card,.card.on{transform:none;opacity:1;transition:none}.card{contain:layout paint}}
 .slow .card,.slow .d-screen img{transition:none}
 @media(max-width:640px){#nav a,.lang button{padding:7px 2px}.d-top button{padding:8px 4px}.d-top{gap:8px}.d-nav{gap:10px}.c-btn{-webkit-touch-callout:none}}
+/* anteprime sfocate: devono stare dopo tutte le regole "background:" dei riquadri, altrimenti vengono azzerate */
+.c-img,.g-img{background-size:cover;background-position:center}
+.d-screen{background-size:contain;background-repeat:no-repeat;background-position:center}
 </style>
 </head><body>
 <header id="top-bar">
@@ -227,7 +243,7 @@ footer{padding:0 16px 26px}
 <path class="d" pathLength="1" style="--d:5.12s;--t:0.33s" d="M590 678 L590 846 M595 760 L710 760 M712 670 L712 850"/>
 <path class="d" pathLength="1" style="--d:5.40s;--t:0.36s" d="M785 674 L785 850 M785 672 L895 672 M785 748 L890 748 M785 848 L895 848"/>
       </g></mask></defs>
-      <image href="logo-tyche-linee.png" width="900" height="853" mask="url(#lm)"/>
+      <image href="logo-tyche-linee.webp" onerror="this.setAttribute('href','logo-tyche-linee.png')" width="900" height="853" mask="url(#lm)"/>
     </svg>
     <h1 class="name" id="name">Michele Ifigenia</h1>
     <div class="lance"></div>
@@ -248,6 +264,7 @@ footer{padding:0 16px 26px}
   <div class="band-head"><h2 data-i="collab">Collaborazioni</h2><span class="count" id="count-collab"></span></div>
   <div class="reel" id="reel-collab"><div class="reel-scroll"><ul class="track"></ul></div><div class="scrub"><i></i></div></div>
 </section>
+
 
 <section id="about">
   <h2 data-i="about">Percorso e contatti</h2>
@@ -283,8 +300,9 @@ footer{padding:0 16px 26px}
   <div class="d-gal" id="d-gal"></div>
   <div class="d-video" id="d-video"></div>
   <button class="d-next" id="d-nextlink"></button>
-</div><script>
-console.info("Tyche index: versione 21-09 notte (booster foto)");
+</div><script src="photos.js"></script>
+<script>
+console.info("Tyche index: versione 21-09 leggera-2");
 /* ============ TESTI ============ */
 var UI={
  it:{nav_works:"Lavori",nav_collab:"Collaborazioni",nav_about:"Percorso e contatti",works:"Lavori",collab:"Collaborazioni",about:"Percorso e contatti",f_perf:"Performance",f_short:"Short Film",scroll:"Scorri",back:"← Indietro",next:"Prossimo",video:"Video",foot:"Coreografia · Performance · Short film",works_n:"lavori",work_1:"lavoro"},
@@ -348,14 +366,33 @@ function ui(k){ return (UI[LANG]&&UI[LANG][k]) || UI.it[k] || k; }
 function L(o){ return (o && typeof o==="object") ? (o[LANG]||o.it) : o; }
 function esc(s){ var d=document.createElement("div"); d.textContent=s; return d.innerHTML; }
 function pad2(n){ return (n<10?"0":"")+n; }
-/* miniature leggere: thumbs/nome.webp (900px). Se non c'è, si usa l'originale */
-function thumb(s){ return "thumbs/"+s.replace(/\.[a-z0-9]+$/i,"")+".webp"; }
-/* versioni leggere delle foto: thumbs/ (lato lungo 900px) e med/ (1800px), entrambe .webp. Se mancano si usa l'originale.
-   Su telefono anche le foto grandi usano thumbs/ (bastano e pesano pochissimo); su pc usano med/. */
-function med(s){ return "med/"+s.replace(/\.[a-z0-9]+$/i,"")+".webp"; }
-var SMALLSCR=!!(window.matchMedia&&matchMedia("(max-width:640px)").matches);
-function big(s){ return SMALLSCR ? thumb(s) : med(s); }
-function thumbErr(im){ var f=im.getAttribute("data-full"); if(f && im.getAttribute("src")!==f){ im.src=f; } else miss(im); }
+/* ============ IMMAGINI LEGGERE ============
+   photos.js (creato da crea-immagini.html) dice per ogni foto: cartelle disponibili (img/480, img/1000, img/1800), larghezze reali,
+   proporzioni e un'anteprima minuscola sfocata. Il sito sceglie la misura giusta per schermo e connessione.
+   Se una foto non e' in photos.js si usa il file originale (pesante: rifai crea-immagini.html). */
+var DPR=Math.min(window.devicePixelRatio||1, SLOWNET?1.5:2.5);
+function rec(n){ return (window.PH && PH[n]) || null; }
+function dirUrl(r,d){ return "img/"+d+"/"+r.f+".webp"; }
+function avail(r){ var o=[]; for(var i=0;i<r.s.length;i++){ if(SLOWNET && r.s[i]>1000 && o.length) break; o.push(i); } return o; }   /* rete lenta: niente 1800 */
+function srcsetOf(r){ return avail(r).map(function(i){ return dirUrl(r,r.s[i])+" "+r.a[i]+"w"; }).join(", "); }
+function pickDir(r,css){ var need=css*DPR, ix=avail(r); for(var k=0;k<ix.length;k++){ if(r.a[ix[k]]>=need) return r.s[ix[k]]; } return r.s[ix[ix.length-1]]; }
+function heroDir(n){
+  var r=rec(n); if(!r) return 0; var ratio=r.w/r.h, dh=Math.min((SMALLSCR?.6:.74)*window.innerHeight,820), dw=Math.min(window.innerWidth,dh*ratio);
+  return pickDir(r,dw);
+}
+function galDir(n,pair){
+  var r=rec(n); if(!r) return 0; var W=window.innerWidth, css=SMALLSCR ? W : (pair ? (Math.min(W,1500)-72)/2 : Math.min(W*.9,.88*window.innerHeight*(r.w/r.h)));
+  return pickDir(r,css);
+}
+function lqOf(n){ var r=rec(n); return r ? ' style="background-image:url('+r.q+');--ar:'+(r.w/r.h).toFixed(4)+'"' : ""; }
+/* un tag <img> per una foto: con photos.js usa srcset (il browser sceglie), altrimenti l'originale */
+function imgTag(n,opt){
+  var r=rec(n), a=' data-full="'+n+'" alt="" decoding="async" onerror="imgErr(this)"'+(opt.extra||"");
+  if(!r) return '<img class="lz" src="'+n+'"'+a+'>';
+  var first=dirUrl(r,r.s[0]), ss=(opt.nosrcset||SLOWNET&&opt.small)?"":' srcset="'+srcsetOf(r)+'" sizes="'+(opt.sizes||"100vw")+'"';
+  return '<img src="'+first+'"'+ss+' width="'+r.w+'" height="'+r.h+'"'+a+'>';
+}
+function imgErr(im){ var f=im.getAttribute("data-full"); if(f && im.getAttribute("data-fb")!=="1" && im.getAttribute("src")!==f){ im.setAttribute("data-fb","1"); im.removeAttribute("srcset"); im.src=f; } else miss(im); }
 /* se un'immagine manca: testo con il nome del file e un fondo sfumato al suo posto */
 function grad(src){ var h=0; for(var i=0;i<src.length;i++) h=(h*31+src.charCodeAt(i))%360; return 'linear-gradient(160deg,hsl('+h+' 28% 13%),hsl('+((h+40)%360)+' 32% 36%))'; }
 function miss(im){
@@ -364,8 +401,9 @@ function miss(im){
   if(p.classList.contains("c-img")||p.classList.contains("g-img")) p.style.background=grad(s);
   if(typeof posM==="function") posM();
 }
-window.miss=miss; window.thumbErr=thumbErr;
-var slow = navigator.connection && (navigator.connection.saveData || /2g/.test(navigator.connection.effectiveType||""));
+window.miss=miss; window.imgErr=imgErr; window.thumbErr=imgErr;
+var slow = SLOWNET;   /* (SLOWNET e SMALLSCR sono definiti sopra) */
+var SMALLSCR=!!(window.matchMedia&&matchMedia("(max-width:640px)").matches);
 var RM_ = window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches;
 
 /* intro solo la prima volta della sessione (o con connessione lenta) */
@@ -388,11 +426,11 @@ var RM_ = window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").mat
 })();
 
 
-/* ============ RICAMI: fiori e sole ============
+/* ============ RICAMI: fiori, uccellino, sole, cervo ============
    Ogni ricamo è generato filo per filo (punto raso, nodi francesi, punto steli) e trasformato in un'immagine SVG:
    il browser la disegna una volta sola, senza migliaia di elementi vivi nella pagina. I ricami si costruiscono
    quando la pagina è già visibile e compaiono con una dissolvenza. Su telefono e dispositivi modesti (LITE)
-   ci sono meno fili e un filtro più semplice; su telefono (SMALL) ancora meno. */
+   ci sono meno fili e un filtro più semplice. */
 (function(){
   var hero=document.querySelector(".hero"), ring=document.getElementById("embroid"); if(!hero||!ring) return;
   var DEG=Math.PI/180, LIGHT=225*DEG, NS='xmlns="http://www.w3.org/2000/svg" ';
@@ -528,7 +566,7 @@ var RM_ = window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").mat
     el.style.transformOrigin=(bx/w*100).toFixed(1)+"% "+(fr*100).toFixed(1)+"%";
     el.style.transform="rotate("+(sp.rot||0)+"deg)";
   }
-  var FQ=[];   /* ricami del footer e del sole: si costruiscono solo quando la parte finale sta per comparire */
+  var FQ=[];   /* ricami del footer: si costruiscono solo quando il footer sta per comparire */
   function group(host,layer,specs,side,tag,late){
     var items=specs.map(function(sp,i){
       var el=document.createElement("div"); el.className="fl"; layer.appendChild(el);
@@ -547,10 +585,9 @@ var RM_ = window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").mat
     }
     layout(); window.addEventListener("resize",layout);
   }
-  /* due gruppi di fiori: radici vicine, steli curvi a ventaglio, altezze diverse */
+  /* schermata iniziale: solo il girasole giallo; in fondo alla pagina restano i due fiori (rosso e lilla) */
   group(hero,ring,[
-    {type:0,ext:46,wk:1,  dx:0,  lean:-24,rot:-2,flip:false,ls:0,dy:0},
-    {type:7,ext:22,wk:.8, dx:.4, lean:28, rot:3, flip:true, ls:1,dy:3}],1,"s");
+    {type:0,ext:46,wk:1,  dx:0,  lean:-24,rot:-2,flip:false,ls:0,dy:0}],1,"s");
   var foot=document.querySelector("footer");
   if(foot){
     var ring2=document.createElement("div"); ring2.className="embroid"; ring2.setAttribute("aria-hidden","true");
@@ -576,10 +613,10 @@ function Reel(root,items,onOpen){
     track.innerHTML=""; cards=[];
     items.forEach(function(w,i){
       var li=document.createElement("li"); li.className="card"; li.dataset.cat=w.cat;
-      li.innerHTML='<button class="c-btn"><span class="c-n">'+pad2(i+1)+'</span><span class="c-img">'+(w.cover?'<img src="'+thumb(w.cover)+'" data-full="'+w.cover+'" alt="" loading="lazy" decoding="async" onerror="thumbErr(this)">':'')+'</span><span class="c-t">'+esc(w.title)+'</span><span class="c-tag">'+esc(L(w.tag))+' · '+esc(L(w.dur))+'</span></button>';
+      li.innerHTML='<button class="c-btn"><span class="c-n">'+pad2(i+1)+'</span><span class="c-img"'+(w.cover?lqOf(w.cover):'')+'>'+(w.cover?imgTag(w.cover,{small:1,sizes:"(max-width:640px) 62vw, 300px",extra:' loading="lazy" onload="this.classList.add(\'ld\')"'}):'')+'</span><span class="c-t">'+esc(w.title)+'</span><span class="c-tag">'+esc(L(w.tag))+' · '+esc(L(w.dur))+'</span></button>';
       /* le prime due copertine si caricano subito (servono per l'attesa iniziale) */
       var im0=li.querySelector("img");
-      if(im0 && i<2 && root.id==="reel-perf"){ im0.loading="eager"; EAGER.push(new Promise(function(res){ if(im0.complete&&im0.naturalWidth) return res(); im0.addEventListener("load",res,{once:true}); im0.addEventListener("error",res,{once:true}); })); }
+      if(im0 && i<2 && root.id==="reel-perf"){ im0.loading="eager"; if(i===0) im0.setAttribute("fetchpriority","high"); EAGER.push(new Promise(function(res){ if(im0.complete&&im0.naturalWidth) return res(); im0.addEventListener("load",res,{once:true}); im0.addEventListener("error",res,{once:true}); })); }
       li.addEventListener("pointerenter",function(){ prefetch(w); },{passive:true});
       li.querySelector("button").onclick=function(){ onOpen(w); };
       li.querySelector("button").onfocus=function(){ setActive(li); };
@@ -643,32 +680,36 @@ function cnt(n){ return n+" "+(n===1?ui("work_1"):ui("works_n")); }
 
 /* ============ SCHEDA (foto intera su nero) ============ */
 var det=document.getElementById("detail"), cur=null, group=[];
-/* foto grande: compare subito la miniatura (già in cache dalla pellicola), poi si passa alla versione grande appena è pronta.
-   Ordine di ricerca: miniatura -> versione grande (med/ su pc) -> originale. Se non c'è nulla, riquadro col nome del file. */
+/* foto grande: prima l'anteprima sfocata (subito), poi la foto piccola (di solito gia' in cache dalla pellicola),
+   poi la misura giusta per lo schermo e la rete (1000 o 1800). Senza photos.js: l'originale. Se manca tutto: riquadro col nome. */
 var heroSeq=0;
 function showPhoto(){
   var c=cur; if(!c||!c.cover) return;
-  var im=document.getElementById("d-img"), sc=document.getElementById("d-screen"), seq=++heroSeq, best=0, aFail=false, bFail=false;
+  var im=document.getElementById("d-img"), sc=document.getElementById("d-screen"), seq=++heroSeq, best=0, r=rec(c.cover);
   sc.removeAttribute("data-missing"); im.style.display="block"; im.onload=posM; im.onerror=null;
-  function put(src,rank){ if(seq!==heroSeq||rank<=best) return; best=rank; im.src=src; im.classList.remove("f"); }
-  function dead(){
-    if(seq!==heroSeq||best||!aFail||!bFail) return;
-    im.classList.remove("f"); im.onerror=function(){ miss(im); }; im.src=c.cover;   /* mostra il nome del file mancante */
-  }
-  function probe(src,rank,onFail){ var p=new Image(); p.decoding="async"; p.onload=function(){ put(src,rank); }; p.onerror=onFail; p.src=src; }
+  sc.style.backgroundImage = r ? "url("+r.q+")" : "";
   im.classList.add("f");
-  probe(thumb(c.cover),1,function(){ aFail=true; dead(); });
-  probe(big(c.cover),2,function(){ probe(c.cover,3,function(){ bFail=true; dead(); }); });
+  function put(src,rank){ if(seq!==heroSeq||rank<=best) return; best=rank; im.src=src; im.classList.remove("f"); if(rank>=2) sc.style.backgroundImage=""; }
+  function dead(){ if(seq!==heroSeq||best) return; im.classList.remove("f"); sc.style.backgroundImage=""; im.onerror=function(){ miss(im); }; im.src=c.cover; }
+  function probe(src,rank,fail){ var p=new Image(); p.decoding="async"; p.onload=function(){ put(src,rank); }; p.onerror=fail||function(){}; p.src=src; }
+  function orig(){ probe(c.cover,3,dead); }
+  if(r){
+    var u1=dirUrl(r,r.s[0]), u2=dirUrl(r,heroDir(c.cover));
+    if(u1===u2) probe(u1,2,orig); else { probe(u1,1); probe(u2,2,orig); }
+  } else orig();
 }
-/* precaricamento: quando si tocca/passa sopra una copertina, o si apre una scheda, le foto grandi del lavoro
-   (e dei vicini) si scaricano in anticipo, cosi' l'apertura e il cambio pagina sono quasi istantanei */
+/* precaricamento (solo con rete buona): passando sopra/toccando una copertina, aprendo una scheda o subito dopo lo sblocco,
+   la foto grande del lavoro (e la prima della galleria) si scarica in anticipo. Non usa mai gli originali. */
 var PF={};
 function prefetch(w){
-  if(!w||PF[w.cover+w.title]) return; PF[w.cover+w.title]=1;
-  [w.cover].concat((w.extra||[]).slice(0,3)).forEach(function(f){ var p=new Image(); p.decoding="async"; p.src=big(f); });
+  if(SLOWNET||!w||!rec(w.cover)||PF[w.cover+w.title]) return; PF[w.cover+w.title]=1;
+  var urls=[dirUrl(rec(w.cover),heroDir(w.cover))], ex=(w.extra||[]), g=(w.fig==="straddle")?null:ex[0];
+  if(g&&rec(g)) urls.push(dirUrl(rec(g),galDir(g,ex.length>1)));
+  urls.forEach(function(u){ var p=new Image(); p.decoding="async"; p.src=u; });
 }
 /* la galleria sotto i testi: il layout è tutto in CSS; qui si aggiorna solo la proporzione di ogni foto appena carica */
 function galAr(im){
+  im.classList.add("ld");
   if(!im.naturalWidth||!im.naturalHeight) return;
   im.parentNode.parentNode.style.setProperty("--ar",(im.naturalWidth/im.naturalHeight).toFixed(3));
 }
@@ -684,6 +725,7 @@ function posM(){
   det.style.setProperty("--ov",Math.max(0,mh/2-(tf*.35+42)+22)+"px");
 }
 function mAr(im){
+  im.classList.add("ld");
   if(!im.naturalWidth||!im.naturalHeight) return;
   document.getElementById("d-m").style.setProperty("--ar",(im.naturalWidth/im.naturalHeight).toFixed(3)); posM();
 }
@@ -705,12 +747,13 @@ function fillDetail(){
   /* foto extra: a cavallo della principale (solo se il lavoro ha fig:"straddle") oppure in galleria pulita sotto i testi */
   var ex=w.extra||[], m=document.getElementById("d-m"), strad=(w.fig==="straddle"&&ex.length>0);
   m.classList.remove("on"); m.style.removeProperty("--ar");
-  m.innerHTML = strad ? '<span class="g-img"><img src="'+thumb(ex[0])+'" data-full="'+ex[0]+'" alt="" decoding="async" onload="mAr(this)" onerror="thumbErr(this)"></span>' : "";
+  m.innerHTML = strad ? '<span class="g-img"'+lqOf(ex[0])+'>'+imgTag(ex[0],{sizes:"(max-width:640px) 50vw, 26vw",extra:' onload="mAr(this)"'})+'</span>' : "";
+  if(strad && rec(ex[0])) m.style.setProperty("--ar",(rec(ex[0]).w/rec(ex[0]).h).toFixed(4));
   var rest=strad?ex.slice(1):ex, rows=[], k;
   for(k=0;k<rest.length;k+=2) rows.push(rest.slice(k,k+2));
   document.getElementById("d-gal").innerHTML=rows.map(function(r){
     return '<div class="gr'+(r.length===1?' one':'')+'">'+r.map(function(f){
-      return '<figure class="g"><span class="g-img"><img src="'+big(f)+'" data-full="'+f+'" alt="" loading="lazy" decoding="async" fetchpriority="low" onload="galAr(this)" onerror="thumbErr(this)"></span></figure>';
+      return '<figure class="g"'+(rec(f)?' style="--ar:'+(rec(f).w/rec(f).h).toFixed(4)+'"':'')+'><span class="g-img"'+lqOf(f)+'>'+imgTag(f,{sizes:(r.length>1?"(max-width:640px) 100vw, 48vw":"(max-width:640px) 100vw, 88vw"),extra:' loading="lazy" fetchpriority="low" onload="galAr(this)"'})+'</span></figure>';
     }).join("")+'</div>';
   }).join("");
   posM();
@@ -789,18 +832,21 @@ renderAll();
     if(done) return; done=true;
     ["wheel","touchmove","keydown"].forEach(function(n){ window.removeEventListener(n,block,{passive:false}); });
     de.classList.remove("wait"); de.classList.add("go");
-    if(!(navigator.connection&&navigator.connection.saveData)){ var k=0; setTimeout(function nxt(){ if(k>=ALL.length) return; prefetch(ALL[k++]); setTimeout(nxt,400); },1500); }
+    if(!SLOWNET && window.PH){ var k=0; setTimeout(function nxt(){ if(k>=3) return; prefetch(ALL[k++]); setTimeout(nxt,600); },1800); }   /* solo le prime 3 schede */
   }
   var minMs = de.classList.contains("seen") ? 500 : 2600;
   Promise.all([
     new Promise(function(r){ if(document.fonts&&document.fonts.ready) document.fonts.ready.then(r,r); else r(); }),
     new Promise(function(r){ if(window.__embDone) r(); else window.addEventListener("embroid",r,{once:true}); }),
     new Promise(function(r){ if(document.readyState==="complete") r(); else window.addEventListener("load",r,{once:true}); }),
-    Promise.all(EAGER),
+    SLOWNET ? Promise.resolve() : Promise.all(EAGER),   /* con rete lenta non si aspettano le copertine */
     new Promise(function(r){ setTimeout(r,minMs); })
   ]).then(go,go);
-  setTimeout(go,7000);
+  setTimeout(go,SLOWNET?4500:7000);
 })();
+
+/* service worker: dalla seconda visita le foto gia' viste arrivano dalla memoria del telefono/pc (poi si aggiornano in silenzio) */
+if("serviceWorker" in navigator && (location.protocol==="https:"||location.hostname==="localhost")) window.addEventListener("load",function(){ navigator.serviceWorker.register("sw.js").catch(function(){}); });
 </script>
 </body>
 </html>

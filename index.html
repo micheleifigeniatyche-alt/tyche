@@ -127,26 +127,29 @@ footer>span{position:relative;z-index:1}
 .d-m{position:absolute;z-index:2;height:clamp(215px,36vh,360px);aspect-ratio:var(--ar,3/2);margin:0;pointer-events:none;opacity:0;transition:opacity .35s}
 .d-m.on{opacity:1}
 .d-m:empty{display:none}
-.d-m .g-img{position:absolute;inset:0;aspect-ratio:auto}
+.d-m .g-img{position:absolute;inset:0;aspect-ratio:auto;box-shadow:0 0 0 1px rgba(233,232,228,.14),0 26px 46px -18px rgba(0,0,0,.9)}
 .d-info{--tf:clamp(2.4rem,8vw,7rem);position:relative;z-index:3;padding:0 24px 40px;display:grid;grid-template-columns:repeat(12,1fr);gap:0 24px;max-width:1500px;margin:calc(var(--tf)*-.55) auto 0}
 .d-meta{grid-column:1 / span 4;grid-row:2;font-size:.85rem;color:#8b8a86;font-weight:600;display:flex;flex-direction:column;gap:4px}
 .d-info h1{grid-column:1 / -1;grid-row:1;order:-1;margin:0 0 calc(42px + var(--ov,0px));color:#fff;font-size:var(--tf);font-weight:600;letter-spacing:-.055em;line-height:.9;pointer-events:none}
-.d-text{grid-column:5 / span 4;grid-row:2 / span 2}
+.d-text{grid-column:5 / span 4;grid-row:2}
 .d-text p{margin:0;font-size:1.05rem;line-height:1.6}
 .d-text blockquote{margin:0 0 26px;padding-left:18px;border-left:1px solid #555;font-size:1rem;line-height:1.6;color:#c9c8c3}
 .d-text blockquote small{display:block;margin-top:8px;font-size:.78rem;color:#8b8a86}
-#d-credits{grid-column:9 / span 4;grid-row:2 / span 2;margin:0;display:grid;gap:14px;align-content:start}
+#d-credits{grid-column:9 / span 4;grid-row:2;margin:0;display:grid;gap:14px;align-content:start}
 #d-credits div{border-top:1px solid #2c2c2e;padding-top:8px}
 #d-credits dt{font-size:.72rem;color:#8b8a86;font-weight:600}
 #d-credits dd{margin:2px 0 0;font-size:.95rem;font-weight:600;line-height:1.3}
-/* FOTO ACCANTO ALLA SINOSSI: le altre foto in cascata sovrapposta nella colonna a sinistra, sotto tag e durata.
-   Larghezze e sovrapposizioni le calcola lo script (percentuali della colonna); l'ombra stacca ogni foto dalla sottostante. */
-.d-cl{grid-column:1 / span 4;grid-row:3;margin-top:28px}
-.d-cl:empty{display:none}
-.g{position:relative;display:block;margin:0;width:var(--w,50%);margin-left:var(--ml,0%);margin-top:var(--mt,0%);z-index:var(--z,1)}
-.g-img{display:block;position:relative;aspect-ratio:var(--ar,3/2);background:#111;overflow:hidden;box-shadow:0 0 0 1px rgba(233,232,228,.11),0 28px 52px -22px rgba(0,0,0,.95)}
-.g-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.86) contrast(1.05)}
-.g-img::after{content:"";position:absolute;inset:0;background:var(--tint);pointer-events:none}
+/* GALLERIA, in stile editoriale (MUBI / A24): sotto i testi, pulita, senza filtri né ombre.
+   Due foto affiancate della stessa altezza (la larghezza segue la proporzione di ciascuna); una foto sola: grande e centrata.
+   Le foto della galleria si caricano a piena qualità (sono sotto la piega, quindi non pesano all'apertura). */
+.d-gal{max-width:1500px;margin:0 auto;padding:44px 24px 80px;display:grid;gap:24px}
+.d-gal:empty{display:none}
+.gr{display:flex;gap:24px;align-items:flex-start}
+.gr .g{flex:var(--ar,1.5) 1 0;min-width:0;margin:0}
+.gr.one{justify-content:center}
+.gr.one .g{flex:0 1 auto;width:min(100%,calc(88vh*var(--ar,1.5)))}
+.g-img{display:block;position:relative;aspect-ratio:var(--ar,3/2);background:#111;overflow:hidden}
+.g-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .d-video{padding:20px 24px 0;max-width:1500px;margin:0 auto}
 .d-video:empty{display:none}
 .d-video .lbl{font-size:.85rem;color:#8b8a86;font-weight:600;margin-bottom:12px}
@@ -159,10 +162,9 @@ footer>span{position:relative;z-index:1}
 .d-next:hover b{opacity:.7}
 
 @media(max-width:900px){
-.d-text{grid-column:1 / -1;grid-row:auto;margin-top:26px;order:1}
+.d-text{grid-column:1 / -1;grid-row:auto;margin-top:26px}
 .d-meta{grid-column:1 / -1;grid-row:auto}
-.d-cl{grid-column:1 / -1;grid-row:auto;margin-top:34px;order:2}
-#d-credits{grid-column:1 / -1;grid-row:auto;margin-top:34px;order:3}
+#d-credits{grid-column:1 / -1;grid-row:auto;margin-top:34px}
 #about h2{grid-column:1 / -1;margin-bottom:26px}
 .about-body{grid-column:1 / -1}
 }
@@ -181,6 +183,9 @@ footer>span{position:relative;z-index:1}
 .d-top{padding:12px 16px}
 .d-screen{height:60vh;height:60svh}
 .d-m{height:clamp(145px,24vh,215px)}
+.d-gal{padding:28px 16px 60px;gap:16px}
+.gr{flex-direction:column;gap:16px}
+.gr .g,.gr.one .g{flex:none;width:100%}
 .d-info,.d-video,.d-next{padding-left:16px;padding-right:16px}
 #about{padding:126px 16px 48px}
 footer{padding:0 16px 26px}
@@ -271,10 +276,10 @@ footer{padding:0 16px 26px}
   <div class="d-info">
     <h1 id="d-title"></h1>
     <div class="d-meta"><span id="d-tag"></span><span id="d-dur"></span></div>
-    <div class="d-cl" id="d-cl"></div>
     <div class="d-text"><blockquote id="d-quote"></blockquote><p id="d-desc"></p></div>
     <dl id="d-credits"></dl>
   </div>
+  <div class="d-gal" id="d-gal"></div>
   <div class="d-video" id="d-video"></div>
   <button class="d-next" id="d-nextlink"></button>
 </div><script>
@@ -291,11 +296,11 @@ var RM={"Autore / Coreografo":"Author / Choreographer","Autore":"Author","Dramat
 function X(it,en){ return {it:it,en:en}; }
 
 /* ============ LAVORI ============
-   cover = foto grande in cima alla scheda. extra = le altre foto: la prima va a cavallo della foto principale,
-   le altre in cascata accanto alla sinossi.
-   (Per rimettere un video basta aggiungere video:"https://..." alla scheda del lavoro.) */
+   cover = foto grande in cima alla scheda. extra = le altre foto, sotto i testi in galleria pulita.
+   Con fig:"straddle" la prima foto extra va invece a cavallo del bordo basso della foto principale (Atteone, Citerone short).
+   Per rimettere un video basta aggiungere video:"https://..." alla scheda del lavoro. */
 var WORKS=[
- {cat:"perf",title:"Amadriadi",cover:"amadriadi.png",extra:["2025amadriadi.png","bolognaamadriadi.jpg","bolognaamadraidi2.jpg","nolognaamadriadi1.jpg"],
+ {cat:"perf",title:"Amadriadi",cover:"amadriadi.png",extra:["bolognaamadriadi.jpg","2025amadriadi.png"],
   tag:X("Performance","Performance"),dur:X("15 minuti","15 minutes"),
   desc:X("Un’evocazione visiva si intreccia allo spazio urbano contemporaneo: la figura delle Amadriadi diventa un espediente per offrire allo spettatore un momento di sospensione. Le Amadriadi, creature mitologiche indissolubilmente legate agli alberi, vivono e muoiono con essi. Tra il verde emerge così un corpo capace di ondeggiare al vento, di radicarsi, di trasfigurarsi, portando con sé un fascino antico eppure sorprendentemente presente. Forse è proprio in questa apparizione, in questa possibilità di metamorfosi, che si rinnova continuamente la relazione entre l’uomo e la natura.",
    "A visual evocation weaves into contemporary urban space: the figure of the Hamadryads becomes a device to offer the viewer a moment of suspension. The Hamadryads, mythological creatures inseparably bound to trees, live and die with them. Among the green emerges a body able to sway in the wind, to take root, to transfigure itself, carrying an ancient yet surprisingly present charm. Perhaps it is precisely in this apparition, in this possibility of metamorphosis, that the relationship between humans and nature is continually renewed."),
@@ -310,7 +315,7 @@ var WORKS=[
   desc:X("Un canto corporeo, una preghiera di gesti e suoni che rinnova un’antica ritualità per ascendere al monte Citerone. Il cammino performativo diventa evocazione dei simboli dionisiaci, spazio di passaggio tra umano e divino. Il mito di Dioniso e le Baccanti di Euripide si intrecciano per celebrare il mistero, l’estasi e la forza trasformativa del rito.",
    "A bodily chant, a prayer of gestures and sounds that renews an ancient ritual to ascend Mount Cithaeron. The performative path becomes an evocation of Dionysian symbols, a space of passage between human and divine. The myth of Dionysus and Euripides’ Bacchae intertwine to celebrate mystery, ecstasy and the transformative force of ritual."),
   credits:["Autore / Coreografo: Michele Ifigenia Colturi","Dramaturg: Ciro Ciancio, Riccardo Vanetta","Performers: Enzina Cappelli, Andreyna Dela Soledad","Co-produzione: Aiep Ariella Vidach"]},
- {cat:"perf",title:"Atteone",cover:"atteone.png",extra:["2025atteone.jpeg"],
+ {cat:"perf",title:"Atteone",cover:"atteone.png",extra:["2025atteone.jpeg"],fig:"straddle",
   tag:X("Debutto 2027","Debut 2027"),dur:X("In fase di sviluppo","In development"),
   desc:X("Il lavoro è centrato su un’unica figura danzante che, nel corso della performance, incarna una metamorfosi tragica: da essere umano a cervo.",
    "The work centres on a single dancing figure who, over the course of the performance, embodies a tragic metamorphosis: from human being to stag."),
@@ -322,7 +327,7 @@ var WORKS=[
   quoteBy:"Ovidio, Metamorfosi / Ovid, Metamorphoses",
   desc:X("Studio coreografico sulla fluidità dei corpi e la fusione degli opposti materici.","A choreographic study on the fluidity of bodies and the fusion of material opposites."),
   credits:["Ricerca artistica: Michele Ifigenia Colturi"]},
- {cat:"short",title:"Citerone",cover:"citeroneandre.png",extra:["citerone2021.png"],
+ {cat:"short",title:"Citerone",cover:"citeroneandre.png",extra:["citerone2021.png"],fig:"straddle",
   tag:X("Short Film","Short Film"),dur:X("Cortometraggio","Short film"),
   desc:X("Sguardo cinematografico sull'ascesa rituale al monte Citerone.","A cinematic gaze on the ritual ascent of Mount Cithaeron."),
   credits:["Autore: Michele Ifigenia Colturi","Filmmaking: Lorenzo Basili"]}
@@ -351,6 +356,7 @@ function miss(im){
   im.style.display="none"; var p=im.parentNode, s=im.getAttribute("src")||"";
   p.setAttribute("data-missing",s.slice(0,40));
   if(p.classList.contains("c-img")||p.classList.contains("g-img")) p.style.background=grad(s);
+  if(typeof posM==="function") posM();
 }
 window.miss=miss; window.thumbErr=thumbErr;
 var slow = navigator.connection && (navigator.connection.saveData || /2g/.test(navigator.connection.effectiveType||""));
@@ -628,7 +634,7 @@ function Reel(root,items,onOpen){
 var reelP, reelS, reelC;
 function cnt(n){ return n+" "+(n===1?ui("work_1"):ui("works_n")); }
 
-/* ============ SCHEDA (foto intera su nero, una foto a cavallo, le altre in cascata accanto alla sinossi) ============ */
+/* ============ SCHEDA (foto intera su nero) ============ */
 var det=document.getElementById("detail"), cur=null, group=[];
 function showPhoto(){
   var c=cur; if(!c||!c.cover) return;
@@ -639,26 +645,10 @@ function showPhoto(){
     im.onerror=function(){ miss(im); }; im.onload=posM; im.fetchPriority="high"; im.src=c.cover; im.classList.remove("f");
   },120);
 }
-/* foto accanto alla sinossi: cascata sovrapposta nella colonna (o a tutta larghezza su schermi stretti).
-   Ognuna sale sopra la precedente e la copre un poco, alternando sinistra e destra; la prima è la più grande. */
-function galLayout(){
-  var figs=[].slice.call(document.querySelectorAll("#d-cl .g")), W=window.innerWidth, prev=null, col=W>900;
-  figs.forEach(function(g,i){
-    var ar=parseFloat(g.getAttribute("data-ar"))||1.5, land=ar>=1.1, big=(i===0);
-    var w = col ? (land?(big?100:78):(big?76:62)) : (W>640 ? (land?(big?74:56):(big?54:44)) : (land?(big?90:70):(big?66:52)));
-    var o = col?12:10, right=(i%2===1), ml, mt;
-    if(!prev){ ml=0; }
-    else if(right){ ml=Math.min(100-w, prev.ml+prev.w-o); }
-    else { ml=Math.max(0, prev.ml-w+o); }
-    ml=Math.max(0,Math.min(100-w,ml)); mt = i===0 ? 0 : -(col?9:8);
-    g.style.setProperty("--w",w+"%"); g.style.setProperty("--ml",ml.toFixed(1)+"%"); g.style.setProperty("--mt",mt+"%"); g.style.setProperty("--z",i+1);
-    prev={ml:ml,w:w};
-  });
-}
+/* la galleria sotto i testi: il layout è tutto in CSS; qui si aggiorna solo la proporzione di ogni foto appena carica */
 function galAr(im){
   if(!im.naturalWidth||!im.naturalHeight) return;
-  var fig=im.parentNode.parentNode, r=im.naturalWidth/im.naturalHeight;
-  im.parentNode.style.setProperty("--ar",r.toFixed(3)); fig.setAttribute("data-ar",r.toFixed(3)); galLayout();
+  im.parentNode.parentNode.style.setProperty("--ar",(im.naturalWidth/im.naturalHeight).toFixed(3));
 }
 /* la foto a cavallo: metà sopra il bordo inferiore della foto principale, metà sul nero; in basso a destra.
    Sposta anche i testi sotto quanto serve perché la parte che sporge non copra nulla. */
@@ -675,7 +665,7 @@ function mAr(im){
   if(!im.naturalWidth||!im.naturalHeight) return;
   document.getElementById("d-m").style.setProperty("--ar",(im.naturalWidth/im.naturalHeight).toFixed(3)); posM();
 }
-window.galAr=galAr; window.mAr=mAr; window.addEventListener("resize",function(){ galLayout(); posM(); });
+window.galAr=galAr; window.mAr=mAr; window.addEventListener("resize",posM);
 function fillDetail(){
   var w=cur, i=group.indexOf(w), n=group.length;
   document.getElementById("d-count").textContent=pad2(i+1)+" / "+pad2(n);
@@ -690,14 +680,18 @@ function fillDetail(){
     if(LANG==="en") role=RM[role]||role;
     return '<div><dt>'+esc(role)+'</dt><dd>'+esc(names)+'</dd></div>';
   }).join("");
-  /* la prima foto extra va a cavallo della principale; le altre in cascata accanto alla sinossi */
-  var ex=w.extra||[], m=document.getElementById("d-m");
+  /* foto extra: a cavallo della principale (solo se il lavoro ha fig:"straddle") oppure in galleria pulita sotto i testi */
+  var ex=w.extra||[], m=document.getElementById("d-m"), strad=(w.fig==="straddle"&&ex.length>0);
   m.classList.remove("on"); m.style.removeProperty("--ar");
-  m.innerHTML = ex.length ? '<span class="g-img"><img src="'+thumb(ex[0])+'" data-full="'+ex[0]+'" alt="" decoding="async" onload="mAr(this)" onerror="thumbErr(this)"></span>' : "";
-  document.getElementById("d-cl").innerHTML=ex.slice(1).map(function(f){
-    return '<figure class="g" data-ar="1.5"><span class="g-img"><img src="'+thumb(f)+'" data-full="'+f+'" alt="" loading="lazy" decoding="async" onload="galAr(this)" onerror="thumbErr(this)"></span></figure>';
+  m.innerHTML = strad ? '<span class="g-img"><img src="'+thumb(ex[0])+'" data-full="'+ex[0]+'" alt="" decoding="async" onload="mAr(this)" onerror="thumbErr(this)"></span>' : "";
+  var rest=strad?ex.slice(1):ex, rows=[], k;
+  for(k=0;k<rest.length;k+=2) rows.push(rest.slice(k,k+2));
+  document.getElementById("d-gal").innerHTML=rows.map(function(r){
+    return '<div class="gr'+(r.length===1?' one':'')+'">'+r.map(function(f){
+      return '<figure class="g"><span class="g-img"><img src="'+f+'" data-full="'+f+'" alt="" loading="lazy" decoding="async" onload="galAr(this)" onerror="thumbErr(this)"></span></figure>';
+    }).join("")+'</div>';
   }).join("");
-  galLayout(); posM();
+  posM();
   document.getElementById("d-video").innerHTML = w.video ? '<div class="lbl">'+ui("video")+'</div><div class="fr"><iframe src="'+w.video+'" loading="lazy" allowfullscreen></iframe></div>' : "";
   var nx=group[(i+1)%n], nl=document.getElementById("d-nextlink");
   nl.innerHTML = n>1 ? '<small>'+ui("next")+'</small><b>'+esc(nx.title)+' →</b>' : "";
@@ -712,6 +706,7 @@ function openWork(w){
   group = w.cat==="collab" ? COLLABS : WORKS.filter(function(x){ return x.cat===w.cat; });
   fillDetail(); showPhoto();
   det.classList.add("on"); det.scrollTop=0; document.body.style.overflow="hidden";
+  posM(); requestAnimationFrame(posM);   /* ora la scheda è visibile: si può misurare */
 }
 function closeWork(){ det.classList.remove("on"); document.getElementById("d-video").innerHTML=""; document.body.style.overflow=""; cur=null; }
 document.getElementById("d-back").onclick=closeWork;

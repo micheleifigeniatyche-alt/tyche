@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<!-- VERSIONE 21-09 leggera-6: disegno del logo anche su telefono (canvas leggero), caratteri pronti prima del via, foto precaricate e gia' decodificate. Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
+<!-- VERSIONE 21-09 leggera-7: linea rossa piu' in basso (quasi a sbarrare il nome), fiore giallo piu' piccolo. Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Michele Ifigenia / Tyche</title>
@@ -59,12 +59,12 @@ body,#top-bar{background-size:240px 240px}
 
 /* HERO */
 .hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:0 20px;overflow:hidden}
-.name-wrap{position:relative;display:inline-block;font-size:clamp(1.3rem,3.4vw,2.7rem);--logo:clamp(120px,17vw,190px);margin-top:calc(var(--logo) - .1em);--y:27%}
+.name-wrap{position:relative;display:inline-block;font-size:clamp(1.3rem,3.4vw,2.7rem);--logo:clamp(120px,17vw,190px);margin-top:calc(var(--logo) - .1em);--y:27%;--ly:46%}   /* --y: dove poggia il logo (non cambia); --ly: altezza della linea rossa, quasi a meta' del nome */
 .name{transition:opacity .35s;margin:0;font-size:1em;font-weight:600;line-height:1;text-transform:uppercase;white-space:nowrap;letter-spacing:-.03em;
   /* nome sempre presente (nessuna animazione): leggero spessore scuro + ombre morbide verso il basso a destra (luce da in alto a sinistra), nessun bordo bianco */
   text-shadow:.012em .024em 0 rgba(0,0,0,.42),.024em .05em 0 rgba(28,22,18,.22),.03em .07em .06em rgba(24,16,12,.3),.08em .2em .22em rgba(24,16,12,.2),.16em .42em .5em rgba(24,16,12,.1)}
 /* linea: filo rosso in rilievo, con sfumatura, un filo di luce sul bordo alto e ombre a piu' livelli */
-.lance{position:absolute;left:-5%;width:110%;top:var(--y);height:2.6px;margin-top:-1.3px;border-radius:1.3px;background:linear-gradient(#b02a39,#7a1520 55%,#5a0f18);box-shadow:inset 0 .5px 0 rgba(255,200,200,.3),0 1px 1px rgba(20,8,8,.45),0 3px 3px rgba(20,8,8,.28),0 9px 12px rgba(20,8,8,.16);z-index:2;transform:scaleX(0);transform-origin:left;animation:line 1.4s .5s cubic-bezier(.65,0,.25,1) both}
+.lance{position:absolute;left:-5%;width:110%;top:var(--ly);height:2.6px;margin-top:-1.3px;border-radius:1.3px;background:linear-gradient(#b02a39,#7a1520 55%,#5a0f18);box-shadow:inset 0 .5px 0 rgba(255,200,200,.3),0 1px 1px rgba(20,8,8,.45),0 3px 3px rgba(20,8,8,.28),0 9px 12px rgba(20,8,8,.16);z-index:2;transform:scaleX(0);transform-origin:left;animation:line 1.4s .5s cubic-bezier(.65,0,.25,1) both}
 .tyche-logo{position:absolute;left:50%;bottom:calc(100% - var(--y) + .14em);height:var(--logo);width:auto;aspect-ratio:900/853;transform:translateX(-50%);overflow:visible}
 .tyche-logo .d{stroke-dasharray:1 1;stroke-dashoffset:1;animation:dr var(--t) var(--d) cubic-bezier(.45,.05,.3,1) both}
 .cue{position:absolute;left:0;right:0;bottom:22px;text-align:center;font-size:.8rem;font-weight:600;color:var(--mute);opacity:0;transition:opacity .8s}
@@ -319,7 +319,7 @@ footer{padding:0 16px 26px}
   <button class="d-next" id="d-nextlink"></button>
 </div><script src="photos.js"></script>
 <script>
-console.info("Tyche index: versione 21-09 leggera-6");
+console.info("Tyche index: versione 21-09 leggera-7");
 /* coda "al via": i ricami compaiono solo quando parte l'animazione iniziale (vedi ATTESA) */
 var STARTED=false, startQ=[];
 function onStart(f){ if(STARTED) f(); else startQ.push(f); }
@@ -644,7 +644,7 @@ window.addEventListener("resize",function(){ if(CVL && document.documentElement.
   }
   /* schermata iniziale: solo il girasole giallo; in fondo alla pagina restano i due fiori (rosso e lilla) */
   group(hero,ring,[
-    {type:0,ext:46,wk:1,  dx:0,  lean:-24,rot:-2,flip:false,ls:0,dy:0}],1,"s",false,true);
+    {type:0,ext:46,wk:.85,dx:0,  lean:-24,rot:-2,flip:false,ls:0,dy:0}],1,"s",false,true);
   var foot=document.querySelector("footer");
   if(foot){
     var ring2=document.createElement("div"); ring2.className="embroid"; ring2.setAttribute("aria-hidden","true");

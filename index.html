@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<!-- VERSIONE 21-09 leggera-5: il fiore giallo e' gia' presente all'apertura (nessuna comparsa); gli altri ricami arrivano quando sono pronti fuori schermo. Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
+<!-- VERSIONE 21-09 leggera-6: disegno del logo anche su telefono (canvas leggero), caratteri pronti prima del via, foto precaricate e gia' decodificate. Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Michele Ifigenia / Tyche</title>
@@ -16,10 +16,20 @@
    Rete di sicurezza: se qualcosa si incastra, dopo 7 secondi la pausa si toglie comunque. */
 document.documentElement.classList.add("pre"); setTimeout(function(){ document.documentElement.classList.remove("pre"); },7000);
 var NET=navigator.connection||{}, SAVE=!!NET.saveData, SLOWNET=SAVE||/(^|-)(2g|3g)$/.test(NET.effectiveType||"");
+/* CARATTERE: nome e barra in alto restano invisibili (max 2,5 s) finche' il carattere web non e' arrivato, cosi' non "saltano" quando cambia il font;
+   la promessa __fontReady dice al sito quando il carattere e' pronto (il via all'animazione aspetta questo momento). */
+window.__fontReady=Promise.resolve();
 if(!SLOWNET){
   var pc=document.createElement("link"); pc.rel="preconnect"; pc.href="https://fonts.googleapis.com"; document.head.appendChild(pc);
   var pg=document.createElement("link"); pg.rel="preconnect"; pg.href="https://fonts.gstatic.com"; pg.crossOrigin=""; document.head.appendChild(pg);
   var ff=document.createElement("link"); ff.rel="stylesheet"; ff.href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;600&display=swap"; document.head.appendChild(ff);
+  document.documentElement.classList.add("fw");
+  window.__fontReady=new Promise(function(res){
+    var fin=function(){ document.documentElement.classList.remove("fw"); res(); };
+    ff.addEventListener("load",function(){ if(document.fonts&&document.fonts.load){ Promise.all([document.fonts.load("400 1em 'Inter Tight'"),document.fonts.load("600 1em 'Inter Tight'")]).then(fin,fin); } else fin(); });
+    ff.addEventListener("error",fin);
+    setTimeout(fin,2500);
+  });
 }
 </script>
 <style>
@@ -39,7 +49,7 @@ body,#top-bar{background-size:240px 240px}
 .band,#top-bar.dark,#detail,.d-top,.d-screen{background-size:240px 240px}
 
 /* BARRA IN ALTO (cambia colore da sola sulle fasce scure) */
-#top-bar{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 24px;padding:14px 24px;background:var(--paper) var(--gp);color:#0b0b0c;font-size:.92rem;font-weight:600;letter-spacing:-.005em;transition:color .25s,background-color .25s}
+#top-bar{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 24px;padding:14px 24px;background:var(--paper) var(--gp);color:#0b0b0c;font-size:.92rem;font-weight:600;letter-spacing:-.005em;transition:color .25s,background-color .25s,opacity .35s}
 #top-bar.dark{background:var(--ink) var(--gb);color:#fff}
 .brand{text-decoration:none}
 #nav{display:flex;gap:6px 26px;flex-wrap:wrap}
@@ -50,7 +60,7 @@ body,#top-bar{background-size:240px 240px}
 /* HERO */
 .hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:0 20px;overflow:hidden}
 .name-wrap{position:relative;display:inline-block;font-size:clamp(1.3rem,3.4vw,2.7rem);--logo:clamp(120px,17vw,190px);margin-top:calc(var(--logo) - .1em);--y:27%}
-.name{margin:0;font-size:1em;font-weight:600;line-height:1;text-transform:uppercase;white-space:nowrap;letter-spacing:-.03em;
+.name{transition:opacity .35s;margin:0;font-size:1em;font-weight:600;line-height:1;text-transform:uppercase;white-space:nowrap;letter-spacing:-.03em;
   /* nome sempre presente (nessuna animazione): leggero spessore scuro + ombre morbide verso il basso a destra (luce da in alto a sinistra), nessun bordo bianco */
   text-shadow:.012em .024em 0 rgba(0,0,0,.42),.024em .05em 0 rgba(28,22,18,.22),.03em .07em .06em rgba(24,16,12,.3),.08em .2em .22em rgba(24,16,12,.2),.16em .42em .5em rgba(24,16,12,.1)}
 /* linea: filo rosso in rilievo, con sfumatura, un filo di luce sul bordo alto e ombre a piu' livelli */
@@ -67,10 +77,14 @@ html.wait #nav{pointer-events:none;opacity:.35}
 @keyframes dr{to{stroke-dashoffset:0}}
 /* prima del via (sito ancora in caricamento) linea e logo restano fermi all'inizio */
 html.pre .lance,html.pre .tyche-logo .d{animation-play-state:paused}
+html.fw .name,html.fw #top-bar{opacity:0}   /* finche' il carattere web non e' pronto */
 .seen .lance{transform:none}
 .seen .tyche-logo .d{stroke-dashoffset:0}
 .seen *{animation:none!important}
 .lite .tyche-logo .d{animation:none;stroke-dashoffset:0}
+/* telefono: il logo si disegna su canvas (leggero); il logo SVG resta nascosto finche' il canvas lavora */
+html.cvlogo .tyche-logo{visibility:hidden}
+.cv-logo{position:absolute;left:50%;bottom:calc(100% - var(--y) + .14em);height:var(--logo);width:auto;aspect-ratio:900/853;transform:translateX(-50%)}
 
 
 /* RICAMI: fiori, uccellino, sole, cervo. Sono immagini SVG: compaiono con una dissolvenza appena pronte. */
@@ -305,7 +319,7 @@ footer{padding:0 16px 26px}
   <button class="d-next" id="d-nextlink"></button>
 </div><script src="photos.js"></script>
 <script>
-console.info("Tyche index: versione 21-09 leggera-5");
+console.info("Tyche index: versione 21-09 leggera-6");
 /* coda "al via": i ricami compaiono solo quando parte l'animazione iniziale (vedi ATTESA) */
 var STARTED=false, startQ=[];
 function onStart(f){ if(STARTED) f(); else startQ.push(f); }
@@ -412,12 +426,56 @@ var slow = SLOWNET;   /* (SLOWNET e SMALLSCR sono definiti sopra) */
 var SMALLSCR=!!(window.matchMedia&&matchMedia("(max-width:640px)").matches);
 var RM_ = window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches;
 
+/* ============ DISEGNO DEL LOGO SU CANVAS (telefono) ============
+   Stessi tratti, stessi tempi e stessa curva del disegno SVG, ma su canvas: ad ogni fotogramma si disegnano solo i tratti
+   (maschera) e si sovrappone il logo una volta sola. E' molto piu' leggero della maschera SVG animata, quindi scorre fluido. */
+var CVL=null;
+function logoCanvasPrepare(){
+  return new Promise(function(res0){
+    var res=function(ok){ if(!ok) document.documentElement.classList.remove("cvlogo"); res0(ok); };   /* se qualcosa non va, torna il logo SVG normale */
+    try{
+      var svg=document.querySelector(".tyche-logo"), paths=[].slice.call(svg.querySelectorAll("mask path.d")), r=svg.getBoundingClientRect();
+      if(!r.width||!paths.length) return res(false);
+      var dpr=Math.min(window.devicePixelRatio||1,3), W=Math.round(r.width*dpr), H=Math.round(r.height*dpr);
+      var cv=document.createElement("canvas"); cv.width=W; cv.height=H; cv.className="cv-logo"; cv.setAttribute("role","img"); cv.setAttribute("aria-label","Tyche");
+      svg.parentNode.insertBefore(cv,svg);
+      var mk=document.createElement("canvas"); mk.width=W; mk.height=H;
+      var S=paths.map(function(p){ return {p:new Path2D(p.getAttribute("d")), len:p.getTotalLength(), d:parseFloat(p.style.getPropertyValue("--d"))||0, t:parseFloat(p.style.getPropertyValue("--t"))||1}; });
+      var im=new Image(), href=svg.querySelector("image").getAttribute("href")||"logo-tyche-linee.webp", tried=0;
+      im.onerror=function(){ if(!tried++){ im.src="logo-tyche-linee.png"; } else { cv.remove(); res(false); } };
+      im.onload=function(){ CVL={cv:cv,mk:mk,im:im,S:S,W:W,H:H}; res(true); };
+      im.src=href;
+    }catch(e){ res(false); }
+  });
+}
+function bez(x1,y1,x2,y2){ return function(t){ var lo=0,hi=1,s=t,i; for(i=0;i<24;i++){ var x=3*(1-s)*(1-s)*s*x1+3*(1-s)*s*s*x2+s*s*s; if(x<t) lo=s; else hi=s; s=(lo+hi)/2; } return 3*(1-s)*(1-s)*s*y1+3*(1-s)*s*s*y2+s*s*s; }; }
+var LOGO_EASE=bez(.45,.05,.3,1);
+function logoCanvasPlay(){
+  if(!CVL) return;
+  var C=CVL, ctx=C.cv.getContext("2d"), mc=C.mk.getContext("2d"), t0=performance.now();
+  function frame(now){
+    var t=(now-t0)/1000, all=true;
+    mc.setTransform(1,0,0,1,0,0); mc.clearRect(0,0,C.W,C.H); mc.setTransform(C.W/900,0,0,C.H/853,0,0);
+    mc.lineWidth=40; mc.lineCap="round"; mc.lineJoin="round"; mc.strokeStyle="#fff";
+    for(var i=0;i<C.S.length;i++){
+      var s=C.S[i], u=(t-s.d)/s.t; if(u<=0){ all=false; continue; } if(u<1) all=false;
+      var p=LOGO_EASE(Math.min(1,u)); mc.setLineDash([s.len,s.len]); mc.lineDashOffset=s.len*(1-p); mc.stroke(s.p);
+    }
+    ctx.globalCompositeOperation="source-over"; ctx.clearRect(0,0,C.W,C.H); ctx.drawImage(C.im,0,0,C.W,C.H);
+    ctx.globalCompositeOperation="destination-in"; ctx.drawImage(C.mk,0,0); ctx.globalCompositeOperation="source-over";
+    if(!all) requestAnimationFrame(frame); else { C.mk.width=C.mk.height=1; }   /* finito: libera la maschera, il canvas resta com'e' */
+  }
+  requestAnimationFrame(frame);
+}
+/* se si ruota lo schermo/ridimensiona a disegno finito, si torna al logo SVG (statico e nitido) */
+window.addEventListener("resize",function(){ if(CVL && document.documentElement.classList.contains("go")){ document.documentElement.classList.remove("cvlogo"); if(CVL.cv.parentNode) CVL.cv.parentNode.removeChild(CVL.cv); CVL=null; } });
+
 /* intro solo la prima volta della sessione (o con connessione lenta) */
 (function(){
   var seen=false; try{ seen = sessionStorage.getItem("seen")==="1"; sessionStorage.setItem("seen","1"); }catch(e){}
   if(seen || slow) document.documentElement.classList.add("seen");
   /* telefono: niente disegno animato del logo (maschera animata, pesante); nome e linea restano */
-  if(window.matchMedia && matchMedia("(max-width:640px)").matches) document.documentElement.classList.add("lite");
+  if(window.matchMedia && matchMedia("(max-width:640px)").matches){ document.documentElement.classList.add("lite"); if(!(seen||slow)) document.documentElement.classList.add("cvlogo"); }
   if(slow) document.documentElement.classList.add("slow");
 })();
 
@@ -690,21 +748,27 @@ function showPhoto(){
   im.classList.add("f");
   function put(src,rank){ if(seq!==heroSeq||rank<=best) return; best=rank; im.src=src; im.classList.remove("f"); if(rank>=2) sc.style.backgroundImage=""; }
   function dead(){ if(seq!==heroSeq||best) return; im.classList.remove("f"); sc.style.backgroundImage=""; im.onerror=function(){ miss(im); }; im.src=c.cover; }
-  function probe(src,rank,fail){ var p=new Image(); p.decoding="async"; p.onload=function(){ put(src,rank); }; p.onerror=fail||function(){}; p.src=src; }
+  function probe(src,rank,fail){ var p=new Image(); p.decoding="async"; p.onload=function(){ if(p.decode) p.decode().then(function(){ put(src,rank); },function(){ put(src,rank); }); else put(src,rank); }; p.onerror=fail||function(){}; p.src=src; }   /* si mostra solo a foto gia' decodificata: niente scatti */
   function orig(){ probe(c.cover,3,dead); }
   if(r){
     var u1=dirUrl(r,r.s[0]), u2=dirUrl(r,heroDir(c.cover));
     if(u1===u2) probe(u1,2,orig); else { probe(u1,1); probe(u2,2,orig); }
   } else orig();
 }
-/* precaricamento (solo con rete buona): passando sopra/toccando una copertina, aprendo una scheda o subito dopo lo sblocco,
-   la foto grande del lavoro (e la prima della galleria) si scarica in anticipo. Non usa mai gli originali. */
-var PF={};
+/* PRECARICAMENTO (solo con rete buona): le foto si scaricano E si decodificano prima che servano.
+   - dopo lo sblocco: le copertine della pellicola (piccole) e poi, una scheda alla volta, foto grande + prime della galleria di TUTTI i lavori;
+   - passando/toccando una copertina o aprendo una scheda: quel lavoro e i vicini subito. Non usa mai gli originali. */
+var PF={}, WM={};
+function warm(u){ if(!u||WM[u]) return; WM[u]=1; var p=new Image(); p.decoding="async"; p.src=u; if(p.decode) p.decode().catch(function(){}); }
 function prefetch(w){
   if(SLOWNET||!w||!rec(w.cover)||PF[w.cover+w.title]) return; PF[w.cover+w.title]=1;
-  var urls=[dirUrl(rec(w.cover),heroDir(w.cover))], ex=(w.extra||[]), g=(w.fig==="straddle")?null:ex[0];
-  if(g&&rec(g)) urls.push(dirUrl(rec(g),galDir(g,ex.length>1)));
-  urls.forEach(function(u){ var p=new Image(); p.decoding="async"; p.src=u; });
+  warm(dirUrl(rec(w.cover),heroDir(w.cover)));
+  var ex=(w.extra||[]);
+  ex.slice(0,2).forEach(function(f,i){ var r=rec(f); if(!r) return; warm(dirUrl(r,(i===0&&w.fig==="straddle")?r.s[0]:galDir(f,ex.length>1))); });
+}
+/* le copertine della pellicola: passano da "lazy" a subito, e si decodificano una dopo l'altra (leggere: 480-1000 px) */
+function warmCards(){
+  [].slice.call(document.querySelectorAll(".card img")).forEach(function(im,i){ setTimeout(function(){ im.loading="eager"; if(im.decode) im.decode().catch(function(){}); },i*140); });
 }
 /* la galleria sotto i testi: il layout è tutto in CSS; qui si aggiorna solo la proporzione di ogni foto appena carica */
 function galAr(im){
@@ -832,18 +896,20 @@ renderAll();
     if(done) return; done=true;
     ["wheel","touchmove","keydown"].forEach(function(n){ window.removeEventListener(n,block,{passive:false}); });
     de.classList.remove("wait"); de.classList.add("go");
-    if(!SLOWNET && window.PH){ var k=0; setTimeout(function nxt(){ if(k>=3) return; prefetch(ALL[k++]); setTimeout(nxt,600); },1800); }   /* solo le prime 3 schede */
+    if(!SLOWNET && window.PH){ setTimeout(warmCards,600); var k=0; setTimeout(function nxt(){ if(k>=ALL.length) return; prefetch(ALL[k++]); setTimeout(nxt,450); },1600); }   /* tutte le schede, una alla volta */
   }
   function start(){
     if(STARTED) return; STARTED=true;
     de.classList.remove("pre");                      /* via: linea e logo partono */
     startQ.splice(0).forEach(function(f){ f(); });   /* via: compaiono i fiori */
-    /* durata dell'animazione da questo momento: logo che si disegna ~6,3 s; sul telefono il logo non si disegna (solo linea e fiori) */
-    var dur = de.classList.contains("seen") ? 0 : (de.classList.contains("lite") ? 2600 : 6600);
+    if(de.classList.contains("cvlogo")) logoCanvasPlay();   /* via: sul telefono il logo si disegna su canvas */
+    /* durata dell'animazione da questo momento: linea + logo che si disegna ~6,3 s (anche sul telefono) */
+    var dur = de.classList.contains("seen") ? 0 : 6600;
     setTimeout(go,dur);
   }
   Promise.all([
-    new Promise(function(r){ if(document.fonts&&document.fonts.ready) document.fonts.ready.then(r,r); else r(); }),
+    window.__fontReady,                                   /* carattere web davvero arrivato (o errore/2,5 s) */
+    de.classList.contains("cvlogo") ? logoCanvasPrepare() : Promise.resolve(),   /* telefono: canvas del logo pronto */
     new Promise(function(r){ if(window.__embDone) r(); else window.addEventListener("embroid",r,{once:true}); }),
     new Promise(function(r){ if(document.readyState==="complete") r(); else window.addEventListener("load",r,{once:true}); }),
     SLOWNET ? Promise.resolve() : Promise.all(EAGER),   /* con rete lenta non si aspettano le copertine */

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<!-- VERSIONE 21-09 leggera-3: nome gia' presente all'apertura, linea/logo/fiori arrivano piano (+0,5 s), ombre senza bordo bianco, ricami nitidi su telefono. Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
+<!-- VERSIONE 21-09 leggera-5: il fiore giallo e' gia' presente all'apertura (nessuna comparsa); gli altri ricami arrivano quando sono pronti fuori schermo. Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Michele Ifigenia / Tyche</title>
@@ -12,6 +12,9 @@
 <script>
 /* RETE: se la connessione e' lenta (2g/3g) o c'e' il risparmio dati, il sito non scarica il carattere web, non precarica nulla
    e usa solo le foto piccole. Con una rete buona carica tutto come prima. */
+/* ANIMAZIONE INIZIALE: resta in pausa ("pre") finche' il sito non e' caricato; poi parte e la schermata resta ferma fino alla fine.
+   Rete di sicurezza: se qualcosa si incastra, dopo 7 secondi la pausa si toglie comunque. */
+document.documentElement.classList.add("pre"); setTimeout(function(){ document.documentElement.classList.remove("pre"); },7000);
 var NET=navigator.connection||{}, SAVE=!!NET.saveData, SLOWNET=SAVE||/(^|-)(2g|3g)$/.test(NET.effectiveType||"");
 if(!SLOWNET){
   var pc=document.createElement("link"); pc.rel="preconnect"; pc.href="https://fonts.googleapis.com"; document.head.appendChild(pc);
@@ -62,6 +65,8 @@ html.wait #nav{pointer-events:none;opacity:.35}
 #nav{transition:opacity .5s}
 @keyframes line{to{transform:scaleX(1)}}
 @keyframes dr{to{stroke-dashoffset:0}}
+/* prima del via (sito ancora in caricamento) linea e logo restano fermi all'inizio */
+html.pre .lance,html.pre .tyche-logo .d{animation-play-state:paused}
 .seen .lance{transform:none}
 .seen .tyche-logo .d{stroke-dashoffset:0}
 .seen *{animation:none!important}
@@ -300,7 +305,10 @@ footer{padding:0 16px 26px}
   <button class="d-next" id="d-nextlink"></button>
 </div><script src="photos.js"></script>
 <script>
-console.info("Tyche index: versione 21-09 leggera-3");
+console.info("Tyche index: versione 21-09 leggera-5");
+/* coda "al via": i ricami compaiono solo quando parte l'animazione iniziale (vedi ATTESA) */
+var STARTED=false, startQ=[];
+function onStart(f){ if(STARTED) f(); else startQ.push(f); }
 /* ============ TESTI ============ */
 var UI={
  it:{nav_works:"Lavori",nav_collab:"Collaborazioni",nav_about:"Percorso e contatti",works:"Lavori",collab:"Collaborazioni",about:"Percorso e contatti",f_perf:"Performance",f_short:"Short Film",scroll:"Scorri",back:"← Indietro",next:"Prossimo",video:"Video",foot:"Coreografia · Performance · Short film",works_n:"lavori",work_1:"lavoro"},
@@ -539,9 +547,11 @@ var RM_ = window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").mat
   var Q=[], idle=window.requestIdleCallback?function(fn){ requestIdleCallback(fn,{timeout:600}); }:function(fn){ setTimeout(fn,60); };
   var embDone=false;
   function pump(){ var t=Q.shift(); if(!t){ if(!embDone){ embDone=true; window.__embDone=true; window.dispatchEvent(new Event("embroid")); } return; } t(); idle(pump); }
-  function put(box,svg){
+  /* now=true: il ricamo e' gia' presente alla prima schermata (nessuna dissolvenza, nessuna comparsa); altrimenti dissolvenza lenta */
+  function put(box,svg,now){
     var im=new Image(); im.alt=""; im.decoding="sync"; im.draggable=false;
-    var show=function(){ box.classList.add("on"); };
+    if(now){ box.style.transition="none"; box.classList.add("on"); }
+    var show=function(){ if(!now) box.classList.add("on"); };
     im.onload=show; im.onerror=show; box.appendChild(im);
     im.src=URL.createObjectURL(new Blob([svg],{type:"image/svg+xml"}));
   }
@@ -553,14 +563,15 @@ var RM_ = window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").mat
     el.style.transformOrigin=(bx/w*100).toFixed(1)+"% "+(fr*100).toFixed(1)+"%";
     el.style.transform="rotate("+(sp.rot||0)+"deg)";
   }
-  var FQ=[];   /* ricami del footer: si costruiscono solo quando il footer sta per comparire */
-  function group(host,layer,specs,side,tag,late){
+  var FQ=[], nowQ=[];   /* FQ: ricami del footer e sole, costruiti quando la zona si avvicina; nowQ: ricami presenti da subito */
+  function group(host,layer,specs,side,tag,late,now){
     var items=specs.map(function(sp,i){
       var el=document.createElement("div"); el.className="fl"; layer.appendChild(el);
-      (late?FQ:Q).push(function(){
+      var build=function(){
         var flip=!!sp.flip, T=Object.assign({},TYPES[sp.type],{ext:sp.ext,lean:flip?-sp.lean:sp.lean,flip:flip,ls:sp.ls});
-        put(el,flower(sp.type,T,tag+i));
-      });
+        put(el,flower(sp.type,T,tag+i),now);
+      };
+      if(now) nowQ.push(build); else (late?FQ:Q).push(build);
       return {el:el,sp:sp};
     });
     function layout(){
@@ -571,10 +582,11 @@ var RM_ = window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").mat
       });
     }
     layout(); window.addEventListener("resize",layout);
+    nowQ.splice(0).forEach(function(b){ b(); });   /* i ricami "gia' presenti" si costruiscono subito, prima che la pagina si mostri */
   }
   /* schermata iniziale: solo il girasole giallo; in fondo alla pagina restano i due fiori (rosso e lilla) */
   group(hero,ring,[
-    {type:0,ext:46,wk:1,  dx:0,  lean:-24,rot:-2,flip:false,ls:0,dy:0}],1,"s");
+    {type:0,ext:46,wk:1,  dx:0,  lean:-24,rot:-2,flip:false,ls:0,dy:0}],1,"s",false,true);
   var foot=document.querySelector("footer");
   if(foot){
     var ring2=document.createElement("div"); ring2.className="embroid"; ring2.setAttribute("aria-hidden","true");
@@ -583,11 +595,11 @@ var RM_ = window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").mat
       {type:3,ext:46,wk:1,  dx:0,  lean:22, rot:2, flip:false,ls:1,dy:0},
       {type:4,ext:20,wk:.8, dx:.4, lean:-28,rot:-3,flip:true, ls:0,dy:3}],-1,"u",true);
   }
-  /* sole, in "Percorso e contatti" (in alto a sinistra); come i fiori del footer nasce solo quando ci si avvicina */
+  /* sole, in "Percorso e contatti" (in alto a sinistra); come i fiori del footer si costruisce con largo anticipo (1600 px prima), cosi' quando ci arrivi e' gia' li' */
   var abt=document.getElementById("about");
   if(abt){ var sun=document.createElement("div"); sun.className="sun"; abt.appendChild(sun); FQ.push(function(){ put(sun,sunSVG()); }); }
   var wake=function(){ while(FQ.length) Q.push(FQ.shift()); idle(pump); }, tgt=abt||foot;
-  if(tgt){ if("IntersectionObserver" in window){ var io=new IntersectionObserver(function(en){ if(en[0].isIntersecting){ io.disconnect(); wake(); } },{rootMargin:"700px 0px"}); io.observe(tgt); } else wake(); }
+  if(tgt){ if("IntersectionObserver" in window){ var io=new IntersectionObserver(function(en){ if(en[0].isIntersecting){ io.disconnect(); wake(); } },{rootMargin:"1600px 0px"}); io.observe(tgt); } else wake(); }
   idle(pump);
 })();
 
@@ -804,10 +816,11 @@ reelS=new Reel(document.getElementById("reel-short"),SHORT,openWork);
 reelC=new Reel(document.getElementById("reel-collab"),COLLABS,openWork);
 renderAll();
 
-/* ============ ATTESA ============
-   Prima di lasciar scendere l'ospite dalla schermata bianca aspettiamo che sia tutto pronto: caratteri, ricami di inizio pagina,
-   prime copertine dei lavori e la fine dell'animazione iniziale. Nel frattempo lo scroll è fermo (pc e telefono) e il menù spento.
-   Poi compare "Scorri" e la pagina si sblocca. Rete di sicurezza: dopo 8 secondi si sblocca comunque. */
+/* ============ ATTESA E VIA ============
+   1) il sito si carica (caratteri, ricami, prime copertine): 1-2 secondi, con il nome gia' visibile;
+   2) poi PARTE l'animazione iniziale (linea, logo che si disegna, fiori);
+   3) la schermata resta ferma (niente scroll, menu spento) finche' l'animazione non e' finita: poi compare "Scorri" e si sblocca.
+   Cosi' tutti la vedono per intero. Alla seconda visita della sessione l'animazione e' saltata. */
 (function(){
   var de=document.documentElement, done=false, keys=[" ","PageDown","PageUp","ArrowDown","ArrowUp","End","Home"];
   de.classList.add("wait");
@@ -821,16 +834,23 @@ renderAll();
     de.classList.remove("wait"); de.classList.add("go");
     if(!SLOWNET && window.PH){ var k=0; setTimeout(function nxt(){ if(k>=3) return; prefetch(ALL[k++]); setTimeout(nxt,600); },1800); }   /* solo le prime 3 schede */
   }
-  /* la schermata resta ferma finche' l'animazione iniziale non e' finita (poi compare "Scorri"): sul telefono il logo non si disegna, quindi si aspetta meno */
-  var minMs = de.classList.contains("seen") ? 500 : (de.classList.contains("lite") ? 2900 : 6400);
+  function start(){
+    if(STARTED) return; STARTED=true;
+    de.classList.remove("pre");                      /* via: linea e logo partono */
+    startQ.splice(0).forEach(function(f){ f(); });   /* via: compaiono i fiori */
+    /* durata dell'animazione da questo momento: logo che si disegna ~6,3 s; sul telefono il logo non si disegna (solo linea e fiori) */
+    var dur = de.classList.contains("seen") ? 0 : (de.classList.contains("lite") ? 2600 : 6600);
+    setTimeout(go,dur);
+  }
   Promise.all([
     new Promise(function(r){ if(document.fonts&&document.fonts.ready) document.fonts.ready.then(r,r); else r(); }),
     new Promise(function(r){ if(window.__embDone) r(); else window.addEventListener("embroid",r,{once:true}); }),
     new Promise(function(r){ if(document.readyState==="complete") r(); else window.addEventListener("load",r,{once:true}); }),
     SLOWNET ? Promise.resolve() : Promise.all(EAGER),   /* con rete lenta non si aspettano le copertine */
-    new Promise(function(r){ setTimeout(r,minMs); })
-  ]).then(go,go);
-  setTimeout(go,SLOWNET?4500:8000);
+    new Promise(function(r){ setTimeout(r,de.classList.contains("seen")?400:1300); })   /* almeno 1,3 s di calma prima del via */
+  ]).then(start,start);
+  setTimeout(start,4000);                     /* rete di sicurezza: dopo 4 secondi parte comunque */
+  setTimeout(go,SLOWNET?6000:14000);          /* rete di sicurezza: si sblocca comunque */
 })();
 
 /* service worker: dalla seconda visita le foto gia' viste arrivano dalla memoria del telefono/pc (poi si aggiornano in silenzio) */

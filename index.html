@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<!-- VERSIONE 23-09 leggera-11: teaser piu' piccoli con locandina solo testo; Citerone short film: manifesto solo nella pellicola; Amadriadi con la foto di Bologna in piedi; Citerone short film con le foto scambiate. Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
+<!-- VERSIONE 23-09 leggera-13: teaser di Atteone accanto alla sinossi; foto grande sfumata nel nero; galleria piu' contenuta su computer; locandina Citerone intera nella pellicola; teaser piu' piccoli con locandina solo testo; Citerone short film: manifesto solo nella pellicola; Amadriadi con la foto di Bologna in piedi; Citerone short film con le foto scambiate. Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Michele Ifigenia / Tyche</title>
@@ -122,7 +122,7 @@ html.cvlogo .tyche-logo{visibility:hidden}
 /* le foto compaiono con una dissolvenza sopra la loro anteprima sfocata (che arriva subito, dentro photos.js) */
 .c-img img,.g-img img{opacity:0;transition:opacity .45s ease}
 .c-img img.ld,.g-img img.ld{opacity:1}
-.c-img::after,.d-screen::after{content:"";position:absolute;inset:0;background:var(--tint);pointer-events:none}
+.c-img::after,.d-screen::after{content:"";position:absolute;inset:0;z-index:2;background:var(--tint);pointer-events:none}
 [data-missing]::before{content:attr(data-missing);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:8px;font-size:.72rem;color:#77756f;text-align:center}
 .c-t{display:block;margin-top:12px;font-size:1.05rem;font-weight:600;letter-spacing:-.015em;line-height:1.15}
 .c-tag{display:block;margin-top:4px;font-size:.78rem;color:#8b8a86;line-height:1.3}
@@ -148,7 +148,10 @@ footer>span{position:relative;z-index:1}
 .d-top>*{white-space:nowrap}
 .d-nav{display:flex;gap:20px}
 .d-top button:hover{opacity:.7}
-.d-screen{position:relative;height:min(74vh,820px);height:min(74svh,820px);background:#000 var(--gb);display:flex;align-items:center;justify-content:center}
+.d-screen{position:relative;height:min(74vh,820px);height:min(74svh,820px);background:#000 var(--gb);display:flex;align-items:center;justify-content:center;overflow:hidden}
+/* la foto si fonde col nero: i suoi bordi sfumano, e dietro un alone morbido dei suoi stessi colori (dall'anteprima minuscola) che si spegne verso i lati */
+.d-screen::before{content:"";position:absolute;inset:-10%;background:var(--lq,none) center/contain no-repeat;filter:blur(80px) brightness(.55) saturate(1.1);transform:scale(1.45);pointer-events:none;-webkit-mask-image:radial-gradient(closest-side,#000 35%,transparent);mask-image:radial-gradient(closest-side,#000 35%,transparent)}
+.d-screen img{position:relative;z-index:1;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent),linear-gradient(transparent,#000 5%,#000 95%,transparent);-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent),linear-gradient(transparent,#000 5%,#000 95%,transparent);mask-composite:intersect}
 .d-screen img{max-width:100%;max-height:100%;width:auto;height:auto;display:block;transition:opacity .25s}
 .d-screen img.f{opacity:0}
 .d-stage{position:relative}
@@ -177,6 +180,7 @@ footer>span{position:relative;z-index:1}
 .gr{display:flex;gap:24px;align-items:flex-start}
 .gr .g{flex:var(--ar,1.5) 1 0;min-width:0;margin:0}
 .gr.one{justify-content:center}
+@media(min-width:641px){.gr:not(.one){width:min(100%,calc(80vh*var(--sum,3) + 24px));justify-self:center}}
 .gr.one .g{flex:0 1 auto;width:min(100%,calc(88vh*var(--ar,1.5)))}
 .g-img{display:block;position:relative;aspect-ratio:var(--ar,3/2);background:#111;overflow:hidden}
 .g-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
@@ -202,6 +206,14 @@ footer>span{position:relative;z-index:1}
 .vo:focus-visible{outline:1px solid #e9e8e4;outline-offset:-6px}
 .vf.play .vo{opacity:0;pointer-events:none}
 @media(prefers-reduced-motion:reduce){.vo,.vp,.vp::before,.vt b{transition:none}}
+/* teaser accanto alla sinossi (videoSide): meta e crediti a sinistra, sinossi al centro, video a destra */
+.d-info.withvid .d-video{grid-column:9 / span 4;grid-row:2 / span 2;padding:0;margin:0;max-width:none;align-self:start}
+.d-info.withvid .d-text{grid-row:2 / span 2}
+.d-info.withvid #d-credits{grid-column:1 / span 4;grid-row:3;margin-top:34px}
+.d-info.withvid .d-video .lbl{max-width:none;margin:0 0 12px}
+.d-info.withvid .vf{width:min(100%,calc(60vh*var(--vr)));width:min(100%,calc(60svh*var(--vr)));margin:0}
+.d-info.withvid .vt b{font-size:clamp(1.3rem,2.2vw,2.1rem)}
+.d-info.withvid .vp{width:42px;height:42px}
 .d-next{display:block;width:100%;text-align:left;padding:70px 24px 60px;max-width:1500px;margin:0 auto}
 .d-next:empty{display:none}
 .d-next small{display:block;font-size:.85rem;color:#8b8a86;font-weight:600}
@@ -212,6 +224,10 @@ footer>span{position:relative;z-index:1}
 .d-text{grid-column:1 / -1;grid-row:auto;margin-top:26px}
 .d-meta{grid-column:1 / -1;grid-row:auto}
 #d-credits{grid-column:1 / -1;grid-row:auto;margin-top:34px}
+.d-info.withvid .d-video,.d-info.withvid .d-text,.d-info.withvid #d-credits{grid-column:1 / -1;grid-row:auto}
+.d-info.withvid .d-video{margin-top:34px;order:1}
+.d-info.withvid #d-credits{order:2}
+.d-info.withvid .vf{margin:0 auto}
 #about h2{grid-column:1 / -1;margin-bottom:26px}
 .about-body{grid-column:1 / -1}
 }
@@ -236,6 +252,8 @@ footer>span{position:relative;z-index:1}
 .gr .g,.gr.one .g{flex:none;width:100%}
 .d-info,.d-video,.d-next{padding-left:16px;padding-right:16px}
 .d-video{padding-left:0;padding-right:0}.d-video .lbl{margin-left:16px;margin-right:16px}.vf{box-shadow:none}
+.d-info.withvid .d-video{margin-left:-16px;margin-right:-16px}
+.d-info.withvid .d-video .lbl{margin-left:16px;margin-right:16px}
 #about{padding:126px 16px 48px}
 footer{padding:0 16px 26px}
 }
@@ -337,7 +355,7 @@ footer{padding:0 16px 26px}
   <button class="d-next" id="d-nextlink"></button>
 </div><script src="photos.js"></script>
 <script>
-console.info("Tyche index: versione 23-09 leggera-11");
+console.info("Tyche index: versione 23-09 leggera-13");
 /* coda "al via": i ricami compaiono solo quando parte l'animazione iniziale (vedi ATTESA) */
 var STARTED=false, startQ=[];
 function onStart(f){ if(STARTED) f(); else startQ.push(f); }
@@ -355,8 +373,9 @@ function X(it,en){ return {it:it,en:en}; }
 
 /* ============ LAVORI ============
    cover = foto grande in cima alla scheda. extra = le altre foto, sotto i testi in galleria pulita.
-   thumb (facoltativo) = foto diversa solo per la pellicola; se manca si usa la cover.
+   thumb (facoltativo) = foto diversa solo per la pellicola; se manca si usa la cover. thumbPos = quale parte tenere se va ritagliata ("50% 0%" = in alto).
    Con fig:"straddle" la prima foto extra va invece a cavallo del bordo basso della foto principale (Atteone, Citerone short).
+   videoSide:true = il teaser sta accanto alla sinossi invece che sotto.
    video: un file nella cartella video (es. video:"video/cumateaser.mp4") oppure un link YouTube/Vimeo incorporabile. */
 var WORKS=[
  {cat:"perf",title:"Amadriadi",cover:"2025amadriadi.png",extra:["bolognaamadriadi.jpg","amadriadi.png"],
@@ -374,7 +393,7 @@ var WORKS=[
   desc:X("Un canto corporeo, una preghiera di gesti e suoni che rinnova un’antica ritualità per ascendere al monte Citerone. Il cammino performativo diventa evocazione dei simboli dionisiaci, spazio di passaggio tra umano e divino. Il mito di Dioniso e le Baccanti di Euripide si intrecciano per celebrare il mistero, l’estasi e la forza trasformativa del rito.",
    "A bodily chant, a prayer of gestures and sounds that renews an ancient ritual to ascend Mount Cithaeron. The performative path becomes an evocation of Dionysian symbols, a space of passage between human and divine. The myth of Dionysus and Euripides’ Bacchae intertwine to celebrate mystery, ecstasy and the transformative force of ritual."),
   credits:["Autore / Coreografo: Michele Ifigenia Colturi","Dramaturg: Ciro Ciancio, Riccardo Vanetta","Performers: Enzina Cappelli, Andreyna Dela Soledad","Co-produzione: Aiep Ariella Vidach"]},
- {cat:"perf",title:"Atteone",cover:"atteone.png",extra:["2025atteone.jpeg"],fig:"straddle",video:"video/atteoneteaser.mp4",
+ {cat:"perf",title:"Atteone",cover:"atteone.png",extra:["2025atteone.jpeg"],fig:"straddle",video:"video/atteoneteaser.mp4",videoSide:true,
   tag:X("Debutto 2027","Debut 2027"),dur:X("In fase di sviluppo","In development"),
   desc:X("Il lavoro è centrato su un’unica figura danzante che, nel corso della performance, incarna una metamorfosi tragica: da essere umano a cervo.",
    "The work centres on a single dancing figure who, over the course of the performance, embodies a tragic metamorphosis: from human being to stag."),
@@ -385,7 +404,7 @@ var WORKS=[
    "“It forms a tenacious grip: like the serpent seized by the royal eagle, which, as it is carried aloft, coils around the raptor’s head and feet and binds its spread wings with its tail; or like the ivy that winds around tall tree trunks; or like the octopus that clutches its captured enemy on the seabed, stretching its tentacles on every side.”"),
   quoteBy:"Ovidio, Metamorfosi / Ovid, Metamorphoses",
   credits:["Autore / Coreografo: Michele Ifigenia Colturi"]},
- {cat:"short",title:"Citerone",thumb:"citerone2021.png",cover:"citeroneandre.png",extra:["citerone2021.png"],fig:"straddle",
+ {cat:"short",title:"Citerone",thumb:"citerone2021.png",thumbPos:"50% 0%",cover:"citeroneandre.png",extra:["citerone2021.png"],fig:"straddle",
   tag:X("Short Film","Short Film"),dur:X("Cortometraggio","Short film"),
   desc:X("Sguardo cinematografico sull'ascesa rituale al monte Citerone.","A cinematic gaze on the ritual ascent of Mount Cithaeron."),
   credits:["Autore / Coreografo: Michele Ifigenia Colturi","Filmmaking: Lorenzo Basili"]}
@@ -690,7 +709,7 @@ function Reel(root,items,onOpen){
     items.forEach(function(w,i){
       var li=document.createElement("li"); li.className="card"; li.dataset.cat=w.cat;
       var tb=w.thumb||w.cover;
-      li.innerHTML='<button class="c-btn"><span class="c-n">'+pad2(i+1)+'</span><span class="c-img"'+(tb?lqOf(tb):'')+'>'+(tb?imgTag(tb,{small:1,sizes:"(max-width:640px) 62vw, 300px",extra:' loading="lazy" onload="this.classList.add(\'ld\')"'}):'')+'</span><span class="c-t">'+esc(w.title)+'</span><span class="c-tag">'+esc(L(w.tag))+' · '+esc(L(w.dur))+'</span></button>';
+      li.innerHTML='<button class="c-btn"><span class="c-n">'+pad2(i+1)+'</span><span class="c-img"'+(tb?lqOf(tb):'')+'>'+(tb?imgTag(tb,{small:1,sizes:"(max-width:640px) 62vw, 300px",extra:' loading="lazy" onload="this.classList.add(\'ld\')"'+(w.thumbPos?' style="object-position:'+w.thumbPos+'"':'')}):'')+'</span><span class="c-t">'+esc(w.title)+'</span><span class="c-tag">'+esc(L(w.tag))+' · '+esc(L(w.dur))+'</span></button>';
       /* le prime due copertine si caricano subito (servono per l'attesa iniziale) */
       var im0=li.querySelector("img");
       if(im0 && i<2 && root.id==="reel-perf"){ im0.loading="eager"; if(i===0) im0.setAttribute("fetchpriority","high"); EAGER.push(new Promise(function(res){ if(im0.complete&&im0.naturalWidth) return res(); im0.addEventListener("load",res,{once:true}); im0.addEventListener("error",res,{once:true}); })); }
@@ -765,6 +784,7 @@ function showPhoto(){
   var im=document.getElementById("d-img"), sc=document.getElementById("d-screen"), seq=++heroSeq, best=0, r=rec(c.cover);
   sc.removeAttribute("data-missing"); im.style.display="block"; im.onload=posM; im.onerror=null;
   sc.style.backgroundImage = r ? "url("+r.q+")" : "";
+  if(r) sc.style.setProperty("--lq","url("+r.q+")"); else sc.style.removeProperty("--lq");
   im.classList.add("f");
   function put(src,rank){ if(seq!==heroSeq||rank<=best) return; best=rank; im.src=src; im.classList.remove("f"); if(rank>=2) sc.style.backgroundImage=""; }
   function dead(){ if(seq!==heroSeq||best) return; im.classList.remove("f"); sc.style.backgroundImage=""; im.onerror=function(){ miss(im); }; im.src=c.cover; }
@@ -817,7 +837,11 @@ window.galAr=galAr; window.mAr=mAr; window.addEventListener("resize",posM);
    Se il file non si trova, il riquadro sparisce da solo (nessun lettore rotto). */
 function mmss(s){ s=Math.round(s); return Math.floor(s/60)+":"+pad2(s%60); }
 function fillVideo(w){
-  var vd=document.getElementById("d-video");
+  var vd=document.getElementById("d-video"), inf=document.querySelector(".d-info"), side=!!(w.video&&w.videoSide);
+  /* posizione: dentro la griglia dei testi (accanto alla sinossi) oppure sotto, prima della galleria */
+  inf.classList.toggle("withvid",side);
+  if(side){ if(vd.parentNode!==inf) inf.appendChild(vd); }
+  else if(vd.parentNode===inf) det.insertBefore(vd,document.getElementById("d-gal"));
   if(!w.video){ vd.innerHTML=""; return; }
   if(!/\.(mp4|webm|m4v|mov)(\?|$)/i.test(w.video)){
     vd.innerHTML='<div class="lbl"><span>'+ui("video")+'</span></div><div class="fr"><iframe src="'+w.video+'" loading="lazy" allowfullscreen></iframe></div>';
@@ -857,7 +881,8 @@ function fillDetail(){
   var rest=strad?ex.slice(1):ex, rows=[], k;
   for(k=0;k<rest.length;k+=2) rows.push(rest.slice(k,k+2));
   document.getElementById("d-gal").innerHTML=rows.map(function(r){
-    return '<div class="gr'+(r.length===1?' one':'')+'">'+r.map(function(f){
+    var sum=r.reduce(function(s,f){ var q=rec(f); return s+(q?q.w/q.h:1.5); },0);
+    return '<div class="gr'+(r.length===1?' one':'')+'" style="--sum:'+sum.toFixed(3)+'">'+r.map(function(f){
       return '<figure class="g"'+(rec(f)?' style="--ar:'+(rec(f).w/rec(f).h).toFixed(4)+'"':'')+'><span class="g-img"'+lqOf(f)+'>'+imgTag(f,{sizes:(r.length>1?"(max-width:640px) 100vw, 48vw":"(max-width:640px) 100vw, 88vw"),extra:' loading="lazy" fetchpriority="low" onload="galAr(this)"'})+'</span></figure>';
     }).join("")+'</div>';
   }).join("");

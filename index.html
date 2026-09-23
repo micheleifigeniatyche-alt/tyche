@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<!-- VERSIONE 21-09 leggera-7: linea rossa piu' in basso (quasi a sbarrare il nome), fiore giallo piu' piccolo. Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
+<!-- VERSIONE 23-09 leggera-10: teaser video (Cuma, Citerone, Atteone) dopo la sinossi; Amadriadi con la foto di Bologna in piedi; Citerone short film con le foto scambiate. Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Michele Ifigenia / Tyche</title>
@@ -180,11 +180,28 @@ footer>span{position:relative;z-index:1}
 .gr.one .g{flex:0 1 auto;width:min(100%,calc(88vh*var(--ar,1.5)))}
 .g-img{display:block;position:relative;aspect-ratio:var(--ar,3/2);background:#111;overflow:hidden}
 .g-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-.d-video{padding:20px 24px 0;max-width:1500px;margin:0 auto}
+/* TEASER: subito dopo sinossi e crediti, prima della galleria. Schermo grande su nero, con la foto del lavoro come locandina;
+   il video si scarica solo quando si preme play (prima solo pochi KB per sapere durata e formato). */
+.d-video{padding:8px 24px 0;max-width:1500px;margin:0 auto}
 .d-video:empty{display:none}
-.d-video .lbl{font-size:.85rem;color:#8b8a86;font-weight:600;margin-bottom:12px}
+.d-video .lbl{display:flex;justify-content:space-between;align-items:baseline;max-width:1200px;margin:0 auto 14px;font-size:.85rem;color:#8b8a86;font-weight:600;border-top:1px solid #2c2c2e;padding-top:10px}
 .d-video .fr{aspect-ratio:16/9;background:#111}
 .d-video iframe{width:100%;height:100%;border:0}
+.vf{--vr:1.7778;position:relative;width:min(100%,1200px,calc(80vh*var(--vr)));width:min(100%,1200px,calc(80svh*var(--vr)));aspect-ratio:var(--vr);margin:0 auto;background:#000;overflow:hidden;box-shadow:0 0 0 1px rgba(233,232,228,.1),0 40px 80px -40px rgba(0,0,0,.9)}
+.vf video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000;display:block}
+.vo{position:absolute;inset:0;z-index:2;width:100%;height:100%;display:block;text-align:left;color:#fff;background:#000;transition:opacity .5s ease}
+.vo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.62;filter:saturate(.86) contrast(1.05);transition:transform 1.4s cubic-bezier(.2,.7,.2,1),opacity .5s}
+.vo::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.72),rgba(0,0,0,0) 55%)}
+.vo:hover img,.vo:focus-visible img{transform:scale(1.035);opacity:.78}
+.vo:focus-visible{outline:1px solid #e9e8e4;outline-offset:-6px}
+.vp{position:absolute;z-index:1;left:50%;top:50%;width:clamp(64px,7vw,92px);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;border:1px solid rgba(255,255,255,.75);background:rgba(0,0,0,.22);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:transform .4s cubic-bezier(.2,.7,.2,1),background-color .3s}
+.vp::before{content:"";position:absolute;left:54%;top:50%;transform:translate(-50%,-50%);border-style:solid;border-width:.62em 0 .62em 1.05em;border-color:transparent transparent transparent #fff;font-size:clamp(14px,1.5vw,20px)}
+.vo:hover .vp{transform:translate(-50%,-50%) scale(1.08);background:rgba(0,0,0,.4)}
+.vt{position:absolute;z-index:1;left:clamp(16px,3vw,36px);bottom:clamp(14px,2.6vw,32px);right:clamp(16px,3vw,36px);display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.vt b{font-size:clamp(1.05rem,2.2vw,1.8rem);font-weight:600;letter-spacing:-.03em;line-height:1}
+.vt small{font-size:.85rem;font-weight:600;color:#c9c8c3;font-variant-numeric:tabular-nums}
+.vf.play .vo{opacity:0;pointer-events:none}
+@media(prefers-reduced-motion:reduce){.vo img,.vp,.vo{transition:none}}
 .d-next{display:block;width:100%;text-align:left;padding:70px 24px 60px;max-width:1500px;margin:0 auto}
 .d-next:empty{display:none}
 .d-next small{display:block;font-size:.85rem;color:#8b8a86;font-weight:600}
@@ -218,6 +235,7 @@ footer>span{position:relative;z-index:1}
 .gr{flex-direction:column;gap:16px}
 .gr .g,.gr.one .g{flex:none;width:100%}
 .d-info,.d-video,.d-next{padding-left:16px;padding-right:16px}
+.d-video{padding-left:0;padding-right:0}.d-video .lbl{margin-left:16px;margin-right:16px}.vf{box-shadow:none}
 #about{padding:126px 16px 48px}
 footer{padding:0 16px 26px}
 }
@@ -314,19 +332,19 @@ footer{padding:0 16px 26px}
     <div class="d-text"><blockquote id="d-quote"></blockquote><p id="d-desc"></p></div>
     <dl id="d-credits"></dl>
   </div>
-  <div class="d-gal" id="d-gal"></div>
   <div class="d-video" id="d-video"></div>
+  <div class="d-gal" id="d-gal"></div>
   <button class="d-next" id="d-nextlink"></button>
 </div><script src="photos.js"></script>
 <script>
-console.info("Tyche index: versione 21-09 leggera-7");
+console.info("Tyche index: versione 23-09 leggera-10");
 /* coda "al via": i ricami compaiono solo quando parte l'animazione iniziale (vedi ATTESA) */
 var STARTED=false, startQ=[];
 function onStart(f){ if(STARTED) f(); else startQ.push(f); }
 /* ============ TESTI ============ */
 var UI={
- it:{nav_works:"Lavori",nav_collab:"Collaborazioni",nav_about:"Percorso e contatti",works:"Lavori",collab:"Collaborazioni",about:"Percorso e contatti",f_perf:"Performance",f_short:"Short Film",scroll:"Scorri",back:"← Indietro",next:"Prossimo",video:"Video",foot:"Coreografia · Performance · Short film",works_n:"lavori",work_1:"lavoro"},
- en:{nav_works:"Works",nav_collab:"Collaborations",nav_about:"About & contact",works:"Works",collab:"Collaborations",about:"About & contact",f_perf:"Performance",f_short:"Short Film",scroll:"Scroll",back:"← Back",next:"Next",video:"Video",foot:"Choreography · Performance · Short film",works_n:"works",work_1:"work"}
+ it:{nav_works:"Lavori",nav_collab:"Collaborazioni",nav_about:"Percorso e contatti",works:"Lavori",collab:"Collaborazioni",about:"Percorso e contatti",f_perf:"Performance",f_short:"Short Film",scroll:"Scorri",back:"← Indietro",next:"Prossimo",video:"Video",teaser:"Teaser",watch:"Guarda il teaser",foot:"Coreografia · Performance · Short film",works_n:"lavori",work_1:"lavoro"},
+ en:{nav_works:"Works",nav_collab:"Collaborations",nav_about:"About & contact",works:"Works",collab:"Collaborations",about:"About & contact",f_perf:"Performance",f_short:"Short Film",scroll:"Scroll",back:"← Back",next:"Next",video:"Video",teaser:"Teaser",watch:"Watch the teaser",foot:"Choreography · Performance · Short film",works_n:"works",work_1:"work"}
 };
 var BIO={
  it:"Michele Ifigenia / Tyche è un gruppo di ricerca coreografica fondato e diretto da Michele Ifigenia Colturi, nato all’interno della Civica Scuola di Teatro Paolo Grassi di Milano e della Scuola Conia di Claudia Castellucci. Riunisce interpreti, drammaturghi, musicisti e artisti di diverse discipline in un organismo che sostiene e sviluppa la visione di Colturi. La ricerca, di natura profondamente visiva, esplora il corpo come materia plastica, un campo scultoreo modellato da luce e suono: elementi che ridefiniscono lo spazio e trasformano il gesto in immagine. Al centro della poetica c’è il mito, inteso non come narrazione chiusa ma come matrice fluida e generativa, da cui emergono figure e simboli in costante metamorfosi. Le creazioni prendono forma tanto in spazi teatrali quanto in contesti non convenzionali, intrecciando linguaggi visivi, sonori e corporei. Il gruppo è artista associato di Ariella Vidach / AiEP.",
@@ -337,25 +355,26 @@ function X(it,en){ return {it:it,en:en}; }
 
 /* ============ LAVORI ============
    cover = foto grande in cima alla scheda. extra = le altre foto, sotto i testi in galleria pulita.
+   thumb (facoltativo) = foto diversa solo per la pellicola; se manca si usa la cover.
    Con fig:"straddle" la prima foto extra va invece a cavallo del bordo basso della foto principale (Atteone, Citerone short).
-   Per rimettere un video basta aggiungere video:"https://..." alla scheda del lavoro. */
+   video: un file nella cartella video (es. video:"video/cumateaser.mp4") oppure un link YouTube/Vimeo incorporabile. */
 var WORKS=[
- {cat:"perf",title:"Amadriadi",cover:"amadriadi.png",extra:["bolognaamadriadi.jpg","2025amadriadi.png"],
+ {cat:"perf",title:"Amadriadi",cover:"2025amadriadi.png",extra:["bolognaamadriadi.jpg","amadriadi.png"],
   tag:X("Performance","Performance"),dur:X("15 minuti","15 minutes"),
-  desc:X("Un’evocazione visiva si intreccia allo spazio urbano contemporaneo: la figura delle Amadriadi diventa un espediente per offrire allo spettatore un momento di sospensione. Le Amadriadi, creature mitologiche indissolubilmente legate agli alberi, vivono e muoiono con essi. Tra il verde emerge così un corpo capace di ondeggiare al vento, di radicarsi, di trasfigurarsi, portando con sé un fascino antico eppure sorprendentemente presente. Forse è proprio in questa apparizione, in questa possibilità di metamorfosi, che si rinnova continuamente la relazione entre l’uomo e la natura.",
+  desc:X("Un’evocazione visiva si intreccia allo spazio urbano contemporaneo: la figura delle Amadriadi diventa un espediente per offrire allo spettatore un momento di sospensione. Le Amadriadi, creature mitologiche indissolubilmente legate agli alberi, vivono e muoiono con essi. Tra il verde emerge così un corpo capace di ondeggiare al vento, di radicarsi, di trasfigurarsi, portando con sé un fascino antico eppure sorprendentemente presente. Forse è proprio in questa apparizione, in questa possibilità di metamorfosi, che si rinnova continuamente la relazione tra l’uomo e la natura.",
    "A visual evocation weaves into contemporary urban space: the figure of the Hamadryads becomes a device to offer the viewer a moment of suspension. The Hamadryads, mythological creatures inseparably bound to trees, live and die with them. Among the green emerges a body able to sway in the wind, to take root, to transfigure itself, carrying an ancient yet surprisingly present charm. Perhaps it is precisely in this apparition, in this possibility of metamorphosis, that the relationship between humans and nature is continually renewed."),
   credits:["Autore / Coreografo: Michele Ifigenia Colturi","Dramaturg: Ciro Ciancio, Riccardo Vanetta","Performers: Enzina Cappelli, Valeria Petroni, Federica D’Aversa","Suono: Tarek Bouguerra","Produzione: Aiep Ariella Vidach / Triennale Teatro Milano"]},
- {cat:"perf",title:"Cuma",cover:"cuma.png",extra:["2024cuma.png"],
+ {cat:"perf",title:"Cuma",cover:"cuma.png",extra:["2024cuma.png"],video:"video/cumateaser.mp4",
   tag:X("Performance","Performance"),dur:X("15 minuti","15 minutes"),
   desc:X("Cuma è un solo coreografico attorno alla figura della sibilla. Gli elementi che appartengono al suo archetipo vengono ricostruiti per portare in vita un ultimo messaggio divinatorio. La sibilla, suo malgrado, intona un canto di fine accompagnato da una possessione, la manìa del dio. Il messaggio è talmente elevato che il corpo della sibilla viene dilaniato dalla profezia stessa.",
    "Cuma is a choreographic solo around the figure of the sibyl. The elements belonging to her archetype are reconstructed to bring to life one last divinatory message. The sibyl, despite herself, intones a song of the end, accompanied by a possession, the mania of the god. The message is so elevated that the sibyl’s body is torn apart by the prophecy itself."),
   credits:["Autore / Coreografo: Michele Ifigenia Colturi","Danzatrice: Federica D’Aversa","Dramaturg: Riccardo Vanetta, Ciro Ciancio","Musiche: Tarek Bouguerra","Filmmaker: Lorenzo Basili","Produzione: Aiep Ariella Vidach, Anghiari Dance Hub"]},
- {cat:"perf",title:"Citerone",cover:"citerone.png",extra:["citerone2022.png","citeronesocietas.JPG"],
+ {cat:"perf",title:"Citerone",cover:"citerone.png",extra:["citerone2022.png","citeronesocietas.JPG"],video:"video/citeroneteaser.mp4",
   tag:X("Performance","Performance"),dur:X("25 minuti","25 minutes"),
   desc:X("Un canto corporeo, una preghiera di gesti e suoni che rinnova un’antica ritualità per ascendere al monte Citerone. Il cammino performativo diventa evocazione dei simboli dionisiaci, spazio di passaggio tra umano e divino. Il mito di Dioniso e le Baccanti di Euripide si intrecciano per celebrare il mistero, l’estasi e la forza trasformativa del rito.",
    "A bodily chant, a prayer of gestures and sounds that renews an ancient ritual to ascend Mount Cithaeron. The performative path becomes an evocation of Dionysian symbols, a space of passage between human and divine. The myth of Dionysus and Euripides’ Bacchae intertwine to celebrate mystery, ecstasy and the transformative force of ritual."),
   credits:["Autore / Coreografo: Michele Ifigenia Colturi","Dramaturg: Ciro Ciancio, Riccardo Vanetta","Performers: Enzina Cappelli, Andreyna Dela Soledad","Co-produzione: Aiep Ariella Vidach"]},
- {cat:"perf",title:"Atteone",cover:"atteone.png",extra:["2025atteone.jpeg"],fig:"straddle",
+ {cat:"perf",title:"Atteone",cover:"atteone.png",extra:["2025atteone.jpeg"],fig:"straddle",video:"video/atteoneteaser.mp4",
   tag:X("Debutto 2027","Debut 2027"),dur:X("In fase di sviluppo","In development"),
   desc:X("Il lavoro è centrato su un’unica figura danzante che, nel corso della performance, incarna una metamorfosi tragica: da essere umano a cervo.",
    "The work centres on a single dancing figure who, over the course of the performance, embodies a tragic metamorphosis: from human being to stag."),
@@ -366,7 +385,7 @@ var WORKS=[
    "“It forms a tenacious grip: like the serpent seized by the royal eagle, which, as it is carried aloft, coils around the raptor’s head and feet and binds its spread wings with its tail; or like the ivy that winds around tall tree trunks; or like the octopus that clutches its captured enemy on the seabed, stretching its tentacles on every side.”"),
   quoteBy:"Ovidio, Metamorfosi / Ovid, Metamorphoses",
   credits:["Autore / Coreografo: Michele Ifigenia Colturi"]},
- {cat:"short",title:"Citerone",cover:"citeroneandre.png",extra:["citerone2021.png"],fig:"straddle",
+ {cat:"short",title:"Citerone",cover:"citerone2021.png",extra:["citeroneandre.png"],fig:"straddle",
   tag:X("Short Film","Short Film"),dur:X("Cortometraggio","Short film"),
   desc:X("Sguardo cinematografico sull'ascesa rituale al monte Citerone.","A cinematic gaze on the ritual ascent of Mount Cithaeron."),
   credits:["Autore / Coreografo: Michele Ifigenia Colturi","Filmmaking: Lorenzo Basili"]}
@@ -670,7 +689,8 @@ function Reel(root,items,onOpen){
     track.innerHTML=""; cards=[];
     items.forEach(function(w,i){
       var li=document.createElement("li"); li.className="card"; li.dataset.cat=w.cat;
-      li.innerHTML='<button class="c-btn"><span class="c-n">'+pad2(i+1)+'</span><span class="c-img"'+(w.cover?lqOf(w.cover):'')+'>'+(w.cover?imgTag(w.cover,{small:1,sizes:"(max-width:640px) 62vw, 300px",extra:' loading="lazy" onload="this.classList.add(\'ld\')"'}):'')+'</span><span class="c-t">'+esc(w.title)+'</span><span class="c-tag">'+esc(L(w.tag))+' · '+esc(L(w.dur))+'</span></button>';
+      var tb=w.thumb||w.cover;
+      li.innerHTML='<button class="c-btn"><span class="c-n">'+pad2(i+1)+'</span><span class="c-img"'+(tb?lqOf(tb):'')+'>'+(tb?imgTag(tb,{small:1,sizes:"(max-width:640px) 62vw, 300px",extra:' loading="lazy" onload="this.classList.add(\'ld\')"'}):'')+'</span><span class="c-t">'+esc(w.title)+'</span><span class="c-tag">'+esc(L(w.tag))+' · '+esc(L(w.dur))+'</span></button>';
       /* le prime due copertine si caricano subito (servono per l'attesa iniziale) */
       var im0=li.querySelector("img");
       if(im0 && i<2 && root.id==="reel-perf"){ im0.loading="eager"; if(i===0) im0.setAttribute("fetchpriority","high"); EAGER.push(new Promise(function(res){ if(im0.complete&&im0.naturalWidth) return res(); im0.addEventListener("load",res,{once:true}); im0.addEventListener("error",res,{once:true}); })); }
@@ -793,6 +813,29 @@ function mAr(im){
   document.getElementById("d-m").style.setProperty("--ar",(im.naturalWidth/im.naturalHeight).toFixed(3)); posM();
 }
 window.galAr=galAr; window.mAr=mAr; window.addEventListener("resize",posM);
+/* TEASER: file nella cartella video -> lettore del sito con la foto del lavoro come locandina; link esterno -> riquadro incorporato.
+   Se il file non si trova, il riquadro sparisce da solo (nessun lettore rotto). */
+function mmss(s){ s=Math.round(s); return Math.floor(s/60)+":"+pad2(s%60); }
+function fillVideo(w){
+  var vd=document.getElementById("d-video");
+  if(!w.video){ vd.innerHTML=""; return; }
+  if(!/\.(mp4|webm|m4v|mov)(\?|$)/i.test(w.video)){
+    vd.innerHTML='<div class="lbl"><span>'+ui("video")+'</span></div><div class="fr"><iframe src="'+w.video+'" loading="lazy" allowfullscreen></iframe></div>';
+    return;
+  }
+  var r=rec(w.cover), ps=r ? dirUrl(r,pickDir(r,Math.min(window.innerWidth,1200))) : w.cover;
+  vd.innerHTML='<div class="lbl"><span>'+ui("teaser")+'</span><span class="vd"></span></div>'
+    +'<div class="vf"><video playsinline preload="'+(SLOWNET?'none':'metadata')+'" src="'+w.video+'"></video>'
+    +'<button class="vo" aria-label="'+ui("watch")+' – '+esc(w.title)+'"><img src="'+ps+'" alt="" decoding="async"><span class="vp"></span><span class="vt"><b>'+ui("watch")+'</b></span></button></div>';
+  var vf=vd.querySelector(".vf"), v=vf.querySelector("video"), ov=vf.querySelector(".vo");
+  v.addEventListener("loadedmetadata",function(){
+    if(v.videoWidth&&v.videoHeight) vf.style.setProperty("--vr",(v.videoWidth/v.videoHeight).toFixed(4));
+    if(isFinite(v.duration)&&v.duration>0) vd.querySelector(".lbl .vd").textContent=mmss(v.duration);
+  });
+  v.addEventListener("error",function(){ if(!vf.classList.contains("play")) vd.innerHTML=""; });
+  ov.onclick=function(){ vf.classList.add("play"); v.controls=true; var p=v.play(); if(p&&p.catch) p.catch(function(){}); };
+  v.addEventListener("ended",function(){ v.controls=false; v.currentTime=0; vf.classList.remove("play"); });
+}
 function fillDetail(){
   var w=cur, i=group.indexOf(w), n=group.length;
   document.getElementById("d-count").textContent=pad2(i+1)+" / "+pad2(n);
@@ -820,7 +863,7 @@ function fillDetail(){
     }).join("")+'</div>';
   }).join("");
   posM();
-  document.getElementById("d-video").innerHTML = w.video ? '<div class="lbl">'+ui("video")+'</div><div class="fr"><iframe src="'+w.video+'" loading="lazy" allowfullscreen></iframe></div>' : "";
+  fillVideo(w);
   var nx=group[(i+1)%n], nl=document.getElementById("d-nextlink");
   nl.innerHTML = n>1 ? '<small>'+ui("next")+'</small><b>'+esc(nx.title)+' →</b>' : "";
   nl.onclick=function(){ openWork(nx); };

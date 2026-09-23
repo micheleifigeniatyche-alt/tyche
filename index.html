@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<!-- VERSIONE 23-09 leggera-14: bande nere come prima; sul telefono si scorre tra i lavori col dito; teaser di Atteone accanto alla sinossi; galleria piu' contenuta su computer; locandina Citerone intera nella pellicola; teaser piu' piccoli con locandina solo testo; Citerone short film: manifesto solo nella pellicola; Amadriadi con la foto di Bologna in piedi; Citerone short film con le foto scambiate. Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
+<!-- VERSIONE 23-09 leggera-15: bande nere come prima; sul telefono si scorre tra i lavori col dito (gesto ora piu' fluido, un solo blocco che si muove, niente scarti); teaser di Atteone accanto alla sinossi; galleria piu' contenuta su computer; locandina Citerone intera nella pellicola; teaser piu' piccoli con locandina solo testo; Citerone short film: manifesto solo nella pellicola, e ora ha il proprio video con locandina "cortometraggio" centrata e frase d'invito; Amadriadi con la foto di Bologna in piedi; Citerone short film con le foto scambiate. Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Michele Ifigenia / Tyche</title>
@@ -142,12 +142,14 @@ footer>span{position:relative;z-index:1}
 #about .sun{right:auto;left:24px;top:30px}
 
 /* SCHEDA DEL LAVORO: foto intera proiettata su nero, nessun ritaglio */
-#detail{display:none;position:fixed;inset:0;z-index:80;background:#000 var(--gb);color:#e9e8e4;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+#detail{display:none;position:fixed;inset:0;z-index:80;background:#000 var(--gb);color:#e9e8e4;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
 #detail.on{display:block}
 /* telefono: trascinando col dito a destra/sinistra si passa al lavoro precedente/successivo (come le pagine su Instagram) */
 #detail{touch-action:pan-y pinch-zoom}
-#detail.drag > :not(.d-top){transform:translate3d(var(--sx,0px),0,0);opacity:var(--so,1)}
-#detail.sw > :not(.d-top){transition:transform .24s cubic-bezier(.2,.7,.2,1),opacity .24s}
+/* tutto il contenuto (foto, testi, video, galleria) si muove come un unico blocco: niente scarti fra un elemento e l'altro durante il gesto */
+.d-body{will-change:transform,opacity}
+#detail.drag .d-body{transform:translate3d(var(--sx,0px),0,0) scale(var(--sc,1));opacity:var(--so,1)}
+#detail.sw .d-body{transition:transform .32s cubic-bezier(.16,1,.3,1),opacity .32s cubic-bezier(.16,1,.3,1)}
 .d-top{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:16px 24px;background:#000 var(--gb);font-size:.92rem;font-weight:600}
 .d-top>*{white-space:nowrap}
 .d-nav{display:flex;gap:20px}
@@ -207,6 +209,16 @@ footer>span{position:relative;z-index:1}
 .vo:focus-visible{outline:1px solid #e9e8e4;outline-offset:-6px}
 .vf.play .vo{opacity:0;pointer-events:none}
 @media(prefers-reduced-motion:reduce){.vo,.vp,.vp::before,.vt b{transition:none}}
+/* LOCANDINA "FEATURE": per un cortometraggio a cui dare importanza (non un semplice teaser). Titolo centrato come un vero
+   titolo di testa, sopravvitto ("Cortometraggio") e una riga accattivante in corsivo che invita a guardarlo con calma. */
+.vf.feature{width:min(100%,960px,calc(68vh*var(--vr)));width:min(100%,960px,calc(68svh*var(--vr)))}
+.vo.feature .vt{position:static;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:16px;padding:10% 8%}
+.vo.feature .vk{font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:#a9a8a3;font-weight:600}
+.vo.feature .vt b{font-size:clamp(1.9rem,5.2vw,4.2rem);letter-spacing:-.045em}
+.vo.feature .vn{max-width:44ch;font-size:.98rem;font-style:italic;font-weight:400;color:#c9c8c3;line-height:1.55;letter-spacing:-.003em}
+.vo.feature .vc{flex-direction:column;gap:14px;font-size:.8rem}
+.vo.feature .vp{width:54px;height:54px}
+@media(max-width:640px){.vo.feature .vt{gap:12px;padding:14% 8%}.vo.feature .vt b{font-size:clamp(1.6rem,8vw,2.6rem)}.vo.feature .vn{font-size:.86rem}}
 /* teaser accanto alla sinossi (videoSide): meta e crediti a sinistra, sinossi al centro, video a destra */
 .d-info.withvid .d-video{grid-column:9 / span 4;grid-row:2 / span 2;padding:0;margin:0;max-width:none;align-self:start}
 .d-info.withvid .d-text{grid-row:2 / span 2}
@@ -341,6 +353,7 @@ footer{padding:0 16px 26px}
     <div class="lang"><button data-l="it">IT</button> / <button data-l="en">EN</button></div>
     <div class="d-nav"><button id="d-prev" aria-label="Precedente">←</button><button id="d-next" aria-label="Successivo">→</button></div>
   </div>
+  <div class="d-body">
   <div class="d-stage" id="d-stage">
     <div class="d-screen" id="d-screen"><img id="d-img" alt=""></div>
     <div class="d-m" id="d-m"></div>
@@ -354,16 +367,17 @@ footer{padding:0 16px 26px}
   <div class="d-video" id="d-video"></div>
   <div class="d-gal" id="d-gal"></div>
   <button class="d-next" id="d-nextlink"></button>
+  </div>
 </div><script src="photos.js"></script>
 <script>
-console.info("Tyche index: versione 23-09 leggera-14");
+console.info("Tyche index: versione 23-09 leggera-15");
 /* coda "al via": i ricami compaiono solo quando parte l'animazione iniziale (vedi ATTESA) */
 var STARTED=false, startQ=[];
 function onStart(f){ if(STARTED) f(); else startQ.push(f); }
 /* ============ TESTI ============ */
 var UI={
- it:{nav_works:"Lavori",nav_collab:"Collaborazioni",nav_about:"Percorso e contatti",works:"Lavori",collab:"Collaborazioni",about:"Percorso e contatti",f_perf:"Performance",f_short:"Short Film",scroll:"Scorri",back:"← Indietro",next:"Prossimo",video:"Video",teaser:"Teaser",watch:"Guarda il teaser",foot:"Coreografia · Performance · Short film",works_n:"lavori",work_1:"lavoro"},
- en:{nav_works:"Works",nav_collab:"Collaborations",nav_about:"About & contact",works:"Works",collab:"Collaborations",about:"About & contact",f_perf:"Performance",f_short:"Short Film",scroll:"Scroll",back:"← Back",next:"Next",video:"Video",teaser:"Teaser",watch:"Watch the teaser",foot:"Choreography · Performance · Short film",works_n:"works",work_1:"work"}
+ it:{nav_works:"Lavori",nav_collab:"Collaborazioni",nav_about:"Percorso e contatti",works:"Lavori",collab:"Collaborazioni",about:"Percorso e contatti",f_perf:"Performance",f_short:"Short Film",scroll:"Scorri",back:"← Indietro",next:"Prossimo",video:"Video",teaser:"Teaser",shortfilm:"Cortometraggio",watch:"Guarda il teaser",foot:"Coreografia · Performance · Short film",works_n:"lavori",work_1:"lavoro"},
+ en:{nav_works:"Works",nav_collab:"Collaborations",nav_about:"About & contact",works:"Works",collab:"Collaborations",about:"About & contact",f_perf:"Performance",f_short:"Short Film",scroll:"Scroll",back:"← Back",next:"Next",video:"Video",teaser:"Teaser",shortfilm:"Short Film",watch:"Watch the teaser",foot:"Choreography · Performance · Short film",works_n:"works",work_1:"work"}
 };
 var BIO={
  it:"Michele Ifigenia / Tyche è un gruppo di ricerca coreografica fondato e diretto da Michele Ifigenia Colturi, nato all’interno della Civica Scuola di Teatro Paolo Grassi di Milano e della Scuola Conia di Claudia Castellucci. Riunisce interpreti, drammaturghi, musicisti e artisti di diverse discipline in un organismo che sostiene e sviluppa la visione di Colturi. La ricerca, di natura profondamente visiva, esplora il corpo come materia plastica, un campo scultoreo modellato da luce e suono: elementi che ridefiniscono lo spazio e trasformano il gesto in immagine. Al centro della poetica c’è il mito, inteso non come narrazione chiusa ma come matrice fluida e generativa, da cui emergono figure e simboli in costante metamorfosi. Le creazioni prendono forma tanto in spazi teatrali quanto in contesti non convenzionali, intrecciando linguaggi visivi, sonori e corporei. Il gruppo è artista associato di Ariella Vidach / AiEP.",
@@ -406,6 +420,8 @@ var WORKS=[
   quoteBy:"Ovidio, Metamorfosi / Ovid, Metamorphoses",
   credits:["Autore / Coreografo: Michele Ifigenia Colturi"]},
  {cat:"short",title:"Citerone",thumb:"citerone2021.png",thumbPos:"50% 0%",cover:"citeroneandre.png",extra:["citerone2021.png"],fig:"straddle",
+  video:"video/citeroneshort.mp4",videoFeature:true,videoLabel:X("Cortometraggio","Short Film"),
+  videoNote:X("Un cortometraggio da guardare con calma — quando c'è tempo per lasciarsi andare.","A short film best watched unhurried — when there's time to let it carry you."),
   tag:X("Short Film","Short Film"),dur:X("Cortometraggio","Short film"),
   desc:X("Sguardo cinematografico sull'ascesa rituale al monte Citerone.","A cinematic gaze on the ritual ascent of Mount Cithaeron."),
   credits:["Autore / Coreografo: Michele Ifigenia Colturi","Filmmaking: Lorenzo Basili"]}
@@ -841,15 +857,18 @@ function fillVideo(w){
   /* posizione: dentro la griglia dei testi (accanto alla sinossi) oppure sotto, prima della galleria */
   inf.classList.toggle("withvid",side);
   if(side){ if(vd.parentNode!==inf) inf.appendChild(vd); }
-  else if(vd.parentNode===inf) det.insertBefore(vd,document.getElementById("d-gal"));
+  else if(vd.parentNode===inf) document.querySelector(".d-body").insertBefore(vd,document.getElementById("d-gal"));
   if(!w.video){ vd.innerHTML=""; return; }
   if(!/\.(mp4|webm|m4v|mov)(\?|$)/i.test(w.video)){
     vd.innerHTML='<div class="lbl"><span>'+ui("video")+'</span></div><div class="fr"><iframe src="'+w.video+'" loading="lazy" allowfullscreen></iframe></div>';
     return;
   }
-  vd.innerHTML='<div class="lbl"><span>'+ui("teaser")+'</span></div>'
-    +'<div class="vf"><video playsinline preload="'+(SLOWNET?'none':'metadata')+'" src="'+w.video+'"></video>'
-    +'<button class="vo" aria-label="'+ui("watch")+' – '+esc(w.title)+'"><span class="vt"><b>'+esc(w.title)+'</b><span class="vc"><span class="vd"></span><span class="vp"></span></span></span></button></div>';
+  var feature=!!w.videoFeature, label=w.videoLabel?L(w.videoLabel):ui("teaser");
+  var kicker=feature?'<span class="vk">'+esc(w.videoKicker?L(w.videoKicker):(w.videoLabel?L(w.videoLabel):ui("shortfilm")))+'</span>':"";
+  var note=(feature&&w.videoNote)?'<span class="vn">'+esc(L(w.videoNote))+'</span>':"";
+  vd.innerHTML='<div class="lbl"><span>'+esc(label)+'</span></div>'
+    +'<div class="vf'+(feature?' feature':'')+'"><video playsinline preload="'+(SLOWNET?'none':'metadata')+'" src="'+w.video+'"></video>'
+    +'<button class="vo'+(feature?' feature':'')+'" aria-label="'+ui("watch")+' – '+esc(w.title)+'"><span class="vt">'+kicker+'<b>'+esc(w.title)+'</b>'+note+'<span class="vc"><span class="vd"></span><span class="vp"></span></span></span></button></div>';
   var vf=vd.querySelector(".vf"), v=vf.querySelector("video"), ov=vf.querySelector(".vo");
   v.addEventListener("loadedmetadata",function(){
     if(v.videoWidth&&v.videoHeight) vf.style.setProperty("--vr",(v.videoWidth/v.videoHeight).toFixed(4));
@@ -918,10 +937,17 @@ document.addEventListener("keydown",function(e){
 /* SCORRIMENTO COL DITO nella scheda: la pagina segue il dito; oltre un certo punto (o con un gesto veloce) passa al lavoro
    successivo (verso sinistra) o precedente (verso destra). Lo scorrimento in verticale resta normale; sul video in riproduzione non scatta. */
 (function(){
-  var sx=0, sy=0, st=0, mode=-1, dx=0, W=1, busy=false;
-  function setX(x,anim){ det.classList.toggle("sw",!!anim); det.classList.add("drag"); det.style.setProperty("--sx",x+"px"); det.style.setProperty("--so",Math.max(.35,1-Math.abs(x)/W*.8).toFixed(3)); }
-  function clear(){ det.classList.remove("drag","sw"); det.style.removeProperty("--sx"); det.style.removeProperty("--so"); }
-  function back(){ setX(0,true); setTimeout(clear,260); }
+  var sx=0, sy=0, st=0, mode=-1, dx=0, W=1, busy=false, raf=0, DUR=320;
+  /* fade e zoom molto piu' leggeri di prima: la foto resta quasi ferma finche' non si passa davvero al lavoro successivo,
+     cosi' non "sfarfalla" durante il trascinamento (l'impiccio visivo lamentato) */
+  function apply(x){
+    det.style.setProperty("--sx",x+"px");
+    det.style.setProperty("--so",Math.max(.55,1-Math.abs(x)/W*.45).toFixed(3));
+    det.style.setProperty("--sc",(1-Math.min(.045,Math.abs(x)/W*.045)).toFixed(4));
+  }
+  function setX(x,anim){ det.classList.toggle("sw",!!anim); det.classList.add("drag"); apply(x); }
+  function clear(){ det.classList.remove("drag","sw"); det.style.removeProperty("--sx"); det.style.removeProperty("--so"); det.style.removeProperty("--sc"); }
+  function back(){ setX(0,true); setTimeout(clear,DUR); }
   det.addEventListener("touchstart",function(e){
     mode=-1; if(busy||!cur||group.length<2||e.touches.length!==1) return;
     var el=e.target; if(el.closest && el.closest(".vf.play,iframe,.d-top")) return;
@@ -930,20 +956,23 @@ document.addEventListener("keydown",function(e){
   det.addEventListener("touchmove",function(e){
     if(mode<0) return;
     var t=e.touches[0], x=t.clientX-sx, y=t.clientY-sy;
-    if(mode===0){ if(Math.abs(x)>12 && Math.abs(x)>Math.abs(y)*1.3) mode=1; else { if(Math.abs(y)>10) mode=-1; return; } }
-    e.preventDefault(); dx=x; setX(dx,false);
+    if(mode===0){ if(Math.abs(x)>10 && Math.abs(x)>Math.abs(y)*1.3) mode=1; else { if(Math.abs(y)>10) mode=-1; return; } }
+    e.preventDefault(); dx=x;
+    det.classList.remove("sw"); det.classList.add("drag");
+    if(!raf) raf=requestAnimationFrame(function(){ raf=0; apply(dx); });   /* un solo aggiornamento di stile per fotogramma: piu' fluido sui telefoni piu' lenti */
   },{passive:false});
   function end(){
     if(mode!==1){ mode=-1; return; } mode=-1;
-    var v=Math.abs(dx)/Math.max(1,Date.now()-st), go=Math.abs(dx)>W*.22 || (v>.45 && Math.abs(dx)>40);
+    var v=Math.abs(dx)/Math.max(1,Date.now()-st), go=Math.abs(dx)>W*.2 || (v>.4 && Math.abs(dx)>32);
     if(!go){ back(); return; }
     var dir=dx<0?1:-1, gi=group.indexOf(cur), gn=group.length, nx=group[(gi+dir+gn)%gn];
     if(RM_){ clear(); openWork(nx); return; }
+    /* il lavoro successivo esce di scena, poi si prepara mentre e' fuori dallo schermo, poi entra: mai un cambio a vista */
     busy=true; setX(-dir*W,true);
     setTimeout(function(){
-      openWork(nx); det.classList.remove("sw"); setX(dir*W*.3,false); void det.offsetWidth;
-      requestAnimationFrame(function(){ setX(0,true); setTimeout(function(){ clear(); busy=false; posM(); },280); });
-    },230);
+      openWork(nx); det.classList.remove("sw"); setX(dir*W*.18,false); void det.offsetWidth;
+      requestAnimationFrame(function(){ setX(0,true); setTimeout(function(){ clear(); busy=false; posM(); },DUR); });
+    },DUR-40);
   }
   det.addEventListener("touchend",end,{passive:true});
   det.addEventListener("touchcancel",function(){ if(mode===1){ mode=-1; back(); } else mode=-1; },{passive:true});

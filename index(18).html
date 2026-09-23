@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<!-- VERSIONE 23-09 leggera-9: Amadriadi con la foto di Bologna in piedi come copertina; Citerone short film con le foto scambiate. Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Michele Ifigenia / Tyche</title>
+<meta name="description" content="Michele Ifigenia / Tyche — coreografia, performance, short film.">
+<meta name="theme-color" content="#f4f3ef">
+<link rel="icon" href="favicon.png">
+<link rel="preload" as="image" href="logo-tyche-linee.webp" fetchpriority="high">
+<script>
+/* RETE: se la connessione e' lenta (2g/3g) o c'e' il risparmio dati, il sito non scarica il carattere web, non precarica nulla
+   e usa solo le foto piccole. Con una rete buona carica tutto come prima. */
+/* ANIMAZIONE INIZIALE: resta in pausa ("pre") finche' il sito non e' caricato; poi parte e la schermata resta ferma fino alla fine.
+   Rete di sicurezza: se qualcosa si incastra, dopo 7 secondi la pausa si toglie comunque. */
+document.documentElement.classList.add("pre"); setTimeout(function(){ document.documentElement.classList.remove("pre"); },7000);
+var NET=navigator.connection||{}, SAVE=!!NET.saveData, SLOWNET=SAVE||/(^|-)(2g|3g)$/.test(NET.effectiveType||"");
+/* CARATTERE: nome e barra in alto restano invisibili (max 2,5 s) finche' il carattere web non e' arrivato, cosi' non "saltano" quando cambia il font;
+   la promessa __fontReady dice al sito quando il carattere e' pronto (il via all'animazione aspetta questo momento). */
+window.__fontReady=Promise.resolve();
+if(!SLOWNET){
+  var pc=document.createElement("link"); pc.rel="preconnect"; pc.href="https://fonts.googleapis.com"; document.head.appendChild(pc);
+  var pg=document.createElement("link"); pg.rel="preconnect"; pg.href="https://fonts.gstatic.com"; pg.crossOrigin=""; document.head.appendChild(pg);
+  var ff=document.createElement("link"); ff.rel="stylesheet"; ff.href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;600&display=swap"; document.head.appendChild(ff);
+  document.documentElement.classList.add("fw");
+  window.__fontReady=new Promise(function(res){
+    var fin=function(){ document.documentElement.classList.remove("fw"); res(); };
+    ff.addEventListener("load",function(){ if(document.fonts&&document.fonts.load){ Promise.all([document.fonts.load("400 1em 'Inter Tight'"),document.fonts.load("600 1em 'Inter Tight'")]).then(fin,fin); } else fin(); });
+    ff.addEventListener("error",fin);
+    setTimeout(fin,2500);
+  });
+}
+</script>
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+:root{--ink:#0b0b0c;--paper:#f4f3ef;--mute:#8d8b85;--tint:rgba(70,100,140,.11);--red:#7a1520;--mono:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace}
+body{margin:0;background:var(--paper) var(--gp);color:var(--ink);font-family:'Inter Tight','Helvetica Neue',Helvetica,Arial,sans-serif;line-height:1.5;overflow-wrap:anywhere}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+a{color:inherit}
+img{max-width:100%}
+
+
+/* GRANA leggerissima: un'immagine di rumore come sfondo (puntini scuri sulla carta, chiari sul nero).
+   Sta dietro al contenuto, non sopra: non costa nulla durante lo scorrimento e non tocca foto e ricami. */
+:root{--gp:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n' x='0' y='0' width='100%25' height='100%25'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.11 0 0 0 -0.055'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");--gb:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n' x='0' y='0' width='100%25' height='100%25'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  -0.11 0 0 0 0.055'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>")}
+body,#top-bar{background-size:240px 240px}
+.band,#top-bar.dark,#detail,.d-top,.d-screen{background-size:240px 240px}
+
+/* BARRA IN ALTO (cambia colore da sola sulle fasce scure) */
+#top-bar{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 24px;padding:14px 24px;background:var(--paper) var(--gp);color:#0b0b0c;font-size:.92rem;font-weight:600;letter-spacing:-.005em;transition:color .25s,background-color .25s,opacity .35s}
+#top-bar.dark{background:var(--ink) var(--gb);color:#fff}
+.brand{text-decoration:none}
+#nav{display:flex;gap:6px 26px;flex-wrap:wrap}
+#nav a{text-decoration:none}
+.lang button{opacity:.55;padding:0 2px}
+.lang button.on{opacity:1;border-bottom:1px solid currentColor}
+
+/* HERO */
+.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;justify-content:center;padding:0 20px;overflow:hidden}
+.name-wrap{position:relative;display:inline-block;font-size:clamp(1.3rem,3.4vw,2.7rem);--logo:clamp(120px,17vw,190px);margin-top:calc(var(--logo) - .1em);--y:27%;--ly:46%}   /* --y: dove poggia il logo (non cambia); --ly: altezza della linea rossa, quasi a meta' del nome */
+.name{transition:opacity .35s;margin:0;font-size:1em;font-weight:600;line-height:1;text-transform:uppercase;white-space:nowrap;letter-spacing:-.03em;
+  /* nome sempre presente (nessuna animazione): leggero spessore scuro + ombre morbide verso il basso a destra (luce da in alto a sinistra), nessun bordo bianco */
+  text-shadow:.012em .024em 0 rgba(0,0,0,.42),.024em .05em 0 rgba(28,22,18,.22),.03em .07em .06em rgba(24,16,12,.3),.08em .2em .22em rgba(24,16,12,.2),.16em .42em .5em rgba(24,16,12,.1)}
+/* linea: filo rosso in rilievo, con sfumatura, un filo di luce sul bordo alto e ombre a piu' livelli */
+.lance{position:absolute;left:-5%;width:110%;top:var(--ly);height:2.6px;margin-top:-1.3px;border-radius:1.3px;background:linear-gradient(#b02a39,#7a1520 55%,#5a0f18);box-shadow:inset 0 .5px 0 rgba(255,200,200,.3),0 1px 1px rgba(20,8,8,.45),0 3px 3px rgba(20,8,8,.28),0 9px 12px rgba(20,8,8,.16);z-index:2;transform:scaleX(0);transform-origin:left;animation:line 1.4s .5s cubic-bezier(.65,0,.25,1) both}
+.tyche-logo{position:absolute;left:50%;bottom:calc(100% - var(--y) + .14em);height:var(--logo);width:auto;aspect-ratio:900/853;transform:translateX(-50%);overflow:visible}
+.tyche-logo .d{stroke-dasharray:1 1;stroke-dashoffset:1;animation:dr var(--t) var(--d) cubic-bezier(.45,.05,.3,1) both}
+.cue{position:absolute;left:0;right:0;bottom:22px;text-align:center;font-size:.8rem;font-weight:600;color:var(--mute);opacity:0;transition:opacity .8s}
+html.go .cue{opacity:1}
+/* finché la pagina non è pronta l'ospite resta sulla schermata bianca: niente scroll, menù spento */
+html.wait,html.wait body{overflow:hidden;height:100%;touch-action:none;overscroll-behavior:none}
+html.wait #nav{pointer-events:none;opacity:.35}
+#nav{transition:opacity .5s}
+@keyframes line{to{transform:scaleX(1)}}
+@keyframes dr{to{stroke-dashoffset:0}}
+/* prima del via (sito ancora in caricamento) linea e logo restano fermi all'inizio */
+html.pre .lance,html.pre .tyche-logo .d{animation-play-state:paused}
+html.fw .name,html.fw #top-bar{opacity:0}   /* finche' il carattere web non e' pronto */
+.seen .lance{transform:none}
+.seen .tyche-logo .d{stroke-dashoffset:0}
+.seen *{animation:none!important}
+.lite .tyche-logo .d{animation:none;stroke-dashoffset:0}
+/* telefono: il logo si disegna su canvas (leggero); il logo SVG resta nascosto finche' il canvas lavora */
+html.cvlogo .tyche-logo{visibility:hidden}
+.cv-logo{position:absolute;left:50%;bottom:calc(100% - var(--y) + .14em);height:var(--logo);width:auto;aspect-ratio:900/853;transform:translateX(-50%)}
+
+
+/* RICAMI: fiori, uccellino, sole, cervo. Sono immagini SVG: compaiono con una dissolvenza appena pronte. */
+.embroid{position:absolute;inset:0;pointer-events:none;z-index:0}
+.name-wrap{z-index:1}
+.fl,.sun{position:absolute;pointer-events:none;opacity:0;transition:opacity 1.8s cubic-bezier(.3,.6,.3,1) .35s}
+.fl.on,.sun.on{opacity:1}
+.fl img,.sun img{display:block;width:100%;height:100%}
+/* ombre dei ricami: a contatto, portata e morbida lontana (luce da in alto a sinistra) */
+.fl{filter:drop-shadow(0 .5px .5px rgba(28,18,10,.4)) drop-shadow(1.2px 2.6px 2.4px rgba(28,18,10,.26)) drop-shadow(3.6px 8.5px 8px rgba(28,18,10,.14))}
+.fl{left:0;top:0}
+.sun{right:clamp(30px,4.2vw,70px);top:clamp(118px,17svh,172px);width:clamp(60px,5.6vw,92px);aspect-ratio:1}
+@media(prefers-reduced-motion:reduce){.fl,.sun{transition:none}}
+
+/* FASCE SCURE CON PELLICOLA SCORREVOLE */
+.band{background:var(--ink) var(--gb);color:#e9e8e4;padding:84px 0 60px;position:relative}
+.band-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 28px;padding:0 24px 34px}
+.band h2{margin:0;font-size:clamp(1.8rem,4vw,3rem);font-weight:600;letter-spacing:-.04em;line-height:1}
+.sub{display:flex;align-items:baseline;gap:20px;padding:6px 24px 0}
+.sub h3{margin:0;font-size:1.05rem;font-weight:600;letter-spacing:-.01em;color:#e9e8e4}
+.sub2{margin-top:26px;padding-top:38px;border-top:1px solid #232325}
+.count{margin-left:auto;font-size:.85rem;color:#8b8a86;font-weight:600}
+.reel{position:relative}
+.reel-scroll{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;padding:46px 0}
+.reel-scroll::-webkit-scrollbar{display:none}
+.track{list-style:none;margin:0 auto;padding:0 10vw;display:flex;gap:34px;align-items:flex-start;width:max-content}
+.card{width:clamp(190px,21vw,300px);flex:0 0 auto;transform:scale(.88);opacity:.5;transform-origin:50% 40%;transition:transform .4s cubic-bezier(.2,.7,.2,1),opacity .4s}
+.card.on{transform:scale(1.1);opacity:1;position:relative;z-index:2}
+.card[hidden]{display:none}
+.c-btn{display:block;width:100%;text-align:left;color:inherit}
+.c-n{display:block;font-size:.8rem;font-weight:600;color:#8b8a86;margin-bottom:9px}
+.c-img{display:block;position:relative;aspect-ratio:3/4;background:#1b1b1d;overflow:hidden}
+.c-img img,.d-screen img{filter:saturate(.86) contrast(1.05)}
+.c-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+/* le foto compaiono con una dissolvenza sopra la loro anteprima sfocata (che arriva subito, dentro photos.js) */
+.c-img img,.g-img img{opacity:0;transition:opacity .45s ease}
+.c-img img.ld,.g-img img.ld{opacity:1}
+.c-img::after,.d-screen::after{content:"";position:absolute;inset:0;background:var(--tint);pointer-events:none}
+[data-missing]::before{content:attr(data-missing);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:8px;font-size:.72rem;color:#77756f;text-align:center}
+.c-t{display:block;margin-top:12px;font-size:1.05rem;font-weight:600;letter-spacing:-.015em;line-height:1.15}
+.c-tag{display:block;margin-top:4px;font-size:.78rem;color:#8b8a86;line-height:1.3}
+.scrub{position:relative;height:2px;background:#2a2a2c;margin:8px 10vw 0;cursor:pointer}
+.scrub i{position:absolute;top:-1px;height:4px;background:#e9e8e4;left:0;width:20%}
+.reel:not(.can) .scrub{display:none}
+
+/* ABOUT */
+#about{position:relative;padding:150px 24px 64px;display:grid;grid-template-columns:repeat(12,1fr);gap:0 24px;content-visibility:auto;contain-intrinsic-size:auto 640px}
+#about h2{grid-column:1 / span 4;margin:0;font-size:clamp(1.5rem,3.1vw,2.3rem);font-weight:600;letter-spacing:-.04em;line-height:1}
+.about-body{grid-column:6 / span 6}
+.about-body p{margin:0 0 30px;font-size:1rem;line-height:1.55;max-width:60ch}
+.links{display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.links a{font-weight:600;font-size:1rem;text-decoration:none;border-bottom:1px solid currentColor}
+footer{position:relative;overflow:hidden;min-height:210px;align-content:flex-start;padding:0 24px 34px;font-size:.8rem;color:var(--mute);font-weight:600;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+footer>span{position:relative;z-index:1}
+#about .sun{right:auto;left:24px;top:30px}
+
+/* SCHEDA DEL LAVORO: foto intera proiettata su nero, nessun ritaglio */
+#detail{display:none;position:fixed;inset:0;z-index:80;background:#000 var(--gb);color:#e9e8e4;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+#detail.on{display:block}
+.d-top{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:16px 24px;background:#000 var(--gb);font-size:.92rem;font-weight:600}
+.d-top>*{white-space:nowrap}
+.d-nav{display:flex;gap:20px}
+.d-top button:hover{opacity:.7}
+.d-screen{position:relative;height:min(74vh,820px);height:min(74svh,820px);background:#000 var(--gb);display:flex;align-items:center;justify-content:center}
+.d-screen img{max-width:100%;max-height:100%;width:auto;height:auto;display:block;transition:opacity .25s}
+.d-screen img.f{opacity:0}
+.d-stage{position:relative}
+/* UNA foto a cavallo del bordo inferiore della foto principale: metà sopra il bordo, metà sul nero sotto.
+   La posizione la calcola lo script sulla foto principale vera (posM). */
+.d-m{position:absolute;z-index:2;height:clamp(215px,36vh,360px);aspect-ratio:var(--ar,3/2);margin:0;pointer-events:none;opacity:0;transition:opacity .35s}
+.d-m.on{opacity:1}
+.d-m:empty{display:none}
+.d-m .g-img{position:absolute;inset:0;aspect-ratio:auto;box-shadow:0 0 0 1px rgba(233,232,228,.14),0 26px 46px -18px rgba(0,0,0,.9)}
+.d-info{--tf:clamp(2.4rem,8vw,7rem);position:relative;z-index:3;padding:0 24px 40px;display:grid;grid-template-columns:repeat(12,1fr);gap:0 24px;max-width:1500px;margin:calc(var(--tf)*-.55) auto 0}
+.d-meta{grid-column:1 / span 4;grid-row:2;font-size:.85rem;color:#8b8a86;font-weight:600;display:flex;flex-direction:column;gap:4px}
+.d-info h1{grid-column:1 / -1;grid-row:1;order:-1;margin:0 0 calc(42px + var(--ov,0px));color:#fff;font-size:var(--tf);font-weight:600;letter-spacing:-.055em;line-height:.9;pointer-events:none}
+.d-text{grid-column:5 / span 4;grid-row:2}
+.d-text p{margin:0;font-size:1.05rem;line-height:1.6}
+.d-text blockquote{margin:0 0 26px;padding-left:18px;border-left:1px solid #555;font-size:1rem;line-height:1.6;color:#c9c8c3}
+.d-text blockquote small{display:block;margin-top:8px;font-size:.78rem;color:#8b8a86}
+#d-credits{grid-column:9 / span 4;grid-row:2;margin:0;display:grid;gap:14px;align-content:start}
+#d-credits div{border-top:1px solid #2c2c2e;padding-top:8px}
+#d-credits dt{font-size:.72rem;color:#8b8a86;font-weight:600}
+#d-credits dd{margin:2px 0 0;font-size:.95rem;font-weight:600;line-height:1.3}
+/* GALLERIA, in stile editoriale (MUBI / A24): sotto i testi, pulita, senza filtri né ombre.
+   Due foto affiancate della stessa altezza (la larghezza segue la proporzione di ciascuna); una foto sola: grande e centrata.
+   Le foto della galleria si caricano a piena qualità (sono sotto la piega, quindi non pesano all'apertura). */
+.d-gal{max-width:1500px;margin:0 auto;padding:44px 24px 80px;display:grid;gap:24px}
+.d-gal:empty{display:none}
+.gr{display:flex;gap:24px;align-items:flex-start}
+.gr .g{flex:var(--ar,1.5) 1 0;min-width:0;margin:0}
+.gr.one{justify-content:center}
+.gr.one .g{flex:0 1 auto;width:min(100%,calc(88vh*var(--ar,1.5)))}
+.g-img{display:block;position:relative;aspect-ratio:var(--ar,3/2);background:#111;overflow:hidden}
+.g-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.d-video{padding:20px 24px 0;max-width:1500px;margin:0 auto}
+.d-video:empty{display:none}
+.d-video .lbl{font-size:.85rem;color:#8b8a86;font-weight:600;margin-bottom:12px}
+.d-video .fr{aspect-ratio:16/9;background:#111}
+.d-video iframe{width:100%;height:100%;border:0}
+.d-next{display:block;width:100%;text-align:left;padding:70px 24px 60px;max-width:1500px;margin:0 auto}
+.d-next:empty{display:none}
+.d-next small{display:block;font-size:.85rem;color:#8b8a86;font-weight:600}
+.d-next b{display:block;margin-top:10px;font-size:clamp(2rem,7vw,5.5rem);font-weight:600;letter-spacing:-.05em;line-height:.95}
+.d-next:hover b{opacity:.7}
+
+@media(max-width:900px){
+.d-text{grid-column:1 / -1;grid-row:auto;margin-top:26px}
+.d-meta{grid-column:1 / -1;grid-row:auto}
+#d-credits{grid-column:1 / -1;grid-row:auto;margin-top:34px}
+#about h2{grid-column:1 / -1;margin-bottom:26px}
+.about-body{grid-column:1 / -1}
+}
+@media(max-width:640px){
+:root{--gp:none;--gb:none}
+.fl{filter:drop-shadow(0 .5px .5px rgba(28,18,10,.36)) drop-shadow(1.4px 3px 3px rgba(28,18,10,.22))}
+#about .sun{left:16px;top:26px;width:84px}
+#top-bar{display:grid;grid-template-columns:1fr auto;grid-template-areas:"b l" "n n";gap:0 12px;padding:8px 16px 6px;font-size:.82rem}
+.brand{grid-area:b}
+.lang{grid-area:l}
+#nav{grid-area:n;justify-content:space-between;gap:0}
+.hero{padding:0 14px}
+.band{padding:70px 0 44px}
+.band-head{padding:0 16px 22px}
+.track{padding:0 8vw;gap:22px}
+.card{width:62vw}
+.d-top{padding:12px 16px}
+.d-screen{height:60vh;height:60svh}
+.d-m{height:clamp(145px,24vh,215px)}
+.d-gal{padding:28px 16px 60px;gap:16px}
+.gr{flex-direction:column;gap:16px}
+.gr .g,.gr.one .g{flex:none;width:100%}
+.d-info,.d-video,.d-next{padding-left:16px;padding-right:16px}
+#about{padding:126px 16px 48px}
+footer{padding:0 16px 26px}
+}
+/* telefono e tablet: scorrimento libero (con inerzia), niente ingrandimenti né snap: molto piu' veloce e agile */
+@media(hover:none){.reel-scroll{scroll-snap-type:none;padding:30px 0}.card,.card.on{transform:none;opacity:1;transition:none}.card{contain:layout paint}}
+.slow .card,.slow .d-screen img{transition:none}
+@media(max-width:640px){#nav a,.lang button{padding:7px 2px}.d-top button{padding:8px 4px}.d-top{gap:8px}.d-nav{gap:10px}.c-btn{-webkit-touch-callout:none}}
+/* anteprime sfocate: devono stare dopo tutte le regole "background:" dei riquadri, altrimenti vengono azzerate */
+.c-img,.g-img{background-size:cover;background-position:center}
+.d-screen{background-size:contain;background-repeat:no-repeat;background-position:center}
+</style>
+</head><body>
+<header id="top-bar">
+  <a class="brand" href="#top">Michele Ifigenia / Tyche</a>
+  <nav id="nav">
+    <a href="#lavori" data-i="nav_works">Lavori</a>
+    <a href="#collaborazioni" data-i="nav_collab">Collaborazioni</a>
+    <a href="#about" data-i="nav_about">Percorso e contatti</a>
+  </nav>
+  <div class="lang" role="group" aria-label="Lingua"><button data-l="it">IT</button> / <button data-l="en">EN</button></div>
+</header>
+
+<main>
+<section class="hero" id="top">
+  <div class="name-wrap">
+    <svg class="tyche-logo" viewBox="0 0 900 853" role="img" aria-label="Tyche">
+      <defs><mask id="lm" maskUnits="userSpaceOnUse" x="0" y="0" width="900" height="853">
+      <g fill="none" stroke="#fff" stroke-width="40" stroke-linecap="round" stroke-linejoin="round">
+<path class="d" pathLength="1" style="--d:1.20s;--t:0.75s" d="M335 295 L300 210 L265 130 L238 45 L250 15 L330 10 L450 15"/>
+<path class="d" pathLength="1" style="--d:1.84s;--t:0.52s" d="M415 208 L400 165 L408 100 L422 48"/>
+<path class="d" pathLength="1" style="--d:2.28s;--t:0.30s" d="M425 65 L470 118 M448 88 L466 118 M488 80 L500 112"/>
+<path class="d" pathLength="1" style="--d:2.53s;--t:0.45s" d="M492 62 L525 88 L545 150 L541 205"/>
+<path class="d" pathLength="1" style="--d:2.92s;--t:0.19s" d="M450 160 L451 161 M500 158 L501 159"/>
+<path class="d" pathLength="1" style="--d:3.07s;--t:0.75s" d="M468 228 L470 300 L470 400 L488 540 L505 600"/>
+<path class="d" pathLength="1" style="--d:3.70s;--t:0.60s" d="M505 600 L555 572 L590 440 L615 350 L632 300 L612 266"/>
+<path class="d" pathLength="1" style="--d:4.22s;--t:0.37s" d="M478 228 L472 290 M492 226 L497 290 M512 268 L516 362"/>
+<path class="d" pathLength="1" style="--d:4.54s;--t:0.34s" d="M5 688 L175 688 M95 688 L97 850"/>
+<path class="d" pathLength="1" style="--d:4.83s;--t:0.41s" d="M228 684 L288 752 L291 850 M350 676 L288 750"/>
+<path class="d" pathLength="1" style="--d:5.17s;--t:0.34s" d="M517 682 L440 686 L406 742 L412 802 L452 846 L516 848"/>
+<path class="d" pathLength="1" style="--d:5.46s;--t:0.41s" d="M590 678 L590 846 M595 760 L710 760 M712 670 L712 850"/>
+<path class="d" pathLength="1" style="--d:5.81s;--t:0.45s" d="M785 674 L785 850 M785 672 L895 672 M785 748 L890 748 M785 848 L895 848"/>
+      </g></mask></defs>
+      <image href="logo-tyche-linee.webp" onerror="this.setAttribute('href','logo-tyche-linee.png')" width="900" height="853" mask="url(#lm)"/>
+    </svg>
+    <h1 class="name" id="name">Michele Ifigenia</h1>
+    <div class="lance"></div>
+  </div>
+  <div class="cue" data-i="scroll">Scorri</div>
+  <div class="embroid" id="embroid" aria-hidden="true"></div>
+</section>
+
+<section class="band" id="lavori">
+  <div class="band-head"><h2 data-i="works">Lavori</h2></div>
+  <div class="sub"><h3 data-i="f_perf">Performance</h3><span class="count" id="count-perf"></span></div>
+  <div class="reel" id="reel-perf"><div class="reel-scroll"><ul class="track"></ul></div><div class="scrub"><i></i></div></div>
+  <div class="sub sub2"><h3 data-i="f_short">Short Film</h3><span class="count" id="count-short"></span></div>
+  <div class="reel" id="reel-short"><div class="reel-scroll"><ul class="track"></ul></div><div class="scrub"><i></i></div></div>
+</section>
+
+<section class="band" id="collaborazioni">
+  <div class="band-head"><h2 data-i="collab">Collaborazioni</h2><span class="count" id="count-collab"></span></div>
+  <div class="reel" id="reel-collab"><div class="reel-scroll"><ul class="track"></ul></div><div class="scrub"><i></i></div></div>
+</section>
+
+
+<section id="about">
+  <h2 data-i="about">Percorso e contatti</h2>
+  <div class="about-body">
+    <p id="bio"></p>
+    <div class="links">
+      <a href="mailto:micheleifigeniatyche@gmail.com">micheleifigeniatyche@gmail.com</a>
+      <a href="https://www.instagram.com/tyche_paculla/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.youtube.com/@micheleifigeniatyche6062" target="_blank" rel="noopener">YouTube</a>
+    </div>
+  </div>
+</section>
+</main>
+<footer><span>Michele Ifigenia / Tyche</span></footer>
+
+<div id="detail" role="dialog" aria-modal="true" aria-label="Scheda del lavoro">
+  <div class="d-top">
+    <button id="d-back" data-i="back">← Indietro</button>
+    <span id="d-count"></span>
+    <div class="lang"><button data-l="it">IT</button> / <button data-l="en">EN</button></div>
+    <div class="d-nav"><button id="d-prev" aria-label="Precedente">←</button><button id="d-next" aria-label="Successivo">→</button></div>
+  </div>
+  <div class="d-stage" id="d-stage">
+    <div class="d-screen" id="d-screen"><img id="d-img" alt=""></div>
+    <div class="d-m" id="d-m"></div>
+  </div>
+  <div class="d-info">
+    <h1 id="d-title"></h1>
+    <div class="d-meta"><span id="d-tag"></span><span id="d-dur"></span></div>
+    <div class="d-text"><blockquote id="d-quote"></blockquote><p id="d-desc"></p></div>
+    <dl id="d-credits"></dl>
+  </div>
+  <div class="d-gal" id="d-gal"></div>
+  <div class="d-video" id="d-video"></div>
+  <button class="d-next" id="d-nextlink"></button>
+</div><script src="photos.js"></script>
+<script>
+console.info("Tyche index: versione 23-09 leggera-9");
+/* coda "al via": i ricami compaiono solo quando parte l'animazione iniziale (vedi ATTESA) */
+var STARTED=false, startQ=[];
+function onStart(f){ if(STARTED) f(); else startQ.push(f); }
+/* ============ TESTI ============ */
+var UI={
+ it:{nav_works:"Lavori",nav_collab:"Collaborazioni",nav_about:"Percorso e contatti",works:"Lavori",collab:"Collaborazioni",about:"Percorso e contatti",f_perf:"Performance",f_short:"Short Film",scroll:"Scorri",back:"← Indietro",next:"Prossimo",video:"Video",foot:"Coreografia · Performance · Short film",works_n:"lavori",work_1:"lavoro"},
+ en:{nav_works:"Works",nav_collab:"Collaborations",nav_about:"About & contact",works:"Works",collab:"Collaborations",about:"About & contact",f_perf:"Performance",f_short:"Short Film",scroll:"Scroll",back:"← Back",next:"Next",video:"Video",foot:"Choreography · Performance · Short film",works_n:"works",work_1:"work"}
+};
+var BIO={
+ it:"Michele Ifigenia / Tyche è un gruppo di ricerca coreografica fondato e diretto da Michele Ifigenia Colturi, nato all’interno della Civica Scuola di Teatro Paolo Grassi di Milano e della Scuola Conia di Claudia Castellucci. Riunisce interpreti, drammaturghi, musicisti e artisti di diverse discipline in un organismo che sostiene e sviluppa la visione di Colturi. La ricerca, di natura profondamente visiva, esplora il corpo come materia plastica, un campo scultoreo modellato da luce e suono: elementi che ridefiniscono lo spazio e trasformano il gesto in immagine. Al centro della poetica c’è il mito, inteso non come narrazione chiusa ma come matrice fluida e generativa, da cui emergono figure e simboli in costante metamorfosi. Le creazioni prendono forma tanto in spazi teatrali quanto in contesti non convenzionali, intrecciando linguaggi visivi, sonori e corporei. Il gruppo è artista associato di Ariella Vidach / AiEP.",
+ en:"Michele Ifigenia / Tyche is a choreographic research group founded and directed by Michele Ifigenia Colturi, born within the Civica Scuola di Teatro Paolo Grassi in Milan and Claudia Castellucci’s Scuola Conia. It brings together performers, dramaturgs, musicians and artists from different disciplines in an organism that supports and develops Colturi’s vision. The research, profoundly visual in nature, explores the body as plastic matter, a sculptural field shaped by light and sound: elements that redefine space and turn gesture into image. At the heart of the poetics is myth, understood not as a closed narrative but as a fluid, generative matrix from which figures and symbols emerge in constant metamorphosis. The creations take shape both in theatrical spaces and in unconventional contexts, interweaving visual, sonic and bodily languages. The group is an associated artist of Ariella Vidach / AiEP."
+};
+var RM={"Autore / Coreografo":"Author / Choreographer","Autore":"Author","Dramaturg":"Dramaturg","Performers":"Performers","Suono":"Sound","Produzione":"Production","Danzatrice":"Dancer","Musiche":"Music","Musica":"Music","Filmmaker":"Filmmaker","Co-produzione":"Co-production","Coproduzione":"Co-production","Ideazione e coreografia":"Concept and choreography","Interpretazione":"Performance","Scenografia":"Scenography","Con il sostegno di":"With the support of","Ricerca artistica":"Artistic research","Filmmaking":"Filmmaking","Di":"By","Interpreti":"Performers","Disegno luci":"Lighting design","Costumi":"Costumes","Progetto vincitore di":"Winner of"};
+function X(it,en){ return {it:it,en:en}; }
+
+/* ============ LAVORI ============
+   cover = foto grande in cima alla scheda. extra = le altre foto, sotto i testi in galleria pulita.
+   thumb (facoltativo) = foto diversa solo per la pellicola; se manca si usa la cover.
+   Con fig:"straddle" la prima foto extra va invece a cavallo del bordo basso della foto principale (Atteone, Citerone short).
+   Per rimettere un video basta aggiungere video:"https://..." alla scheda del lavoro. */
+var WORKS=[
+ {cat:"perf",title:"Amadriadi",cover:"2025amadriadi.png",extra:["bolognaamadriadi.jpg","amadriadi.png"],
+  tag:X("Performance","Performance"),dur:X("15 minuti","15 minutes"),
+  desc:X("Un’evocazione visiva si intreccia allo spazio urbano contemporaneo: la figura delle Amadriadi diventa un espediente per offrire allo spettatore un momento di sospensione. Le Amadriadi, creature mitologiche indissolubilmente legate agli alberi, vivono e muoiono con essi. Tra il verde emerge così un corpo capace di ondeggiare al vento, di radicarsi, di trasfigurarsi, portando con sé un fascino antico eppure sorprendentemente presente. Forse è proprio in questa apparizione, in questa possibilità di metamorfosi, che si rinnova continuamente la relazione tra l’uomo e la natura.",
+   "A visual evocation weaves into contemporary urban space: the figure of the Hamadryads becomes a device to offer the viewer a moment of suspension. The Hamadryads, mythological creatures inseparably bound to trees, live and die with them. Among the green emerges a body able to sway in the wind, to take root, to transfigure itself, carrying an ancient yet surprisingly present charm. Perhaps it is precisely in this apparition, in this possibility of metamorphosis, that the relationship between humans and nature is continually renewed."),
+  credits:["Autore / Coreografo: Michele Ifigenia Colturi","Dramaturg: Ciro Ciancio, Riccardo Vanetta","Performers: Enzina Cappelli, Valeria Petroni, Federica D’Aversa","Suono: Tarek Bouguerra","Produzione: Aiep Ariella Vidach / Triennale Teatro Milano"]},
+ {cat:"perf",title:"Cuma",cover:"cuma.png",extra:["2024cuma.png"],
+  tag:X("Performance","Performance"),dur:X("15 minuti","15 minutes"),
+  desc:X("Cuma è un solo coreografico attorno alla figura della sibilla. Gli elementi che appartengono al suo archetipo vengono ricostruiti per portare in vita un ultimo messaggio divinatorio. La sibilla, suo malgrado, intona un canto di fine accompagnato da una possessione, la manìa del dio. Il messaggio è talmente elevato che il corpo della sibilla viene dilaniato dalla profezia stessa.",
+   "Cuma is a choreographic solo around the figure of the sibyl. The elements belonging to her archetype are reconstructed to bring to life one last divinatory message. The sibyl, despite herself, intones a song of the end, accompanied by a possession, the mania of the god. The message is so elevated that the sibyl’s body is torn apart by the prophecy itself."),
+  credits:["Autore / Coreografo: Michele Ifigenia Colturi","Danzatrice: Federica D’Aversa","Dramaturg: Riccardo Vanetta, Ciro Ciancio","Musiche: Tarek Bouguerra","Filmmaker: Lorenzo Basili","Produzione: Aiep Ariella Vidach, Anghiari Dance Hub"]},
+ {cat:"perf",title:"Citerone",cover:"citerone.png",extra:["citerone2022.png","citeronesocietas.JPG"],
+  tag:X("Performance","Performance"),dur:X("25 minuti","25 minutes"),
+  desc:X("Un canto corporeo, una preghiera di gesti e suoni che rinnova un’antica ritualità per ascendere al monte Citerone. Il cammino performativo diventa evocazione dei simboli dionisiaci, spazio di passaggio tra umano e divino. Il mito di Dioniso e le Baccanti di Euripide si intrecciano per celebrare il mistero, l’estasi e la forza trasformativa del rito.",
+   "A bodily chant, a prayer of gestures and sounds that renews an ancient ritual to ascend Mount Cithaeron. The performative path becomes an evocation of Dionysian symbols, a space of passage between human and divine. The myth of Dionysus and Euripides’ Bacchae intertwine to celebrate mystery, ecstasy and the transformative force of ritual."),
+  credits:["Autore / Coreografo: Michele Ifigenia Colturi","Dramaturg: Ciro Ciancio, Riccardo Vanetta","Performers: Enzina Cappelli, Andreyna Dela Soledad","Co-produzione: Aiep Ariella Vidach"]},
+ {cat:"perf",title:"Atteone",cover:"atteone.png",extra:["2025atteone.jpeg"],fig:"straddle",
+  tag:X("Debutto 2027","Debut 2027"),dur:X("In fase di sviluppo","In development"),
+  desc:X("Il lavoro è centrato su un’unica figura danzante che, nel corso della performance, incarna una metamorfosi tragica: da essere umano a cervo.",
+   "The work centres on a single dancing figure who, over the course of the performance, embodies a tragic metamorphosis: from human being to stag."),
+  credits:["Autore / Coreografo: Michele Ifigenia Colturi","Interpretazione: Enzina Cappelli","Musica: Tarek Bouguerra","Dramaturg: Riccardo Vanetta","Scenografia: Alice Vanini","2D/3D Artist: Andrea Rebecca Marchini","Produzione: AIEP (Milano)","Coproduzione: Hangartfest (Pesaro)","Con il sostegno di: ResiDance – azione del Network Anticorpi XL, Centro di Residenza della Toscana (Armunia – Capo Travo / Kilowatt)"]},
+ {cat:"perf",title:"Salmace",cover:"salmace.png",extra:[],
+  tag:X("Work in progress","Work in progress"),dur:X("Work in progress","Work in progress"),
+  quote:X("«Crea una stretta tenace: come il serpente rapito dall'aquila regale, che mentre viene trasportato in alto avvolge la testa e le zampe del rapace e con la coda gli lega le ali spiegate; o come l'edera che suole circondare i lunghi tronchi degli alberi; o come la piovra che stringe il nemico catturato sul fondo del mare, allungando i suoi tentacoli da ogni lato.»",
+   "“It forms a tenacious grip: like the serpent seized by the royal eagle, which, as it is carried aloft, coils around the raptor’s head and feet and binds its spread wings with its tail; or like the ivy that winds around tall tree trunks; or like the octopus that clutches its captured enemy on the seabed, stretching its tentacles on every side.”"),
+  quoteBy:"Ovidio, Metamorfosi / Ovid, Metamorphoses",
+  credits:["Autore / Coreografo: Michele Ifigenia Colturi"]},
+ {cat:"short",title:"Citerone",cover:"citerone2021.png",extra:["citeroneandre.png"],fig:"straddle",
+  tag:X("Short Film","Short Film"),dur:X("Cortometraggio","Short film"),
+  desc:X("Sguardo cinematografico sull'ascesa rituale al monte Citerone.","A cinematic gaze on the ritual ascent of Mount Cithaeron."),
+  credits:["Autore / Coreografo: Michele Ifigenia Colturi","Filmmaking: Lorenzo Basili"]}
+];
+var COLLABS=[
+ {cat:"collab",title:"YTI — Your Tactile Identity",cover:"yti.png",extra:[],
+  tag:X("Con YoY Performing Arts, IVONA","With YoY Performing Arts, IVONA"),dur:X("Kilowatt Festival · 24 luglio 2026","Kilowatt Festival · 24 July 2026"),
+  desc:X("YTI è insieme un progetto di ricerca e un manifesto artistico, nato dall’incontro tra tre compagnie: YoY Performing Arts, IVONA e Michele Ifigenia / Tyche. In un tempo segnato da distanze e polarizzazioni, il lavoro sceglie la vicinanza: abitare le differenze e farne materia di creazione collettiva. Tre linguaggi coreografici si intrecciano in un unico tessuto, dove il movimento diventa ascolto e la contaminazione un atto insieme politico e creativo.",
+   "YTI is both a research project and an artistic manifesto, born from the meeting of three companies: YoY Performing Arts, IVONA and Michele Ifigenia / Tyche. In a time marked by distance and polarization, the work chooses proximity: inhabiting differences and making them the matter of collective creation. Three choreographic languages are woven into a single fabric, where movement becomes listening and contamination becomes an act at once political and creative."),
+  credits:["Autore / Coreografo: Michele Ifigenia Colturi","Di: YoY Performing Arts, IVONA, Michele Ifigenia/Tyche","Interpreti: Emma Zani, Roberto Doveri, Pablo Girolami, Guilherme Leal, Federica D’Aversa","Dramaturg: Riccardo Vanetta","Musiche: Tarek Bouguerra, Timoteo Carbone","Disegno luci: Gianni Staropoli","Costumi: Patricia Villirillo","Progetto vincitore di: Giovane Danza Italiana 2025, Bando CURA 2025","Con il sostegno di: MiC e SIAE – Per Chi Crea"]}
+];
+
+/* ============ UTILITÀ ============ */
+var LANG="it";
+try{ var sv=localStorage.getItem("lang"); if(sv==="it"||sv==="en") LANG=sv; }catch(e){}
+function ui(k){ return (UI[LANG]&&UI[LANG][k]) || UI.it[k] || k; }
+function L(o){ return (o && typeof o==="object") ? (o[LANG]||o.it) : o; }
+function esc(s){ var d=document.createElement("div"); d.textContent=s; return d.innerHTML; }
+function pad2(n){ return (n<10?"0":"")+n; }
+/* ============ IMMAGINI LEGGERE ============
+   photos.js (creato da crea-immagini.html) dice per ogni foto: cartelle disponibili (img/480, img/1000, img/1800), larghezze reali,
+   proporzioni e un'anteprima minuscola sfocata. Il sito sceglie la misura giusta per schermo e connessione.
+   Se una foto non e' in photos.js si usa il file originale (pesante: rifai crea-immagini.html). */
+var DPR=Math.min(window.devicePixelRatio||1, SLOWNET?1.5:2.5);
+function rec(n){ return (window.PH && PH[n]) || null; }
+function dirUrl(r,d){ return "img/"+d+"/"+r.f+".webp"; }
+function avail(r){ var o=[]; for(var i=0;i<r.s.length;i++){ if(SLOWNET && r.s[i]>1000 && o.length) break; o.push(i); } return o; }   /* rete lenta: niente 1800 */
+function srcsetOf(r){ return avail(r).map(function(i){ return dirUrl(r,r.s[i])+" "+r.a[i]+"w"; }).join(", "); }
+function pickDir(r,css){ var need=css*DPR, ix=avail(r); for(var k=0;k<ix.length;k++){ if(r.a[ix[k]]>=need) return r.s[ix[k]]; } return r.s[ix[ix.length-1]]; }
+function heroDir(n){
+  var r=rec(n); if(!r) return 0; var ratio=r.w/r.h, dh=Math.min((SMALLSCR?.6:.74)*window.innerHeight,820), dw=Math.min(window.innerWidth,dh*ratio);
+  return pickDir(r,dw);
+}
+function galDir(n,pair){
+  var r=rec(n); if(!r) return 0; var W=window.innerWidth, css=SMALLSCR ? W : (pair ? (Math.min(W,1500)-72)/2 : Math.min(W*.9,.88*window.innerHeight*(r.w/r.h)));
+  return pickDir(r,css);
+}
+function lqOf(n){ var r=rec(n); return r ? ' style="background-image:url('+r.q+');--ar:'+(r.w/r.h).toFixed(4)+'"' : ""; }
+/* un tag <img> per una foto: con photos.js usa srcset (il browser sceglie), altrimenti l'originale */
+function imgTag(n,opt){
+  var r=rec(n), a=' data-full="'+n+'" alt="" decoding="async" onerror="imgErr(this)"'+(opt.extra||"");
+  if(!r) return '<img class="lz" src="'+n+'"'+a+'>';
+  var first=dirUrl(r,r.s[0]), ss=(opt.nosrcset||SLOWNET&&opt.small)?"":' srcset="'+srcsetOf(r)+'" sizes="'+(opt.sizes||"100vw")+'"';
+  return '<img src="'+first+'"'+ss+' width="'+r.w+'" height="'+r.h+'"'+a+'>';
+}
+function imgErr(im){ var f=im.getAttribute("data-full"); if(f && im.getAttribute("data-fb")!=="1" && im.getAttribute("src")!==f){ im.setAttribute("data-fb","1"); im.removeAttribute("srcset"); im.src=f; } else miss(im); }
+/* se un'immagine manca: testo con il nome del file e un fondo sfumato al suo posto */
+function grad(src){ var h=0; for(var i=0;i<src.length;i++) h=(h*31+src.charCodeAt(i))%360; return 'linear-gradient(160deg,hsl('+h+' 28% 13%),hsl('+((h+40)%360)+' 32% 36%))'; }
+function miss(im){
+  im.style.display="none"; var p=im.parentNode, s=im.getAttribute("src")||"";
+  p.setAttribute("data-missing",s.slice(0,40));
+  if(p.classList.contains("c-img")||p.classList.contains("g-img")) p.style.background=grad(s);
+  if(typeof posM==="function") posM();
+}
+window.miss=miss; window.imgErr=imgErr; window.thumbErr=imgErr;
+var slow = SLOWNET;   /* (SLOWNET e SMALLSCR sono definiti sopra) */
+var SMALLSCR=!!(window.matchMedia&&matchMedia("(max-width:640px)").matches);
+var RM_ = window.matchMedia && matchMedia("(prefers-reduced-motion:reduce)").matches;
+
+/* ============ DISEGNO DEL LOGO SU CANVAS (telefono) ============
+   Stessi tratti, stessi tempi e stessa curva del disegno SVG, ma su canvas: ad ogni fotogramma si disegnano solo i tratti
+   (maschera) e si sovrappone il logo una volta sola. E' molto piu' leggero della maschera SVG animata, quindi scorre fluido. */
+var CVL=null;
+function logoCanvasPrepare(){
+  return new Promise(function(res0){
+    var res=function(ok){ if(!ok) document.documentElement.classList.remove("cvlogo"); res0(ok); };   /* se qualcosa non va, torna il logo SVG normale */
+    try{
+      var svg=document.querySelector(".tyche-logo"), paths=[].slice.call(svg.querySelectorAll("mask path.d")), r=svg.getBoundingClientRect();
+      if(!r.width||!paths.length) return res(false);
+      var dpr=Math.min(window.devicePixelRatio||1,3), W=Math.round(r.width*dpr), H=Math.round(r.height*dpr);
+      var cv=document.createElement("canvas"); cv.width=W; cv.height=H; cv.className="cv-logo"; cv.setAttribute("role","img"); cv.setAttribute("aria-label","Tyche");
+      svg.parentNode.insertBefore(cv,svg);
+      var mk=document.createElement("canvas"); mk.width=W; mk.height=H;
+      var S=paths.map(function(p){ return {p:new Path2D(p.getAttribute("d")), len:p.getTotalLength(), d:parseFloat(p.style.getPropertyValue("--d"))||0, t:parseFloat(p.style.getPropertyValue("--t"))||1}; });
+      var im=new Image(), href=svg.querySelector("image").getAttribute("href")||"logo-tyche-linee.webp", tried=0;
+      im.onerror=function(){ if(!tried++){ im.src="logo-tyche-linee.png"; } else { cv.remove(); res(false); } };
+      im.onload=function(){ CVL={cv:cv,mk:mk,im:im,S:S,W:W,H:H}; res(true); };
+      im.src=href;
+    }catch(e){ res(false); }
+  });
+}
+function bez(x1,y1,x2,y2){ return function(t){ var lo=0,hi=1,s=t,i; for(i=0;i<24;i++){ var x=3*(1-s)*(1-s)*s*x1+3*(1-s)*s*s*x2+s*s*s; if(x<t) lo=s; else hi=s; s=(lo+hi)/2; } return 3*(1-s)*(1-s)*s*y1+3*(1-s)*s*s*y2+s*s*s; }; }
+var LOGO_EASE=bez(.45,.05,.3,1);
+function logoCanvasPlay(){
+  if(!CVL) return;
+  var C=CVL, ctx=C.cv.getContext("2d"), mc=C.mk.getContext("2d"), t0=performance.now();
+  function frame(now){
+    var t=(now-t0)/1000, all=true;
+    mc.setTransform(1,0,0,1,0,0); mc.clearRect(0,0,C.W,C.H); mc.setTransform(C.W/900,0,0,C.H/853,0,0);
+    mc.lineWidth=40; mc.lineCap="round"; mc.lineJoin="round"; mc.strokeStyle="#fff";
+    for(var i=0;i<C.S.length;i++){
+      var s=C.S[i], u=(t-s.d)/s.t; if(u<=0){ all=false; continue; } if(u<1) all=false;
+      var p=LOGO_EASE(Math.min(1,u)); mc.setLineDash([s.len,s.len]); mc.lineDashOffset=s.len*(1-p); mc.stroke(s.p);
+    }
+    ctx.globalCompositeOperation="source-over"; ctx.clearRect(0,0,C.W,C.H); ctx.drawImage(C.im,0,0,C.W,C.H);
+    ctx.globalCompositeOperation="destination-in"; ctx.drawImage(C.mk,0,0); ctx.globalCompositeOperation="source-over";
+    if(!all) requestAnimationFrame(frame); else { C.mk.width=C.mk.height=1; }   /* finito: libera la maschera, il canvas resta com'e' */
+  }
+  requestAnimationFrame(frame);
+}
+/* se si ruota lo schermo/ridimensiona a disegno finito, si torna al logo SVG (statico e nitido) */
+window.addEventListener("resize",function(){ if(CVL && document.documentElement.classList.contains("go")){ document.documentElement.classList.remove("cvlogo"); if(CVL.cv.parentNode) CVL.cv.parentNode.removeChild(CVL.cv); CVL=null; } });
+
+/* intro solo la prima volta della sessione (o con connessione lenta) */
+(function(){
+  var seen=false; try{ seen = sessionStorage.getItem("seen")==="1"; sessionStorage.setItem("seen","1"); }catch(e){}
+  if(seen || slow) document.documentElement.classList.add("seen");
+  /* telefono: niente disegno animato del logo (maschera animata, pesante); nome e linea restano */
+  if(window.matchMedia && matchMedia("(max-width:640px)").matches){ document.documentElement.classList.add("lite"); if(!(seen||slow)) document.documentElement.classList.add("cvlogo"); }
+  if(slow) document.documentElement.classList.add("slow");
+})();
+
+/* ============ RICAMI: fiori, uccellino, sole, cervo ============
+   Ogni ricamo è generato filo per filo (punto raso, nodi francesi, punto steli) e trasformato in un'immagine SVG:
+   il browser la disegna una volta sola, senza migliaia di elementi vivi nella pagina. I ricami si costruiscono
+   quando la pagina è già visibile e compaiono con una dissolvenza lenta. Solo con rete lenta o dispositivi molto deboli (LITE)
+   ci sono meno fili e un filtro più semplice. */
+(function(){
+  var hero=document.querySelector(".hero"), ring=document.getElementById("embroid"); if(!hero||!ring) return;
+  var DEG=Math.PI/180, LIGHT=225*DEG, NS='xmlns="http://www.w3.org/2000/svg" ';
+  /* qualita' piena anche su telefono (nitidi); versione semplificata solo con rete lenta/risparmio dati o dispositivi molto deboli */
+  var LOW=!!(SLOWNET||(navigator.hardwareConcurrency||8)<=2||(navigator.deviceMemory||8)<=2), SMALL=LOW, LITE=LOW;
+  var TYPES=[
+   {N:13,h:42, s:84,l:50,Lp:55,Rc:14.3,ch:24, cs:45,cl:24},  /* girasole */
+   {N:16,h:20, s:68,l:46,Lp:50,Rc:12,  ch:42, cs:55,cl:74},  /* zinnia arancio */
+   {N:19,h:338,s:52,l:66,Lp:52,Rc:11,  ch:44, cs:50,cl:80},  /* dalia rosa */
+   {N:10,h:355,s:70,l:38,Lp:52,Rc:12.5,ch:20, cs:40,cl:16},  /* rosso */
+   {N:9, h:268,s:40,l:60,Lp:56,Rc:9,   ch:46, cs:80,cl:58},  /* lilla */
+   {N:14,h:46, s:38,l:84,Lp:52,Rc:11,  ch:40, cs:80,cl:52},  /* panna */
+   {N:8, h:47, s:92,l:54,Lp:46,Rc:17,  ch:22, cs:40,cl:15},  /* rudbeckia */
+   {N:12,h:218,s:52,l:54,Lp:54,Rc:10,  ch:270,cs:35,cl:22},  /* fiordaliso */
+   {N:11,h:9,  s:70,l:62,Lp:50,Rc:12,  ch:46, cs:85,cl:56},  /* corallo */
+   {N:15,h:322,s:52,l:42,Lp:52,Rc:12,  ch:44, cs:80,cl:52},  /* magenta */
+   {N:12,h:33, s:70,l:46,Lp:52,Rc:13,  ch:88, cs:25,cl:28}   /* ocra */
+  ];
+  function f(n){ return n.toFixed(1); }
+  function f2(n){ return n.toFixed(2); }
+  function rng(seed){ return function(){ seed=seed+0x6D2B79F5|0; var t=Math.imul(seed^seed>>>15,1|seed); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+  /* un filo = ombra + corpo (+ riflesso, tranne in LITE) */
+  function threader(out,sx,sy,hx,hy){
+    return function(d,h,sat,l,w){
+      out.push('<path d="'+d+'" stroke="hsl('+f(h)+' '+sat+'% '+f(l-13)+'%)" stroke-width="'+f2(w*.9)+'" transform="translate('+sx+' '+sy+')" opacity=".55"/>');
+      out.push('<path d="'+d+'" stroke="hsl('+f(h)+' '+sat+'% '+f(l)+'%)" stroke-width="'+f2(w)+'"/>');
+      if(!LITE) out.push('<path d="'+d+'" stroke="hsl('+f(h)+' '+Math.min(100,sat+8)+'% '+f(Math.min(92,l+20))+'%)" stroke-width="'+f2(w*.3)+'" transform="translate('+hx+' '+hy+')" opacity=".55"/>');
+    };
+  }
+  /* filtro: grana della fibra + ombra del filo sollevato (in LITE solo l'ombra) */
+  function filt(id,seed,o){
+    var sh='<feOffset in="'+(LITE?'SourceAlpha':'d')+'" dx="'+o.dx+'" dy="'+o.dy+'" result="o"/><feGaussianBlur in="o" stdDeviation="'+o.sd+'" result="b"/>'
+      +'<feColorMatrix in="b" type="matrix" values="0 0 0 0 '+o.c[0]+'  0 0 0 0 '+o.c[1]+'  0 0 0 0 '+o.c[2]+'  0 0 0 '+o.a+' 0" result="sh"/>';
+    var head='<filter id="'+id+'" x="-12%" y="-10%" width="124%" height="126%" color-interpolation-filters="sRGB">';
+    if(LITE) return head+sh+'<feMerge><feMergeNode in="sh"/><feMergeNode in="SourceGraphic"/></feMerge></filter>';
+    return head
+      +'<feTurbulence type="fractalNoise" baseFrequency="'+o.bf+'" numOctaves="2" seed="'+seed+'" result="n"/>'
+      +'<feDisplacementMap in="SourceGraphic" in2="n" scale="'+o.disp+'" xChannelSelector="R" yChannelSelector="G" result="d"/>'
+      +'<feDiffuseLighting in="n" surfaceScale="'+o.sf+'" diffuseConstant="1.12" lighting-color="#fff" result="lt"><feDistantLight azimuth="235" elevation="58"/></feDiffuseLighting>'
+      +'<feComposite in="lt" in2="d" operator="in" result="ltc"/><feBlend in="d" in2="ltc" mode="multiply" result="tx"/>'
+      +sh+'<feMerge><feMergeNode in="sh"/><feMergeNode in="tx"/></feMerge></filter>';
+  }
+  var FLT={bf:"1.4 1.4",disp:".7",sf:".9",dx:".7",dy:"1.4",sd:"1.15",a:".36",c:[.2,.15,.1]};
+  /* ---- fiore: petali a punto raso, centro a nodi francesi, gambo curvo a punto steli ---- */
+  function flower(idx,T,uid){
+    var R=rng(11+idx*97); function rr(a,b){ return a+(b-a)*R(); }
+    var flip=(T.flip!==undefined?!!T.flip:(idx%2===1)), CX=100+(T.lean||0), CY=92, out=[], E=T.ext||0, y0=CY+T.Lp*.7, i, j, p;
+    var thr=threader(out,.55,.7,-.5,-.55);
+    function bez(t){ var x0=CX,x1=CX-(CX-95)*.1,x2=95+(CX-95)*.25,x3=95,ya=y0,yb=y0+35+E*.3,yc=200+E*.7,yd=234+E,u=1-t;
+      return [u*u*u*x0+3*u*u*t*x1+3*u*t*t*x2+t*t*t*x3, u*u*u*ya+3*u*u*t*yb+3*u*t*t*yc+t*t*t*yd]; }
+    var n=SMALL?12:LITE?20:30;
+    for(i=0;i<n;i++){
+      var a=bez(i/n), b=bez(Math.min(1,(i+2.2)/n)), o=(i%2?1:-1)*.75;
+      thr('M'+f(a[0]+o)+' '+f(a[1])+' L'+f(b[0]-o)+' '+f(b[1]),100+rr(-4,4),32,32+rr(-3,5),3.1);
+    }
+    function leaf(bx,by,ang,len,wid,tone){
+      var ux=Math.sin(ang), uy=-Math.cos(ang), nx=-uy, ny=ux, m=SMALL?5:LITE?9:13;
+      for(var k=0;k<m;k++){
+        var s=(k+.5)/m, hw=wid*Math.pow(Math.sin(Math.PI*Math.min(1,s*.97+.02)),.85)/2, sh=.07;
+        var cx=bx+ux*len*s, cy=by+uy*len*s;
+        var lx=cx+nx*hw-ux*len*sh, ly=cy+ny*hw-uy*len*sh, rx=cx-nx*hw+ux*len*sh, ry=cy-ny*hw+uy*len*sh;
+        thr('M'+f(lx)+' '+f(ly)+' Q'+f(cx+ux*len*.02)+' '+f(cy+uy*len*.02)+' '+f(rx)+' '+f(ry),104+rr(-4,4)+tone,30,27+8*s+rr(-3,3),3.3);
+      }
+      thr('M'+f(bx)+' '+f(by)+' L'+f(bx+ux*len*.95)+' '+f(by+uy*len*.95),100+tone,30,44,1.4);
+    }
+    var LS=T.ls?-1:1, b1=bez(.6), b2=bez(.8);
+    leaf(b1[0],b1[1],-52*DEG*LS,46,17,0);
+    leaf(b2[0],b2[1],58*DEG*LS,36,14,-4);
+    thr('M95 '+(233+E)+' Q92 '+(240+E)+' 84 '+(241+E),100,28,34,1.5);
+    out.push('<circle cx="'+CX+'" cy="'+CY+'" r="'+f(T.Rc+3.2)+'" fill="hsl('+T.ch+' '+T.cs+'% '+Math.max(10,T.cl-16)+'%)"/>');
+    var N=T.N, sector=2*Math.PI/N, r0=T.Rc*.98, ns=Math.max(8,Math.min(18,Math.round(10*sector/.483)));
+    if(LITE) ns=Math.max(5,Math.round(ns*.62));
+    if(SMALL) ns=Math.max(4,Math.round(ns*.7));
+    for(p=0;p<N;p++){
+      var th=(p/N)*2*Math.PI-Math.PI/2+rr(-.05,.05), len=T.Lp*rr(.92,1.06);
+      var lit=Math.cos((flip?Math.PI-th:th)-LIGHT), baseL=T.l+9*lit, baseH=T.h+rr(-2,2);
+      for(j=0;j<ns;j++){
+        var u=(j/(ns-1))*2-1, au=Math.abs(u), lj=len*(1-.3*Math.pow(au,1.7))*rr(.965,1.03);
+        var a0=th+u*sector*.27, a1=th+u*sector*.56, a2=th+u*sector*.39, rs=r0*rr(.92,1.1), rm=lj*.55;
+        thr('M'+f(CX+Math.cos(a0)*rs)+' '+f(CY+Math.sin(a0)*rs)+' Q'+f(CX+Math.cos(a1)*rm)+' '+f(CY+Math.sin(a1)*rm)+' '+f(CX+Math.cos(a2)*lj)+' '+f(CY+Math.sin(a2)*lj),
+            baseH,T.s,baseL+rr(-5,5)+(1-au)*3-(au>.85?9:0),LITE?3.9:3.4);
+      }
+    }
+    var K=Math.round(52*Math.pow(T.Rc/14.3,2)*(SMALL?.45:LITE?.7:1));
+    for(i=0;i<K;i++){
+      var rad=Math.sqrt((i+.5)/K)*T.Rc, ang=i*2.39996, kx=CX+Math.cos(ang)*rad, ky=CY+Math.sin(ang)*rad, kr=rr(2.9,3.5)*Math.min(1,T.Rc/12+.2)*(LITE?1.12:1);
+      out.push('<circle cx="'+f(kx)+'" cy="'+f(ky)+'" r="'+f(kr)+'" fill="url(#k'+uid+')"/><circle cx="'+f(kx-kr*.32)+'" cy="'+f(ky-kr*.36)+'" r="'+f(kr*.36)+'" fill="#fff" opacity=".32"/>');
+    }
+    var defs='<defs><radialGradient id="k'+uid+'" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="hsl('+T.ch+' '+T.cs+'% '+Math.min(92,T.cl+16)+'%)"/><stop offset=".55" stop-color="hsl('+T.ch+' '+T.cs+'% '+T.cl+'%)"/><stop offset="1" stop-color="hsl('+T.ch+' '+T.cs+'% '+Math.max(6,T.cl-16)+'%)"/></radialGradient>'+filt("t"+uid,6+idx,FLT)+'</defs>';
+    var g=flip?'<g transform="translate(200 0) scale(-1 1)">'+out.join("")+'</g>':out.join("");
+    return '<svg '+NS+'viewBox="0 0 200 '+(246+E)+'" fill="none" stroke-linecap="round" stroke-linejoin="round">'+defs+'<g filter="url(#t'+uid+')">'+g+'</g></svg>';
+  }
+
+  /* ---- sole: raggi a punto raso (lunghi e corti), centro a nodi francesi ---- */
+  function sunSVG(){
+    var R=rng(23); function rr(a,b){ return a+(b-a)*R(); }
+    var out=[], thr=threader(out,.55,.7,-.5,-.55), CX=100, CY=100, NR=SMALL?10:LITE?12:16, r0=36, p, j, i;
+    for(p=0;p<NR;p++){
+      var th=(p/NR)*2*Math.PI-Math.PI/2+rr(-.02,.02), lg=(p%2===0), len=(lg?46:27)*rr(.95,1.05), ns=SMALL?(lg?4:3):LITE?(lg?5:4):(lg?8:6);
+      var lit=Math.cos(th-LIGHT), hue=lg?40:34, l0=(lg?52:50)+8*lit;
+      for(j=0;j<ns;j++){
+        var u=(j/(ns-1))*2-1, au=Math.abs(u), lj=len*(1-.2*Math.pow(au,1.6))*rr(.96,1.03);
+        var a0=th+u*(lg?.085:.11), a1=th+u*(lg?.07:.09), a2=th+u*(lg?.018:.03), rs=r0*rr(.96,1.04);
+        thr('M'+f(CX+Math.cos(a0)*rs)+' '+f(CY+Math.sin(a0)*rs)+' Q'+f(CX+Math.cos(a1)*(r0+lj*.5))+' '+f(CY+Math.sin(a1)*(r0+lj*.5))+' '+f(CX+Math.cos(a2)*(r0+lj))+' '+f(CY+Math.sin(a2)*(r0+lj)),
+            hue+rr(-2,2),92,l0+rr(-4,4)+(1-au)*3-(au>.85?7:0),LITE?3.9:3.2);
+      }
+    }
+    out.push('<circle cx="'+CX+'" cy="'+CY+'" r="35.5" fill="hsl(24 85% 38%)"/>');
+    var K=SMALL?22:LITE?32:46;
+    for(i=0;i<K;i++){
+      var rad=Math.sqrt((i+.5)/K)*32, ang=i*2.39996, kx=CX+Math.cos(ang)*rad, ky=CY+Math.sin(ang)*rad, kr=rr(3.6,4.3)*(LITE?1.12:1);
+      out.push('<circle cx="'+f(kx)+'" cy="'+f(ky)+'" r="'+f(kr)+'" fill="url(#ksun)"/><circle cx="'+f(kx-kr*.32)+'" cy="'+f(ky-kr*.36)+'" r="'+f(kr*.36)+'" fill="#fff" opacity=".35"/>');
+    }
+    var defs='<defs><radialGradient id="ksun" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="hsl(38 95% 66%)"/><stop offset=".55" stop-color="hsl(30 92% 50%)"/><stop offset="1" stop-color="hsl(22 85% 36%)"/></radialGradient>'+filt("tsun",17,FLT)+'</defs>';
+    return '<svg '+NS+'viewBox="0 0 200 200" fill="none" stroke-linecap="round" stroke-linejoin="round">'+defs+'<g filter="url(#tsun)">'+out.join("")+'</g></svg>';
+  }
+
+  /* ---- costruzione a rate, quando il browser è libero; l'immagine compare con una dissolvenza ---- */
+  var Q=[], idle=window.requestIdleCallback?function(fn){ requestIdleCallback(fn,{timeout:600}); }:function(fn){ setTimeout(fn,60); };
+  var embDone=false;
+  function pump(){ var t=Q.shift(); if(!t){ if(!embDone){ embDone=true; window.__embDone=true; window.dispatchEvent(new Event("embroid")); } return; } t(); idle(pump); }
+  /* now=true: il ricamo e' gia' presente alla prima schermata (nessuna dissolvenza, nessuna comparsa); altrimenti dissolvenza lenta */
+  function put(box,svg,now){
+    var im=new Image(); im.alt=""; im.decoding="sync"; im.draggable=false;
+    if(now){ box.style.transition="none"; box.classList.add("on"); }
+    var show=function(){ if(!now) box.classList.add("on"); };
+    im.onload=show; im.onerror=show; box.appendChild(im);
+    im.src=URL.createObjectURL(new Blob([svg],{type:"image/svg+xml"}));
+  }
+  /* x, baseY = dove poggia la base del gambo; il fiore ruota intorno a quel punto */
+  function place(el,sp,x,baseY,w){
+    var flip=!!sp.flip, vh=246+sp.ext, eh=w*vh/200, fr=(234+sp.ext)/vh, bx=(flip?105:95)/200*w;
+    el.style.width=w+"px"; el.style.height=Math.round(eh)+"px";
+    el.style.left=Math.round(x-bx)+"px"; el.style.top=Math.round(baseY-fr*eh)+"px";
+    el.style.transformOrigin=(bx/w*100).toFixed(1)+"% "+(fr*100).toFixed(1)+"%";
+    el.style.transform="rotate("+(sp.rot||0)+"deg)";
+  }
+  var FQ=[], nowQ=[];   /* FQ: ricami del footer e sole, costruiti quando la zona si avvicina; nowQ: ricami presenti da subito */
+  function group(host,layer,specs,side,tag,late,now){
+    var items=specs.map(function(sp,i){
+      var el=document.createElement("div"); el.className="fl"; layer.appendChild(el);
+      var build=function(){
+        var flip=!!sp.flip, T=Object.assign({},TYPES[sp.type],{ext:sp.ext,lean:flip?-sp.lean:sp.lean,flip:flip,ls:sp.ls});
+        put(el,flower(sp.type,T,tag+i),now);
+      };
+      if(now) nowQ.push(build); else (late?FQ:Q).push(build);
+      return {el:el,sp:sp};
+    });
+    function layout(){
+      var W=host.clientWidth, H=host.clientHeight, wA=(W<=640)?Math.min(84,W*.21):Math.max(60,Math.min(88,W*.056)), xA=Math.max(wA*.75,W*.15);   /* su telefono i fiori sono piu' grandi */
+      items.forEach(function(it){
+        var sp=it.sp, w=Math.round(wA*sp.wk), x=side>0 ? xA+wA*sp.dx : W-xA-wA*sp.dx;
+        place(it.el,sp,x,H+5+(sp.dy||0),w);
+      });
+    }
+    layout(); window.addEventListener("resize",layout);
+    nowQ.splice(0).forEach(function(b){ b(); });   /* i ricami "gia' presenti" si costruiscono subito, prima che la pagina si mostri */
+  }
+  /* schermata iniziale: solo il girasole giallo; in fondo alla pagina restano i due fiori (rosso e lilla) */
+  group(hero,ring,[
+    {type:0,ext:46,wk:.85,dx:0,  lean:-24,rot:-2,flip:false,ls:0,dy:0}],1,"s",false,true);
+  var foot=document.querySelector("footer");
+  if(foot){
+    var ring2=document.createElement("div"); ring2.className="embroid"; ring2.setAttribute("aria-hidden","true");
+    foot.insertBefore(ring2,foot.firstChild);
+    group(foot,ring2,[
+      {type:3,ext:46,wk:1,  dx:0,  lean:22, rot:2, flip:false,ls:1,dy:0},
+      {type:4,ext:20,wk:.8, dx:.4, lean:-28,rot:-3,flip:true, ls:0,dy:3}],-1,"u",true);
+  }
+  /* sole, in "Percorso e contatti" (in alto a sinistra); come i fiori del footer si costruisce con largo anticipo (1600 px prima), cosi' quando ci arrivi e' gia' li' */
+  var abt=document.getElementById("about");
+  if(abt){ var sun=document.createElement("div"); sun.className="sun"; abt.appendChild(sun); FQ.push(function(){ put(sun,sunSVG()); }); }
+  var wake=function(){ while(FQ.length) Q.push(FQ.shift()); idle(pump); }, tgt=abt||foot;
+  if(tgt){ if("IntersectionObserver" in window){ var io=new IntersectionObserver(function(en){ if(en[0].isIntersecting){ io.disconnect(); wake(); } },{rootMargin:"1600px 0px"}); io.observe(tgt); } else wake(); }
+  idle(pump);
+})();
+
+/* ============ PELLICOLA SCORREVOLE ============ */
+var TOUCH=!!(window.matchMedia&&matchMedia("(hover:none)").matches), EAGER=[];
+function Reel(root,items,onOpen){
+  var sc=root.querySelector(".reel-scroll"), track=root.querySelector(".track"), thumb_=root.querySelector(".scrub i"), scrub=root.querySelector(".scrub");
+  var cards=[], rate=0, raf=0, lastX=null, hover=false;
+  this.build=function(){
+    track.innerHTML=""; cards=[];
+    items.forEach(function(w,i){
+      var li=document.createElement("li"); li.className="card"; li.dataset.cat=w.cat;
+      var tb=w.thumb||w.cover;
+      li.innerHTML='<button class="c-btn"><span class="c-n">'+pad2(i+1)+'</span><span class="c-img"'+(tb?lqOf(tb):'')+'>'+(tb?imgTag(tb,{small:1,sizes:"(max-width:640px) 62vw, 300px",extra:' loading="lazy" onload="this.classList.add(\'ld\')"'}):'')+'</span><span class="c-t">'+esc(w.title)+'</span><span class="c-tag">'+esc(L(w.tag))+' · '+esc(L(w.dur))+'</span></button>';
+      /* le prime due copertine si caricano subito (servono per l'attesa iniziale) */
+      var im0=li.querySelector("img");
+      if(im0 && i<2 && root.id==="reel-perf"){ im0.loading="eager"; if(i===0) im0.setAttribute("fetchpriority","high"); EAGER.push(new Promise(function(res){ if(im0.complete&&im0.naturalWidth) return res(); im0.addEventListener("load",res,{once:true}); im0.addEventListener("error",res,{once:true}); })); }
+      li.addEventListener("pointerenter",function(){ prefetch(w); },{passive:true});
+      li.querySelector("button").onclick=function(){ onOpen(w); };
+      li.querySelector("button").onfocus=function(){ setActive(li); };
+      track.appendChild(li); cards.push(li);
+    });
+    update();
+  };
+  function vis(){ return cards.filter(function(c){ return !c.hidden; }); }
+  function setActive(el){ cards.forEach(function(c){ c.classList.toggle("on",c===el); }); }
+  function nearest(x){
+    var best=null,bd=1e9; vis().forEach(function(c){ var r=c.getBoundingClientRect(), d=Math.abs(r.left+r.width/2-x); if(d<bd){bd=d;best=c;} });
+    return best;
+  }
+  function update(){
+    var max=sc.scrollWidth-sc.clientWidth;
+    root.classList.toggle("can",max>4);
+    var w=sc.scrollWidth||1;
+    thumb_.style.width=Math.max(8,sc.clientWidth/w*100)+"%";
+    thumb_.style.left=(sc.scrollLeft/w*100)+"%";
+    if(TOUCH) return;   /* su tocco nessuna carta "attiva": si risparmia lavoro a ogni movimento */
+    if(!hover){ var r=sc.getBoundingClientRect(); setActive(nearest(r.left+r.width/2)); }
+    else if(lastX!==null) setActive(nearest(lastX));
+  }
+  function tick(){
+    raf=0; if(!rate) return;
+    var max=sc.scrollWidth-sc.clientWidth;
+    sc.scrollLeft+=rate;
+    if((rate>0&&sc.scrollLeft>=max-1)||(rate<0&&sc.scrollLeft<=1)){ rate=0; update(); return; }
+    update(); raf=requestAnimationFrame(tick);
+  }
+  function go(){ if(!raf && rate) raf=requestAnimationFrame(tick); }
+  root.addEventListener("pointermove",function(e){
+    if(e.pointerType!=="mouse") return;
+    hover=true; lastX=e.clientX;
+    var r=root.getBoundingClientRect(), d=((e.clientX-r.left)/r.width-.5)*2, a=Math.abs(d), dz=.26;
+    rate = a<dz ? 0 : Math.sign(d)*Math.pow((a-dz)/(1-dz),1.6)*24;
+    setActive(nearest(e.clientX)); go();
+  });
+  root.addEventListener("pointerleave",function(e){
+    if(e.pointerType!=="mouse") return;
+    hover=false;
+    var r=root.getBoundingClientRect();
+    if(e.clientX>=r.right-3){ rate=Math.max(Math.abs(rate),10); }
+    else if(e.clientX<=r.left+3){ rate=-Math.max(Math.abs(rate),10); }
+    else rate=0;
+    if(!rate) update(); go();
+  });
+  ["wheel","touchstart","pointerdown"].forEach(function(ev){ root.addEventListener(ev,function(){ rate=0; },{passive:true}); });
+  var st=0;
+  sc.addEventListener("scroll",function(){ if(st) return; st=requestAnimationFrame(function(){ st=0; update(); }); },{passive:true});
+  var rz=0; window.addEventListener("resize",function(){ if(rz) return; rz=requestAnimationFrame(function(){ rz=0; update(); }); });
+  function scrubTo(e){ var r=scrub.getBoundingClientRect(); sc.scrollLeft=((e.clientX-r.left)/r.width)*(sc.scrollWidth-sc.clientWidth); }
+  var drag=false;
+  scrub.addEventListener("pointerdown",function(e){ drag=true; scrub.setPointerCapture(e.pointerId); scrubTo(e); });
+  scrub.addEventListener("pointermove",function(e){ if(drag) scrubTo(e); });
+  scrub.addEventListener("pointerup",function(){ drag=false; });
+  this.update=update; this.cards=function(){ return cards; };
+}
+var reelP, reelS, reelC;
+function cnt(n){ return n+" "+(n===1?ui("work_1"):ui("works_n")); }
+
+/* ============ SCHEDA (foto intera su nero) ============ */
+var det=document.getElementById("detail"), cur=null, group=[];
+/* foto grande: prima l'anteprima sfocata (subito), poi la foto piccola (di solito gia' in cache dalla pellicola),
+   poi la misura giusta per lo schermo e la rete (1000 o 1800). Senza photos.js: l'originale. Se manca tutto: riquadro col nome. */
+var heroSeq=0;
+function showPhoto(){
+  var c=cur; if(!c||!c.cover) return;
+  var im=document.getElementById("d-img"), sc=document.getElementById("d-screen"), seq=++heroSeq, best=0, r=rec(c.cover);
+  sc.removeAttribute("data-missing"); im.style.display="block"; im.onload=posM; im.onerror=null;
+  sc.style.backgroundImage = r ? "url("+r.q+")" : "";
+  im.classList.add("f");
+  function put(src,rank){ if(seq!==heroSeq||rank<=best) return; best=rank; im.src=src; im.classList.remove("f"); if(rank>=2) sc.style.backgroundImage=""; }
+  function dead(){ if(seq!==heroSeq||best) return; im.classList.remove("f"); sc.style.backgroundImage=""; im.onerror=function(){ miss(im); }; im.src=c.cover; }
+  function probe(src,rank,fail){ var p=new Image(); p.decoding="async"; p.onload=function(){ if(p.decode) p.decode().then(function(){ put(src,rank); },function(){ put(src,rank); }); else put(src,rank); }; p.onerror=fail||function(){}; p.src=src; }   /* si mostra solo a foto gia' decodificata: niente scatti */
+  function orig(){ probe(c.cover,3,dead); }
+  if(r){
+    var u1=dirUrl(r,r.s[0]), u2=dirUrl(r,heroDir(c.cover));
+    if(u1===u2) probe(u1,2,orig); else { probe(u1,1); probe(u2,2,orig); }
+  } else orig();
+}
+/* PRECARICAMENTO (solo con rete buona): le foto si scaricano E si decodificano prima che servano.
+   - dopo lo sblocco: le copertine della pellicola (piccole) e poi, una scheda alla volta, foto grande + prime della galleria di TUTTI i lavori;
+   - passando/toccando una copertina o aprendo una scheda: quel lavoro e i vicini subito. Non usa mai gli originali. */
+var PF={}, WM={};
+function warm(u){ if(!u||WM[u]) return; WM[u]=1; var p=new Image(); p.decoding="async"; p.src=u; if(p.decode) p.decode().catch(function(){}); }
+function prefetch(w){
+  if(SLOWNET||!w||!rec(w.cover)||PF[w.cover+w.title]) return; PF[w.cover+w.title]=1;
+  warm(dirUrl(rec(w.cover),heroDir(w.cover)));
+  var ex=(w.extra||[]);
+  ex.slice(0,2).forEach(function(f,i){ var r=rec(f); if(!r) return; warm(dirUrl(r,(i===0&&w.fig==="straddle")?r.s[0]:galDir(f,ex.length>1))); });
+}
+/* le copertine della pellicola: passano da "lazy" a subito, e si decodificano una dopo l'altra (leggere: 480-1000 px) */
+function warmCards(){
+  [].slice.call(document.querySelectorAll(".card img")).forEach(function(im,i){ setTimeout(function(){ im.loading="eager"; if(im.decode) im.decode().catch(function(){}); },i*140); });
+}
+/* la galleria sotto i testi: il layout è tutto in CSS; qui si aggiorna solo la proporzione di ogni foto appena carica */
+function galAr(im){
+  im.classList.add("ld");
+  if(!im.naturalWidth||!im.naturalHeight) return;
+  im.parentNode.parentNode.style.setProperty("--ar",(im.naturalWidth/im.naturalHeight).toFixed(3));
+}
+/* la foto a cavallo: metà sopra il bordo inferiore della foto principale, metà sul nero; in basso a destra.
+   Sposta anche i testi sotto quanto serve perché la parte che sporge non copra nulla. */
+function posM(){
+  var m=document.getElementById("d-m"), st=document.getElementById("d-stage"), im=document.getElementById("d-img");
+  if(!m||!m.firstChild||!cur){ det.style.setProperty("--ov","0px"); return; }
+  var r=im.getBoundingClientRect(), sr=st.getBoundingClientRect(); if(!r.width||!r.height) r=sr;   /* foto principale mancante: si usa il riquadro */
+  var mh=m.offsetHeight, mw=m.offsetWidth, right=(r.right-sr.left)-Math.max(14,r.width*.05);
+  m.style.left=Math.max(8,right-mw)+"px"; m.style.top=((r.bottom-sr.top)-mh/2)+"px"; m.classList.add("on");
+  var tf=parseFloat(getComputedStyle(document.getElementById("d-title")).fontSize)||80;
+  det.style.setProperty("--ov",Math.max(0,mh/2-(tf*.35+42)+22)+"px");
+}
+function mAr(im){
+  im.classList.add("ld");
+  if(!im.naturalWidth||!im.naturalHeight) return;
+  document.getElementById("d-m").style.setProperty("--ar",(im.naturalWidth/im.naturalHeight).toFixed(3)); posM();
+}
+window.galAr=galAr; window.mAr=mAr; window.addEventListener("resize",posM);
+function fillDetail(){
+  var w=cur, i=group.indexOf(w), n=group.length;
+  document.getElementById("d-count").textContent=pad2(i+1)+" / "+pad2(n);
+  document.getElementById("d-title").textContent=w.title;
+  document.getElementById("d-tag").textContent=L(w.tag);
+  document.getElementById("d-dur").textContent=L(w.dur);
+  document.getElementById("d-desc").textContent=L(w.desc)||"";
+  var q=document.getElementById("d-quote");
+  q.innerHTML = w.quote ? esc(L(w.quote))+'<small>'+esc(w.quoteBy)+'</small>' : ""; q.style.display = w.quote ? "block" : "none";
+  document.getElementById("d-credits").innerHTML=w.credits.map(function(c){
+    var k=c.indexOf(": "), role=k>0?c.slice(0,k):"", names=k>0?c.slice(k+2):c;
+    if(LANG==="en") role=RM[role]||role;
+    return '<div><dt>'+esc(role)+'</dt><dd>'+esc(names)+'</dd></div>';
+  }).join("");
+  /* foto extra: a cavallo della principale (solo se il lavoro ha fig:"straddle") oppure in galleria pulita sotto i testi */
+  var ex=w.extra||[], m=document.getElementById("d-m"), strad=(w.fig==="straddle"&&ex.length>0);
+  m.classList.remove("on"); m.style.removeProperty("--ar");
+  m.innerHTML = strad ? '<span class="g-img"'+lqOf(ex[0])+'>'+imgTag(ex[0],{sizes:"(max-width:640px) 50vw, 26vw",extra:' onload="mAr(this)"'})+'</span>' : "";
+  if(strad && rec(ex[0])) m.style.setProperty("--ar",(rec(ex[0]).w/rec(ex[0]).h).toFixed(4));
+  var rest=strad?ex.slice(1):ex, rows=[], k;
+  for(k=0;k<rest.length;k+=2) rows.push(rest.slice(k,k+2));
+  document.getElementById("d-gal").innerHTML=rows.map(function(r){
+    return '<div class="gr'+(r.length===1?' one':'')+'">'+r.map(function(f){
+      return '<figure class="g"'+(rec(f)?' style="--ar:'+(rec(f).w/rec(f).h).toFixed(4)+'"':'')+'><span class="g-img"'+lqOf(f)+'>'+imgTag(f,{sizes:(r.length>1?"(max-width:640px) 100vw, 48vw":"(max-width:640px) 100vw, 88vw"),extra:' loading="lazy" fetchpriority="low" onload="galAr(this)"'})+'</span></figure>';
+    }).join("")+'</div>';
+  }).join("");
+  posM();
+  document.getElementById("d-video").innerHTML = w.video ? '<div class="lbl">'+ui("video")+'</div><div class="fr"><iframe src="'+w.video+'" loading="lazy" allowfullscreen></iframe></div>' : "";
+  var nx=group[(i+1)%n], nl=document.getElementById("d-nextlink");
+  nl.innerHTML = n>1 ? '<small>'+ui("next")+'</small><b>'+esc(nx.title)+' →</b>' : "";
+  nl.onclick=function(){ openWork(nx); };
+  document.getElementById("d-prev").style.visibility=document.getElementById("d-next").style.visibility = n>1 ? "visible" : "hidden";
+  document.getElementById("d-prev").onclick=function(){ openWork(group[(i-1+n)%n]); };
+  document.getElementById("d-next").onclick=function(){ openWork(nx); };
+  document.getElementById("d-back").textContent=ui("back");
+}
+function openWork(w){
+  cur=w;
+  group = ALL;   /* le frecce e i pulsanti scorrono tutti i lavori di seguito */
+  fillDetail(); showPhoto();
+  det.classList.add("on"); det.scrollTop=0; document.body.style.overflow="hidden";
+  posM(); requestAnimationFrame(posM);   /* ora la scheda è visibile: si può misurare */
+  var gi=group.indexOf(w), gn=group.length; setTimeout(function(){ prefetch(group[(gi+1)%gn]); prefetch(group[(gi+gn-1)%gn]); },400);
+}
+function closeWork(){ det.classList.remove("on"); document.getElementById("d-video").innerHTML=""; document.body.style.overflow=""; cur=null; }
+document.getElementById("d-back").onclick=closeWork;
+document.addEventListener("keydown",function(e){
+  if(!det.classList.contains("on")) return;
+  if(e.key==="Escape") closeWork();
+  else if((e.key==="ArrowRight"||e.key==="ArrowLeft") && group.length>1 && cur){
+    var gi=group.indexOf(cur), gn=group.length;
+    openWork(group[(gi+(e.key==="ArrowRight"?1:gn-1))%gn]); e.preventDefault();   /* freccia destra/sinistra: lavoro successivo/precedente */
+  }
+});
+
+/* barra in alto: nera sul chiaro, bianca sulle fasce scure (senza effetti pesanti) */
+(function(){
+  var bands=[].slice.call(document.querySelectorAll(".band")), tb=document.getElementById("top-bar"), tq=0;
+  function tone(){ tq=0; var dark=false; for(var i=0;i<bands.length;i++){ var r=bands[i].getBoundingClientRect(); if(r.top<=24 && r.bottom>=24){ dark=true; break; } } tb.classList.toggle("dark",dark); }
+  window.addEventListener("scroll",function(){ if(!tq) tq=requestAnimationFrame(tone); },{passive:true});
+  tone();
+})();
+
+var PERF=WORKS.filter(function(w){ return w.cat==="perf"; }), SHORT=WORKS.filter(function(w){ return w.cat==="short"; });
+var ALL=PERF.concat(SHORT,COLLABS);
+
+/* ============ LINGUA ============ */
+function renderAll(){
+  document.documentElement.lang=LANG;
+  document.querySelectorAll("[data-i]").forEach(function(el){ el.textContent=ui(el.dataset.i); });
+  document.getElementById("bio").textContent=BIO[LANG];
+  document.querySelectorAll(".lang button").forEach(function(b){ b.classList.toggle("on",b.dataset.l===LANG); });
+  reelP.build(); reelS.build(); reelC.build();
+  document.getElementById("count-perf").textContent=cnt(PERF.length);
+  document.getElementById("count-short").textContent=cnt(SHORT.length);
+  document.getElementById("count-collab").textContent=cnt(COLLABS.length);
+  if(cur) fillDetail();
+}
+document.querySelectorAll(".lang button").forEach(function(b){
+  b.onclick=function(){ LANG=b.dataset.l; try{ localStorage.setItem("lang",LANG); }catch(e){} renderAll(); };
+});
+
+reelP=new Reel(document.getElementById("reel-perf"),PERF,openWork);
+reelS=new Reel(document.getElementById("reel-short"),SHORT,openWork);
+reelC=new Reel(document.getElementById("reel-collab"),COLLABS,openWork);
+renderAll();
+
+/* ============ ATTESA E VIA ============
+   1) il sito si carica (caratteri, ricami, prime copertine): 1-2 secondi, con il nome gia' visibile;
+   2) poi PARTE l'animazione iniziale (linea, logo che si disegna, fiori);
+   3) la schermata resta ferma (niente scroll, menu spento) finche' l'animazione non e' finita: poi compare "Scorri" e si sblocca.
+   Cosi' tutti la vedono per intero. Alla seconda visita della sessione l'animazione e' saltata. */
+(function(){
+  var de=document.documentElement, done=false, keys=[" ","PageDown","PageUp","ArrowDown","ArrowUp","End","Home"];
+  de.classList.add("wait");
+  try{ if("scrollRestoration" in history) history.scrollRestoration="manual"; }catch(e){}
+  window.scrollTo(0,0);
+  function block(e){ if(e.type==="keydown" && keys.indexOf(e.key)<0) return; e.preventDefault(); }
+  ["wheel","touchmove","keydown"].forEach(function(n){ window.addEventListener(n,block,{passive:false}); });
+  function go(){
+    if(done) return; done=true;
+    ["wheel","touchmove","keydown"].forEach(function(n){ window.removeEventListener(n,block,{passive:false}); });
+    de.classList.remove("wait"); de.classList.add("go");
+    if(!SLOWNET && window.PH){ setTimeout(warmCards,600); var k=0; setTimeout(function nxt(){ if(k>=ALL.length) return; prefetch(ALL[k++]); setTimeout(nxt,450); },1600); }   /* tutte le schede, una alla volta */
+  }
+  function start(){
+    if(STARTED) return; STARTED=true;
+    de.classList.remove("pre");                      /* via: linea e logo partono */
+    startQ.splice(0).forEach(function(f){ f(); });   /* via: compaiono i fiori */
+    if(de.classList.contains("cvlogo")) logoCanvasPlay();   /* via: sul telefono il logo si disegna su canvas */
+    /* durata dell'animazione da questo momento: linea + logo che si disegna ~6,3 s (anche sul telefono) */
+    var dur = de.classList.contains("seen") ? 0 : 6600;
+    setTimeout(go,dur);
+  }
+  Promise.all([
+    window.__fontReady,                                   /* carattere web davvero arrivato (o errore/2,5 s) */
+    de.classList.contains("cvlogo") ? logoCanvasPrepare() : Promise.resolve(),   /* telefono: canvas del logo pronto */
+    new Promise(function(r){ if(window.__embDone) r(); else window.addEventListener("embroid",r,{once:true}); }),
+    new Promise(function(r){ if(document.readyState==="complete") r(); else window.addEventListener("load",r,{once:true}); }),
+    SLOWNET ? Promise.resolve() : Promise.all(EAGER),   /* con rete lenta non si aspettano le copertine */
+    new Promise(function(r){ setTimeout(r,de.classList.contains("seen")?400:1300); })   /* almeno 1,3 s di calma prima del via */
+  ]).then(start,start);
+  setTimeout(start,4000);                     /* rete di sicurezza: dopo 4 secondi parte comunque */
+  setTimeout(go,SLOWNET?6000:14000);          /* rete di sicurezza: si sblocca comunque */
+})();
+
+/* service worker: dalla seconda visita le foto gia' viste arrivano dalla memoria del telefono/pc (poi si aggiornano in silenzio) */
+if("serviceWorker" in navigator && (location.protocol==="https:"||location.hostname==="localhost")) window.addEventListener("load",function(){ navigator.serviceWorker.register("sw.js").catch(function(){}); });
+</script>
+</body>
+</html>

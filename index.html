@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<!-- VERSIONE 23-09 leggera-18: teaser di Atteone molto piu' grande (su computer occupa piu' di meta' della larghezza accanto ai testi; su telefono e tablet tutta la larghezza). Precedente, leggera-17: la foto piccola a cavallo (Atteone, Citerone short film) non si sposta piu' mentre le foto caricano ne' durante lo scorrimento col dito (la posizione ora si calcola dalle proporzioni note della foto, non dalla foto che sta ancora arrivando); la foto grande della scheda occupa subito il suo spazio definitivo (niente "salti" quando arriva la versione nitida); animazione iniziale piu' corta di circa 1,5 s (si puo' scorrere prima); Citerone short film: sottotitolo "Mettetevi comodi e godetevelo" e avviso che si tratta di un'anteprima. Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
+<!-- VERSIONE 23-09 leggera-19: Citerone short film, locandina minimale: solo "Estratto" sopra il titolo, niente frase in corsivo. Precedente, leggera-18: teaser di Atteone molto piu' grande (su computer occupa piu' di meta' della larghezza accanto ai testi; su telefono e tablet tutta la larghezza). Precedente, leggera-17: la foto piccola a cavallo (Atteone, Citerone short film) non si sposta piu' mentre le foto caricano ne' durante lo scorrimento col dito (la posizione ora si calcola dalle proporzioni note della foto, non dalla foto che sta ancora arrivando); la foto grande della scheda occupa subito il suo spazio definitivo (niente "salti" quando arriva la versione nitida); animazione iniziale piu' corta di circa 1,5 s (si puo' scorrere prima); Citerone short film: sottotitolo "Mettetevi comodi e godetevelo" e avviso che si tratta di un'anteprima. Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Michele Ifigenia / Tyche</title>
@@ -382,7 +382,7 @@ footer{padding:0 16px 26px}
   </div>
 </div><script src="photos.js"></script>
 <script>
-console.info("Tyche index: versione 23-09 leggera-18");
+console.info("Tyche index: versione 23-09 leggera-19");
 /* coda "al via": i ricami compaiono solo quando parte l'animazione iniziale (vedi ATTESA) */
 var STARTED=false, startQ=[];
 function onStart(f){ if(STARTED) f(); else startQ.push(f); }
@@ -435,10 +435,9 @@ var WORKS=[
   credits:["Autore / Coreografo: Michele Ifigenia Colturi"]},
  {cat:"short",title:"Citerone",kicker:X("Cortometraggio","Short Film"),thumb:"citerone2021.png",thumbPos:"50% 0%",cover:"citeroneandre.png",extra:["citerone2021.png"],fig:"straddle",
   video:"video/citeroneshort.mp4",videoFeature:true,
-  videoLabel:X("Cortometraggio · Anteprima","Short Film · Preview"),
-  videoKicker:X("Anteprima del cortometraggio","Short film preview"),
-  videoNote:X("Mettetevi comodi e godetevelo: questa è un’anteprima del cortometraggio.","Sit back and enjoy it: this is a preview of the short film."),
-  tag:X("Short Film","Short Film"),dur:X("Cortometraggio · anteprima","Short film · preview"),
+  videoLabel:X("Estratto","Excerpt"),
+  videoKicker:X("Estratto","Excerpt"),
+  tag:X("Short Film","Short Film"),dur:X("Cortometraggio","Short film"),
   desc:X("Sguardo cinematografico sull'ascesa rituale al monte Citerone.","A cinematic gaze on the ritual ascent of Mount Cithaeron."),
   credits:["Autore / Coreografo: Michele Ifigenia Colturi","Filmmaking: Lorenzo Basili"]}
 ];

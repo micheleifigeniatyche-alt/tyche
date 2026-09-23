@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<!-- VERSIONE 23-09 leggera-10: teaser video (Cuma, Citerone, Atteone) dopo la sinossi; Amadriadi con la foto di Bologna in piedi; Citerone short film con le foto scambiate. Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
+<!-- VERSIONE 23-09 leggera-11: teaser piu' piccoli con locandina solo testo; Citerone short film: manifesto solo nella pellicola; Amadriadi con la foto di Bologna in piedi; Citerone short film con le foto scambiate. Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Michele Ifigenia / Tyche</title>
@@ -184,24 +184,24 @@ footer>span{position:relative;z-index:1}
    il video si scarica solo quando si preme play (prima solo pochi KB per sapere durata e formato). */
 .d-video{padding:8px 24px 0;max-width:1500px;margin:0 auto}
 .d-video:empty{display:none}
-.d-video .lbl{display:flex;justify-content:space-between;align-items:baseline;max-width:1200px;margin:0 auto 14px;font-size:.85rem;color:#8b8a86;font-weight:600;border-top:1px solid #2c2c2e;padding-top:10px}
+.d-video .lbl{display:flex;justify-content:space-between;align-items:baseline;max-width:880px;margin:0 auto 14px;font-size:.85rem;color:#8b8a86;font-weight:600;border-top:1px solid #2c2c2e;padding-top:10px}
 .d-video .fr{aspect-ratio:16/9;background:#111}
 .d-video iframe{width:100%;height:100%;border:0}
-.vf{--vr:1.7778;position:relative;width:min(100%,1200px,calc(80vh*var(--vr)));width:min(100%,1200px,calc(80svh*var(--vr)));aspect-ratio:var(--vr);margin:0 auto;background:#000;overflow:hidden;box-shadow:0 0 0 1px rgba(233,232,228,.1),0 40px 80px -40px rgba(0,0,0,.9)}
+.vf{--vr:1.7778;position:relative;width:min(100%,880px,calc(62vh*var(--vr)));width:min(100%,880px,calc(62svh*var(--vr)));aspect-ratio:var(--vr);margin:0 auto;background:#000;overflow:hidden;box-shadow:0 0 0 1px rgba(233,232,228,.1)}
 .vf video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000;display:block}
-.vo{position:absolute;inset:0;z-index:2;width:100%;height:100%;display:block;text-align:left;color:#fff;background:#000;transition:opacity .5s ease}
-.vo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.62;filter:saturate(.86) contrast(1.05);transition:transform 1.4s cubic-bezier(.2,.7,.2,1),opacity .5s}
-.vo::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.72),rgba(0,0,0,0) 55%)}
-.vo:hover img,.vo:focus-visible img{transform:scale(1.035);opacity:.78}
+/* locandina solo testo, come un titolo di testa: nome del lavoro in grande, play sottile in basso a destra */
+.vo{position:absolute;inset:0;z-index:2;width:100%;height:100%;display:block;text-align:left;color:#fff;background:#050505 var(--gb);background-size:240px 240px;transition:opacity .5s ease}
+.vt{position:absolute;left:clamp(18px,3.4vw,40px);right:clamp(18px,3.4vw,40px);bottom:clamp(16px,3vw,36px);display:flex;justify-content:space-between;align-items:flex-end;gap:18px}
+.vt b{font-size:clamp(1.6rem,4.4vw,3.6rem);font-weight:600;letter-spacing:-.05em;line-height:.92;transition:opacity .3s}
+.vc{display:flex;align-items:center;gap:12px;flex:0 0 auto;font-size:.85rem;font-weight:600;color:#c9c8c3;font-variant-numeric:tabular-nums}
+.vp{position:relative;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.7);transition:background-color .3s,border-color .3s}
+.vp::before{content:"";position:absolute;left:53%;top:50%;transform:translate(-50%,-50%);border-style:solid;border-width:7px 0 7px 11px;border-color:transparent transparent transparent #fff;transition:border-color .3s}
+.vo:hover .vp,.vo:focus-visible .vp{background:#fff;border-color:#fff}
+.vo:hover .vp::before,.vo:focus-visible .vp::before{border-color:transparent transparent transparent #000}
+.vo:hover .vt b{opacity:.85}
 .vo:focus-visible{outline:1px solid #e9e8e4;outline-offset:-6px}
-.vp{position:absolute;z-index:1;left:50%;top:50%;width:clamp(64px,7vw,92px);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;border:1px solid rgba(255,255,255,.75);background:rgba(0,0,0,.22);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:transform .4s cubic-bezier(.2,.7,.2,1),background-color .3s}
-.vp::before{content:"";position:absolute;left:54%;top:50%;transform:translate(-50%,-50%);border-style:solid;border-width:.62em 0 .62em 1.05em;border-color:transparent transparent transparent #fff;font-size:clamp(14px,1.5vw,20px)}
-.vo:hover .vp{transform:translate(-50%,-50%) scale(1.08);background:rgba(0,0,0,.4)}
-.vt{position:absolute;z-index:1;left:clamp(16px,3vw,36px);bottom:clamp(14px,2.6vw,32px);right:clamp(16px,3vw,36px);display:flex;justify-content:space-between;align-items:baseline;gap:12px}
-.vt b{font-size:clamp(1.05rem,2.2vw,1.8rem);font-weight:600;letter-spacing:-.03em;line-height:1}
-.vt small{font-size:.85rem;font-weight:600;color:#c9c8c3;font-variant-numeric:tabular-nums}
 .vf.play .vo{opacity:0;pointer-events:none}
-@media(prefers-reduced-motion:reduce){.vo img,.vp,.vo{transition:none}}
+@media(prefers-reduced-motion:reduce){.vo,.vp,.vp::before,.vt b{transition:none}}
 .d-next{display:block;width:100%;text-align:left;padding:70px 24px 60px;max-width:1500px;margin:0 auto}
 .d-next:empty{display:none}
 .d-next small{display:block;font-size:.85rem;color:#8b8a86;font-weight:600}
@@ -337,7 +337,7 @@ footer{padding:0 16px 26px}
   <button class="d-next" id="d-nextlink"></button>
 </div><script src="photos.js"></script>
 <script>
-console.info("Tyche index: versione 23-09 leggera-10");
+console.info("Tyche index: versione 23-09 leggera-11");
 /* coda "al via": i ricami compaiono solo quando parte l'animazione iniziale (vedi ATTESA) */
 var STARTED=false, startQ=[];
 function onStart(f){ if(STARTED) f(); else startQ.push(f); }
@@ -385,7 +385,7 @@ var WORKS=[
    "“It forms a tenacious grip: like the serpent seized by the royal eagle, which, as it is carried aloft, coils around the raptor’s head and feet and binds its spread wings with its tail; or like the ivy that winds around tall tree trunks; or like the octopus that clutches its captured enemy on the seabed, stretching its tentacles on every side.”"),
   quoteBy:"Ovidio, Metamorfosi / Ovid, Metamorphoses",
   credits:["Autore / Coreografo: Michele Ifigenia Colturi"]},
- {cat:"short",title:"Citerone",cover:"citerone2021.png",extra:["citeroneandre.png"],fig:"straddle",
+ {cat:"short",title:"Citerone",thumb:"citerone2021.png",cover:"citeroneandre.png",extra:["citerone2021.png"],fig:"straddle",
   tag:X("Short Film","Short Film"),dur:X("Cortometraggio","Short film"),
   desc:X("Sguardo cinematografico sull'ascesa rituale al monte Citerone.","A cinematic gaze on the ritual ascent of Mount Cithaeron."),
   credits:["Autore / Coreografo: Michele Ifigenia Colturi","Filmmaking: Lorenzo Basili"]}
@@ -813,7 +813,7 @@ function mAr(im){
   document.getElementById("d-m").style.setProperty("--ar",(im.naturalWidth/im.naturalHeight).toFixed(3)); posM();
 }
 window.galAr=galAr; window.mAr=mAr; window.addEventListener("resize",posM);
-/* TEASER: file nella cartella video -> lettore del sito con la foto del lavoro come locandina; link esterno -> riquadro incorporato.
+/* TEASER: file nella cartella video -> lettore del sito con una locandina solo testo (nome del lavoro); link esterno -> riquadro incorporato.
    Se il file non si trova, il riquadro sparisce da solo (nessun lettore rotto). */
 function mmss(s){ s=Math.round(s); return Math.floor(s/60)+":"+pad2(s%60); }
 function fillVideo(w){
@@ -823,14 +823,13 @@ function fillVideo(w){
     vd.innerHTML='<div class="lbl"><span>'+ui("video")+'</span></div><div class="fr"><iframe src="'+w.video+'" loading="lazy" allowfullscreen></iframe></div>';
     return;
   }
-  var r=rec(w.cover), ps=r ? dirUrl(r,pickDir(r,Math.min(window.innerWidth,1200))) : w.cover;
-  vd.innerHTML='<div class="lbl"><span>'+ui("teaser")+'</span><span class="vd"></span></div>'
+  vd.innerHTML='<div class="lbl"><span>'+ui("teaser")+'</span></div>'
     +'<div class="vf"><video playsinline preload="'+(SLOWNET?'none':'metadata')+'" src="'+w.video+'"></video>'
-    +'<button class="vo" aria-label="'+ui("watch")+' – '+esc(w.title)+'"><img src="'+ps+'" alt="" decoding="async"><span class="vp"></span><span class="vt"><b>'+ui("watch")+'</b></span></button></div>';
+    +'<button class="vo" aria-label="'+ui("watch")+' – '+esc(w.title)+'"><span class="vt"><b>'+esc(w.title)+'</b><span class="vc"><span class="vd"></span><span class="vp"></span></span></span></button></div>';
   var vf=vd.querySelector(".vf"), v=vf.querySelector("video"), ov=vf.querySelector(".vo");
   v.addEventListener("loadedmetadata",function(){
     if(v.videoWidth&&v.videoHeight) vf.style.setProperty("--vr",(v.videoWidth/v.videoHeight).toFixed(4));
-    if(isFinite(v.duration)&&v.duration>0) vd.querySelector(".lbl .vd").textContent=mmss(v.duration);
+    if(isFinite(v.duration)&&v.duration>0) [].forEach.call(vd.querySelectorAll(".vd"),function(e){ e.textContent=mmss(v.duration); });
   });
   v.addEventListener("error",function(){ if(!vf.classList.contains("play")) vd.innerHTML=""; });
   ov.onclick=function(){ vf.classList.add("play"); v.controls=true; var p=v.play(); if(p&&p.catch) p.catch(function(){}); };

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<!-- VERSIONE 23-09 leggera-16: locandina del cortometraggio Citerone piu' alta sul telefono (le scritte non venivano piu' tagliate fuori); tutte le locandine dei teaser ora hanno il testo centrato come quella di Citerone short film; teaser di Atteone piu' grande su computer (sempre accanto alla sinossi, crediti a lato); scheda di Citerone short film con "Cortometraggio" come sopratitolo sopra il nome, cosi' si capisce subito che e' un cortometraggio e non la performance omonima; scorrimento col dito tra i lavori sul telefono piu' fluido (un solo movimento continuo, velocita' del gesto misurata meglio). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
+<!-- VERSIONE 23-09 leggera-18: teaser di Atteone molto piu' grande (su computer occupa piu' di meta' della larghezza accanto ai testi; su telefono e tablet tutta la larghezza). Precedente, leggera-17: la foto piccola a cavallo (Atteone, Citerone short film) non si sposta piu' mentre le foto caricano ne' durante lo scorrimento col dito (la posizione ora si calcola dalle proporzioni note della foto, non dalla foto che sta ancora arrivando); la foto grande della scheda occupa subito il suo spazio definitivo (niente "salti" quando arriva la versione nitida); animazione iniziale piu' corta di circa 1,5 s (si puo' scorrere prima); Citerone short film: sottotitolo "Mettetevi comodi e godetevelo" e avviso che si tratta di un'anteprima. Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Michele Ifigenia / Tyche</title>
@@ -155,11 +155,13 @@ footer>span{position:relative;z-index:1}
 .d-nav{display:flex;gap:20px}
 .d-top button:hover{opacity:.7}
 .d-screen{position:relative;height:min(74vh,820px);height:min(74svh,820px);background:#000 var(--gb);display:flex;align-items:center;justify-content:center}
-.d-screen img{max-width:100%;max-height:100%;width:auto;height:auto;display:block;transition:opacity .25s}
+/* la foto grande occupa sempre tutto il riquadro e si adatta dentro (contain): la sua misura sullo schermo e' decisa subito,
+   quindi quando arriva la versione nitida non cambia dimensione e nulla attorno si sposta */
+.d-screen img{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:contain;display:block;transition:opacity .25s}
 .d-screen img.f{opacity:0}
 .d-stage{position:relative}
 /* UNA foto a cavallo del bordo inferiore della foto principale: metà sopra il bordo, metà sul nero sotto.
-   La posizione la calcola lo script sulla foto principale vera (posM). */
+   La posizione la calcola lo script dalle proporzioni note della foto principale (posM), quindi non si sposta mentre le foto caricano. */
 .d-m{position:absolute;z-index:2;height:clamp(215px,36vh,360px);aspect-ratio:var(--ar,3/2);margin:0;pointer-events:none;opacity:0;transition:opacity .35s}
 .d-m.on{opacity:1}
 .d-m:empty{display:none}
@@ -226,14 +228,16 @@ footer>span{position:relative;z-index:1}
 .vo.feature .vt b{font-size:clamp(1.6rem,8vw,2.6rem)}
 .vo.feature .vn{font-size:.86rem}
 }
-/* teaser accanto alla sinossi (videoSide): meta e crediti a sinistra, sinossi al centro, video a destra */
-.d-info.withvid .d-video{grid-column:9 / span 4;grid-row:2 / span 2;padding:0;margin:0;max-width:none;align-self:start}
-.d-info.withvid .d-text{grid-row:2 / span 2}
-.d-info.withvid #d-credits{grid-column:1 / span 4;grid-row:3;margin-top:34px}
+/* teaser accanto alla sinossi (videoSide): testi (dati, sinossi, crediti) in una colonna a sinistra, video GRANDE a destra
+   (piu' di meta' della larghezza, prima era solo un terzo) */
+.d-info.withvid .d-meta{grid-column:1 / span 5;grid-row:2}
+.d-info.withvid .d-text{grid-column:1 / span 5;grid-row:3;margin-top:26px}
+.d-info.withvid #d-credits{grid-column:1 / span 5;grid-row:4;margin-top:34px}
+.d-info.withvid .d-video{grid-column:6 / span 7;grid-row:2 / span 3;padding:0;margin:0;max-width:none;align-self:start}
 .d-info.withvid .d-video .lbl{max-width:none;margin:0 0 12px}
-.d-info.withvid .vf{width:min(100%,calc(70vh*var(--vr)));width:min(100%,calc(70svh*var(--vr)));margin:0}
-.d-info.withvid .vt b{font-size:clamp(1.5rem,2.6vw,2.4rem)}
-.d-info.withvid .vp{width:46px;height:46px}
+.d-info.withvid .vf{width:min(100%,calc(78vh*var(--vr)));width:min(100%,calc(78svh*var(--vr)));margin:0 0 0 auto}
+.d-info.withvid .vt b{font-size:clamp(1.8rem,3.6vw,3.4rem)}
+.d-info.withvid .vp{width:54px;height:54px}
 .d-next{display:block;width:100%;text-align:left;padding:70px 24px 60px;max-width:1500px;margin:0 auto}
 .d-next:empty{display:none}
 .d-next small{display:block;font-size:.85rem;color:#8b8a86;font-weight:600}
@@ -244,10 +248,11 @@ footer>span{position:relative;z-index:1}
 .d-text{grid-column:1 / -1;grid-row:auto;margin-top:26px}
 .d-meta{grid-column:1 / -1;grid-row:auto}
 #d-credits{grid-column:1 / -1;grid-row:auto;margin-top:34px}
-.d-info.withvid .d-video,.d-info.withvid .d-text,.d-info.withvid #d-credits{grid-column:1 / -1;grid-row:auto}
+.d-info.withvid .d-meta,.d-info.withvid .d-video,.d-info.withvid .d-text,.d-info.withvid #d-credits{grid-column:1 / -1;grid-row:auto}
 .d-info.withvid .d-video{margin-top:34px;order:1}
 .d-info.withvid #d-credits{order:2}
-.d-info.withvid .vf{margin:0 auto}
+.d-info.withvid .vf{margin:0 auto;width:min(100%,calc(80vh*var(--vr)));width:min(100%,calc(80svh*var(--vr)))}
+.d-info.withvid .vt b{font-size:clamp(1.8rem,7vw,2.8rem)}
 #about h2{grid-column:1 / -1;margin-bottom:26px}
 .about-body{grid-column:1 / -1}
 }
@@ -377,7 +382,7 @@ footer{padding:0 16px 26px}
   </div>
 </div><script src="photos.js"></script>
 <script>
-console.info("Tyche index: versione 23-09 leggera-16");
+console.info("Tyche index: versione 23-09 leggera-18");
 /* coda "al via": i ricami compaiono solo quando parte l'animazione iniziale (vedi ATTESA) */
 var STARTED=false, startQ=[];
 function onStart(f){ if(STARTED) f(); else startQ.push(f); }
@@ -399,6 +404,7 @@ function X(it,en){ return {it:it,en:en}; }
    Con fig:"straddle" la prima foto extra va invece a cavallo del bordo basso della foto principale (Atteone, Citerone short).
    videoSide:true = il teaser sta accanto alla sinossi invece che sotto.
    kicker = sopratitolo mostrato sopra il titolo grande nella scheda (es. "Cortometraggio").
+   videoKicker = sopratitolo nella locandina del video; videoNote = riga in corsivo sotto il titolo della locandina.
    video: un file nella cartella video (es. video:"video/cumateaser.mp4") oppure un link YouTube/Vimeo incorporabile. */
 var WORKS=[
  {cat:"perf",title:"Amadriadi",cover:"2025amadriadi.png",extra:["bolognaamadriadi.jpg","amadriadi.png"],
@@ -428,9 +434,11 @@ var WORKS=[
   quoteBy:"Ovidio, Metamorfosi / Ovid, Metamorphoses",
   credits:["Autore / Coreografo: Michele Ifigenia Colturi"]},
  {cat:"short",title:"Citerone",kicker:X("Cortometraggio","Short Film"),thumb:"citerone2021.png",thumbPos:"50% 0%",cover:"citeroneandre.png",extra:["citerone2021.png"],fig:"straddle",
-  video:"video/citeroneshort.mp4",videoFeature:true,videoLabel:X("Cortometraggio","Short Film"),
-  videoNote:X("Un cortometraggio da guardare con calma — quando c'è tempo per lasciarsi andare.","A short film best watched unhurried — when there's time to let it carry you."),
-  tag:X("Short Film","Short Film"),dur:X("Cortometraggio","Short film"),
+  video:"video/citeroneshort.mp4",videoFeature:true,
+  videoLabel:X("Cortometraggio · Anteprima","Short Film · Preview"),
+  videoKicker:X("Anteprima del cortometraggio","Short film preview"),
+  videoNote:X("Mettetevi comodi e godetevelo: questa è un’anteprima del cortometraggio.","Sit back and enjoy it: this is a preview of the short film."),
+  tag:X("Short Film","Short Film"),dur:X("Cortometraggio · anteprima","Short film · preview"),
   desc:X("Sguardo cinematografico sull'ascesa rituale al monte Citerone.","A cinematic gaze on the ritual ascent of Mount Cithaeron."),
   credits:["Autore / Coreografo: Michele Ifigenia Colturi","Filmmaking: Lorenzo Basili"]}
 ];
@@ -841,19 +849,33 @@ function galAr(im){
   im.parentNode.parentNode.style.setProperty("--ar",(im.naturalWidth/im.naturalHeight).toFixed(3));
 }
 /* la foto a cavallo: metà sopra il bordo inferiore della foto principale, metà sul nero; in basso a destra.
+   La posizione si calcola dalle PROPORZIONI della foto principale (note da photos.js) e dalle misure di layout del riquadro,
+   non dalla foto che sta arrivando ne' dalle misure a schermo durante il trascinamento: cosi' resta ferma, sempre.
    Sposta anche i testi sotto quanto serve perché la parte che sporge non copra nulla. */
-function posM(){
-  var m=document.getElementById("d-m"), st=document.getElementById("d-stage"), im=document.getElementById("d-img");
-  if(!m||!m.firstChild||!cur){ det.style.setProperty("--ov","0px"); return; }
-  var r=im.getBoundingClientRect(), sr=st.getBoundingClientRect(); if(!r.width||!r.height) r=sr;   /* foto principale mancante: si usa il riquadro */
-  var mh=m.offsetHeight, mw=m.offsetWidth, right=(r.right-sr.left)-Math.max(14,r.width*.05);
-  m.style.left=Math.max(8,right-mw)+"px"; m.style.top=((r.bottom-sr.top)-mh/2)+"px"; m.classList.add("on");
-  var tf=parseFloat(getComputedStyle(document.getElementById("d-title")).fontSize)||80;
-  det.style.setProperty("--ov",Math.max(0,mh/2-(tf*.35+42)+22)+"px");
+function coverAr(){
+  var sc=document.getElementById("d-screen"), im=document.getElementById("d-img"), r=cur&&rec(cur.cover);
+  if(sc.hasAttribute("data-missing")) return 0;          /* foto principale mancante: si usa tutto il riquadro */
+  if(r) return r.w/r.h;
+  if(im.naturalWidth&&im.naturalHeight) return im.naturalWidth/im.naturalHeight;
+  return 0;
 }
+var mKey="";
+function posM(){
+  var m=document.getElementById("d-m"), sc=document.getElementById("d-screen");
+  if(!m||!m.firstChild||!cur){ det.style.setProperty("--ov","0px"); return; }
+  var sw=sc.offsetWidth, sh=sc.offsetHeight; if(!sw||!sh) return;
+  var ar=coverAr()||sw/sh, pw=Math.min(sw,sh*ar), ph=pw/ar, pl=(sw-pw)/2, pb=sc.offsetTop+(sh+ph)/2;
+  var mh=m.offsetHeight, mw=m.offsetWidth, right=pl+pw-Math.max(14,pw*.05);
+  var L_=Math.round(Math.max(8,right-mw)), T_=Math.round(pb-mh/2), key=L_+","+T_;
+  if(key!==mKey){ mKey=key; m.style.left=L_+"px"; m.style.top=T_+"px"; }
+  m.classList.add("on");
+  var tf=parseFloat(getComputedStyle(document.getElementById("d-title")).fontSize)||80;
+  det.style.setProperty("--ov",Math.round(Math.max(0,mh/2-(tf*.35+42)+22))+"px");
+}
+/* foto a cavallo caricata: se le proporzioni erano gia' note (photos.js) non si tocca nulla, cosi' non si muove */
 function mAr(im){
   im.classList.add("ld");
-  if(!im.naturalWidth||!im.naturalHeight) return;
+  if(rec(im.getAttribute("data-full"))||!im.naturalWidth||!im.naturalHeight) return;
   document.getElementById("d-m").style.setProperty("--ar",(im.naturalWidth/im.naturalHeight).toFixed(3)); posM();
 }
 window.galAr=galAr; window.mAr=mAr; window.addEventListener("resize",posM);
@@ -903,9 +925,9 @@ function fillDetail(){
   }).join("");
   /* foto extra: a cavallo della principale (solo se il lavoro ha fig:"straddle") oppure in galleria pulita sotto i testi */
   var ex=w.extra||[], m=document.getElementById("d-m"), strad=(w.fig==="straddle"&&ex.length>0);
-  m.classList.remove("on"); m.style.removeProperty("--ar");
+  m.classList.remove("on"); m.style.removeProperty("--ar"); mKey="";
+  if(strad && rec(ex[0])) m.style.setProperty("--ar",(rec(ex[0]).w/rec(ex[0]).h).toFixed(4));   /* proporzione fissata PRIMA di inserire la foto */
   m.innerHTML = strad ? '<span class="g-img"'+lqOf(ex[0])+'>'+imgTag(ex[0],{sizes:"(max-width:640px) 50vw, 26vw",extra:' onload="mAr(this)"'})+'</span>' : "";
-  if(strad && rec(ex[0])) m.style.setProperty("--ar",(rec(ex[0]).w/rec(ex[0]).h).toFixed(4));
   var rest=strad?ex.slice(1):ex, rows=[], k;
   for(k=0;k<rest.length;k+=2) rows.push(rest.slice(k,k+2));
   document.getElementById("d-gal").innerHTML=rows.map(function(r){
@@ -929,7 +951,7 @@ function openWork(w){
   group = ALL;   /* le frecce e i pulsanti scorrono tutti i lavori di seguito */
   fillDetail(); showPhoto();
   det.classList.add("on"); det.scrollTop=0; document.body.style.overflow="hidden";
-  posM(); requestAnimationFrame(posM);   /* ora la scheda è visibile: si può misurare */
+  posM();   /* ora la scheda è visibile: si può misurare (misure di layout, quindi valide subito) */
   var gi=group.indexOf(w), gn=group.length; setTimeout(function(){ prefetch(group[(gi+1)%gn]); prefetch(group[(gi+gn-1)%gn]); },400);
 }
 function closeWork(){ det.classList.remove("on"); document.getElementById("d-video").innerHTML=""; document.body.style.overflow=""; cur=null; }
@@ -987,7 +1009,7 @@ document.addEventListener("keydown",function(e){
     busy=true; setX(-dir*W,true);
     setTimeout(function(){
       openWork(nx); det.classList.remove("sw"); setX(dir*W,false); void det.offsetWidth;
-      requestAnimationFrame(function(){ setX(0,true); setTimeout(function(){ clear(); busy=false; posM(); },DUR); });
+      requestAnimationFrame(function(){ setX(0,true); setTimeout(function(){ clear(); busy=false; },DUR); });
     },DUR-30);
   }
   det.addEventListener("touchend",end,{passive:true});
@@ -1027,10 +1049,10 @@ reelC=new Reel(document.getElementById("reel-collab"),COLLABS,openWork);
 renderAll();
 
 /* ============ ATTESA E VIA ============
-   1) il sito si carica (caratteri, ricami, prime copertine): 1-2 secondi, con il nome gia' visibile;
+   1) il sito si carica (caratteri, ricami, prime copertine): circa 1 secondo, con il nome gia' visibile;
    2) poi PARTE l'animazione iniziale (linea, logo che si disegna, fiori);
-   3) la schermata resta ferma (niente scroll, menu spento) finche' l'animazione non e' finita: poi compare "Scorri" e si sblocca.
-   Cosi' tutti la vedono per intero. Alla seconda visita della sessione l'animazione e' saltata. */
+   3) la schermata resta ferma (niente scroll, menu spento) finche' il disegno non e' quasi finito: poi compare "Scorri" e si sblocca
+      (le ultime lettere finiscono di disegnarsi mentre si puo' gia' scorrere). Alla seconda visita della sessione l'animazione e' saltata. */
 (function(){
   var de=document.documentElement, done=false, keys=[" ","PageDown","PageUp","ArrowDown","ArrowUp","End","Home"];
   de.classList.add("wait");
@@ -1049,8 +1071,8 @@ renderAll();
     de.classList.remove("pre");                      /* via: linea e logo partono */
     startQ.splice(0).forEach(function(f){ f(); });   /* via: compaiono i fiori */
     if(de.classList.contains("cvlogo")) logoCanvasPlay();   /* via: sul telefono il logo si disegna su canvas */
-    /* durata dell'animazione da questo momento: linea + logo che si disegna ~6,3 s (anche sul telefono) */
-    var dur = de.classList.contains("seen") ? 0 : 6600;
+    /* sblocco: ~5,2 s dal via (prima erano 6,6 s); il logo finisce a ~6,3 s, le ultime lettere si completano mentre si scorre */
+    var dur = de.classList.contains("seen") ? 0 : 5200;
     setTimeout(go,dur);
   }
   Promise.all([
@@ -1059,10 +1081,10 @@ renderAll();
     new Promise(function(r){ if(window.__embDone) r(); else window.addEventListener("embroid",r,{once:true}); }),
     new Promise(function(r){ if(document.readyState==="complete") r(); else window.addEventListener("load",r,{once:true}); }),
     SLOWNET ? Promise.resolve() : Promise.all(EAGER),   /* con rete lenta non si aspettano le copertine */
-    new Promise(function(r){ setTimeout(r,de.classList.contains("seen")?400:1300); })   /* almeno 1,3 s di calma prima del via */
+    new Promise(function(r){ setTimeout(r,de.classList.contains("seen")?300:900); })   /* almeno 0,9 s di calma prima del via */
   ]).then(start,start);
-  setTimeout(start,4000);                     /* rete di sicurezza: dopo 4 secondi parte comunque */
-  setTimeout(go,SLOWNET?6000:14000);          /* rete di sicurezza: si sblocca comunque */
+  setTimeout(start,3500);                     /* rete di sicurezza: dopo 3,5 secondi parte comunque */
+  setTimeout(go,SLOWNET?5000:12000);          /* rete di sicurezza: si sblocca comunque */
 })();
 
 /* service worker: dalla seconda visita le foto gia' viste arrivano dalla memoria del telefono/pc (poi si aggiornano in silenzio) */

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<!-- VERSIONE 23-09 leggera-19: Citerone short film, locandina minimale: solo "Estratto" sopra il titolo, niente frase in corsivo. Precedente, leggera-18: teaser di Atteone molto piu' grande (su computer occupa piu' di meta' della larghezza accanto ai testi; su telefono e tablet tutta la larghezza). Precedente, leggera-17: la foto piccola a cavallo (Atteone, Citerone short film) non si sposta piu' mentre le foto caricano ne' durante lo scorrimento col dito (la posizione ora si calcola dalle proporzioni note della foto, non dalla foto che sta ancora arrivando); la foto grande della scheda occupa subito il suo spazio definitivo (niente "salti" quando arriva la versione nitida); animazione iniziale piu' corta di circa 1,5 s (si puo' scorrere prima); Citerone short film: sottotitolo "Mettetevi comodi e godetevelo" e avviso che si tratta di un'anteprima. Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
+<!-- VERSIONE 23-09 leggera-20: teaser di Amadriadi (video/amadriaditeaser.mp4) in formato 1,33 (4:3): schermo grande e centrato sotto i testi, titolo "Amadriadi" al centro della locandina, etichetta "Teaser" e durata allineate esattamente alla larghezza del video; la proporzione e' fissata da subito (nessun salto quando il video carica). Tutti i teaser: etichetta e schermo ora sempre larghi uguali, durata a destra dell'etichetta. Precedente, leggera-19: Citerone short film, locandina minimale: solo "Estratto" sopra il titolo, niente frase in corsivo. Precedente, leggera-18: teaser di Atteone molto piu' grande (su computer occupa piu' di meta' della larghezza accanto ai testi; su telefono e tablet tutta la larghezza). Precedente, leggera-17: la foto piccola a cavallo (Atteone, Citerone short film) non si sposta piu' mentre le foto caricano ne' durante lo scorrimento col dito (la posizione ora si calcola dalle proporzioni note della foto, non dalla foto che sta ancora arrivando); la foto grande della scheda occupa subito il suo spazio definitivo (niente "salti" quando arriva la versione nitida); animazione iniziale piu' corta di circa 1,5 s (si puo' scorrere prima); Citerone short film: sottotitolo "Mettetevi comodi e godetevelo" e avviso che si tratta di un'anteprima. Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Michele Ifigenia / Tyche</title>
@@ -195,10 +195,18 @@ footer>span{position:relative;z-index:1}
    il video si scarica solo quando si preme play (prima solo pochi KB per sapere durata e formato). */
 .d-video{padding:8px 24px 0;max-width:1500px;margin:0 auto}
 .d-video:empty{display:none}
-.d-video .lbl{display:flex;justify-content:space-between;align-items:baseline;max-width:880px;margin:0 auto 14px;font-size:.85rem;color:#8b8a86;font-weight:600;border-top:1px solid #2c2c2e;padding-top:10px}
+.d-video .lbl{display:flex;justify-content:space-between;align-items:baseline;max-width:none;margin:0 0 14px;font-size:.85rem;color:#8b8a86;font-weight:600;border-top:1px solid #2c2c2e;padding-top:10px}
 .d-video .fr{aspect-ratio:16/9;background:#111}
 .d-video iframe{width:100%;height:100%;border:0}
-.vf{--vr:1.7778;position:relative;width:min(100%,880px,calc(62vh*var(--vr)));width:min(100%,880px,calc(62svh*var(--vr)));aspect-ratio:var(--vr);margin:0 auto;background:#000;overflow:hidden;box-shadow:0 0 0 1px rgba(233,232,228,.1)}
+/* .vw = cornice del video: etichetta e schermo hanno sempre la stessa larghezza, allineati al millimetro */
+.vw{--vr:1.7778;width:min(100%,880px,calc(62vh*var(--vr)));width:min(100%,880px,calc(62svh*var(--vr)));margin:0 auto}
+/* formato 1,33 (4:3, videoRatio:4/3): schermo piu' grande e definito, proporzione fissata da subito (nessun salto al caricamento) */
+.vw.r43{width:min(100%,1040px,calc(78vh*var(--vr)));width:min(100%,1040px,calc(78svh*var(--vr)))}
+.d-video .vw.r43{margin-top:18px}
+.vw.r43 .vf{box-shadow:0 0 0 1px rgba(233,232,228,.16),0 40px 80px -40px rgba(0,0,0,.9)}
+.vw.r43 .vt b{font-size:clamp(1.8rem,3.4vw,3.2rem)}
+.vw .lbl .lr{font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.vf{position:relative;width:100%;aspect-ratio:var(--vr);margin:0;background:#000;overflow:hidden;box-shadow:0 0 0 1px rgba(233,232,228,.1)}
 .vf video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000;display:block}
 /* locandina: testo sempre centrato (come Citerone short film), nome del lavoro in grande, play sottile sotto */
 .vo{position:absolute;inset:0;z-index:2;width:100%;height:100%;display:block;text-align:center;color:#fff;background:#050505 var(--gb);background-size:240px 240px;transition:opacity .5s ease}
@@ -215,7 +223,7 @@ footer>span{position:relative;z-index:1}
 @media(prefers-reduced-motion:reduce){.vo,.vp,.vp::before,.vt b{transition:none}}
 /* LOCANDINA "FEATURE": per un cortometraggio a cui dare importanza (non un semplice teaser). Titolo piu' grande, sopratitolo
    ("Cortometraggio") e una riga accattivante in corsivo che invita a guardarlo con calma. */
-.vf.feature{width:min(100%,960px,calc(68vh*var(--vr)));width:min(100%,960px,calc(68svh*var(--vr)))}
+.vw.feature{width:min(100%,960px,calc(68vh*var(--vr)));width:min(100%,960px,calc(68svh*var(--vr)))}
 .vo.feature .vt{gap:16px;padding:10% 8%}
 .vo.feature .vk{font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:#a9a8a3;font-weight:600}
 .vo.feature .vt b{font-size:clamp(1.9rem,5.2vw,4.2rem);letter-spacing:-.045em}
@@ -223,7 +231,7 @@ footer>span{position:relative;z-index:1}
 .vo.feature .vc{gap:14px;font-size:.8rem}
 .vo.feature .vp{width:54px;height:54px}
 @media(max-width:640px){
-.vf.feature{aspect-ratio:3/4;width:min(100%,960px)}
+.vf.feature{aspect-ratio:3/4}.vw.feature{width:100%}
 .vo.feature .vt{gap:12px;padding:14% 8%}
 .vo.feature .vt b{font-size:clamp(1.6rem,8vw,2.6rem)}
 .vo.feature .vn{font-size:.86rem}
@@ -235,7 +243,7 @@ footer>span{position:relative;z-index:1}
 .d-info.withvid #d-credits{grid-column:1 / span 5;grid-row:4;margin-top:34px}
 .d-info.withvid .d-video{grid-column:6 / span 7;grid-row:2 / span 3;padding:0;margin:0;max-width:none;align-self:start}
 .d-info.withvid .d-video .lbl{max-width:none;margin:0 0 12px}
-.d-info.withvid .vf{width:min(100%,calc(78vh*var(--vr)));width:min(100%,calc(78svh*var(--vr)));margin:0 0 0 auto}
+.d-info.withvid .vw{width:min(100%,calc(78vh*var(--vr)));width:min(100%,calc(78svh*var(--vr)));margin:0 0 0 auto}
 .d-info.withvid .vt b{font-size:clamp(1.8rem,3.6vw,3.4rem)}
 .d-info.withvid .vp{width:54px;height:54px}
 .d-next{display:block;width:100%;text-align:left;padding:70px 24px 60px;max-width:1500px;margin:0 auto}
@@ -251,7 +259,7 @@ footer>span{position:relative;z-index:1}
 .d-info.withvid .d-meta,.d-info.withvid .d-video,.d-info.withvid .d-text,.d-info.withvid #d-credits{grid-column:1 / -1;grid-row:auto}
 .d-info.withvid .d-video{margin-top:34px;order:1}
 .d-info.withvid #d-credits{order:2}
-.d-info.withvid .vf{margin:0 auto;width:min(100%,calc(80vh*var(--vr)));width:min(100%,calc(80svh*var(--vr)))}
+.d-info.withvid .vw{margin:0 auto;width:min(100%,calc(80vh*var(--vr)));width:min(100%,calc(80svh*var(--vr)))}
 .d-info.withvid .vt b{font-size:clamp(1.8rem,7vw,2.8rem)}
 #about h2{grid-column:1 / -1;margin-bottom:26px}
 .about-body{grid-column:1 / -1}
@@ -276,7 +284,7 @@ footer>span{position:relative;z-index:1}
 .gr{flex-direction:column;gap:16px}
 .gr .g,.gr.one .g{flex:none;width:100%}
 .d-info,.d-video,.d-next{padding-left:16px;padding-right:16px}
-.d-video{padding-left:0;padding-right:0}.d-video .lbl{margin-left:16px;margin-right:16px}.vf{box-shadow:none}
+.d-video{padding-left:0;padding-right:0}.d-video .lbl{margin-left:16px;margin-right:16px}.vf,.vw.r43 .vf{box-shadow:none}.vw.r43{width:100%}.d-video .vw.r43{margin-top:6px}
 .d-info.withvid .d-video{margin-left:-16px;margin-right:-16px}
 .d-info.withvid .d-video .lbl{margin-left:16px;margin-right:16px}
 #about{padding:126px 16px 48px}
@@ -321,7 +329,7 @@ footer{padding:0 16px 26px}
 <path class="d" pathLength="1" style="--d:5.46s;--t:0.41s" d="M590 678 L590 846 M595 760 L710 760 M712 670 L712 850"/>
 <path class="d" pathLength="1" style="--d:5.81s;--t:0.45s" d="M785 674 L785 850 M785 672 L895 672 M785 748 L890 748 M785 848 L895 848"/>
       </g></mask></defs>
-      <image href="logo-tyche-linee.webp" onerror="this.setAttribute('href','logo-tyche-linee.png')" width="900" height="853" mask="url(#lm)"/>
+      <image href="logo-tyche-linee.webp" onerror="if(!this.dataset.f){this.dataset.f=1;this.setAttribute('href','logo-tyche-linee.png')}" width="900" height="853" mask="url(#lm)"/>
     </svg>
     <h1 class="name" id="name">Michele Ifigenia</h1>
     <div class="lance"></div>
@@ -382,7 +390,7 @@ footer{padding:0 16px 26px}
   </div>
 </div><script src="photos.js"></script>
 <script>
-console.info("Tyche index: versione 23-09 leggera-19");
+console.info("Tyche index: versione 23-09 leggera-20");
 /* coda "al via": i ricami compaiono solo quando parte l'animazione iniziale (vedi ATTESA) */
 var STARTED=false, startQ=[];
 function onStart(f){ if(STARTED) f(); else startQ.push(f); }
@@ -405,9 +413,10 @@ function X(it,en){ return {it:it,en:en}; }
    videoSide:true = il teaser sta accanto alla sinossi invece che sotto.
    kicker = sopratitolo mostrato sopra il titolo grande nella scheda (es. "Cortometraggio").
    videoKicker = sopratitolo nella locandina del video; videoNote = riga in corsivo sotto il titolo della locandina.
+   videoRatio: proporzione del video se nota (es. 4/3 per il formato 1,33): lo schermo ha subito la misura giusta, niente salti.
    video: un file nella cartella video (es. video:"video/cumateaser.mp4") oppure un link YouTube/Vimeo incorporabile. */
 var WORKS=[
- {cat:"perf",title:"Amadriadi",cover:"2025amadriadi.png",extra:["bolognaamadriadi.jpg","amadriadi.png"],
+ {cat:"perf",title:"Amadriadi",cover:"2025amadriadi.png",extra:["bolognaamadriadi.jpg","amadriadi.png"],video:"video/amadriaditeaser.mp4",videoRatio:4/3,
   tag:X("Performance","Performance"),dur:X("15 minuti","15 minutes"),
   desc:X("Un’evocazione visiva si intreccia allo spazio urbano contemporaneo: la figura delle Amadriadi diventa un espediente per offrire allo spettatore un momento di sospensione. Le Amadriadi, creature mitologiche indissolubilmente legate agli alberi, vivono e muoiono con essi. Tra il verde emerge così un corpo capace di ondeggiare al vento, di radicarsi, di trasfigurarsi, portando con sé un fascino antico eppure sorprendentemente presente. Forse è proprio in questa apparizione, in questa possibilità di metamorfosi, che si rinnova continuamente la relazione tra l’uomo e la natura.",
    "A visual evocation weaves into contemporary urban space: the figure of the Hamadryads becomes a device to offer the viewer a moment of suspension. The Hamadryads, mythological creatures inseparably bound to trees, live and die with them. Among the green emerges a body able to sway in the wind, to take root, to transfigure itself, carrying an ancient yet surprisingly present charm. Perhaps it is precisely in this apparition, in this possibility of metamorphosis, that the relationship between humans and nature is continually renewed."),
@@ -895,12 +904,14 @@ function fillVideo(w){
   var feature=!!w.videoFeature, label=w.videoLabel?L(w.videoLabel):ui("teaser");
   var kicker=feature?'<span class="vk">'+esc(w.videoKicker?L(w.videoKicker):(w.videoLabel?L(w.videoLabel):ui("shortfilm")))+'</span>':"";
   var note=(feature&&w.videoNote)?'<span class="vn">'+esc(L(w.videoNote))+'</span>':"";
-  vd.innerHTML='<div class="lbl"><span>'+esc(label)+'</span></div>'
+  var fixR=+w.videoRatio||0, r43=fixR&&Math.abs(fixR-4/3)<.02;   /* videoRatio: proporzione nota, fissata subito */
+  vd.innerHTML='<div class="vw'+(feature?' feature':'')+(r43?' r43':'')+'"'+(fixR?' style="--vr:'+fixR.toFixed(4)+'"':'')+'>'
+    +'<div class="lbl"><span>'+esc(label)+'</span><span class="lr vd"></span></div>'
     +'<div class="vf'+(feature?' feature':'')+'"><video playsinline preload="'+(SLOWNET?'none':'metadata')+'" src="'+w.video+'"></video>'
-    +'<button class="vo'+(feature?' feature':'')+'" aria-label="'+ui("watch")+' – '+esc(w.title)+'"><span class="vt">'+kicker+'<b>'+esc(w.title)+'</b>'+note+'<span class="vc"><span class="vd"></span><span class="vp"></span></span></span></button></div>';
-  var vf=vd.querySelector(".vf"), v=vf.querySelector("video"), ov=vf.querySelector(".vo");
+    +'<button class="vo'+(feature?' feature':'')+'" aria-label="'+ui("watch")+' – '+esc(w.title)+'"><span class="vt">'+kicker+'<b>'+esc(w.title)+'</b>'+note+'<span class="vc"><span class="vp"></span></span></span></button></div></div>';
+  var vw=vd.querySelector(".vw"), vf=vd.querySelector(".vf"), v=vf.querySelector("video"), ov=vf.querySelector(".vo");
   v.addEventListener("loadedmetadata",function(){
-    if(v.videoWidth&&v.videoHeight) vf.style.setProperty("--vr",(v.videoWidth/v.videoHeight).toFixed(4));
+    if(!fixR&&v.videoWidth&&v.videoHeight) vw.style.setProperty("--vr",(v.videoWidth/v.videoHeight).toFixed(4));
     if(isFinite(v.duration)&&v.duration>0) [].forEach.call(vd.querySelectorAll(".vd"),function(e){ e.textContent=mmss(v.duration); });
   });
   v.addEventListener("error",function(){ if(!vf.classList.contains("play")) vd.innerHTML=""; });

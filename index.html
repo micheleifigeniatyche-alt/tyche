@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<!-- VERSIONE 23-09 leggera-20: teaser di Amadriadi (video/amadriaditeaser.mp4) in formato 1,33 (4:3): schermo grande e centrato sotto i testi, titolo "Amadriadi" al centro della locandina, etichetta "Teaser" e durata allineate esattamente alla larghezza del video; la proporzione e' fissata da subito (nessun salto quando il video carica). Tutti i teaser: etichetta e schermo ora sempre larghi uguali, durata a destra dell'etichetta. Precedente, leggera-19: Citerone short film, locandina minimale: solo "Estratto" sopra il titolo, niente frase in corsivo. Precedente, leggera-18: teaser di Atteone molto piu' grande (su computer occupa piu' di meta' della larghezza accanto ai testi; su telefono e tablet tutta la larghezza). Precedente, leggera-17: la foto piccola a cavallo (Atteone, Citerone short film) non si sposta piu' mentre le foto caricano ne' durante lo scorrimento col dito (la posizione ora si calcola dalle proporzioni note della foto, non dalla foto che sta ancora arrivando); la foto grande della scheda occupa subito il suo spazio definitivo (niente "salti" quando arriva la versione nitida); animazione iniziale piu' corta di circa 1,5 s (si puo' scorrere prima); Citerone short film: sottotitolo "Mettetevi comodi e godetevelo" e avviso che si tratta di un'anteprima. Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
+<!-- VERSIONE 23-09 leggera-21: YTI senza "Autore / Coreografo"; nuova sinossi di Citerone performance; Citerone short film con "Musiche: Tarek Bouguerra". Precedente, leggera-20: teaser di Amadriadi (video/amadriaditeaser.mp4) in formato 1,33 (4:3): schermo grande e centrato sotto i testi, titolo "Amadriadi" al centro della locandina, etichetta "Teaser" e durata allineate esattamente alla larghezza del video; la proporzione e' fissata da subito (nessun salto quando il video carica). Tutti i teaser: etichetta e schermo ora sempre larghi uguali, durata a destra dell'etichetta. Precedente, leggera-19: Citerone short film, locandina minimale: solo "Estratto" sopra il titolo, niente frase in corsivo. Precedente, leggera-18: teaser di Atteone molto piu' grande (su computer occupa piu' di meta' della larghezza accanto ai testi; su telefono e tablet tutta la larghezza). Precedente, leggera-17: la foto piccola a cavallo (Atteone, Citerone short film) non si sposta piu' mentre le foto caricano ne' durante lo scorrimento col dito (la posizione ora si calcola dalle proporzioni note della foto, non dalla foto che sta ancora arrivando); la foto grande della scheda occupa subito il suo spazio definitivo (niente "salti" quando arriva la versione nitida); animazione iniziale piu' corta di circa 1,5 s (si puo' scorrere prima); Citerone short film: sottotitolo "Mettetevi comodi e godetevelo" e avviso che si tratta di un'anteprima. Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Michele Ifigenia / Tyche</title>
@@ -390,7 +390,7 @@ footer{padding:0 16px 26px}
   </div>
 </div><script src="photos.js"></script>
 <script>
-console.info("Tyche index: versione 23-09 leggera-20");
+console.info("Tyche index: versione 23-09 leggera-21");
 /* coda "al via": i ricami compaiono solo quando parte l'animazione iniziale (vedi ATTESA) */
 var STARTED=false, startQ=[];
 function onStart(f){ if(STARTED) f(); else startQ.push(f); }
@@ -428,8 +428,8 @@ var WORKS=[
   credits:["Autore / Coreografo: Michele Ifigenia Colturi","Danzatrice: Federica D’Aversa","Dramaturg: Riccardo Vanetta, Ciro Ciancio","Musiche: Tarek Bouguerra","Filmmaker: Lorenzo Basili","Produzione: Aiep Ariella Vidach, Anghiari Dance Hub"]},
  {cat:"perf",title:"Citerone",cover:"citerone.png",extra:["citerone2022.png","citeronesocietas.JPG"],video:"video/citeroneteaser.mp4",
   tag:X("Performance","Performance"),dur:X("25 minuti","25 minutes"),
-  desc:X("Un canto corporeo, una preghiera di gesti e suoni che rinnova un’antica ritualità per ascendere al monte Citerone. Il cammino performativo diventa evocazione dei simboli dionisiaci, spazio di passaggio tra umano e divino. Il mito di Dioniso e le Baccanti di Euripide si intrecciano per celebrare il mistero, l’estasi e la forza trasformativa del rito.",
-   "A bodily chant, a prayer of gestures and sounds that renews an ancient ritual to ascend Mount Cithaeron. The performative path becomes an evocation of Dionysian symbols, a space of passage between human and divine. The myth of Dionysus and Euripides’ Bacchae intertwine to celebrate mystery, ecstasy and the transformative force of ritual."),
+  desc:X("Un canto corporeo, una preghiera di gesti e suoni che rinnova un’ancestrale ritualità per ascendere al monte Citerone. Il cammino performativo diventa evocazione dei simboli dionisiaci, spazio di passaggio tra umano e divino. Il mito di Dioniso e le Baccanti di Euripide si fondono per celebrare il mistero, l’estasi e la forza trasformativa del rito.",
+   "A bodily chant, a prayer of gestures and sounds that renews an ancestral ritual to ascend Mount Cithaeron. The performative path becomes an evocation of Dionysian symbols, a space of passage between human and divine. The myth of Dionysus and Euripides’ Bacchae merge to celebrate mystery, ecstasy and the transformative force of ritual."),
   credits:["Autore / Coreografo: Michele Ifigenia Colturi","Dramaturg: Ciro Ciancio, Riccardo Vanetta","Performers: Enzina Cappelli, Andreyna Dela Soledad","Co-produzione: Aiep Ariella Vidach"]},
  {cat:"perf",title:"Atteone",cover:"atteone.png",extra:["2025atteone.jpeg"],fig:"straddle",video:"video/atteoneteaser.mp4",videoSide:true,
   tag:X("Debutto 2027","Debut 2027"),dur:X("In fase di sviluppo","In development"),
@@ -448,14 +448,14 @@ var WORKS=[
   videoKicker:X("Estratto","Excerpt"),
   tag:X("Short Film","Short Film"),dur:X("Cortometraggio","Short film"),
   desc:X("Sguardo cinematografico sull'ascesa rituale al monte Citerone.","A cinematic gaze on the ritual ascent of Mount Cithaeron."),
-  credits:["Autore / Coreografo: Michele Ifigenia Colturi","Filmmaking: Lorenzo Basili"]}
+  credits:["Autore / Coreografo: Michele Ifigenia Colturi","Filmmaking: Lorenzo Basili","Musiche: Tarek Bouguerra"]}
 ];
 var COLLABS=[
  {cat:"collab",title:"YTI — Your Tactile Identity",cover:"yti.png",extra:[],
   tag:X("Con YoY Performing Arts, IVONA","With YoY Performing Arts, IVONA"),dur:X("Kilowatt Festival · 24 luglio 2026","Kilowatt Festival · 24 July 2026"),
   desc:X("YTI è insieme un progetto di ricerca e un manifesto artistico, nato dall’incontro tra tre compagnie: YoY Performing Arts, IVONA e Michele Ifigenia / Tyche. In un tempo segnato da distanze e polarizzazioni, il lavoro sceglie la vicinanza: abitare le differenze e farne materia di creazione collettiva. Tre linguaggi coreografici si intrecciano in un unico tessuto, dove il movimento diventa ascolto e la contaminazione un atto insieme politico e creativo.",
    "YTI is both a research project and an artistic manifesto, born from the meeting of three companies: YoY Performing Arts, IVONA and Michele Ifigenia / Tyche. In a time marked by distance and polarization, the work chooses proximity: inhabiting differences and making them the matter of collective creation. Three choreographic languages are woven into a single fabric, where movement becomes listening and contamination becomes an act at once political and creative."),
-  credits:["Autore / Coreografo: Michele Ifigenia Colturi","Di: YoY Performing Arts, IVONA, Michele Ifigenia/Tyche","Interpreti: Emma Zani, Roberto Doveri, Pablo Girolami, Guilherme Leal, Federica D’Aversa","Dramaturg: Riccardo Vanetta","Musiche: Tarek Bouguerra, Timoteo Carbone","Disegno luci: Gianni Staropoli","Costumi: Patricia Villirillo","Progetto vincitore di: Giovane Danza Italiana 2025, Bando CURA 2025","Con il sostegno di: MiC e SIAE – Per Chi Crea"]}
+  credits:["Di: YoY Performing Arts, IVONA, Michele Ifigenia/Tyche","Interpreti: Emma Zani, Roberto Doveri, Pablo Girolami, Guilherme Leal, Federica D’Aversa","Dramaturg: Riccardo Vanetta","Musiche: Tarek Bouguerra, Timoteo Carbone","Disegno luci: Gianni Staropoli","Costumi: Patricia Villirillo","Progetto vincitore di: Giovane Danza Italiana 2025, Bando CURA 2025","Con il sostegno di: MiC e SIAE – Per Chi Crea"]}
 ];
 
 /* ============ UTILITÀ ============ */

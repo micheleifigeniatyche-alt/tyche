@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<!-- VERSIONE 23-09 leggera-24: "Andreyna De La Soledad" con maiuscole. Precedente, leggera-23: corretto "Andreyna De La Soledad". Precedente, leggera-22: Citerone performance, interpreti Enzina Cappelli e Valeria Petroni; Citerone short film, interpreti Andreyna De La Soledad ed Enzina Cappelli. Precedente, leggera-21: YTI senza "Autore / Coreografo"; nuova sinossi di Citerone performance; Citerone short film con "Musiche: Tarek Bouguerra". Precedente, leggera-20: teaser di Amadriadi (video/amadriaditeaser.mp4) in formato 1,33 (4:3): schermo grande e centrato sotto i testi, titolo "Amadriadi" al centro della locandina, etichetta "Teaser" e durata allineate esattamente alla larghezza del video; la proporzione e' fissata da subito (nessun salto quando il video carica). Tutti i teaser: etichetta e schermo ora sempre larghi uguali, durata a destra dell'etichetta. Precedente, leggera-19: Citerone short film, locandina minimale: solo "Estratto" sopra il titolo, niente frase in corsivo. Precedente, leggera-18: teaser di Atteone molto piu' grande (su computer occupa piu' di meta' della larghezza accanto ai testi; su telefono e tablet tutta la larghezza). Precedente, leggera-17: la foto piccola a cavallo (Atteone, Citerone short film) non si sposta piu' mentre le foto caricano ne' durante lo scorrimento col dito (la posizione ora si calcola dalle proporzioni note della foto, non dalla foto che sta ancora arrivando); la foto grande della scheda occupa subito il suo spazio definitivo (niente "salti" quando arriva la versione nitida); animazione iniziale piu' corta di circa 1,5 s (si puo' scorrere prima); Citerone short film: sottotitolo "Mettetevi comodi e godetevelo" e avviso che si tratta di un'anteprima. Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
+<!-- VERSIONE 23-09 leggera-26: Atteone, aggiunta "Movimentatrice di scena: Annachiara Fanelli". Precedente, leggera-25: Atteone con la sezione "Percorso": progetto triennale Hangartfest (Prologo 2025, Il bosco 2026, debutto 2027) e residenze CapoTrave/Kilowatt e Fondazione Armunia, con link ai siti ufficiali; corretto "CapoTrave/Kilowatt" nei crediti. Precedente, leggera-24: "Andreyna De La Soledad" con maiuscole. Precedente, leggera-23: corretto "Andreyna De La Soledad". Precedente, leggera-22: Citerone performance, interpreti Enzina Cappelli e Valeria Petroni; Citerone short film, interpreti Andreyna De La Soledad ed Enzina Cappelli. Precedente, leggera-21: YTI senza "Autore / Coreografo"; nuova sinossi di Citerone performance; Citerone short film con "Musiche: Tarek Bouguerra". Precedente, leggera-20: teaser di Amadriadi (video/amadriaditeaser.mp4) in formato 1,33 (4:3): schermo grande e centrato sotto i testi, titolo "Amadriadi" al centro della locandina, etichetta "Teaser" e durata allineate esattamente alla larghezza del video; la proporzione e' fissata da subito (nessun salto quando il video carica). Tutti i teaser: etichetta e schermo ora sempre larghi uguali, durata a destra dell'etichetta. Precedente, leggera-19: Citerone short film, locandina minimale: solo "Estratto" sopra il titolo, niente frase in corsivo. Precedente, leggera-18: teaser di Atteone molto piu' grande (su computer occupa piu' di meta' della larghezza accanto ai testi; su telefono e tablet tutta la larghezza). Precedente, leggera-17: la foto piccola a cavallo (Atteone, Citerone short film) non si sposta piu' mentre le foto caricano ne' durante lo scorrimento col dito (la posizione ora si calcola dalle proporzioni note della foto, non dalla foto che sta ancora arrivando); la foto grande della scheda occupa subito il suo spazio definitivo (niente "salti" quando arriva la versione nitida); animazione iniziale piu' corta di circa 1,5 s (si puo' scorrere prima); Citerone short film: sottotitolo "Mettetevi comodi e godetevelo" e avviso che si tratta di un'anteprima. Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Michele Ifigenia / Tyche</title>
@@ -252,6 +252,37 @@ footer>span{position:relative;z-index:1}
 .d-next b{display:block;margin-top:10px;font-size:clamp(2rem,7vw,5.5rem);font-weight:600;letter-spacing:-.05em;line-height:.95}
 .d-next:hover b{opacity:.7}
 
+/* PERCORSO (tappe, residenze): elenco editoriale su righe sottili, come le pagine film di MUBI / A24.
+   Colonne: quando · cosa e dove · realta' che ospita · freccia. Ogni riga con link apre il sito ufficiale in una nuova scheda. */
+.d-path{max-width:1500px;margin:0 auto;padding:64px 24px 8px}
+.d-path:empty{display:none}
+.ph{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin:0 0 28px}
+.ph h2{margin:0;font-size:clamp(1.6rem,3.4vw,2.8rem);font-weight:600;letter-spacing:-.045em;line-height:1;color:#fff}
+.ph span{font-size:.85rem;color:#8b8a86;font-weight:600;font-variant-numeric:tabular-nums}
+.pg{margin:0 0 44px}
+.pg:last-child{margin-bottom:0}
+.pgh{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:0 0 10px;font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:#a9a8a3;font-weight:600}
+.pgh em{font-style:normal;letter-spacing:.02em;font-variant-numeric:tabular-nums;color:#8b8a86}
+.pgn{margin:0 0 16px;max-width:62ch;font-size:.92rem;line-height:1.55;color:#8b8a86}
+.pr{display:grid;grid-template-columns:minmax(120px,1.3fr) 5fr minmax(150px,2fr) 24px;gap:0 24px;align-items:baseline;padding:18px 0 20px;border-top:1px solid #2c2c2e;color:#e9e8e4;text-decoration:none;transition:color .3s}
+.pg .pr:last-child{border-bottom:1px solid #2c2c2e}
+.pw{font-size:.82rem;color:#8b8a86;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.4}
+.pt b{display:block;font-size:clamp(1.15rem,1.9vw,1.55rem);font-weight:600;letter-spacing:-.025em;line-height:1.15;color:#fff}
+.pt i{display:block;margin-top:6px;font-style:normal;font-size:.88rem;line-height:1.45;color:#a9a8a3}
+.po{font-size:.95rem;font-weight:600;line-height:1.3;color:#e9e8e4}
+.pa{justify-self:end;font-size:1rem;color:#8b8a86;transition:transform .35s cubic-bezier(.2,.7,.2,1),color .3s}
+a.pr:hover .pa,a.pr:focus-visible .pa{transform:translate(3px,-3px);color:#fff}
+a.pr:hover .po,a.pr:focus-visible .po{text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px}
+a.pr:focus-visible{outline:1px solid #e9e8e4;outline-offset:4px}
+.pr.soon{color:#6f6e6a}
+.pr.soon .pt b,.pr.soon .po{color:#8b8a86}
+@media(prefers-reduced-motion:reduce){.pa{transition:none}}
+@media(max-width:640px){
+.d-path{padding:48px 16px 0}
+.pr{grid-template-columns:1fr 20px;grid-template-areas:"w a" "t t" "o o";gap:6px 12px;padding:16px 0 18px}
+.pw{grid-area:w}.pa{grid-area:a}.pt{grid-area:t}.po{grid-area:o;font-size:.88rem;color:#c9c8c3}
+.pt b{font-size:1.2rem}
+}
 @media(max-width:900px){
 .d-text{grid-column:1 / -1;grid-row:auto;margin-top:26px}
 .d-meta{grid-column:1 / -1;grid-row:auto}
@@ -385,25 +416,26 @@ footer{padding:0 16px 26px}
     <dl id="d-credits"></dl>
   </div>
   <div class="d-video" id="d-video"></div>
+  <section class="d-path" id="d-path" aria-labelledby="d-path-h"></section>
   <div class="d-gal" id="d-gal"></div>
   <button class="d-next" id="d-nextlink"></button>
   </div>
 </div><script src="photos.js"></script>
 <script>
-console.info("Tyche index: versione 23-09 leggera-24");
+console.info("Tyche index: versione 23-09 leggera-26");
 /* coda "al via": i ricami compaiono solo quando parte l'animazione iniziale (vedi ATTESA) */
 var STARTED=false, startQ=[];
 function onStart(f){ if(STARTED) f(); else startQ.push(f); }
 /* ============ TESTI ============ */
 var UI={
- it:{nav_works:"Lavori",nav_collab:"Collaborazioni",nav_about:"Percorso e contatti",works:"Lavori",collab:"Collaborazioni",about:"Percorso e contatti",f_perf:"Performance",f_short:"Short Film",scroll:"Scorri",back:"← Indietro",next:"Prossimo",video:"Video",teaser:"Teaser",shortfilm:"Cortometraggio",watch:"Guarda il teaser",foot:"Coreografia · Performance · Short film",works_n:"lavori",work_1:"lavoro"},
- en:{nav_works:"Works",nav_collab:"Collaborations",nav_about:"About & contact",works:"Works",collab:"Collaborations",about:"About & contact",f_perf:"Performance",f_short:"Short Film",scroll:"Scroll",back:"← Back",next:"Next",video:"Video",teaser:"Teaser",shortfilm:"Short Film",watch:"Watch the teaser",foot:"Choreography · Performance · Short film",works_n:"works",work_1:"work"}
+ it:{nav_works:"Lavori",nav_collab:"Collaborazioni",nav_about:"Percorso e contatti",works:"Lavori",collab:"Collaborazioni",about:"Percorso e contatti",f_perf:"Performance",f_short:"Short Film",scroll:"Scorri",back:"← Indietro",next:"Prossimo",video:"Video",teaser:"Teaser",shortfilm:"Cortometraggio",path:"Percorso",watch:"Guarda il teaser",foot:"Coreografia · Performance · Short film",works_n:"lavori",work_1:"lavoro"},
+ en:{nav_works:"Works",nav_collab:"Collaborations",nav_about:"About & contact",works:"Works",collab:"Collaborations",about:"About & contact",f_perf:"Performance",f_short:"Short Film",scroll:"Scroll",back:"← Back",next:"Next",video:"Video",teaser:"Teaser",shortfilm:"Short Film",path:"Journey",watch:"Watch the teaser",foot:"Choreography · Performance · Short film",works_n:"works",work_1:"work"}
 };
 var BIO={
  it:"Michele Ifigenia / Tyche è un gruppo di ricerca coreografica fondato e diretto da Michele Ifigenia Colturi, nato all’interno della Civica Scuola di Teatro Paolo Grassi di Milano e della Scuola Conia di Claudia Castellucci. Riunisce interpreti, drammaturghi, musicisti e artisti di diverse discipline in un organismo che sostiene e sviluppa la visione di Colturi. La ricerca, di natura profondamente visiva, esplora il corpo come materia plastica, un campo scultoreo modellato da luce e suono: elementi che ridefiniscono lo spazio e trasformano il gesto in immagine. Al centro della poetica c’è il mito, inteso non come narrazione chiusa ma come matrice fluida e generativa, da cui emergono figure e simboli in costante metamorfosi. Le creazioni prendono forma tanto in spazi teatrali quanto in contesti non convenzionali, intrecciando linguaggi visivi, sonori e corporei. Il gruppo è artista associato di Ariella Vidach / AiEP.",
  en:"Michele Ifigenia / Tyche is a choreographic research group founded and directed by Michele Ifigenia Colturi, born within the Civica Scuola di Teatro Paolo Grassi in Milan and Claudia Castellucci’s Scuola Conia. It brings together performers, dramaturgs, musicians and artists from different disciplines in an organism that supports and develops Colturi’s vision. The research, profoundly visual in nature, explores the body as plastic matter, a sculptural field shaped by light and sound: elements that redefine space and turn gesture into image. At the heart of the poetics is myth, understood not as a closed narrative but as a fluid, generative matrix from which figures and symbols emerge in constant metamorphosis. The creations take shape both in theatrical spaces and in unconventional contexts, interweaving visual, sonic and bodily languages. The group is an associated artist of Ariella Vidach / AiEP."
 };
-var RM={"Autore / Coreografo":"Author / Choreographer","Autore":"Author","Dramaturg":"Dramaturg","Performers":"Performers","Suono":"Sound","Produzione":"Production","Danzatrice":"Dancer","Musiche":"Music","Musica":"Music","Filmmaker":"Filmmaker","Co-produzione":"Co-production","Coproduzione":"Co-production","Ideazione e coreografia":"Concept and choreography","Interpretazione":"Performance","Scenografia":"Scenography","Con il sostegno di":"With the support of","Ricerca artistica":"Artistic research","Filmmaking":"Filmmaking","Di":"By","Interpreti":"Performers","Disegno luci":"Lighting design","Costumi":"Costumes","Progetto vincitore di":"Winner of"};
+var RM={"Autore / Coreografo":"Author / Choreographer","Autore":"Author","Dramaturg":"Dramaturg","Performers":"Performers","Suono":"Sound","Produzione":"Production","Danzatrice":"Dancer","Musiche":"Music","Musica":"Music","Filmmaker":"Filmmaker","Co-produzione":"Co-production","Coproduzione":"Co-production","Ideazione e coreografia":"Concept and choreography","Interpretazione":"Performance","Scenografia":"Scenography","Con il sostegno di":"With the support of","Ricerca artistica":"Artistic research","Filmmaking":"Filmmaking","Di":"By","Interpreti":"Performers","Disegno luci":"Lighting design","Costumi":"Costumes","Progetto vincitore di":"Winner of","Movimentatrice di scena":"Stage mover"};
 function X(it,en){ return {it:it,en:en}; }
 
 /* ============ LAVORI ============
@@ -413,6 +445,7 @@ function X(it,en){ return {it:it,en:en}; }
    videoSide:true = il teaser sta accanto alla sinossi invece che sotto.
    kicker = sopratitolo mostrato sopra il titolo grande nella scheda (es. "Cortometraggio").
    videoKicker = sopratitolo nella locandina del video; videoNote = riga in corsivo sotto il titolo della locandina.
+   path: il "Percorso" (tappe e residenze), gruppi di righe con data, titolo, luogo, realta' ospitante e link al sito ufficiale.
    videoRatio: proporzione del video se nota (es. 4/3 per il formato 1,33): lo schermo ha subito la misura giusta, niente salti.
    video: un file nella cartella video (es. video:"video/cumateaser.mp4") oppure un link YouTube/Vimeo incorporabile. */
 var WORKS=[
@@ -432,10 +465,25 @@ var WORKS=[
    "A bodily chant, a prayer of gestures and sounds that renews an ancestral ritual to ascend Mount Cithaeron. The performative path becomes an evocation of Dionysian symbols, a space of passage between human and divine. The myth of Dionysus and Euripides’ Bacchae merge to celebrate mystery, ecstasy and the transformative force of ritual."),
   credits:["Autore / Coreografo: Michele Ifigenia Colturi","Dramaturg: Ciro Ciancio, Riccardo Vanetta","Interpreti: Enzina Cappelli, Valeria Petroni","Co-produzione: Aiep Ariella Vidach"]},
  {cat:"perf",title:"Atteone",cover:"atteone.png",extra:["2025atteone.jpeg"],fig:"straddle",video:"video/atteoneteaser.mp4",videoSide:true,
+  path:{groups:[
+   {head:X("Hangartfest · Progetto triennale","Hangartfest · Three-year project"),span:"2025 — 2027",
+    note:X("Michele Ifigenia Colturi è coreografo residente di Hangartfest per il triennio 2025–2027: ogni anno il progetto compie una nuova tappa.","Michele Ifigenia Colturi is resident choreographer of Hangartfest for 2025–2027: each year the project takes a new step."),
+    items:[
+     {when:X("I · Settembre 2025","I · September 2025"),title:X("Atteone, Prologo","Atteone, Prologo"),where:X("Prima assoluta · La Maddalena – Centro Arti Performative, Pesaro","World premiere · La Maddalena – Centro Arti Performative, Pesaro"),org:"Hangartfest 2025",url:"https://hangartfest.it/atteone-prologo/"},
+     {when:X("II · Settembre 2026","II · September 2026"),title:X("Atteone, Il bosco","Atteone, Il bosco"),where:X("Residenza e debutto · La Maddalena – Centro Arti Performative, Pesaro","Residency and premiere · La Maddalena – Centro Arti Performative, Pesaro"),org:"Hangartfest 2026",url:"https://hangartfest.it/hangartfest2026/#atteone"},
+     {when:X("III · 2027","III · 2027"),title:X("Atteone","Atteone"),where:X("Debutto dello spettacolo","Premiere of the full work"),org:"Hangartfest"}
+    ]},
+   {head:X("Residenze","Residencies"),span:X("Toscana","Tuscany"),
+    note:X("Con il sostegno di ResiDance – azione del Network Anticorpi XL, Centro di Residenza della Toscana.","With the support of ResiDance – a Network Anticorpi XL initiative, Centro di Residenza della Toscana."),
+    items:[
+     {when:X("Settembre 2025","September 2025"),title:X("Residenza e prova aperta","Residency and open rehearsal"),where:X("8–19 settembre · prova aperta il 19 · Teatro alla Misericordia, Sansepolcro","8–19 September · open rehearsal on the 19th · Teatro alla Misericordia, Sansepolcro"),org:"CapoTrave/Kilowatt",url:"https://www.kilowattfestival.it/contenuto/atteone-michele-ifigenia-colturi-tyche/"},
+     {when:X("Gennaio – Marzo 2026","January – March 2026"),title:X("Residenza e prova aperta","Residency and open rehearsal"),where:X("26–30 gennaio e 2–9 marzo · prova aperta il 6 marzo · Teatro Nardini, Rosignano Marittimo","26–30 January and 2–9 March · open rehearsal on 6 March · Teatro Nardini, Rosignano Marittimo"),org:"Fondazione Armunia",url:"https://www.armunia.eu/it/residenze/68f0adATTEONE.html"}
+    ]}
+  ]},
   tag:X("Debutto 2027","Debut 2027"),dur:X("In fase di sviluppo","In development"),
   desc:X("Il lavoro è centrato su un’unica figura danzante che, nel corso della performance, incarna una metamorfosi tragica: da essere umano a cervo.",
    "The work centres on a single dancing figure who, over the course of the performance, embodies a tragic metamorphosis: from human being to stag."),
-  credits:["Autore / Coreografo: Michele Ifigenia Colturi","Interpretazione: Enzina Cappelli","Musica: Tarek Bouguerra","Dramaturg: Riccardo Vanetta","Scenografia: Alice Vanini","2D/3D Artist: Andrea Rebecca Marchini","Produzione: AIEP (Milano)","Coproduzione: Hangartfest (Pesaro)","Con il sostegno di: ResiDance – azione del Network Anticorpi XL, Centro di Residenza della Toscana (Armunia – Capo Travo / Kilowatt)"]},
+  credits:["Autore / Coreografo: Michele Ifigenia Colturi","Interpretazione: Enzina Cappelli","Musica: Tarek Bouguerra","Dramaturg: Riccardo Vanetta","Scenografia: Alice Vanini","2D/3D Artist: Andrea Rebecca Marchini","Movimentatrice di scena: Annachiara Fanelli","Produzione: AIEP (Milano)","Coproduzione: Hangartfest (Pesaro)","Con il sostegno di: ResiDance – azione del Network Anticorpi XL, Centro di Residenza della Toscana (Armunia – CapoTrave/Kilowatt)"]},
  {cat:"perf",title:"Salmace",cover:"salmace.png",extra:[],
   tag:X("Work in progress","Work in progress"),dur:X("Work in progress","Work in progress"),
   quote:X("«Crea una stretta tenace: come il serpente rapito dall'aquila regale, che mentre viene trasportato in alto avvolge la testa e le zampe del rapace e con la coda gli lega le ali spiegate; o come l'edera che suole circondare i lunghi tronchi degli alberi; o come la piovra che stringe il nemico catturato sul fondo del mare, allungando i suoi tentacoli da ogni lato.»",
@@ -895,7 +943,7 @@ function fillVideo(w){
   /* posizione: dentro la griglia dei testi (accanto alla sinossi) oppure sotto, prima della galleria */
   inf.classList.toggle("withvid",side);
   if(side){ if(vd.parentNode!==inf) inf.appendChild(vd); }
-  else if(vd.parentNode===inf) document.querySelector(".d-body").insertBefore(vd,document.getElementById("d-gal"));
+  else if(vd.parentNode===inf) document.querySelector(".d-body").insertBefore(vd,document.getElementById("d-path"));
   if(!w.video){ vd.innerHTML=""; return; }
   if(!/\.(mp4|webm|m4v|mov)(\?|$)/i.test(w.video)){
     vd.innerHTML='<div class="lbl"><span>'+ui("video")+'</span></div><div class="fr"><iframe src="'+w.video+'" loading="lazy" allowfullscreen></iframe></div>';
@@ -917,6 +965,19 @@ function fillVideo(w){
   v.addEventListener("error",function(){ if(!vf.classList.contains("play")) vd.innerHTML=""; });
   ov.onclick=function(){ vf.classList.add("play"); v.controls=true; var p=v.play(); if(p&&p.catch) p.catch(function(){}); };
   v.addEventListener("ended",function(){ v.controls=false; v.currentTime=0; vf.classList.remove("play"); });
+}
+/* PERCORSO: tappe del progetto e residenze, con link ai siti ufficiali */
+function fillPath(w){
+  var el=document.getElementById("d-path"), P=w.path;
+  if(!P||!P.groups){ el.innerHTML=""; return; }
+  var sp=function(v){ return v?esc(L(v)):""; };
+  el.innerHTML='<div class="ph"><h2 id="d-path-h">'+esc(ui("path"))+'</h2><span>'+sp(P.span)+'</span></div>'+P.groups.map(function(g){
+    return '<div class="pg"><div class="pgh"><span>'+sp(g.head)+'</span><em>'+sp(g.span)+'</em></div>'+(g.note?'<p class="pgn">'+sp(g.note)+'</p>':'')+g.items.map(function(it){
+      var inner='<span class="pw">'+sp(it.when)+'</span><span class="pt"><b>'+sp(it.title)+'</b><i>'+sp(it.where)+'</i></span><span class="po">'+esc(it.org||"")+'</span>';
+      return it.url ? '<a class="pr" href="'+it.url+'" target="_blank" rel="noopener">'+inner+'<span class="pa" aria-hidden="true">↗</span></a>'
+                    : '<div class="pr soon">'+inner+'<span class="pa"></span></div>';
+    }).join("")+'</div>';
+  }).join("");
 }
 function fillDetail(){
   var w=cur, i=group.indexOf(w), n=group.length;
@@ -948,6 +1009,7 @@ function fillDetail(){
   }).join("");
   posM();
   fillVideo(w);
+  fillPath(w);
   var nx=group[(i+1)%n], nl=document.getElementById("d-nextlink");
   nl.innerHTML = n>1 ? '<small>'+ui("next")+'</small><b>'+esc(nx.title)+' →</b>' : "";
   nl.onclick=function(){ openWork(nx); };

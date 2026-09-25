@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<!-- VERSIONE 25-09 leggera-69 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
+<!-- VERSIONE 25-09 leggera-72 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Michele Ifigenia / Tyche</title>
@@ -176,8 +176,9 @@ footer>span{position:relative;z-index:1}
 #detail.on{display:block}
 /* telefono: trascinando col dito a destra/sinistra si passa al lavoro precedente/successivo (come le pagine su Instagram) */
 #detail{touch-action:pan-y pinch-zoom}
-/* tutto il contenuto (foto, testi, video, galleria) si muove come un unico blocco: niente scarti fra un elemento e l'altro durante il gesto */
-.d-body{will-change:transform,opacity}
+/* tutto il contenuto (foto, testi, video, galleria) si muove come un unico blocco durante il gesto;
+   il livello grafico dedicato esiste solo mentre si trascina (prima restava sempre acceso: pesante) */
+#detail.drag .d-body{will-change:transform,opacity}
 #detail.drag .d-body{transform:translate3d(var(--sx,0px),0,0) scale(var(--sc,1));opacity:var(--so,1)}
 #detail.sw .d-body{transition:transform .32s cubic-bezier(.16,1,.3,1),opacity .32s cubic-bezier(.16,1,.3,1)}
 .d-top{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:16px 24px;background:#000 var(--gb);font-size:.92rem;font-weight:600}
@@ -335,20 +336,15 @@ footer .bs-link:hover,footer .bs-link:focus-visible{color:var(--ink);border-colo
 .sun.door:hover,.sun.door.sway{rotate:22deg}
 body.bs-open main,body.bs-open footer,body.bs-open #top-bar{visibility:hidden}
 #bs{display:none;position:fixed;inset:0;z-index:85;background:var(--paper) var(--gp);background-size:240px 240px;color:var(--ink);overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
-#bs.on{display:block;animation:bsIn 1.1s cubic-bezier(.22,.61,.36,1) both}
-#bs.on .bs-head{animation:bsRise 1.3s cubic-bezier(.22,.61,.36,1) .2s both}
-#bs.on .bs-edge{animation:bsRise 1.3s cubic-bezier(.22,.61,.36,1) .38s both}
-#bs.on .bs-sheet{animation:bsRise 1.4s cubic-bezier(.22,.61,.36,1) .55s both}
-#bs.out{animation:bsOut .6s cubic-bezier(.4,0,.2,1) both}
+/* apertura leggera: una sola dissolvenza breve (prima erano quattro animazioni sovrapposte, lunghe fino a 2 s) */
+#bs{contain:layout paint}
+#bs.on{display:block;animation:bsIn .45s cubic-bezier(.22,.61,.36,1) both}
+#bs.out{animation:bsOut .35s cubic-bezier(.4,0,.2,1) both}
 @keyframes bsIn{from{opacity:0}to{opacity:1}}
 @keyframes bsOut{from{opacity:1}to{opacity:0}}
-@keyframes bsRise{from{opacity:0}to{opacity:1}}
 /* (l'animazione iniziale del sito spegne le animazioni alla seconda visita: qui le si riaccende) */
-.seen #bs.on{animation:bsIn 1.1s cubic-bezier(.22,.61,.36,1) both!important}
-.seen #bs.on .bs-head{animation:bsRise 1.3s cubic-bezier(.22,.61,.36,1) .2s both!important}
-.seen #bs.on .bs-edge{animation:bsRise 1.3s cubic-bezier(.22,.61,.36,1) .38s both!important}
-.seen #bs.on .bs-sheet{animation:bsRise 1.4s cubic-bezier(.22,.61,.36,1) .55s both!important}
-.seen #bs.out{animation:bsOut .6s cubic-bezier(.4,0,.2,1) both!important}
+.seen #bs.on{animation:bsIn .45s cubic-bezier(.22,.61,.36,1) both!important}
+.seen #bs.out{animation:bsOut .35s cubic-bezier(.4,0,.2,1) both!important}
 /* barra in alto della sezione e della foto in grande: chiara come la barra della home */
 #bs .d-top,#lb .d-top{background:var(--paper) var(--gp);background-size:240px 240px;color:var(--ink)}
 /* FOTO IN GRANDE: fondo chiaro, foto intera, titolo sotto; frecce in alto come nelle schede; scorrimento col dito sul telefono */
@@ -357,7 +353,8 @@ body.bs-open main,body.bs-open footer,body.bs-open #top-bar{visibility:hidden}
 #lb.on{opacity:1;visibility:visible;transition:opacity .55s cubic-bezier(.22,.61,.36,1),visibility 0s}
 #lb .d-top{position:relative}
 .lb-stage{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:8px 24px;touch-action:pan-y pinch-zoom}
-.lb-stage img{max-width:100%;max-height:100%;width:auto;height:auto;display:block;object-fit:contain;opacity:0;transform:scale(.985);transition:opacity .5s ease,transform .8s cubic-bezier(.22,.61,.36,1)}
+/* la foto occupa sempre tutto lo spazio (contain): l'anteprima e poi la versione nitida hanno la stessa misura, nessun salto */
+.lb-stage>img{width:100%;height:100%;display:block;object-fit:contain;opacity:0;transform:scale(.985);transition:opacity .35s ease,transform .5s cubic-bezier(.22,.61,.36,1)}
 .lb-stage img.ld{opacity:1;transform:none}
 .lb-cap{width:100%;max-width:1500px;margin:0 auto;padding:14px 24px 26px;display:grid;grid-template-columns:2.4em 1fr;gap:0 10px;align-items:baseline;font-size:.95rem;line-height:1.4}
 .lb-cap span:first-child{font-size:.78rem;font-weight:600;color:var(--mute);font-variant-numeric:tabular-nums}
@@ -369,10 +366,11 @@ body.bs-open main,body.bs-open footer,body.bs-open #top-bar{visibility:hidden}
 .bs-edge{max-width:1320px;margin:0 auto 30px;padding:0 24px;display:flex;justify-content:flex-end;font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;font-weight:600;color:var(--mute)}
 .bs-edge span{flex:1;border-top:1px solid rgba(11,11,12,.14);padding-top:12px;text-align:right}
 .bs-sheet{max-width:1320px;margin:0 auto;padding:0 24px 40px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:38px 18px;align-items:start}
-.fc{margin:0}
+/* content-visibility: il browser disegna solo i fotogrammi vicini allo schermo */
+.fc{margin:0;content-visibility:auto;contain-intrinsic-size:auto 280px}
 /* anteprime: tutte nello stesso formato 3:2 (la foto intera si vede aprendola in grande) */
 .fc-img{display:block;position:relative;aspect-ratio:3/2;background:#e7e5df center/cover no-repeat;overflow:hidden;box-shadow:0 0 0 1px rgba(11,11,12,.06)}
-.fc-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity 1.1s cubic-bezier(.22,.61,.36,1)}
+.fc-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .5s ease}
 .fc-img img.ld{opacity:1}
 .fc-img.ph::before{content:attr(data-ph);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:#a9a7a1}
 .fc-date{position:absolute;right:12px;bottom:10px;z-index:2;font-family:var(--mono);font-size:clamp(.72rem,1vw,.86rem);letter-spacing:.1em;font-variant-numeric:tabular-nums;color:#ff9b45;text-shadow:0 0 1px rgba(255,170,90,.9),0 0 6px rgba(255,110,20,.55);opacity:.92;pointer-events:none}
@@ -380,7 +378,7 @@ body.bs-open main,body.bs-open footer,body.bs-open #top-bar{visibility:hidden}
 .fc-n{font-size:.7rem;font-weight:600;color:var(--mute);font-variant-numeric:tabular-nums}
 .fc-who{font-size:.82rem;font-weight:400;line-height:1.35;color:var(--ink);letter-spacing:-.003em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .fc-where{grid-column:2;margin-top:4px;font-family:var(--mono);font-size:.74rem;line-height:1.5;color:var(--mute)}
-@media(prefers-reduced-motion:reduce){#bs.on,#bs.on .bs-head,#bs.on .bs-edge,#bs.on .bs-sheet,#bs.out{animation:none!important}#lb,.lb-stage img{transition:none}.fc-img img{transition:none}.fl.door,.sun.door{transition:none;rotate:none!important}}
+@media(prefers-reduced-motion:reduce){#bs.on,#bs.out{animation:none!important}#lb,.lb-stage img{transition:none}.fc-img img{transition:none}.fl.door,.sun.door{transition:none;rotate:none!important}}
 /* RIVISTA APERTA: due pagine affiancate (copertina + apertura articolo), come un quaderno aperto sulla carta.
    Un solo fotogramma; piega centrale appena accennata, nessun bordo. --bk = proporzione delle due pagine insieme. */
 .fc-img.spread{background:#ecebe6}
@@ -579,7 +577,7 @@ footer{padding:0 16px 26px}
   <div class="lb-cap"><span id="lb-cn"></span><span id="lb-t"></span></div>
 </div><script src="photos.js"></script>
 <script>
-console.info("Tyche index: versione 25-09 leggera-69");
+console.info("Tyche index: versione 25-09 leggera-72");
 /* coda "al via": i ricami compaiono solo quando parte l'animazione iniziale (vedi ATTESA) */
 var STARTED=false, startQ=[];
 function onStart(f){ if(STARTED) f(); else startQ.push(f); }
@@ -833,14 +831,12 @@ var KID=(function(){
   function contour(R,d,col,w){
     return '<g filter="url(#mk)" fill="none" stroke="'+col+'" stroke-linejoin="round" stroke-linecap="round"><path d="'+d+'" stroke-width="'+w+'" opacity=".82"/><path d="'+d+'" stroke-width="'+f(w*.65)+'" opacity=".45" transform="translate('+f((R()-.5)*1.6)+' '+f((R()-.5)*1.6)+')"/></g>';
   }
-  /* una forma colorata a matita: velatura leggera, due passate di tratti incrociati, qualche tratto piu' scuro, contorno ripassato */
   /* un colpo di pennarello: tratto largo e pieno, un po' fuori dai bordi */
   function swipe(R,box,col,ang,w,op,out){
     var cx=(box[0]+box[2])/2+(R()-.5)*(box[2]-box[0])*.4, cy=(box[1]+box[3])/2+(R()-.5)*(box[3]-box[1])*.4, L=Math.hypot(box[2]-box[0],box[3]-box[1])*(.3+R()*.3)*(out?1.25:1);
     var c=Math.cos(ang), s=Math.sin(ang), bw=(R()-.5)*6;
     return '<path d="M'+f(cx-c*L/2)+' '+f(cy-s*L/2)+' Q'+f(cx-s*bw)+' '+f(cy+c*bw)+' '+f(cx+c*L/2)+' '+f(cy+s*L/2)+'" stroke="'+col+'" stroke-width="'+f(w)+'" stroke-linecap="round" fill="none" opacity="'+op+'"/>';
   }
-  /* forma colorata "di fretta": colore che esce dai bordi, un paio di colpi di pennarello, contorno che non combacia col colore */
   /* forma colorata "di fretta": il colore esce un po' dai bordi (sbavature), un paio di colpi di pennarello,
      il contorno non combacia del tutto col colore */
   function pencil(R,d,box,fill,dark,ang,line){
@@ -944,7 +940,7 @@ var KID=(function(){
 })();
 
 /* ============ RICAMI (ora disegni a matita): fiori e sole ============
-   Ogni disegno (vedi KID sopra) diventa un'immagine SVG disegnata una volta sola; compaiono con una dissolvenza lenta.
+   Ogni disegno (vedi KID sopra) diventa un'immagine; compaiono con una dissolvenza lenta.
    Le posizioni sono le stesse dei vecchi ricami. */
 (function(){
   var hero=document.querySelector(".hero"), ring=document.getElementById("embroid"); if(!hero||!ring) return;
@@ -952,13 +948,30 @@ var KID=(function(){
   var Q=[], idle=window.requestIdleCallback?function(fn){ requestIdleCallback(fn,{timeout:600}); }:function(fn){ setTimeout(fn,60); };
   var embDone=false;
   function pump(){ var t=Q.shift(); if(!t){ if(!embDone){ embDone=true; window.__embDone=true; window.dispatchEvent(new Event("embroid")); } return; } t(); idle(pump); }
-  /* now=true: il ricamo e' gia' presente alla prima schermata (nessuna dissolvenza, nessuna comparsa); altrimenti dissolvenza lenta */
-  function put(box,svg,now){
-    var im=new Image(); im.alt=""; im.decoding="sync"; im.draggable=false;
+  /* COPIA SALVATA: il disegno (SVG con molti filtri, costoso soprattutto sul telefono) diventa una volta sola una piccola
+     immagine salvata nel browser; dalla visita successiva si usa quella: niente calcolo, compare subito.
+     now=true: il ricamo e' gia' presente alla prima schermata (nessuna dissolvenza); altrimenti dissolvenza lenta.
+     Se qualcosa non va, si torna al disegno SVG come prima. */
+  var KV="k1";   /* se si cambiano i disegni, cambiare questo nome: le copie vecchie vengono ignorate */
+  function put(box,make,now,key){
+    var im=new Image(), ck=key?"kid:"+KV+":"+key:"", saved=null;
+    im.alt=""; im.decoding=now?"sync":"async"; im.draggable=false;
     if(now){ box.style.transition="none"; box.classList.add("on"); }
     var show=function(){ if(!now) box.classList.add("on"); };
-    im.onload=show; im.onerror=show; box.appendChild(im);
-    im.src=URL.createObjectURL(new Blob([svg],{type:"image/svg+xml"}));
+    try{ if(ck) saved=localStorage.getItem(ck); }catch(e){}
+    function live(){
+      var s=make(), m=/viewBox="0 0 ([\d.]+) ([\d.]+)"/.exec(s), W=320, H=m?Math.round(W*m[2]/m[1]):W;
+      if(m) s=s.replace("<svg ",'<svg width="'+W+'" height="'+H+'" ');
+      im.onerror=show;
+      im.onload=function(){ show(); if(ck) setTimeout(function(){ try{
+        var c=document.createElement("canvas"); c.width=W; c.height=H; c.getContext("2d").drawImage(im,0,0,W,H);
+        var d=c.toDataURL("image/webp",.9); if(d.length>2000&&d.length<400000) localStorage.setItem(ck,d);
+      }catch(e){} },2000); };
+      im.src=URL.createObjectURL(new Blob([s],{type:"image/svg+xml"}));
+    }
+    box.appendChild(im);
+    if(saved){ im.onload=show; im.onerror=function(){ try{ localStorage.removeItem(ck); }catch(e){} live(); }; im.src=saved; }
+    else live();
   }
   /* x, baseY = dove poggia la base del gambo; il fiore ruota intorno a quel punto */
   function place(el,sp,x,baseY,w){
@@ -974,7 +987,7 @@ var KID=(function(){
       var el=document.createElement("div"); el.className="fl"; layer.appendChild(el);
       var build=function(){
         var flip=!!sp.flip;
-        put(el,KID.flower(sp.type,{ext:sp.ext,lean:flip?-sp.lean:sp.lean,flip:flip,ls:sp.ls}),now);
+        put(el,function(){ return KID.flower(sp.type,{ext:sp.ext,lean:flip?-sp.lean:sp.lean,flip:flip,ls:sp.ls}); },now,"f"+sp.type+"_"+sp.ext+"_"+sp.lean+(flip?"f":""));
       };
       if(now) nowQ.push(build); else (late?FQ:Q).push(build);
       return {el:el,sp:sp};
@@ -1002,7 +1015,7 @@ var KID=(function(){
   }
   /* sole, in "Percorso e contatti" (in alto a sinistra); come i fiori del footer si costruisce con largo anticipo (1600 px prima), cosi' quando ci arrivi e' gia' li' */
   var abt=document.getElementById("about");
-  if(abt){ var sun=document.createElement("div"); sun.className="sun"; abt.appendChild(sun); FQ.push(function(){ put(sun,KID.sun()); }); }
+  if(abt){ var sun=document.createElement("div"); sun.className="sun"; abt.appendChild(sun); FQ.push(function(){ put(sun,KID.sun,false,"sun"); }); }
   /* freccia-suggerimento accanto al sole (vedi .bs-hint): si traccia fotogramma per fotogramma con la stessa curva del logo,
      quando la freccia stessa e' ben dentro lo schermo; si ridisegna a ogni visita (sparisce solo dopo aver aperto "Dietro le quinte") */
   var BS_KNOWN=false; try{ BS_KNOWN=localStorage.getItem("bsSeen")==="1"; }catch(e){}
@@ -1321,18 +1334,24 @@ function fillDetail(){
 }
 /* INDIRIZZO DIRETTO DI OGNI LAVORO: sito.it/#cuma, #cuma-short, #citerone-short, #atteone... (si puo' mandare a chi si vuole) */
 function slug(w){ var t=w.title.toLowerCase(); if(t.normalize) t=t.normalize("NFD").replace(/[\u0300-\u036f]/g,""); return t.replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")+(w.cat==="short"?"-short":""); }
-function openWork(w){
+/* CRONOLOGIA: aprire una scheda aggiunge un passo alla cronologia (il tasto Indietro del browser la chiude);
+   passare da un lavoro all'altro dentro la scheda sostituisce il passo, cosi' un solo Indietro basta per uscire. */
+function openWork(w,nohist){
+  var was=det.classList.contains("on"), h="#"+slug(w);
   cur=w;
-  try{ if(location.hash!=="#"+slug(w)) history.replaceState(null,"","#"+slug(w)); }catch(e){}
+  try{ if(!nohist && location.hash!==h){ if(was) history.replaceState({tyche:"work"},"",h); else history.pushState({tyche:"work"},"",h); } }catch(e){}
   group = ALL;   /* le frecce e i pulsanti scorrono tutti i lavori di seguito */
   fillDetail(); showPhoto();
   det.classList.add("on"); det.scrollTop=0; document.body.style.overflow="hidden";
   posM();   /* ora la scheda è visibile: si può misurare (misure di layout, quindi valide subito) */
   var gi=group.indexOf(w), gn=group.length; setTimeout(function(){ prefetch(group[(gi+1)%gn]); prefetch(group[(gi+gn-1)%gn]); },400);
 }
-function closeWork(){ det.classList.remove("on"); document.getElementById("d-video").innerHTML=""; document.body.style.overflow=""; cur=null;
-  try{ if(location.hash && location.hash!=="#dietro") history.replaceState(null,"",location.pathname+location.search); }catch(e){} }
-document.getElementById("d-back").onclick=closeWork;
+function closeWork(fromPop){
+  if(fromPop!==true && history.state && history.state.tyche==="work"){ history.back(); return; }   /* si torna indietro di un passo: chiude il popstate */
+  det.classList.remove("on"); document.getElementById("d-video").innerHTML=""; document.body.style.overflow=""; cur=null;
+  if(fromPop!==true){ try{ if(location.hash && location.hash!=="#dietro") history.replaceState(null,"",location.pathname+location.search); }catch(e){} }
+}
+document.getElementById("d-back").onclick=function(){ closeWork(); };
 document.addEventListener("keydown",function(e){
   if(!det.classList.contains("on")) return;
   if(e.key==="Escape") closeWork();
@@ -1409,21 +1428,25 @@ document.addEventListener("keydown",function(e){
    spread = due foto affiancate come una rivista aperta (un solo fotogramma); url + link = link accanto alla didascalia in grande.
    Finche' src e' vuoto il riquadro resta un segnaposto. */
 var BACKSTAGE={span:X("2019 — oggi","2019 — now"),frames:[
- {src:"DIETRO_Cònia_2019_classe_I.jpg",tag:X("Cònia, 2019","Cònia, 2019"),lite:"dietro/2019-conia",ar:1.4976,date:"",who:X("Cònia, classe I — un po’ dove tutto è nato, era il 2019 circa","Cònia, first year — sort of where it all began, around 2019"),where:X("quanti eravamo? qualcuno si ricorda tutti i nomi?","how many were we? does anyone remember all the names?")},
- {src:"DIETRO_cITERONE_PROVE_2020.jpg",tag:X("Ipercorpo, Forlì, 2020","Ipercorpo, Forlì, 2020"),lite:"dietro/2020-citerone-prove",ar:1.4997,date:"",who:X("prove di Citerone — una delle nostre prime date, a Forlì, a Ipercorpo","Citerone rehearsals — one of our first dates, in Forlì, at Ipercorpo"),where:X("quel muro scrostato","that peeling wall")},
- {src:"DIETRO_Foto__gruppo_riprese_Cuma_2021.jpg",tag:X("Riprese di Cuma, 2021","Filming Cuma, 2021"),lite:"dietro/2021-cuma-riprese",ar:1.2501,date:"",who:X("le riprese di Cuma","filming Cuma"),where:X("la luce che entrava di lato","the light coming in sideways")},
- {src:"DIETRO_2022gruppo.jpg",tag:X("Set di Citerone, 2022","Citerone set, 2022"),lite:"dietro/2022-gruppo",ar:1.5,date:"",who:X("dopo le riprese di Citerone, il cortometraggio","after filming Citerone, the short film"),where:X("pausa pranzo? o era dopo le prove?","lunch break? or was it after rehearsal?")},
- {src:"DIETRO_Sopralluoghi_Bormio_-_Luglio_2022__28_.jpg",tag:X("Bormio, 2022","Bormio, 2022"),lite:"dietro/2022-bormio",ar:1.7778,date:"",who:X("Bormio, i sopralluoghi","Bormio, scouting"),where:X("si cercava il monte giusto","looking for the right mountain")},
- {src:"DIETRO_proiezione_cinema_armunia_cortometraggio_citerone_shortfilm.jpg",tag:X("Nuovo Armenia, Milano, 2022","Nuovo Armenia, Milan, 2022"),lite:"dietro/2022-armunia-proiezione",ar:1.4998,date:"",who:X("il cortometraggio di Citerone al Cinema Nuovo Armenia, Milano","the Citerone short film at Cinema Nuovo Armenia, Milan"),where:X("il corto sotto gli alberi, di sera","the short film under the trees, at night")},
- {src:"DIETRO_Fote_gruppo-prove_citerone_2022.jpg",tag:X("Fattoria Vittadini, 2022","Fattoria Vittadini, 2022"),lite:"dietro/2022-citerone-prove",ar:1.4997,date:"",who:X("Fattoria Vittadini, prove di compagnia","Fattoria Vittadini, company rehearsals"),where:X("chi ha fatto la faccia più strana?","who pulled the strangest face?")},
- {src:"DIETRO_Amadriadi_prove_triennale_fog.jpg",tag:X("Triennale, Milano","Triennale, Milan"),lite:"dietro/amadriadi-prove-fog",ar:1.5,date:"",who:X("Amadriadi, prove in Triennale","Amadriadi, rehearsals at Triennale"),where:X("tra gli alberi, prima del FOG","among the trees, before FOG")},
- {src:"1.jpeg",tag:X("Fabbrica del Vapore, Milano, 2025","Fabbrica del Vapore, Milan, 2025"),date:"",who:X("Fabbrica del Vapore, Milano — il primo incontro per la collaborazione YTI, 2025","Fabbrica del Vapore, Milan — the first meeting for the YTI collaboration, 2025")},
- {src:"5.jpg",tag:X("PARC, Firenze, 2025","PARC, Florence, 2025"),date:"",who:X("PARC, Firenze — prove di YTI, 2025","PARC, Florence — YTI rehearsals, 2025")},
- {src:"DIETRO_DSCF5705.jpg",tag:X("Anghiari, YTI, febbraio 2026","Anghiari, YTI, February 2026"),lite:"dietro/sala-riprese",ar:1.5004,date:"",who:X("prove ad Anghiari, YTI, febbraio 2026","rehearsals in Anghiari, YTI, February 2026"),where:X("c'era sempre una camera accesa","there was always a camera on")},
- {src:"2.jpeg",tag:X("Anghiari, YTI, febbraio 2026","Anghiari, YTI, February 2026"),date:"",who:X("prove ad Anghiari, YTI — il progetto in collaborazione, febbraio 2026","rehearsals in Anghiari, YTI — the collaborative project, February 2026")},
- {src:"3.jpeg",tag:X("Anghiari, YTI, febbraio 2026","Anghiari, YTI, February 2026"),date:"",who:X("prove ad Anghiari, YTI — il progetto in collaborazione, febbraio 2026","rehearsals in Anghiari, YTI — the collaborative project, February 2026")},
- {src:"4.jpeg",tag:X("Anghiari, YTI, febbraio 2026","Anghiari, YTI, February 2026"),date:"",who:X("prove ad Anghiari, YTI — il progetto in collaborazione, febbraio 2026","rehearsals in Anghiari, YTI — the collaborative project, February 2026")},
- {spread:["rivista.jpg","rivista1.jpg"],zoom:1.07,tag:X("La Falena, 2023","La Falena, 2023"),who:X("«La Falena» n. 2/2023, Speciale I Novissimi: l’intervista di Alessandro Iachino","«La Falena» no. 2/2023, I Novissimi special: interview by Alessandro Iachino"),url:"https://iris.uniroma1.it/retrieve/f9efc635-7c53-429b-8981-ba2eed14c4f8/FALENA%206_02-2023.pdf#page=47",link:X("Leggi l’articolo, pp. 47–49","Read the article, pp. 47–49")}
+ {src:"DIETRO_Cònia_2019_classe_I.jpg",tag:X("Scuola Cònia, 2019","Scuola Cònia, 2019"),lite:"dietro/2019-conia",ar:1.4976,date:"",who:X("Scuola Cònia, primo anno, intorno al 2019: dove tutto è cominciato","Scuola Cònia, first year, around 2019: where it all began"),where:X("Quanti eravamo? Qualcuno ricorda ancora tutti i nomi?","How many of us were there? Does anyone still remember all the names?")},
+ {src:"DIETRO_cITERONE_PROVE_2020.jpg",tag:X("Ipercorpo, Forlì, 2020","Ipercorpo, Forlì, 2020"),lite:"dietro/2020-citerone-prove",ar:1.4997,date:"",who:X("Prove di Citerone a Ipercorpo, Forlì, 2020: una delle nostre prime date","Citerone rehearsals at Ipercorpo, Forlì, 2020: one of our first dates"),where:X("Quel muro scrostato","That peeling wall")},
+ {src:"DIETRO_Foto__gruppo_riprese_Cuma_2021.jpg",tag:X("Riprese di Cuma, 2021","Filming Cuma, 2021"),lite:"dietro/2021-cuma-riprese",ar:1.2501,date:"",who:X("Sul set di Cuma, 2021","On the set of Cuma, 2021"),where:X("La luce che entrava di lato","The light coming in from the side")},
+ {src:"DIETRO_2022gruppo.jpg",tag:X("Set di Citerone, 2022","Citerone set, 2022"),lite:"dietro/2022-gruppo",ar:1.5,date:"",who:X("Dopo le riprese del cortometraggio Citerone, 2022","After filming the Citerone short film, 2022"),where:X("Pausa pranzo? O era dopo le prove?","Lunch break? Or was it after rehearsal?")},
+ {src:"DIETRO_Sopralluoghi_Bormio_-_Luglio_2022__28_.jpg",tag:X("Bormio, 2022","Bormio, 2022"),lite:"dietro/2022-bormio",ar:1.7778,date:"",who:X("Sopralluoghi a Bormio, luglio 2022","Location scouting in Bormio, July 2022"),where:X("Si cercava il monte giusto","Looking for the right mountain")},
+ {src:"DIETRO_proiezione_cinema_armunia_cortometraggio_citerone_shortfilm.jpg",tag:X("Nuovo Armenia, Milano, 2022","Nuovo Armenia, Milan, 2022"),lite:"dietro/2022-armunia-proiezione",ar:1.4998,date:"",who:X("Proiezione del cortometraggio Citerone al Cinema Nuovo Armenia, Milano, 2022","Screening of the Citerone short film at Cinema Nuovo Armenia, Milan, 2022"),where:X("Il corto sotto gli alberi, di sera","The short film under the trees, at night")},
+ {src:"DIETRO_Fote_gruppo-prove_citerone_2022.jpg",tag:X("Fattoria Vittadini, 2022","Fattoria Vittadini, 2022"),lite:"dietro/2022-citerone-prove",ar:1.4997,date:"",who:X("Prove di compagnia alla Fattoria Vittadini, 2022","Company rehearsals at Fattoria Vittadini, 2022"),where:X("Chi ha fatto la faccia più strana?","Who pulled the strangest face?")},
+ {src:"b.jpeg",tag:X("CLAPS, Brescia, 2024","CLAPS, Brescia, 2024"),date:"",who:X("Prove e ricerca per Atteone al CLAPS, Brescia, 2024","Rehearsals and research for Atteone at CLAPS, Brescia, 2024")},
+ {src:"c.jpeg",tag:X("CLAPS, Brescia, 2024","CLAPS, Brescia, 2024"),date:"",who:X("Ricerca in sala per Atteone al CLAPS, Brescia, 2024","Studio research for Atteone at CLAPS, Brescia, 2024")},
+ {src:"DIETRO_Amadriadi_prove_triennale_fog.jpg",tag:X("Triennale, Milano","Triennale, Milan"),lite:"dietro/amadriadi-prove-fog",ar:1.5,date:"",who:X("Prove di Amadriadi alla Triennale di Milano","Amadriadi rehearsals at Triennale Milano"),where:X("Tra gli alberi, prima del FOG","Among the trees, before FOG")},
+ {src:"a.jpeg",tag:X("NAO Performing Festival, 2025","NAO Performing Festival, 2025"),date:"",who:X("Presentazione di «Atteone, Prologo» al NAO Performing Festival, Fabbrica del Vapore, Milano, 2025","Presentation of “Atteone, Prologo” at NAO Performing Festival, Fabbrica del Vapore, Milan, 2025")},
+ {src:"1.jpeg",tag:X("Fabbrica del Vapore, Milano, 2025","Fabbrica del Vapore, Milan, 2025"),date:"",who:X("Primo incontro per YTI alla Fabbrica del Vapore, Milano, 2025","First meeting for YTI at Fabbrica del Vapore, Milan, 2025")},
+ {src:"5.jpg",tag:X("PARC, Firenze, 2025","PARC, Florence, 2025"),date:"",who:X("Prove di YTI al PARC, Firenze, 2025","YTI rehearsals at PARC, Florence, 2025")},
+ {src:"DIETRO_DSCF5705.jpg",tag:X("YTI, Anghiari, 2026","YTI, Anghiari, 2026"),lite:"dietro/sala-riprese",ar:1.5004,date:"",who:X("Prove di YTI ad Anghiari, febbraio 2026","YTI rehearsals in Anghiari, February 2026"),where:X("C’era sempre una camera accesa","There was always a camera on")},
+ {src:"2.jpeg",tag:X("YTI, Anghiari, 2026","YTI, Anghiari, 2026"),date:"",who:X("Prove di YTI, con YoY Performing Arts e IVONA, Anghiari, febbraio 2026","YTI rehearsals with YoY Performing Arts and IVONA, Anghiari, February 2026")},
+ {src:"3.jpeg",tag:X("YTI, Anghiari, 2026","YTI, Anghiari, 2026"),date:"",who:X("Prove di YTI ad Anghiari, febbraio 2026","YTI rehearsals in Anghiari, February 2026")},
+ {src:"4.jpeg",tag:X("YTI, Anghiari, 2026","YTI, Anghiari, 2026"),date:"",who:X("Prove di YTI ad Anghiari, febbraio 2026","YTI rehearsals in Anghiari, February 2026")},
+ {src:"d.jpeg",tag:X("Contemporanea-26, Prato, 2026","Contemporanea-26, Prato, 2026"),date:"",who:X("Cuma al Teatro Fabbricone di Prato, per Contemporanea-26 / Focus Danza del Teatro Metastasio, 12 giugno 2026","Cuma at Teatro Fabbricone, Prato, for Teatro Metastasio’s Contemporanea-26 / Focus Danza, 12 June 2026")},
+ {spread:["rivista.jpg","rivista1.jpg"],zoom:1.07,tag:X("La Falena, 2023","La Falena, 2023"),who:X("«La Falena» n. 2/2023, speciale «I Novissimi»: intervista di Alessandro Iachino","“La Falena” no. 2/2023, “I Novissimi” special issue: interview by Alessandro Iachino"),url:"https://iris.uniroma1.it/retrieve/f9efc635-7c53-429b-8981-ba2eed14c4f8/FALENA%206_02-2023.pdf#page=47",link:X("Leggi l’articolo, pp. 47–49","Read the article, pp. 47–49")}
 ]};
 var bsEl=document.getElementById("bs"), bsIO=null;
 function bsAr(im){ im.classList.add("ld"); if(rec(im.getAttribute("data-full"))||!im.naturalWidth) return; im.parentNode.style.setProperty("--ar",(im.naturalWidth/im.naturalHeight).toFixed(4)); }
@@ -1441,59 +1464,79 @@ function bsCands(f,big){
   if(f.src){ cand.push(f.src,"dietro/"+f.src); var nf=f.src.normalize?f.src.normalize("NFD"):f.src; if(nf!==f.src) cand.push(nf,"dietro/"+nf); }
   return cand;
 }
-/* rivista aperta: due pagine; la proporzione si prende dalla copertina appena arriva */
-function bsBook(f,lazy){
+/* rivista aperta: due pagine; prima la versione leggera (photos.js), poi l'originale; la proporzione si prende dalla copertina */
+function bsBook(f,lazy,css){
   return '<span class="bk"'+(f.zoom?' style="--z:'+f.zoom+'"':'')+'>'+f.spread.map(function(n,i){
-    var c=[n,"dietro/"+n];
+    var r=rec(n), c=r?[dirUrl(r,pickDir(r,css||400)),n,"dietro/"+n]:[n,"dietro/"+n];
     return '<span class="bk-p bk-'+(i?'r':'l')+'"><img src="'+encodeURI(c[0])+'" data-c="'+esc(JSON.stringify(c)).replace(/"/g,"&quot;")+'" data-i="0" alt=""'+(lazy?' loading="lazy"':'')+' decoding="async" onload="bsShow(this);bkAr(this)" onerror="bsNext(this)"></span>';
   }).join("")+'</span>';
 }
 window.bkAr=function(im){ if(!im.naturalWidth||im.closest(".bk-r")) return; im.closest(".bk").style.setProperty("--bk",(2*im.naturalWidth/im.naturalHeight).toFixed(4)); };
+/* griglia costruita una volta sola: riaprendo la sezione (o cambiando lingua) cambiano solo le didascalie,
+   le foto restano caricate e decodificate e compaiono all'istante */
+var bsBuiltBig=null;
 function fillBS(){
-  var F=BACKSTAGE.frames, BIG=bsBig();
+  var F=BACKSTAGE.frames, BIG=bsBig(), sheet=document.getElementById("bs-sheet");
   document.getElementById("bs-h").textContent=ui("bs_t");
   document.getElementById("bs-intro").textContent="";   /* nessuna frase: resta solo il titolo */
   document.getElementById("bs-span").textContent=L(BACKSTAGE.span);
   document.getElementById("bs-count").textContent=pad2(F.length);
-  document.getElementById("bs-sheet").innerHTML=F.map(function(f,i){
+  document.getElementById("bs-back").textContent=ui("back");
+  if(bsBuiltBig===BIG){
+    [].forEach.call(sheet.querySelectorAll(".fc"),function(fc){ var f=F[+fc.getAttribute("data-k")]; fc.querySelector(".fc-who").textContent=L(f.tag||f.who)||""; });
+    return;
+  }
+  bsBuiltBig=BIG;
+  sheet.innerHTML=F.map(function(f,i){
     var n=pad2(i+1), r=f.src?rec(f.src):null;
+    var lz=i<4?' fetchpriority="high"':' loading="lazy" fetchpriority="low"';   /* prima riga subito, le altre avvicinandosi */
     var sz="(max-width:640px) 50vw, (max-width:900px) 33vw, 24vw", arS=f.ar?' style="--ar:'+f.ar+'"':'';
     /* la foto si cerca in piu' posti, nell'ordine: versione leggera in dietro/ (…-800/-1600.webp), poi il file originale
        accanto a index.html, poi dentro dietro/, poi con la "ò" scritta alla maniera del Mac. La prima che esiste vince. */
     var cand=bsCands(f,BIG);
-    var tag = r ? imgTag(f.src,{sizes:sz,extra:' loading="lazy" onload="bsAr(this)"'})
-          : '<img src="'+encodeURI(cand[0])+'" data-c="'+esc(JSON.stringify(cand)).replace(/"/g,"&quot;")+'" data-i="0" alt="" loading="lazy" decoding="async"'+(i>2?' fetchpriority="low"':'')+' onload="bsShow(this)" onerror="bsNext(this)">';
+    var tag = r ? imgTag(f.src,{sizes:sz,extra:lz+' onload="bsShow(this)"'})
+          : '<img src="'+encodeURI(cand[0])+'" data-c="'+esc(JSON.stringify(cand)).replace(/"/g,"&quot;")+'" data-i="0" alt=""'+lz+' decoding="async" onload="bsShow(this)" onerror="bsNext(this)">';
     var img=f.src
       ? '<span class="fc-img"'+(r?lqOf(f.src):arS)+'>'+tag+(f.date?'<span class="fc-date">'+esc(f.date)+'</span>':'')+'</span>'
       : '<span class="fc-img ph" data-ph="'+n+'">'+(f.date?'<span class="fc-date">'+esc(f.date)+'</span>':'')+'</span>';
-    if(f.spread) img='<span class="fc-img spread">'+bsBook(f,true)+'</span>';
+    if(f.spread) img='<span class="fc-img spread">'+bsBook(f,i>=4,220)+'</span>';
     return '<figure class="fc" data-k="'+i+'">'+img+'<figcaption class="fc-cap"><span class="fc-n">'+n+'</span><span class="fc-who">'+esc(L(f.tag||f.who)||"")+'</span></figcaption></figure>';
   }).join("");
-  document.getElementById("bs-back").textContent=ui("back");
   bsLight();
 }
 /* (foto sempre a colori: nessuna accensione al passaggio) */
 function bsLight(){ if(bsIO){ bsIO.disconnect(); bsIO=null; } }
 var bsHideT=0;
-function openBS(){
+function openBS(nohist){
   clearTimeout(bsClosing); bsEl.classList.remove("out");
-  clearTimeout(bsHideT); bsHideT=setTimeout(function(){ if(bsEl.classList.contains("on")) document.body.classList.add("bs-open"); },RM_?0:1150);
+  clearTimeout(bsHideT); bsHideT=setTimeout(function(){ if(bsEl.classList.contains("on")) document.body.classList.add("bs-open"); },RM_?0:460);
   try{ localStorage.setItem("bsSeen","1"); }catch(e){} if(window.__bsHint) window.__bsHint.classList.add("gone");   /* scoperto: la freccia non serve piu' */
   fillBS(); bsEl.classList.add("on"); bsEl.scrollTop=0; document.body.style.overflow="hidden"; bsHomeDraw();
-  try{ if(location.hash!=="#dietro") history.replaceState(null,"","#dietro"); }catch(e){}
+  try{ if(nohist!==true && location.hash!=="#dietro") history.pushState({tyche:"bs"},"","#dietro"); }catch(e){}
 }
 var bsClosing=0;
-function closeBS(){
+function closeBS(fromPop){
+  if(fromPop!==true && history.state && (history.state.tyche==="bs"||history.state.tyche==="lb")){ history.go(history.state.tyche==="lb"?-2:-1); return; }
   clearTimeout(bsHideT); document.body.classList.remove("bs-open");
-  if(lbEl.classList.contains("on")) closeLB();
+  if(lbEl.classList.contains("on")) closeLB(true);
   if(RM_){ bsEl.classList.remove("on"); }
-  else { bsEl.classList.add("out"); clearTimeout(bsClosing); bsClosing=setTimeout(function(){ bsEl.classList.remove("on","out"); },580); }
+  else { bsEl.classList.add("out"); clearTimeout(bsClosing); bsClosing=setTimeout(function(){ bsEl.classList.remove("on","out"); },360); }
   if(bsIO){ bsIO.disconnect(); bsIO=null; }
   if(!det.classList.contains("on")) document.body.style.overflow="";
-  try{ if(location.hash==="#dietro") history.replaceState(null,"",location.pathname+location.search); }catch(e){}
+  if(fromPop!==true){ try{ if(location.hash==="#dietro") history.replaceState(null,"",location.pathname+location.search); }catch(e){} }
 }
 window.openBS=openBS;
-document.getElementById("bs-back").onclick=closeBS;
+/* PREPARAZIONE ANTICIPATA: avvicinandosi a "Percorso e contatti" (dove stanno le porte) o passando su un fiore/sole,
+   la griglia di "Dietro le quinte" si costruisce di nascosto e le prime foto iniziano ad arrivare: all'apertura sono gia' pronte. */
+(function(){
+  if(SLOWNET) return;
+  var done=false, idle=window.requestIdleCallback||function(f){ setTimeout(f,200); };
+  function prep(){ if(done) return; done=true; idle(function(){ if(!bsEl.classList.contains("on")){ fillBS(); bsHomeDraw(); } }); }
+  var a=document.getElementById("about");
+  if(a && "IntersectionObserver" in window){ var o=new IntersectionObserver(function(en){ if(en[0].isIntersecting){ o.disconnect(); prep(); } },{rootMargin:"600px 0px"}); o.observe(a); }
+  ["pointerover","touchstart"].forEach(function(ev){ document.addEventListener(ev,function(e){ if(e.target.closest&&e.target.closest(".door")) prep(); },{passive:true}); });
+})();
+document.getElementById("bs-back").onclick=function(){ closeBS(); };
 /* fiorellino azzurro: disegnato la prima volta che si apre la sezione; toccandolo si chiude e si torna in cima alla home */
 var bsHome=document.getElementById("bs-home");
 function bsHomeDraw(){
@@ -1509,19 +1552,47 @@ bsHome.onclick=function(){
   var de=document.documentElement, sb=de.style.scrollBehavior; de.style.scrollBehavior="auto"; window.scrollTo(0,0); de.style.scrollBehavior=sb;
 };
 /* foto in grande */
-var lbEl=document.getElementById("lb"), lbK=0;
+var lbEl=document.getElementById("lb"), lbK=0, lbSeq=0;
+/* la versione giusta per lo schermo (da photos.js se c'e'), poi le alternative */
+function lbCands(f){
+  var r=f.src&&rec(f.src), c=bsCands(f,true);
+  if(r) c.unshift(dirUrl(r,pickDir(r,Math.min(window.innerWidth,Math.max(200,window.innerHeight-140)*r.w/r.h))));
+  return c;
+}
+/* precarica la foto precedente e la successiva: scorrendo arrivano gia' pronte */
+function lbWarm(k){
+  if(SLOWNET) return; var F=BACKSTAGE.frames, n=F.length;
+  [k+1,k-1].forEach(function(j){ var f=F[(j+n)%n]; if(!f.spread&&f.src) warm(encodeURI(lbCands(f)[0])); });
+}
 function lbShow(k){
-  var F=BACKSTAGE.frames, n=F.length; lbK=(k+n)%n; var f=F[lbK], c=bsCands(f,true), st=document.getElementById("lb-stage");
+  var F=BACKSTAGE.frames, n=F.length; lbK=(k+n)%n; var f=F[lbK], st=document.getElementById("lb-stage"), seq=++lbSeq;
   document.getElementById("lb-n").textContent=pad2(lbK+1)+" / "+pad2(n);
   document.getElementById("lb-cn").textContent=pad2(lbK+1);
   var lt=document.getElementById("lb-t"); lt.textContent=L(f.who)||"";
   if(f.url){ var la=document.createElement("a"); la.className="lb-link"; la.href=f.url; la.target="_blank"; la.rel="noopener"; la.innerHTML=esc(L(f.link))+'<i aria-hidden="true"> ↗\uFE0E</i>'; lt.appendChild(document.createTextNode(" ")); lt.appendChild(la); }
-  st.innerHTML = f.spread ? bsBook(f,false) : '<img src="'+encodeURI(c[0])+'" data-c="'+esc(JSON.stringify(c)).replace(/"/g,"&quot;")+'" data-i="0" alt="" decoding="async" onload="bsShow(this)" onerror="bsNext(this)">';
+  if(f.spread){ st.innerHTML=bsBook(f,false,Math.min(window.innerWidth,1400)/2); lbWarm(lbK); return; }
+  if(!f.src){ st.innerHTML=""; return; }
+  /* subito l'anteprima gia' caricata nella griglia (nessun vuoto), poi al suo posto la versione nitida appena e' pronta */
+  var th=document.querySelector('#bs-sheet .fc[data-k="'+lbK+'"] .fc-img > img'), low=(th&&th.complete&&th.naturalWidth)?(th.currentSrc||th.src):"";
+  st.innerHTML='<img alt="" decoding="async">'; var im=st.firstChild, c=lbCands(f), i=0;
+  if(low){ im.src=low; im.classList.add("ld"); }
+  (function next(){
+    if(seq!==lbSeq) return;
+    if(i>=c.length){ if(!low) im.style.display="none"; return; }
+    var u=encodeURI(c[i++]), p=new Image(); p.decoding="async";
+    p.onload=function(){ var sw=function(){ if(seq!==lbSeq) return; im.src=u; if(!im.classList.contains("ld")) requestAnimationFrame(function(){ im.classList.add("ld"); }); }; if(p.decode) p.decode().then(sw,sw); else sw(); };
+    p.onerror=next; p.src=u;
+  })();
+  lbWarm(lbK);
 }
-function openLB(k){ lbShow(k); lbEl.classList.add("on"); document.getElementById("lb-x").textContent=ui("back"); }
-function closeLB(){ lbEl.classList.remove("on"); }
+function openLB(k,nohist){ lbShow(k); lbEl.classList.add("on"); document.getElementById("lb-x").textContent=ui("back");
+  if(nohist!==true){ try{ history.pushState({tyche:"lb"},"",location.hash||"#dietro"); }catch(e){} } }
+function closeLB(fromPop){
+  if(fromPop!==true && history.state && history.state.tyche==="lb"){ history.back(); return; }
+  lbEl.classList.remove("on");
+}
 document.getElementById("bs-sheet").addEventListener("click",function(e){ var fc=e.target.closest&&e.target.closest(".fc"); if(fc&&e.target.closest(".fc-img")) openLB(+fc.getAttribute("data-k")); });
-document.getElementById("lb-x").onclick=closeLB;
+document.getElementById("lb-x").onclick=function(){ closeLB(); };
 document.getElementById("lb-p").onclick=function(){ lbShow(lbK-1); };
 document.getElementById("lb-nx").onclick=function(){ lbShow(lbK+1); };
 (function(){ var st=document.getElementById("lb-stage"), x0=null, y0=0;
@@ -1561,8 +1632,26 @@ reelP=new Reel(document.getElementById("reel-perf"),PERF,openWork);
 reelS=new Reel(document.getElementById("reel-short"),SHORT,openWork);
 reelC=new Reel(document.getElementById("reel-collab"),COLLABS,openWork);
 renderAll();
-if(location.hash==="#dietro"||window.__BS_OPEN) openBS();   /* link diretto: sito.it/#dietro */
-else if(location.hash){ var hw=ALL.filter(function(w){ return "#"+slug(w)===location.hash; })[0]; if(hw){ window.__DEEP=true; openWork(hw); } }   /* link diretto a un lavoro: si apre subito la scheda, senza attesa iniziale */
+
+/* LINK DIRETTI (sito.it/#dietro, sito.it/#cuma…): sotto la scheda si mette la home nella cronologia,
+   cosi' il tasto Indietro riporta al sito invece di uscire */
+function workOf(h){ return (h&&h!=="#dietro") ? ALL.filter(function(w){ return "#"+slug(w)===h; })[0] : null; }
+var home0=location.pathname+location.search;
+if(location.hash==="#dietro"||window.__BS_OPEN){ try{ history.replaceState(null,"",home0); }catch(e){} openBS(); }
+else if(workOf(location.hash)){ var hw=workOf(location.hash); window.__DEEP=true; try{ history.replaceState(null,"",home0); }catch(e){} openWork(hw); }   /* si apre subito la scheda, senza attesa iniziale */
+
+/* TASTI INDIETRO / AVANTI DEL BROWSER (anche il tasto laterale del mouse e Alt+←): si chiude o si riapre
+   quello che corrisponde al passo della cronologia. La pagina sotto resta dov'era. */
+window.addEventListener("popstate",function(){
+  var h=location.hash, st=history.state&&history.state.tyche, hw=workOf(h);
+  if(lbEl.classList.contains("on") && st!=="lb") closeLB(true);
+  if(h==="#dietro"){
+    if(!bsEl.classList.contains("on")) openBS(true);
+    if(st==="lb" && !lbEl.classList.contains("on")) openLB(lbK,true);
+  } else if(bsEl.classList.contains("on")) closeBS(true);
+  if(hw){ if(cur!==hw || !det.classList.contains("on")) openWork(hw,true); }
+  else if(det.classList.contains("on")) closeWork(true);
+});
 
 /* ============ ATTESA E VIA ============
    1) il sito si carica (caratteri, ricami, prime copertine): circa 1 secondo, con il nome gia' visibile;

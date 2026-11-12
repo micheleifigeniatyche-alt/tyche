@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<!-- VERSIONE 25-09 leggera-75 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
+<!-- VERSIONE 25-09 leggera-78 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Michele Ifigenia / Tyche</title>
@@ -168,21 +168,15 @@ html.cvlogo .tyche-logo{visibility:hidden}
 .me-lbl{display:flex;flex-direction:column;gap:4px}
 .me-k{font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;font-weight:600;color:var(--mute)}
 .me-n{font-size:1rem;font-weight:600;letter-spacing:-.015em;line-height:1.3;border-bottom:1px solid currentColor;align-self:flex-start;transition:opacity .3s}
-.me-door:hover .kube,.me-door:focus-visible .kube{rotate:-4deg}
-.me-door:hover .me-n{opacity:.6}
 .me-door:focus-visible{outline:1px solid var(--ink);outline-offset:6px}
-@media(max-width:900px){
-.me-door{position:static;grid-column:1 / -1;flex-direction:row;align-items:center;gap:16px;margin:0 0 34px}
-.me-door .kube{width:58px;margin:0}
-}
-/* computer: pupazzetto e nome in basso a sinistra, sulla stessa riga dei contatti */
-@media(min-width:901px){
-.me-door{position:static;grid-column:1 / span 4;grid-row:1;align-self:end;flex-direction:row;align-items:flex-end;gap:14px}
-#about h2{grid-row:1;align-self:start}
-#about .about-body{grid-row:1}
-.me-door .kube{margin:0}
-.me-n{margin-bottom:6px}
-}
+/* pupazzetto in piedi sulle lettere di "Percorso e contatti", vicino al sole; il nome accanto.
+   --fw = larghezza del pupazzetto, --fs = grandezza del titolo, --ht = dove inizia il titolo: i piedi poggiano sulle lettere a ogni misura */
+#about{--fw:clamp(70px,6vw,96px);--fs:clamp(1.5rem,3.1vw,2.3rem);--ht:150px}
+.me-door{position:absolute;z-index:2;left:calc(var(--sl) + var(--sun) + 72px);top:calc(var(--ht) + var(--fs)*.27 - var(--fw)*1.05);flex-direction:row;align-items:center;gap:12px;margin:0}
+.me-door .kube{width:var(--fw);margin:0}
+.me-n{font-size:.92rem}
+/* telefono: sole, freccina e pupazzetto scendono sotto la barra in alto (che occupa circa 75 px), cosi' si vedono interi */
+@media(max-width:640px){#about{--fw:64px;--ht:198px}.me-door{left:calc(var(--sl) + var(--sun) + 62px)}}
 /* PAGINA DEL COREOGRAFO: su carta chiara come "Dietro le quinte"; pupazzetto grande a sinistra, testo a destra */
 #me{display:none;position:fixed;inset:0;z-index:86;background:var(--paper) var(--gp);background-size:240px 240px;color:var(--ink);overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
 #me.on{display:block;animation:bsIn .45s cubic-bezier(.22,.61,.36,1) both}
@@ -468,7 +462,7 @@ body.bs-open main,body.bs-open footer,body.bs-open #top-bar{visibility:hidden}
 }
 @media(max-width:640px){
 :root{--gp:none;--gb:none}
-#about{--sl:16px;--st:26px;--sun:84px}
+#about{--sl:16px;--st:94px;--sun:80px}
 #top-bar{display:grid;grid-template-columns:1fr auto;grid-template-areas:"b l" "n n";gap:0 12px;padding:8px 16px 6px;font-size:.82rem}
 .brand{grid-area:b}
 .lang{grid-area:l}
@@ -488,7 +482,7 @@ body.bs-open main,body.bs-open footer,body.bs-open #top-bar{visibility:hidden}
 .d-video{padding-left:0;padding-right:0}.d-video .lbl{margin-left:16px;margin-right:16px}.vf,.vw.r43 .vf{box-shadow:none}.vw.r43{width:100%}.d-video .vw.r43{margin-top:6px}
 .d-info.withvid .d-video{margin-left:-16px;margin-right:-16px}
 .d-info.withvid .d-video .lbl{margin-left:16px;margin-right:16px}
-#about{padding:126px 16px 48px}
+#about{padding:198px 16px 48px}
 footer{padding:0 16px 26px}
 }
 /* telefono e tablet: scorrimento libero (con inerzia), niente ingrandimenti né snap: molto piu' veloce e agile */
@@ -561,7 +555,7 @@ footer{padding:0 16px 26px}
 
 <section id="about">
   <h2 data-i="about">Percorso e contatti</h2>
-  <button class="me-door" id="me-door" type="button"><span class="kube" id="kube" aria-hidden="true"></span><span class="me-lbl"><span class="me-n">Michele Ifigenia Colturi</span></span></button>
+  <button class="me-door" id="me-door" type="button"><span class="kube" id="kube" aria-hidden="true"></span></button>
   <div class="about-body">
     <p id="bio"></p>
     <div class="links">
@@ -572,7 +566,7 @@ footer{padding:0 16px 26px}
   </div>
 </section>
 </main>
-<footer><span>Michele Ifigenia / Tyche</span></footer>
+<footer></footer>
 
 <div id="detail" role="dialog" aria-modal="true" aria-label="Scheda del lavoro">
   <div class="d-top">
@@ -629,7 +623,7 @@ footer{padding:0 16px 26px}
   <div class="lb-cap"><span id="lb-cn"></span><span id="lb-t"></span></div>
 </div><script src="photos.js"></script>
 <script>
-console.info("Tyche index: versione 25-09 leggera-75");
+console.info("Tyche index: versione 25-09 leggera-78");
 /* coda "al via": i ricami compaiono solo quando parte l'animazione iniziale (vedi ATTESA) */
 var STARTED=false, startQ=[];
 function onStart(f){ if(STARTED) f(); else startQ.push(f); }
@@ -1051,10 +1045,11 @@ var KID=(function(){
       g.push(pencilLine(hp,3.2,gr,3,.95));
     }
     g.push(pencilLine([[101,60],[99,97],[97,134]],4.2,gr,10));             /* corpo */
-    g.push(pencilLine([[100,77],[76,59],[62,27]],3.8,gr,9));              /* braccio alzato */
-    g.push(pencilLine([[100,79],[130,91],[160,83]],3.8,gr,9));            /* braccio aperto */
-    g.push(pencilLine([[97,134],[88,170],[80,206],[66,210]],4,gr,10));     /* gamba d'appoggio + piede */
-    g.push(pencilLine([[97,134],[132,160],[166,174]],4,gr,10));            /* gamba slanciata */
+    /* arti in gruppi separati, cosi' si muovono (vedi MOVIMENTO in fondo): braccio alzato = braccio + avambraccio che saluta */
+    g.push('<g class="lu">'+pencilLine([[100,77],[76,59]],3.8,gr,7)+'<g class="lf">'+pencilLine([[77,60],[62,27]],3.8,gr,7)+'</g></g>');   /* braccio alzato che saluta */
+    g.push('<g class="ro">'+pencilLine([[100,79],[130,91],[160,83]],3.8,gr,9)+'</g>');                 /* braccio aperto */
+    g.push('<g class="ls">'+pencilLine([[97,134],[88,170],[80,206],[66,210]],4,gr,10)+'</g>');         /* gamba d'appoggio + piede */
+    g.push('<g class="lk">'+pencilLine([[97,134],[132,160],[166,174]],4,gr,10)+'</g>');                /* gamba slanciata */
     out.push('<g filter="url(#pg)" fill="none" stroke-linecap="round" stroke-linejoin="round">'+g.join("")+'</g>');
     /* capelli biondi a raggi di sole: trattini di matita colorata in piu' toni, ognuno fatto di 3 passate */
     var hair=[], cols=["#e9b520","#d29a12","#f2c63a","#c88d10"];
@@ -1076,7 +1071,7 @@ var KID=(function(){
     }
     var cp=[]; for(var u=0;u<=9;u++){ var t=u/9*2*Math.PI*1.1; cp.push([FX+Math.cos(t)*2.1, FY+Math.sin(t)*2.1]); }
     fl.push(pencilLine(cp,2.4,"#f0b81c",3,1.4));
-    out.push('<g filter="url(#pg)" fill="none" stroke-linecap="round" stroke-linejoin="round">'+fl.join("")+'</g>');
+    out.push('<g class="lk"><g filter="url(#pg)" fill="none" stroke-linecap="round" stroke-linejoin="round">'+fl.join("")+'</g></g>');   /* il fiore segue la gamba */
     /* occhi azzurri: due trattini di matita azzurra */
     out.push('<g filter="url(#pg)" fill="none" stroke-linecap="round">'+pencilLine([[94.4,41.2],[96.6,41.6]],3,"#2f7fe0",4,1.5)+pencilLine([[105.3,41.5],[107.5,41.1]],3,"#2f7fe0",4,1.5)+'</g>');
     var pg='<filter id="pg" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">'
@@ -1085,7 +1080,24 @@ var KID=(function(){
       +'<feComposite in="SourceGraphic" in2="m" operator="in" result="gr"/>'
       +'<feTurbulence type="fractalNoise" baseFrequency=".045" numOctaves="2" seed="62" result="w"/>'
       +'<feDisplacementMap in="gr" in2="w" scale="1.3" xChannelSelector="R" yChannelSelector="G"/></filter>';
-    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 220"><defs>'+pg+'</defs>'+out.join("")+'</svg>';
+    /* MOVIMENTO continuo e leggero (animazione dentro il disegno, nessuno script): l'avambraccio saluta dal gomito,
+       il braccio alzato e quello aperto ondeggiano dalla spalla, la gamba slanciata (con il fiore) dall'anca,
+       la gamba d'appoggio quasi ferma cosi' il piede resta sulle lettere. Chi ha chiesto meno movimento nel sistema lo vede fermo. */
+    var mv='<style>'
+      +'.lu,.lf,.ro,.ls,.lk{transform-box:view-box;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-direction:alternate}'
+      +'.lu{transform-origin:100px 77px;animation-name:lu;animation-duration:1.6s}'
+      +'.lf{transform-origin:77px 60px;animation-name:lf;animation-duration:.42s}'
+      +'.ro{transform-origin:100px 79px;animation-name:ro;animation-duration:2.3s}'
+      +'.ls{transform-origin:97px 134px;animation-name:ls;animation-duration:2.9s}'
+      +'.lk{transform-origin:97px 134px;animation-name:lk;animation-duration:2.6s}'
+      +'@keyframes lu{from{transform:rotate(-5deg)}to{transform:rotate(6deg)}}'
+      +'@keyframes lf{from{transform:rotate(-16deg)}to{transform:rotate(14deg)}}'
+      +'@keyframes ro{from{transform:rotate(-6deg)}to{transform:rotate(7deg)}}'
+      +'@keyframes ls{from{transform:rotate(-1.4deg)}to{transform:rotate(1.4deg)}}'
+      +'@keyframes lk{from{transform:rotate(-7deg)}to{transform:rotate(5deg)}}'
+      +'@media(prefers-reduced-motion:reduce){.lu,.lf,.ro,.ls,.lk{animation:none}}'
+      +'</style>';
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 220"><defs>'+pg+'</defs>'+mv+out.join("")+'</svg>';
   }
   return {flower:flower,sun:sun,cube:cube,figure:figure};
 })();

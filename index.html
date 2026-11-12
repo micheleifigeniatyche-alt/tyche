@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<!-- VERSIONE 25-09 leggera-85 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
+<!-- VERSIONE 25-09 leggera-88 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Michele Ifigenia / Tyche</title>
@@ -176,8 +176,8 @@ html.cvlogo .tyche-logo{visibility:hidden}
 .me-door .kube{width:var(--fw);margin:0}
 .me-n{font-size:.92rem}
 /* telefono: sole, freccina e pupazzetto scendono sotto la barra in alto (che occupa circa 75 px), cosi' si vedono interi */
-/* telefono: il pupazzetto sta in fondo alla pagina, in piedi accanto ai due fiori (lo sposta lo script, vedi PUPAZZETTO IN FONDO) */
-@media(max-width:640px){footer .me-door{position:absolute;left:auto;top:auto;right:33%;bottom:-5px;z-index:2}footer .me-door .kube{width:80px}#about{padding-top:184px}}
+/* telefono: il pupazzetto sta in fondo alla pagina, in basso a sinistra (i fiori restano a destra) (lo sposta lo script, vedi PUPAZZETTO IN FONDO) */
+@media(max-width:640px){footer .me-door{position:absolute;left:16px;top:auto;right:auto;bottom:-5px;z-index:2}footer .me-door .kube{width:80px}#about{padding-top:184px}}
 @media(max-width:640px){#about{--fw:84px;--ht:198px}.me-door{left:calc(var(--sl) + var(--sun) + 62px)}}
 /* PAGINA DEL COREOGRAFO: su carta chiara come "Dietro le quinte"; pupazzetto grande a sinistra, testo a destra */
 #me{display:none;position:fixed;inset:0;z-index:86;background:var(--paper) var(--gp);background-size:240px 240px;color:var(--ink);overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
@@ -186,15 +186,15 @@ html.cvlogo .tyche-logo{visibility:hidden}
 #me .d-top{background:var(--paper) var(--gp);background-size:240px 240px;color:var(--ink)}
 .me-wrap{max-width:1320px;margin:0 auto;padding:64px 24px 90px;display:grid;grid-template-columns:repeat(12,1fr);gap:0 24px;align-items:start}
 /* nella pagina del coreografo il pupazzetto sta fermo; toccandolo si torna fuori (come il fiorellino azzurro di "Dietro le quinte") */
-.me-fig{grid-column:1 / span 4;width:clamp(150px,16vw,240px);aspect-ratio:200/220;cursor:pointer;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;user-select:none}
+.me-fig{grid-column:1 / span 4;width:clamp(124px,13vw,196px);aspect-ratio:200/220;cursor:pointer;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;user-select:none}
 .me-fig:focus-visible{outline:1px solid var(--ink);outline-offset:6px}
 .me-fig img{display:block;width:100%;height:100%;pointer-events:none;-webkit-user-drag:none}
 .me-txt{grid-column:5 / span 7}
 .me-txt .me-k{display:block;margin:0 0 8px}
-.me-txt h1{margin:0 0 34px;font-size:clamp(1.8rem,3.6vw,3rem);font-weight:600;letter-spacing:-.045em;line-height:1}
-.me-txt p{margin:0 0 18px;font-size:1rem;line-height:1.6;max-width:62ch}
+.me-txt h1{margin:0 0 30px;font-size:clamp(1.55rem,3vw,2.5rem);font-weight:600;letter-spacing:-.045em;line-height:1}
+.me-txt p{margin:0 0 16px;font-size:.92rem;line-height:1.6;max-width:62ch}
 .me-txt i{font-style:italic}
-@media(max-width:900px){.me-fig{grid-column:1 / -1;width:120px;margin-bottom:28px}.me-txt{grid-column:1 / -1}}
+@media(max-width:900px){.me-fig{grid-column:1 / -1;width:100px;margin-bottom:28px}.me-txt{grid-column:1 / -1}}
 @media(max-width:640px){.me-wrap{padding:36px 16px 70px}}
 @media(prefers-reduced-motion:reduce){.kube{transition:none}#me.on{animation:none!important}}
 footer{position:relative;overflow:hidden;min-height:210px;align-content:flex-start;padding:0 24px 34px;font-size:.8rem;color:var(--mute);font-weight:600;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
@@ -627,7 +627,7 @@ footer{padding:0 16px 26px}
   <div class="lb-cap"><span id="lb-cn"></span><span id="lb-t"></span></div>
 </div><script src="photos.js"></script>
 <script>
-console.info("Tyche index: versione 25-09 leggera-85");
+console.info("Tyche index: versione 25-09 leggera-88");
 /* coda "al via": i ricami compaiono solo quando parte l'animazione iniziale (vedi ATTESA) */
 var STARTED=false, startQ=[];
 function onStart(f){ if(STARTED) f(); else startQ.push(f); }
@@ -1106,11 +1106,11 @@ var KID=(function(){
        Chi ha chiesto meno movimento nel sistema lo vede fermo. */
     var mv=(opt&&opt.anim)?'<style>'
       +'.figa .lu,.figa .lf,.figa .ro,.figa .ls,.figa .lk{transform-box:view-box;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-direction:alternate}'
-      +'.figa .lu{transform-origin:100px 77px;animation-name:fg-lu;animation-duration:5.4s}'
-      +'.figa .lf{transform-origin:77px 60px;animation-name:fg-lf;animation-duration:1.42s}'
-      +'.figa .ro{transform-origin:100px 79px;animation-name:fg-ro;animation-duration:7.76s}'
-      +'.figa .ls{transform-origin:97px 134px;animation-name:fg-ls;animation-duration:9.8s}'
-      +'.figa .lk{transform-origin:97px 134px;animation-name:fg-lk;animation-duration:8.78s}'
+      +'.figa .lu{transform-origin:100px 77px;animation-name:fg-lu;animation-duration:4.6s}'
+      +'.figa .lf{transform-origin:77px 60px;animation-name:fg-lf;animation-duration:1.2s}'
+      +'.figa .ro{transform-origin:100px 79px;animation-name:fg-ro;animation-duration:6.6s}'
+      +'.figa .ls{transform-origin:97px 134px;animation-name:fg-ls;animation-duration:8.3s}'
+      +'.figa .lk{transform-origin:97px 134px;animation-name:fg-lk;animation-duration:7.46s}'
       +'@keyframes fg-lu{from{transform:rotate(-5deg)}to{transform:rotate(6deg)}}'
       +'@keyframes fg-lf{from{transform:rotate(-16deg)}to{transform:rotate(14deg)}}'
       +'@keyframes fg-ro{from{transform:rotate(-6deg)}to{transform:rotate(7deg)}}'

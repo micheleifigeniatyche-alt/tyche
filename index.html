@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<!-- VERSIONE 25-09 leggera-75 PROVA (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
+<!-- VERSIONE 25-09 leggera-75 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Michele Ifigenia / Tyche</title>
@@ -164,7 +164,7 @@ html.cvlogo .tyche-logo{visibility:hidden}
 .kube.on{opacity:1}
 .kube img{display:block;width:100%;height:100%;pointer-events:none}
 .me-door{position:absolute;left:calc(var(--sl) + 6px);top:calc(150px + clamp(1.5rem,3.1vw,2.3rem) + 56px);display:flex;flex-direction:column;align-items:flex-start;text-align:left;color:var(--ink);-webkit-tap-highlight-color:transparent}
-.me-door .kube{width:clamp(110px,10vw,160px);aspect-ratio:200/220;margin-bottom:10px}
+.me-door .kube{width:clamp(76px,6.6vw,104px);aspect-ratio:200/220;margin-bottom:10px}
 .me-lbl{display:flex;flex-direction:column;gap:4px}
 .me-k{font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;font-weight:600;color:var(--mute)}
 .me-n{font-size:1rem;font-weight:600;letter-spacing:-.015em;line-height:1.3;border-bottom:1px solid currentColor;align-self:flex-start;transition:opacity .3s}
@@ -173,7 +173,15 @@ html.cvlogo .tyche-logo{visibility:hidden}
 .me-door:focus-visible{outline:1px solid var(--ink);outline-offset:6px}
 @media(max-width:900px){
 .me-door{position:static;grid-column:1 / -1;flex-direction:row;align-items:center;gap:16px;margin:0 0 34px}
-.me-door .kube{width:72px;margin:0}
+.me-door .kube{width:58px;margin:0}
+}
+/* computer: pupazzetto e nome in basso a sinistra, sulla stessa riga dei contatti */
+@media(min-width:901px){
+.me-door{position:static;grid-column:1 / span 4;grid-row:1;align-self:end;flex-direction:row;align-items:flex-end;gap:14px}
+#about h2{grid-row:1;align-self:start}
+#about .about-body{grid-row:1}
+.me-door .kube{margin:0}
+.me-n{margin-bottom:6px}
 }
 /* PAGINA DEL COREOGRAFO: su carta chiara come "Dietro le quinte"; pupazzetto grande a sinistra, testo a destra */
 #me{display:none;position:fixed;inset:0;z-index:86;background:var(--paper) var(--gp);background-size:240px 240px;color:var(--ink);overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
@@ -621,7 +629,7 @@ footer{padding:0 16px 26px}
   <div class="lb-cap"><span id="lb-cn"></span><span id="lb-t"></span></div>
 </div><script src="photos.js"></script>
 <script>
-console.info("Tyche index: versione 25-09 leggera-75 PROVA");
+console.info("Tyche index: versione 25-09 leggera-75");
 /* coda "al via": i ricami compaiono solo quando parte l'animazione iniziale (vedi ATTESA) */
 var STARTED=false, startQ=[];
 function onStart(f){ if(STARTED) f(); else startQ.push(f); }
@@ -1002,46 +1010,82 @@ var KID=(function(){
     out.push(pencil(R,poly([T,Rr,B,Lf]),[28,28,172,100],"#6e6d6a","#2c2c2e",.2,"#1a1a1b"));
     return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><defs>'+filters(21)+'</defs>'+out.join("")+'</svg>';
   }
-  /* pupazzetto a matita (un danzatore): ogni linea e' fatta di piu' passate sottili di grafite, ognuna con pressione e
-     percorso appena diversi, come un disegno vero; testa vuota, capelli corti biondi a tratti di matita colorata, occhi azzurri a puntino */
+  /* pupazzetto a matita (un danzatore), disegnato come con una matita vera:
+     ogni linea e' fatta di tante passate sottilissime di grafite, leggermente scostate e piu' corte alle estremita'
+     (dove la matita si appoggia e si stacca il segno e' piu' leggero); sopra c'e' la grana della carta (filtro "pg"),
+     che lascia piccoli vuoti dentro il tratto come sulla carta ruvida. Tutto vettoriale: nitido anche ingrandito.
+     Testa vuota, capelli corti biondi a matita colorata, occhi azzurri a due trattini. */
   function figure(){
-    var R=rng(53), out=[], gr="#2a2a2b";
-    function pass(pts,amp){
-      var q=pts.map(function(p){ return [p[0]+(R()-.5)*amp, p[1]+(R()-.5)*amp]; }), d="M"+f(q[0][0])+" "+f(q[0][1]);
-      for(var i=1;i<q.length;i++){ var a=q[i-1], b=q[i]; d+=" Q"+f((a[0]+b[0])/2+(R()-.5)*4)+" "+f((a[1]+b[1])/2+(R()-.5)*4)+" "+f(b[0])+" "+f(b[1]); }
-      return d;
-    }
-    function seg(pts,w){
-      var o="";
-      for(var k=0;k<4;k++) o+='<path d="'+pass(pts,k?2.2:1)+'" stroke-width="'+f(w*(.32+R()*.3))+'" opacity="'+(.3+R()*.45).toFixed(2)+'"/>';
+    var R=rng(53), out=[];
+    /* punti fitti lungo la linea che passa per i punti dati, con una leggera curvatura casuale per ogni tratto */
+    function dense(P){
+      var o=[];
+      for(var i=1;i<P.length;i++){
+        var a=P[i-1], b=P[i], dx=b[0]-a[0], dy=b[1]-a[1], L=Math.hypot(dx,dy)||1, bow=(R()-.5)*L*.06;
+        var cx=(a[0]+b[0])/2-dy/L*bow, cy=(a[1]+b[1])/2+dx/L*bow, n=Math.max(6,Math.round(L/2.5));
+        for(var k=(i>1?1:0);k<=n;k++){ var t=k/n, u=1-t; o.push([u*u*a[0]+2*u*t*cx+t*t*b[0], u*u*a[1]+2*u*t*cy+t*t*b[1]]); }
+      }
       return o;
     }
-    /* testa: cerchio a mano libera, tre giri sottili che non combaciano del tutto */
-    var CX=101, CY=40, head="";
+    /* una linea a matita: "passes" passate sottili, ognuna spostata di poco, con un'ondulazione lenta, accorciata a caso ai due capi */
+    function pencilLine(P,w,col,passes,op){
+      var D=dense(P), N=D.length, o="";
+      for(var p=0;p<passes;p++){
+        var off=((R()+R())/2-.5)*w*.85, ph=R()*6.3, fq=.15+R()*.25, s0=Math.floor(R()*N*.08), e0=N-1-Math.floor(R()*N*.08), pts=[];
+        for(var i=s0;i<=e0;i++){
+          var pa=D[Math.max(0,i-1)], pb=D[Math.min(N-1,i+1)], tx=pb[0]-pa[0], ty=pb[1]-pa[1], tl=Math.hypot(tx,ty)||1;
+          var d=off+Math.sin(i*fq+ph)*w*.18+(R()-.5)*.25;
+          pts.push(f(D[i][0]-ty/tl*d)+" "+f(D[i][1]+tx/tl*d));
+        }
+        if(pts.length<2) continue;
+        o+='<path d="M'+pts.join(" L")+'" stroke="'+col+'" stroke-width="'+f(w*(.2+R()*.18))+'" opacity="'+Math.min(.97,(op||1)*(.55+R()*.4)).toFixed(2)+'"/>';
+      }
+      return o;
+    }
+    var gr="#0c0c0d", g=[];
+    /* testa: tre giri a mano libera che non combaciano */
+    var CX=101, CY=40;
     for(var k=0;k<3;k++){
-      var pts=[], st=-2+R()*.6, n=14, rr=17.5+(R()-.5)*1.6;
-      for(var i=0;i<=n;i++){ var an=st+i/n*2*Math.PI*(1.04+R()*.06); pts.push([CX+Math.cos(an)*rr*(1+(R()-.5)*.06), CY+Math.sin(an)*rr*1.08*(1+(R()-.5)*.06)]); }
-      var d="M"+f(pts[0][0])+" "+f(pts[0][1]); for(i=1;i<pts.length;i++) d+=" L"+f(pts[i][0])+" "+f(pts[i][1]);
-      head+='<path d="'+d+'" stroke-width="'+f(1.1+R()*.8)+'" opacity="'+(.4+R()*.4).toFixed(2)+'"/>';
+      var hp=[], st=-2+R()*.7, n=18, rr=17.5+(R()-.5)*1.4;
+      for(var i=0;i<=n;i++){ var an=st+i/n*2*Math.PI*(1.03+R()*.07); hp.push([CX+Math.cos(an)*rr*(1+(R()-.5)*.05), CY+Math.sin(an)*rr*1.08*(1+(R()-.5)*.05)]); }
+      g.push(pencilLine(hp,3.2,gr,3,.95));
     }
-    out.push('<g filter="url(#mk)" fill="none" stroke="'+gr+'" stroke-linecap="round" stroke-linejoin="round">'+head
-      +seg([[101,60],[99,97],[97,134]],3.6)                       /* corpo */
-      +seg([[100,77],[76,59],[62,27]],3.2)                        /* braccio alzato */
-      +seg([[100,79],[130,91],[160,83]],3.2)                      /* braccio aperto */
-      +seg([[97,134],[88,170],[80,206],[66,210]],3.4)             /* gamba d'appoggio + piede */
-      +seg([[97,134],[132,160],[166,174]],3.4)                    /* gamba slanciata */
-      +'</g>');
-    /* capelli corti biondi: tanti trattini di matita gialla sulla parte alta della testa */
-    var hair=[], cols=["#f2c230","#e0a91c","#f7d04a","#d49a14"];
-    for(var j=0;j<22;j++){
-      var an=Math.PI*(1.08+j/21*.84)+(R()-.5)*.12, r0=13+R()*4, r1=r0+5+R()*5, bend=(R()-.5)*3;
-      var x0=CX+Math.cos(an)*r0, y0=CY+Math.sin(an)*r0*1.08, x1=CX+Math.cos(an+.12)*r1, y1=CY+Math.sin(an+.12)*r1*1.08;
-      hair.push('<path d="M'+f(x0)+' '+f(y0)+' Q'+f((x0+x1)/2-Math.sin(an)*bend)+' '+f((y0+y1)/2+Math.cos(an)*bend)+' '+f(x1)+' '+f(y1)+'" stroke="'+cols[j%4]+'" stroke-width="'+f(1.3+R()*1.1)+'" opacity="'+(.65+R()*.3).toFixed(2)+'"/>');
+    g.push(pencilLine([[101,60],[99,97],[97,134]],4.2,gr,10));             /* corpo */
+    g.push(pencilLine([[100,77],[76,59],[62,27]],3.8,gr,9));              /* braccio alzato */
+    g.push(pencilLine([[100,79],[130,91],[160,83]],3.8,gr,9));            /* braccio aperto */
+    g.push(pencilLine([[97,134],[88,170],[80,206],[66,210]],4,gr,10));     /* gamba d'appoggio + piede */
+    g.push(pencilLine([[97,134],[132,160],[166,174]],4,gr,10));            /* gamba slanciata */
+    out.push('<g filter="url(#pg)" fill="none" stroke-linecap="round" stroke-linejoin="round">'+g.join("")+'</g>');
+    /* capelli biondi a raggi di sole: trattini di matita colorata in piu' toni, ognuno fatto di 3 passate */
+    var hair=[], cols=["#e9b520","#d29a12","#f2c63a","#c88d10"];
+    for(var j=0;j<30;j++){   /* raggi tutto intorno al viso, come un sole; libero solo sotto il mento (collo) */
+      var an=Math.PI*(.63+j/29*1.74)+(R()-.5)*.08, r0=20.5+R()*2, r1=r0+(j%2?5:9)+R()*3;
+      var x0=CX+Math.cos(an)*r0, y0=CY+Math.sin(an)*r0*1.08, x1=CX+Math.cos(an)*r1, y1=CY+Math.sin(an)*r1*1.08;
+      hair.push(pencilLine([[x0,y0],[x1,y1]],2.6,cols[j%4],3,1.25));
     }
-    out.push('<g filter="url(#mk)" fill="none" stroke-linecap="round">'+hair.join("")+'</g>');
-    /* occhi azzurri: due puntini appena allungati */
-    out.push('<g filter="url(#sm)" stroke="#2f7fe0" stroke-linecap="round" fill="none"><path d="M94.6 41.2 L96.4 41.6" stroke-width="2.6"/><path d="M105.4 41.4 L107.2 41.1" stroke-width="2.6"/></g>');
-    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 220"><defs>'+filters(33)+'</defs>'+out.join("")+'</svg>';
+    out.push('<g filter="url(#pg)" fill="none" stroke-linecap="round">'+hair.join("")+'</g>');
+    /* fiorellino sul piede slanciato: gambo cortissimo verde, cinque petali rossi a matita (contorno + tratteggio), centro giallo */
+    var FX=172, FY=165, fl=[];
+    fl.push(pencilLine([[166.5,173.5],[169,169.5],[FX,FY+1]],2.4,"#1f8a4c",3,1.3));
+    var a0=R()*6.3;
+    for(var q=0;q<5;q++){
+      var pa=a0+q/5*2*Math.PI+(R()-.5)*.2, pcx=FX+Math.cos(pa)*5.2, pcy=FY+Math.sin(pa)*5.2, lp=[];
+      for(var u=0;u<=10;u++){ var t=u/10*2*Math.PI*1.08, ex=Math.cos(t)*4.4, ey=Math.sin(t)*2.9; lp.push([pcx+ex*Math.cos(pa)-ey*Math.sin(pa), pcy+ex*Math.sin(pa)+ey*Math.cos(pa)]); }
+      fl.push(pencilLine(lp,1.9,"#d4231a",3,1.3));
+      fl.push(pencilLine([[pcx-Math.cos(pa)*2.6,pcy-Math.sin(pa)*2.6],[pcx+Math.cos(pa)*3,pcy+Math.sin(pa)*3]],3.4,"#ea3a24",3,.9));
+    }
+    var cp=[]; for(var u=0;u<=9;u++){ var t=u/9*2*Math.PI*1.1; cp.push([FX+Math.cos(t)*2.1, FY+Math.sin(t)*2.1]); }
+    fl.push(pencilLine(cp,2.4,"#f0b81c",3,1.4));
+    out.push('<g filter="url(#pg)" fill="none" stroke-linecap="round" stroke-linejoin="round">'+fl.join("")+'</g>');
+    /* occhi azzurri: due trattini di matita azzurra */
+    out.push('<g filter="url(#pg)" fill="none" stroke-linecap="round">'+pencilLine([[94.4,41.2],[96.6,41.6]],3,"#2f7fe0",4,1.5)+pencilLine([[105.3,41.5],[107.5,41.1]],3,"#2f7fe0",4,1.5)+'</g>');
+    var pg='<filter id="pg" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">'
+      +'<feTurbulence type="fractalNoise" baseFrequency="1.15" numOctaves="2" seed="61" result="n"/>'
+      +'<feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -2 0 0 0 1.85" result="m"/>'
+      +'<feComposite in="SourceGraphic" in2="m" operator="in" result="gr"/>'
+      +'<feTurbulence type="fractalNoise" baseFrequency=".045" numOctaves="2" seed="62" result="w"/>'
+      +'<feDisplacementMap in="gr" in2="w" scale="1.3" xChannelSelector="R" yChannelSelector="G"/></filter>';
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 220"><defs>'+pg+'</defs>'+out.join("")+'</svg>';
   }
   return {flower:flower,sun:sun,cube:cube,figure:figure};
 })();
@@ -1122,7 +1166,7 @@ var KID=(function(){
   }
   /* sole, in "Percorso e contatti" (in alto a sinistra); come i fiori del footer si costruisce con largo anticipo (1600 px prima), cosi' quando ci arrivi e' gia' li' */
   var abt=document.getElementById("about");
-  var kb=document.getElementById("kube"); if(kb){ FQ.push(function(){ put(kb,KID.figure,false,"figure2"); }); }
+  var kb=document.getElementById("kube"); if(kb){ FQ.push(function(){ put(kb,KID.figure,false,""); }); }
   if(abt){ var sun=document.createElement("div"); sun.className="sun"; abt.appendChild(sun); FQ.push(function(){ put(sun,KID.sun,false,"sun"); }); }
   /* freccia-suggerimento accanto al sole (vedi .bs-hint): si traccia fotogramma per fotogramma con la stessa curva del logo,
      quando la freccia stessa e' ben dentro lo schermo; si ridisegna a ogni visita (sparisce solo dopo aver aperto "Dietro le quinte") */

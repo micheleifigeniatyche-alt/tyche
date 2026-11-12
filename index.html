@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<!-- VERSIONE 25-09 leggera-73 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
+<!-- VERSIONE 25-09 leggera-74 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Michele Ifigenia / Tyche</title>
@@ -472,7 +472,7 @@ footer{padding:0 16px 26px}
     <a href="#collaborazioni" data-i="nav_collab">Collaborazioni</a>
     <a href="#about" data-i="nav_about">Percorso e contatti</a>
   </nav>
-  <div class="lang" role="group" aria-label="Lingua"><button data-l="it">IT</button> / <button data-l="en">EN</button></div>
+  <div class="lang" role="group" aria-label="Lingua"><button data-l="it">IT</button> / <button data-l="en">EN</button> / <button data-l="fr">FR</button></div>
 </header>
 
 <main>
@@ -536,7 +536,7 @@ footer{padding:0 16px 26px}
   <div class="d-top">
     <button id="d-back" data-i="back">← Indietro</button>
     <span id="d-count"></span>
-    <div class="lang"><button data-l="it">IT</button> / <button data-l="en">EN</button></div>
+    <div class="lang"><button data-l="it">IT</button> / <button data-l="en">EN</button> / <button data-l="fr">FR</button></div>
     <div class="d-nav"><button id="d-prev" aria-label="Precedente">←</button><button id="d-next" aria-label="Successivo">→</button></div>
   </div>
   <div class="d-body">
@@ -560,7 +560,7 @@ footer{padding:0 16px 26px}
   <div class="d-top">
     <button id="bs-back" data-i="back">← Indietro</button>
     <span id="bs-count"></span>
-    <div class="lang"><button data-l="it">IT</button> / <button data-l="en">EN</button></div>
+    <div class="lang"><button data-l="it">IT</button> / <button data-l="en">EN</button> / <button data-l="fr">FR</button></div>
   </div>
   <div class="bs-head"><span class="d-kicker" id="bs-k"></span><h1 id="bs-h"></h1><p class="bs-intro" id="bs-intro"></p></div>
   <div class="bs-edge"><span id="bs-span"></span></div>
@@ -577,21 +577,24 @@ footer{padding:0 16px 26px}
   <div class="lb-cap"><span id="lb-cn"></span><span id="lb-t"></span></div>
 </div><script src="photos.js"></script>
 <script>
-console.info("Tyche index: versione 25-09 leggera-73");
+console.info("Tyche index: versione 25-09 leggera-74");
 /* coda "al via": i ricami compaiono solo quando parte l'animazione iniziale (vedi ATTESA) */
 var STARTED=false, startQ=[];
 function onStart(f){ if(STARTED) f(); else startQ.push(f); }
 /* ============ TESTI ============ */
 var UI={
  it:{nav_works:"Lavori",nav_collab:"Collaborazioni",nav_about:"Percorso e contatti",works:"Lavori",collab:"Collaborazioni",about:"Percorso e contatti",f_perf:"Performance",f_short:"Short Film",scroll:"Scorri",back:"← Indietro",next:"Prossimo",video:"Video",teaser:"Teaser",shortfilm:"Cortometraggio",path:"Percorso",bs_link:"Dietro le quinte",bs_t:"Dietro le quinte",bs_intro:"",bs_n:"fotogrammi",watch:"Guarda il teaser",foot:"Coreografia · Performance · Short film",works_n:"lavori",work_1:"lavoro"},
- en:{nav_works:"Works",nav_collab:"Collaborations",nav_about:"About & contact",works:"Works",collab:"Collaborations",about:"About & contact",f_perf:"Performance",f_short:"Short Film",scroll:"Scroll",back:"← Back",next:"Next",video:"Video",teaser:"Teaser",shortfilm:"Short Film",path:"Journey",bs_link:"Behind the scenes",bs_t:"Behind the scenes",bs_intro:"",bs_n:"frames",watch:"Watch the teaser",foot:"Choreography · Performance · Short film",works_n:"works",work_1:"work"}
+ en:{nav_works:"Works",nav_collab:"Collaborations",nav_about:"About & contact",works:"Works",collab:"Collaborations",about:"About & contact",f_perf:"Performance",f_short:"Short Film",scroll:"Scroll",back:"← Back",next:"Next",video:"Video",teaser:"Teaser",shortfilm:"Short Film",path:"Journey",bs_link:"Behind the scenes",bs_t:"Behind the scenes",bs_intro:"",bs_n:"frames",watch:"Watch the teaser",foot:"Choreography · Performance · Short film",works_n:"works",work_1:"work"},
+ fr:{nav_works:"Créations",nav_collab:"Collaborations",nav_about:"Parcours et contact",works:"Créations",collab:"Collaborations",about:"Parcours et contact",f_perf:"Performance",f_short:"Court métrage",scroll:"Défiler",back:"← Retour",next:"Suivant",video:"Vidéo",teaser:"Teaser",shortfilm:"Court métrage",path:"Parcours",bs_link:"Coulisses",bs_t:"Coulisses",bs_intro:"",bs_n:"images",watch:"Voir le teaser",foot:"Chorégraphie · Performance · Court métrage",works_n:"créations",work_1:"création"}
 };
 var BIO={
  it:"Michele Ifigenia / Tyche è un gruppo di ricerca coreografica fondato e diretto da Michele Ifigenia Colturi, nato all’interno della Civica Scuola di Teatro Paolo Grassi di Milano e della Scuola Conia di Claudia Castellucci. Riunisce interpreti, drammaturghi, musicisti e artisti di diverse discipline in un organismo che sostiene e sviluppa la visione di Colturi. La ricerca, di natura profondamente visiva, esplora il corpo come materia plastica, un campo scultoreo modellato da luce e suono: elementi che ridefiniscono lo spazio e trasformano il gesto in immagine. Al centro della poetica c’è il mito, inteso non come narrazione chiusa ma come matrice fluida e generativa, da cui emergono figure e simboli in costante metamorfosi. Le creazioni prendono forma tanto in spazi teatrali quanto in contesti non convenzionali, intrecciando linguaggi visivi, sonori e corporei. Il gruppo è artista associato di Ariella Vidach / AiEP.",
- en:"Michele Ifigenia / Tyche is a choreographic research group founded and directed by Michele Ifigenia Colturi, born within the Civica Scuola di Teatro Paolo Grassi in Milan and Claudia Castellucci’s Scuola Conia. It brings together performers, dramaturgs, musicians and artists from different disciplines in an organism that supports and develops Colturi’s vision. The research, profoundly visual in nature, explores the body as plastic matter, a sculptural field shaped by light and sound: elements that redefine space and turn gesture into image. At the heart of the poetics is myth, understood not as a closed narrative but as a fluid, generative matrix from which figures and symbols emerge in constant metamorphosis. The creations take shape both in theatrical spaces and in unconventional contexts, interweaving visual, sonic and bodily languages. The group is an associated artist of Ariella Vidach / AiEP."
+ en:"Michele Ifigenia / Tyche is a choreographic research group founded and directed by Michele Ifigenia Colturi, born within the Civica Scuola di Teatro Paolo Grassi in Milan and Claudia Castellucci’s Scuola Conia. It brings together performers, dramaturgs, musicians and artists from different disciplines in an organism that supports and develops Colturi’s vision. The research, profoundly visual in nature, explores the body as plastic matter, a sculptural field shaped by light and sound: elements that redefine space and turn gesture into image. At the heart of the poetics is myth, understood not as a closed narrative but as a fluid, generative matrix from which figures and symbols emerge in constant metamorphosis. The creations take shape both in theatrical spaces and in unconventional contexts, interweaving visual, sonic and bodily languages. The group is an associated artist of Ariella Vidach / AiEP.",
+ fr:"Michele Ifigenia / Tyche est un groupe de recherche chorégraphique fondé et dirigé par Michele Ifigenia Colturi, né au sein de la Civica Scuola di Teatro Paolo Grassi de Milan et de la Scuola Conia de Claudia Castellucci. Il réunit des interprètes, dramaturges, musiciens et artistes de différentes disciplines au sein d’un organisme qui soutient et développe la vision de Colturi. La recherche, de nature profondément visuelle, explore le corps comme matière plastique, un champ sculptural modelé par la lumière et le son : des éléments qui redéfinissent l’espace et transforment le geste en image. Au cœur de la poétique se trouve le mythe, entendu non comme un récit clos mais comme une matrice fluide et générative, d’où émergent des figures et des symboles en constante métamorphose. Les créations prennent forme aussi bien dans des espaces théâtraux que dans des contextes non conventionnels, entrelaçant langages visuels, sonores et corporels. Le groupe est artiste associé d’Ariella Vidach / AiEP."
 };
 var RM={"Autore / Coreografo":"Author / Choreographer","Autore":"Author","Dramaturg":"Dramaturg","Performers":"Performers","Suono":"Sound","Produzione":"Production","Danzatrice":"Dancer","Musiche":"Music","Musica":"Music","Filmmaker":"Filmmaker","Co-produzione":"Co-production","Coproduzione":"Co-production","Ideazione e coreografia":"Concept and choreography","Interpretazione":"Performance","Scenografia":"Scenography","Con il sostegno di":"With the support of","Ricerca artistica":"Artistic research","Filmmaking":"Filmmaking","Di":"By","Interpreti":"Performers","Disegno luci":"Lighting design","Costumi":"Costumes","Progetto vincitore di":"Winner of","Movimentatrice di scena":"Stage mover","Interprete":"Performer"};
-function X(it,en){ return {it:it,en:en}; }
+var RMF={"Autore / Coreografo":"Auteur / Chorégraphe","Autore":"Auteur","Dramaturg":"Dramaturgie","Performers":"Interprètes","Suono":"Son","Produzione":"Production","Danzatrice":"Danseuse","Musiche":"Musique","Musica":"Musique","Filmmaker":"Réalisation","Co-produzione":"Coproduction","Coproduzione":"Coproduction","Ideazione e coreografia":"Conception et chorégraphie","Interpretazione":"Interprétation","Scenografia":"Scénographie","Con il sostegno di":"Avec le soutien de","Ricerca artistica":"Recherche artistique","Filmmaking":"Réalisation","Di":"De","Interpreti":"Interprètes","Disegno luci":"Création lumière","Costumi":"Costumes","Progetto vincitore di":"Lauréat de","Movimentatrice di scena":"Régie plateau","Interprete":"Interprète","2D/3D Artist":"Artiste 2D/3D"};   /* ruoli in francese */
+function X(it,en,fr){ return {it:it,en:en,fr:fr}; }
 
 /* ============ LAVORI ============
    cover = foto grande in cima alla scheda. extra = le altre foto, sotto i testi in galleria pulita.
@@ -606,79 +609,73 @@ function X(it,en){ return {it:it,en:en}; }
    video: un file nella cartella video (es. video:"video/cumateaser.mp4") oppure un link YouTube/Vimeo incorporabile. */
 var WORKS=[
  {cat:"perf",title:"Amadriadi",cover:"2025amadriadi.png",extra:["bolognaamadriadi.jpg","amadriadi.png"],video:"video/amadriaditeaser.mp4",videoRatio:4/3,
-  tag:X("Performance","Performance"),dur:X("15 minuti","15 minutes"),
-  desc:X("Un’evocazione visiva si intreccia allo spazio urbano contemporaneo: la figura delle Amadriadi diventa un espediente per offrire allo spettatore un momento di sospensione. Le Amadriadi, creature mitologiche indissolubilmente legate agli alberi, vivono e muoiono con essi. Tra il verde emerge così un corpo capace di ondeggiare al vento, di radicarsi, di trasfigurarsi, portando con sé un fascino antico eppure sorprendentemente presente. Forse è proprio in questa apparizione, in questa possibilità di metamorfosi, che si rinnova continuamente la relazione tra l’uomo e la natura.",
-   "A visual evocation weaves into contemporary urban space: the figure of the Hamadryads becomes a device to offer the viewer a moment of suspension. The Hamadryads, mythological creatures inseparably bound to trees, live and die with them. Among the green emerges a body able to sway in the wind, to take root, to transfigure itself, carrying an ancient yet surprisingly present charm. Perhaps it is precisely in this apparition, in this possibility of metamorphosis, that the relationship between humans and nature is continually renewed."),
+  tag:X("Performance","Performance","Performance"),dur:X("15 minuti","15 minutes","15 minutes"),
+  desc:X("Un’evocazione visiva si intreccia allo spazio urbano contemporaneo: la figura delle Amadriadi diventa un espediente per offrire allo spettatore un momento di sospensione. Le Amadriadi, creature mitologiche indissolubilmente legate agli alberi, vivono e muoiono con essi. Tra il verde emerge così un corpo capace di ondeggiare al vento, di radicarsi, di trasfigurarsi, portando con sé un fascino antico eppure sorprendentemente presente. Forse è proprio in questa apparizione, in questa possibilità di metamorfosi, che si rinnova continuamente la relazione tra l’uomo e la natura.","A visual evocation weaves into contemporary urban space: the figure of the Hamadryads becomes a device to offer the viewer a moment of suspension. The Hamadryads, mythological creatures inseparably bound to trees, live and die with them. Among the green emerges a body able to sway in the wind, to take root, to transfigure itself, carrying an ancient yet surprisingly present charm. Perhaps it is precisely in this apparition, in this possibility of metamorphosis, that the relationship between humans and nature is continually renewed.","Une évocation visuelle se mêle à l’espace urbain contemporain : la figure des Hamadryades devient un moyen d’offrir au spectateur un moment de suspension. Les Hamadryades, créatures mythologiques indissolublement liées aux arbres, vivent et meurent avec eux. Parmi la verdure surgit ainsi un corps capable d’onduler au vent, de s’enraciner, de se transfigurer, portant en lui un charme ancien et pourtant étonnamment présent. C’est peut-être précisément dans cette apparition, dans cette possibilité de métamorphose, que se renouvelle sans cesse la relation entre l’homme et la nature."),
   credits:["Interpreti: Enzina Cappelli, Valeria Petroni, Federica D’Aversa","Dramaturg: Ciro Ciancio, Riccardo Vanetta","Autore / Coreografo: Michele Ifigenia Colturi","Suono: Tarek Bouguerra","Produzione: Aiep Ariella Vidach / Triennale Teatro Milano"]},
  {cat:"perf",title:"Cuma",cover:"cuma.png",extra:["2024cuma.png"],video:"video/cumateaser.mp4",
-  tag:X("Performance","Performance"),dur:X("15 minuti","15 minutes"),
-  desc:X("Cuma è un solo coreografico attorno alla figura della sibilla. Gli elementi che appartengono al suo archetipo vengono ricostruiti per portare in vita un ultimo messaggio divinatorio. La sibilla, suo malgrado, intona un canto di fine accompagnato da una possessione, la manìa del dio. Il messaggio è talmente elevato che il corpo della sibilla viene dilaniato dalla profezia stessa.",
-   "Cuma is a choreographic solo around the figure of the sibyl. The elements belonging to her archetype are reconstructed to bring to life one last divinatory message. The sibyl, despite herself, intones a song of the end, accompanied by a possession, the mania of the god. The message is so elevated that the sibyl’s body is torn apart by the prophecy itself."),
+  tag:X("Performance","Performance","Performance"),dur:X("15 minuti","15 minutes","15 minutes"),
+  desc:X("Cuma è un solo coreografico attorno alla figura della sibilla. Gli elementi che appartengono al suo archetipo vengono ricostruiti per portare in vita un ultimo messaggio divinatorio. La sibilla, suo malgrado, intona un canto di fine accompagnato da una possessione, la manìa del dio. Il messaggio è talmente elevato che il corpo della sibilla viene dilaniato dalla profezia stessa.","Cuma is a choreographic solo around the figure of the sibyl. The elements belonging to her archetype are reconstructed to bring to life one last divinatory message. The sibyl, despite herself, intones a song of the end, accompanied by a possession, the mania of the god. The message is so elevated that the sibyl’s body is torn apart by the prophecy itself.","Cuma est un solo chorégraphique autour de la figure de la sibylle. Les éléments propres à son archétype sont reconstruits pour donner vie à un ultime message divinatoire. La sibylle, malgré elle, entonne un chant de fin accompagné d’une possession, la manie du dieu. Le message est si élevé que le corps de la sibylle est déchiré par la prophétie elle-même."),
   credits:["Interprete: Federica D’Aversa","Dramaturg: Ciro Ciancio, Riccardo Vanetta","Autore / Coreografo: Michele Ifigenia Colturi","Musiche: Tarek Bouguerra","Filmmaker: Lorenzo Basili","Produzione: Aiep Ariella Vidach, Anghiari Dance Hub"]},
  {cat:"perf",title:"Citerone",cover:"citerone.png",extra:["citerone2022.png","citeronesocietas.JPG"],video:"video/citeroneteaser.mp4",
-  tag:X("Performance","Performance"),dur:X("25 minuti","25 minutes"),
-  desc:X("Un canto corporeo, una preghiera di gesti e suoni che rinnova un’ancestrale ritualità per ascendere al monte Citerone. Il cammino performativo diventa evocazione dei simboli dionisiaci, spazio di passaggio tra umano e divino. Il mito di Dioniso e le Baccanti di Euripide si fondono per celebrare il mistero, l’estasi e la forza trasformativa del rito.",
-   "A bodily chant, a prayer of gestures and sounds that renews an ancestral ritual to ascend Mount Cithaeron. The performative path becomes an evocation of Dionysian symbols, a space of passage between human and divine. The myth of Dionysus and Euripides’ Bacchae merge to celebrate mystery, ecstasy and the transformative force of ritual."),
+  tag:X("Performance","Performance","Performance"),dur:X("25 minuti","25 minutes","25 minutes"),
+  desc:X("Un canto corporeo, una preghiera di gesti e suoni che rinnova un’ancestrale ritualità per ascendere al monte Citerone. Il cammino performativo diventa evocazione dei simboli dionisiaci, spazio di passaggio tra umano e divino. Il mito di Dioniso e le Baccanti di Euripide si fondono per celebrare il mistero, l’estasi e la forza trasformativa del rito.","A bodily chant, a prayer of gestures and sounds that renews an ancestral ritual to ascend Mount Cithaeron. The performative path becomes an evocation of Dionysian symbols, a space of passage between human and divine. The myth of Dionysus and Euripides’ Bacchae merge to celebrate mystery, ecstasy and the transformative force of ritual.","Un chant corporel, une prière de gestes et de sons qui renouvelle un rituel ancestral pour gravir le mont Cithéron. Le chemin performatif devient évocation des symboles dionysiaques, espace de passage entre l’humain et le divin. Le mythe de Dionysos et les Bacchantes d’Euripide se fondent pour célébrer le mystère, l’extase et la force transformatrice du rite."),
   credits:["Interpreti: Enzina Cappelli, Valeria Petroni","Dramaturg: Ciro Ciancio, Riccardo Vanetta","Autore / Coreografo: Michele Ifigenia Colturi","Co-produzione: Aiep Ariella Vidach"]},
  {cat:"perf",title:"Atteone",cover:"atteone.png",extra:["2025atteone.jpeg"],fig:"straddle",video:"video/atteoneteaser.mp4",videoSide:true,
   path:{groups:[
-   {head:X("Origine","Origin"),span:"2024",
-    note:X("Il seme del progetto nasce con ResiDance, l’azione del Network Anticorpi XL dedicata alle residenze per la creazione coreografica: è qui che si muovono le prime intuizioni e ricerche.","The seed of the project was planted with ResiDance, the Network Anticorpi XL initiative devoted to residencies for choreographic creation: this is where the first intuitions and research took shape."),
+   {head:X("Origine","Origin","Origine"),span:"2024",
+    note:X("Il seme del progetto nasce con ResiDance, l’azione del Network Anticorpi XL dedicata alle residenze per la creazione coreografica: è qui che si muovono le prime intuizioni e ricerche.","The seed of the project was planted with ResiDance, the Network Anticorpi XL initiative devoted to residencies for choreographic creation: this is where the first intuitions and research took shape.","Le germe du projet est né avec ResiDance, l’action du Network Anticorpi XL consacrée aux résidences de création chorégraphique : c’est là que prennent forme les premières intuitions et recherches."),
     items:[
-     {when:X("2024","2024"),title:X("ResiDance 2024","ResiDance 2024"),where:X("Progetto selezionato · prime residenze di ricerca","Selected project · first research residencies"),org:"Network Anticorpi XL",url:"https://www.networkdanzaxl.org/content/1761/atteone.html"}
+     {when:X("2024","2024","2024"),title:X("ResiDance 2024","ResiDance 2024","ResiDance 2024"),where:X("Progetto selezionato · prime residenze di ricerca","Selected project · first research residencies","Projet sélectionné · premières résidences de recherche"),org:"Network Anticorpi XL",url:"https://www.networkdanzaxl.org/content/1761/atteone.html"}
     ]},
-   {head:X("Hangartfest · Progetto triennale","Hangartfest · Three-year project"),span:"2025 — 2027",
-    note:X("Michele Ifigenia Colturi è coreografo residente di Hangartfest per il triennio 2025–2027: ogni anno il progetto compie una nuova tappa.","Michele Ifigenia Colturi is resident choreographer of Hangartfest for 2025–2027: each year the project takes a new step."),
+   {head:X("Hangartfest · Progetto triennale","Hangartfest · Three-year project","Hangartfest · Projet triennal"),span:"2025 — 2027",
+    note:X("Michele Ifigenia Colturi è coreografo residente di Hangartfest per il triennio 2025–2027: ogni anno il progetto compie una nuova tappa.","Michele Ifigenia Colturi is resident choreographer of Hangartfest for 2025–2027: each year the project takes a new step.","Michele Ifigenia Colturi est chorégraphe en résidence à Hangartfest pour la période 2025–2027 : chaque année, le projet franchit une nouvelle étape."),
     items:[
-     {when:X("I · Settembre 2025","I · September 2025"),title:X("Atteone, Prologo","Atteone, Prologo"),where:X("Prima assoluta · La Maddalena – Centro Arti Performative, Pesaro","World premiere · La Maddalena – Centro Arti Performative, Pesaro"),org:"Hangartfest 2025",url:"https://hangartfest.it/atteone-prologo/"},
-     {when:X("II · Settembre 2026","II · September 2026"),title:X("Atteone, Il bosco","Atteone, Il bosco"),where:X("Residenza e debutto · La Maddalena – Centro Arti Performative, Pesaro","Residency and premiere · La Maddalena – Centro Arti Performative, Pesaro"),org:"Hangartfest 2026",url:"https://hangartfest.it/hangartfest2026/#atteone"},
-     {when:X("III · 2027","III · 2027"),title:X("Atteone, Epilogo","Atteone, Epilogo"),where:X("Debutto del terzo capitolo","Premiere of the third chapter"),org:"Hangartfest 2027"}
+     {when:X("I · Settembre 2025","I · September 2025","I · Septembre 2025"),title:X("Atteone, Prologo","Atteone, Prologo","Atteone, Prologo"),where:X("Prima assoluta · La Maddalena – Centro Arti Performative, Pesaro","World premiere · La Maddalena – Centro Arti Performative, Pesaro","Création mondiale · La Maddalena – Centro Arti Performative, Pesaro"),org:"Hangartfest 2025",url:"https://hangartfest.it/atteone-prologo/"},
+     {when:X("II · Settembre 2026","II · September 2026","II · Septembre 2026"),title:X("Atteone, Il bosco","Atteone, Il bosco","Atteone, Il bosco"),where:X("Residenza e debutto · La Maddalena – Centro Arti Performative, Pesaro","Residency and premiere · La Maddalena – Centro Arti Performative, Pesaro","Résidence et première · La Maddalena – Centro Arti Performative, Pesaro"),org:"Hangartfest 2026",url:"https://hangartfest.it/hangartfest2026/#atteone"},
+     {when:X("III · 2027","III · 2027","III · 2027"),title:X("Atteone, Epilogo","Atteone, Epilogo","Atteone, Epilogo"),where:X("Debutto del terzo capitolo","Premiere of the third chapter","Première du troisième chapitre"),org:"Hangartfest 2027"}
     ]},
-   {head:X("Residenze","Residencies"),span:X("Toscana","Tuscany"),
-    note:X("Con il sostegno di ResiDance – azione del Network Anticorpi XL, Centro di Residenza della Toscana.","With the support of ResiDance – a Network Anticorpi XL initiative, Centro di Residenza della Toscana."),
+   {head:X("Residenze","Residencies","Résidences"),span:X("Toscana","Tuscany","Toscane"),
+    note:X("Con il sostegno di ResiDance – azione del Network Anticorpi XL, Centro di Residenza della Toscana.","With the support of ResiDance – a Network Anticorpi XL initiative, Centro di Residenza della Toscana.","Avec le soutien de ResiDance – action du Network Anticorpi XL, Centro di Residenza della Toscana."),
     items:[
-     {when:X("Settembre 2025","September 2025"),title:X("Residenza e prova aperta","Residency and open rehearsal"),where:X("8–19 settembre · prova aperta il 19 · Teatro alla Misericordia, Sansepolcro","8–19 September · open rehearsal on the 19th · Teatro alla Misericordia, Sansepolcro"),org:"CapoTrave/Kilowatt",url:"https://www.kilowattfestival.it/contenuto/atteone-michele-ifigenia-colturi-tyche/"},
-     {when:X("Gennaio – Marzo 2026","January – March 2026"),title:X("Residenza e prova aperta","Residency and open rehearsal"),where:X("26–30 gennaio e 2–9 marzo · prova aperta il 6 marzo · Teatro Nardini, Rosignano Marittimo","26–30 January and 2–9 March · open rehearsal on 6 March · Teatro Nardini, Rosignano Marittimo"),org:"Fondazione Armunia",url:"https://www.armunia.eu/it/residenze/68f0adATTEONE.html"}
+     {when:X("Settembre 2025","September 2025","Septembre 2025"),title:X("Residenza e prova aperta","Residency and open rehearsal","Résidence et répétition publique"),where:X("8–19 settembre · prova aperta il 19 · Teatro alla Misericordia, Sansepolcro","8–19 September · open rehearsal on the 19th · Teatro alla Misericordia, Sansepolcro","8–19 septembre · répétition publique le 19 · Teatro alla Misericordia, Sansepolcro"),org:"CapoTrave/Kilowatt",url:"https://www.kilowattfestival.it/contenuto/atteone-michele-ifigenia-colturi-tyche/"},
+     {when:X("Gennaio – Marzo 2026","January – March 2026","Janvier – Mars 2026"),title:X("Residenza e prova aperta","Residency and open rehearsal","Résidence et répétition publique"),where:X("26–30 gennaio e 2–9 marzo · prova aperta il 6 marzo · Teatro Nardini, Rosignano Marittimo","26–30 January and 2–9 March · open rehearsal on 6 March · Teatro Nardini, Rosignano Marittimo","26–30 janvier et 2–9 mars · répétition publique le 6 mars · Teatro Nardini, Rosignano Marittimo"),org:"Fondazione Armunia",url:"https://www.armunia.eu/it/residenze/68f0adATTEONE.html"}
     ]}
   ]},
-  tag:X("Debutto 2027","Debut 2027"),dur:X("In fase di sviluppo","In development"),
-  desc:X("Il lavoro è centrato su un’unica figura danzante che, nel corso della performance, incarna una metamorfosi tragica: da essere umano a cervo.",
-   "The work centres on a single dancing figure who, over the course of the performance, embodies a tragic metamorphosis: from human being to stag."),
+  tag:X("Debutto 2027","Debut 2027","Création 2027"),dur:X("In fase di sviluppo","In development","En cours de développement"),
+  desc:X("Il lavoro è centrato su un’unica figura danzante che, nel corso della performance, incarna una metamorfosi tragica: da essere umano a cervo.","The work centres on a single dancing figure who, over the course of the performance, embodies a tragic metamorphosis: from human being to stag.","Le travail est centré sur une figure dansante unique qui, au fil de la performance, incarne une métamorphose tragique : d’être humain à cerf."),
   credits:["Interprete: Enzina Cappelli","Dramaturg: Riccardo Vanetta","Autore / Coreografo: Michele Ifigenia Colturi","Musiche: Tarek Bouguerra","Scenografia: Alice Vanini","2D/3D Artist: Andrea Rebecca Marchini","Movimentatrice di scena: Annachiara Fanelli","Produzione: AIEP (Milano)","Coproduzione: Hangartfest (Pesaro)","Con il sostegno di: ResiDance – azione del Network Anticorpi XL, Centro di Residenza della Toscana (Armunia – CapoTrave/Kilowatt)"]},
  {cat:"perf",title:"Salmace",cover:"salmace.png",extra:[],
-  tag:X("Work in progress","Work in progress"),dur:X("Work in progress","Work in progress"),
-  quote:X("«Crea una stretta tenace: come il serpente rapito dall'aquila regale, che mentre viene trasportato in alto avvolge la testa e le zampe del rapace e con la coda gli lega le ali spiegate; o come l'edera che suole circondare i lunghi tronchi degli alberi; o come la piovra che stringe il nemico catturato sul fondo del mare, allungando i suoi tentacoli da ogni lato.»",
-   "“It forms a tenacious grip: like the serpent seized by the royal eagle, which, as it is carried aloft, coils around the raptor’s head and feet and binds its spread wings with its tail; or like the ivy that winds around tall tree trunks; or like the octopus that clutches its captured enemy on the seabed, stretching its tentacles on every side.”"),
+  tag:X("Work in progress","Work in progress","Work in progress"),dur:X("Work in progress","Work in progress","Work in progress"),
+  quote:X("«Crea una stretta tenace: come il serpente rapito dall'aquila regale, che mentre viene trasportato in alto avvolge la testa e le zampe del rapace e con la coda gli lega le ali spiegate; o come l'edera che suole circondare i lunghi tronchi degli alberi; o come la piovra che stringe il nemico catturato sul fondo del mare, allungando i suoi tentacoli da ogni lato.»","“It forms a tenacious grip: like the serpent seized by the royal eagle, which, as it is carried aloft, coils around the raptor’s head and feet and binds its spread wings with its tail; or like the ivy that winds around tall tree trunks; or like the octopus that clutches its captured enemy on the seabed, stretching its tentacles on every side.”","« Elle forme une étreinte tenace : comme le serpent enlevé par l’aigle royal qui, emporté dans les airs, s’enroule autour de la tête et des serres du rapace et lui lie de sa queue les ailes déployées ; ou comme le lierre qui a coutume d’entourer les longs troncs des arbres ; ou comme la pieuvre qui enserre l’ennemi capturé au fond de la mer, en étendant ses tentacules de tous côtés. »"),
   quoteBy:"Ovidio, Metamorfosi / Ovid, Metamorphoses",
   credits:["Autore / Coreografo: Michele Ifigenia Colturi"]},
- {cat:"short",title:"Citerone",kicker:X("Cortometraggio","Short Film"),thumb:"citerone2021.png",thumbPos:"50% 0%",cover:"citeroneandre.png",extra:["citerone2021.png"],fig:"straddle",
+ {cat:"short",title:"Citerone",kicker:X("Cortometraggio","Short Film","Court métrage"),thumb:"citerone2021.png",thumbPos:"50% 0%",cover:"citeroneandre.png",extra:["citerone2021.png"],fig:"straddle",
   video:"video/citeroneshort.mp4",videoFeature:true,
-  videoLabel:X("Estratto","Excerpt"),
-  videoKicker:X("Estratto","Excerpt"),
-  tag:X("Short Film","Short Film"),dur:X("Cortometraggio","Short film"),
-  desc:X("Sguardo cinematografico sull'ascesa rituale al monte Citerone.","A cinematic gaze on the ritual ascent of Mount Cithaeron."),
+  videoLabel:X("Estratto","Excerpt","Extrait"),
+  videoKicker:X("Estratto","Excerpt","Extrait"),
+  tag:X("Short Film","Short Film","Court métrage"),dur:X("Cortometraggio","Short film","Court métrage"),
+  desc:X("Sguardo cinematografico sull'ascesa rituale al monte Citerone.","A cinematic gaze on the ritual ascent of Mount Cithaeron.","Regard cinématographique sur l’ascension rituelle du mont Cithéron."),
   credits:["Interpreti: Andreyna De La Soledad, Enzina Cappelli","Autore / Coreografo: Michele Ifigenia Colturi","Musiche: Tarek Bouguerra","Filmmaking: Lorenzo Basili"]},
  /* Cuma short: nella pellicola la locandina (thumb); nella scheda la foto grande 2024cuma.png (cover) con la locandina piccola a cavallo, come Citerone short */
- {cat:"short",title:"Cuma",kicker:X("Cortometraggio","Short Film"),thumb:"cuma-locandina.png",thumbPos:"50% 0%",cover:"cumacopertina.jpg",extra:["cuma-locandina.png"],fig:"straddle",
+ {cat:"short",title:"Cuma",kicker:X("Cortometraggio","Short Film","Court métrage"),thumb:"cuma-locandina.png",thumbPos:"50% 0%",cover:"cumacopertina.jpg",extra:["cuma-locandina.png"],fig:"straddle",
   video:"video/cumashort.mp4",videoFeature:true,
-  videoLabel:X("Cortometraggio completo","Full short film"),
-  videoKicker:X("Cortometraggio","Short film"),
-  award:{text:X("Vincitore del premio CAM CAM, 2022","Winner of the CAM CAM award, 2022"),url:"https://www.movimentodanza.org/michele-ifigenia-colturi-vince-la-seconda-edizione-di-cam-cam-dance-for-camera/"},
-  tag:X("Short Film","Short Film"),dur:X("3 minuti","3 minutes"),
-  desc:X("","" ),
+  videoLabel:X("Cortometraggio completo","Full short film","Court métrage intégral"),
+  videoKicker:X("Cortometraggio","Short film","Court métrage"),
+  award:{text:X("Vincitore del premio CAM CAM, 2022","Winner of the CAM CAM award, 2022","Lauréat du prix CAM CAM, 2022"),url:"https://www.movimentodanza.org/michele-ifigenia-colturi-vince-la-seconda-edizione-di-cam-cam-dance-for-camera/"},
+  tag:X("Short Film","Short Film","Court métrage"),dur:X("3 minuti","3 minutes","3 minutes"),
+  desc:X("","",""),
   credits:["Interprete: Federica D’Aversa","Autore / Coreografo: Michele Ifigenia Colturi","Musiche: Tarek Bouguerra","Filmmaker: Lorenzo Basili"]}
 ];
 var COLLABS=[
  {cat:"collab",title:"YTI — Your Tactile Identity",cover:"yti.png",extra:[],
-  tag:X("Con YoY Performing Arts, IVONA","With YoY Performing Arts, IVONA"),dur:X("Kilowatt Festival · 24 luglio 2026","Kilowatt Festival · 24 July 2026"),
-  desc:X("YTI è insieme un progetto di ricerca e un manifesto artistico, nato dall’incontro tra tre compagnie: YoY Performing Arts, IVONA e Michele Ifigenia / Tyche. In un tempo segnato da distanze e polarizzazioni, il lavoro sceglie la vicinanza: abitare le differenze e farne materia di creazione collettiva. Tre linguaggi coreografici si intrecciano in un unico tessuto, dove il movimento diventa ascolto e la contaminazione un atto insieme politico e creativo.",
-   "YTI is both a research project and an artistic manifesto, born from the meeting of three companies: YoY Performing Arts, IVONA and Michele Ifigenia / Tyche. In a time marked by distance and polarization, the work chooses proximity: inhabiting differences and making them the matter of collective creation. Three choreographic languages are woven into a single fabric, where movement becomes listening and contamination becomes an act at once political and creative."),
+  tag:X("Con YoY Performing Arts, IVONA","With YoY Performing Arts, IVONA","Avec YoY Performing Arts, IVONA"),dur:X("Kilowatt Festival · 24 luglio 2026","Kilowatt Festival · 24 July 2026","Kilowatt Festival · 24 juillet 2026"),
+  desc:X("YTI è insieme un progetto di ricerca e un manifesto artistico, nato dall’incontro tra tre compagnie: YoY Performing Arts, IVONA e Michele Ifigenia / Tyche. In un tempo segnato da distanze e polarizzazioni, il lavoro sceglie la vicinanza: abitare le differenze e farne materia di creazione collettiva. Tre linguaggi coreografici si intrecciano in un unico tessuto, dove il movimento diventa ascolto e la contaminazione un atto insieme politico e creativo.","YTI is both a research project and an artistic manifesto, born from the meeting of three companies: YoY Performing Arts, IVONA and Michele Ifigenia / Tyche. In a time marked by distance and polarization, the work chooses proximity: inhabiting differences and making them the matter of collective creation. Three choreographic languages are woven into a single fabric, where movement becomes listening and contamination becomes an act at once political and creative.","YTI est à la fois un projet de recherche et un manifeste artistique, né de la rencontre entre trois compagnies : YoY Performing Arts, IVONA et Michele Ifigenia / Tyche. À une époque marquée par les distances et les polarisations, le travail choisit la proximité : habiter les différences et en faire la matière d’une création collective. Trois langages chorégraphiques s’entrelacent en un seul tissu, où le mouvement devient écoute et la contamination un acte à la fois politique et créatif."),
   credits:["Di: YoY Performing Arts, IVONA, Michele Ifigenia/Tyche","Interpreti: Emma Zani, Roberto Doveri, Pablo Girolami, Guilherme Leal, Federica D’Aversa","Dramaturg: Riccardo Vanetta","Musiche: Tarek Bouguerra, Timoteo Carbone","Disegno luci: Gianni Staropoli","Costumi: Patricia Villirillo","Progetto vincitore di: Giovane Danza Italiana 2025, Bando CURA 2025","Con il sostegno di: MiC e SIAE – Per Chi Crea"]}
 ];
 
 /* ============ UTILITÀ ============ */
 var LANG="it";
-try{ var sv=localStorage.getItem("lang"); if(sv==="it"||sv==="en") LANG=sv; }catch(e){}
+try{ var sv=localStorage.getItem("lang"); if(sv==="it"||sv==="en"||sv==="fr") LANG=sv; }catch(e){}
 function ui(k){ return (UI[LANG]&&UI[LANG][k]) || UI.it[k] || k; }
 function L(o){ return (o && typeof o==="object") ? (o[LANG]||o.it) : o; }
 function esc(s){ var d=document.createElement("div"); d.textContent=s; return d.innerHTML; }
@@ -1056,7 +1053,7 @@ var KID=(function(){
 (function(){
   var doors=[].slice.call(document.querySelectorAll("footer .fl,#about .sun"));   /* il girasole della prima schermata resta solo un ricamo */
   doors.forEach(function(d){
-    d.classList.add("door"); d.style.transition=""; d.title="Dietro le quinte";
+    d.classList.add("door"); d.style.transition=""; d.title=ui("bs_t");
     d.addEventListener("click",function(){ try{ if(navigator.vibrate) navigator.vibrate(8); }catch(e){} if(window.openBS) openBS(); });   /* Android: un tocco di vibrazione appena percettibile */
   });
   /* telefono: un solo gesto lento, la prima volta che ciascun ricamo entra nello schermo (dopo l'animazione iniziale) */
@@ -1089,7 +1086,7 @@ var KID=(function(){
    (un piccolo segreto per chi resta); se in quel momento e' visibile, si piega una volta, piano */
 setTimeout(function(){
   var g=document.querySelector("#embroid .fl"); if(!g) return;
-  g.classList.add("door"); g.style.transition=""; g.title="Dietro le quinte";
+  g.classList.add("door"); g.style.transition=""; g.title=ui("bs_t");
   g.addEventListener("click",function(){ try{ if(navigator.vibrate) navigator.vibrate(8); }catch(e){} if(window.openBS) openBS(); });
   if(RM_) return;
   var r=g.getBoundingClientRect();
@@ -1299,13 +1296,13 @@ function fillDetail(){
   document.getElementById("d-tag").textContent=L(w.tag);
   document.getElementById("d-dur").textContent=L(w.dur);
   var aw=document.getElementById("d-award");   /* premio (facoltativo) */
-  if(w.award){ aw.hidden=false; aw.href=w.award.url; aw.innerHTML='<small>'+(LANG==="en"?"Award":"Premio")+'</small>'+esc(L(w.award.text))+'<i aria-hidden="true">↗\uFE0E</i>'; } else { aw.hidden=true; aw.removeAttribute("href"); aw.innerHTML=""; }
+  if(w.award){ aw.hidden=false; aw.href=w.award.url; aw.innerHTML='<small>'+(LANG==="en"?"Award":LANG==="fr"?"Prix":"Premio")+'</small>'+esc(L(w.award.text))+'<i aria-hidden="true">↗\uFE0E</i>'; } else { aw.hidden=true; aw.removeAttribute("href"); aw.innerHTML=""; }
   document.getElementById("d-desc").textContent=L(w.desc)||"";
   var q=document.getElementById("d-quote");
   q.innerHTML = w.quote ? esc(L(w.quote))+'<small>'+esc(w.quoteBy)+'</small>' : ""; q.style.display = w.quote ? "block" : "none";
   document.getElementById("d-credits").innerHTML=w.credits.map(function(c){
     var k=c.indexOf(": "), role=k>0?c.slice(0,k):"", names=k>0?c.slice(k+2):c;
-    if(LANG==="en") role=RM[role]||role;
+    if(LANG==="en") role=RM[role]||role; else if(LANG==="fr") role=RMF[role]||role;
     return '<div><dt>'+esc(role)+'</dt><dd>'+esc(names)+'</dd></div>';
   }).join("");
   /* foto extra: a cavallo della principale (solo se il lavoro ha fig:"straddle") oppure in galleria pulita sotto i testi */
@@ -1427,26 +1424,26 @@ document.addEventListener("keydown",function(e){
    date = data impressa sulla foto (facoltativa); where = dove / che momento (per ora non mostrato).
    spread = due foto affiancate come una rivista aperta (un solo fotogramma); url + link = link accanto alla didascalia in grande.
    Finche' src e' vuoto il riquadro resta un segnaposto. */
-var BACKSTAGE={span:X("2019 — oggi","2019 — now"),frames:[
- {src:"DIETRO_Cònia_2019_classe_I.jpg",tag:X("Scuola Cònia, 2019","Scuola Cònia, 2019"),lite:"dietro/2019-conia",ar:1.4976,date:"",who:X("Scuola Cònia, primo anno, intorno al 2019: dove tutto è cominciato","Scuola Cònia, first year, around 2019: where it all began"),where:X("Quanti eravamo? Qualcuno ricorda ancora tutti i nomi?","How many of us were there? Does anyone still remember all the names?")},
- {src:"DIETRO_cITERONE_PROVE_2020.jpg",tag:X("Ipercorpo, Forlì, 2021","Ipercorpo, Forlì, 2021"),lite:"dietro/2020-citerone-prove",ar:1.4997,date:"",who:X("Prove di Citerone a Ipercorpo, Forlì, 2021: una delle nostre prime date","Citerone rehearsals at Ipercorpo, Forlì, 2021: one of our first dates"),where:X("Quel muro scrostato","That peeling wall")},
- {src:"DIETRO_Foto__gruppo_riprese_Cuma_2021.jpg",tag:X("Riprese di Cuma, 2021","Filming Cuma, 2021"),lite:"dietro/2021-cuma-riprese",ar:1.2501,date:"",who:X("Sul set di Cuma, 2021","On the set of Cuma, 2021"),where:X("La luce che entrava di lato","The light coming in from the side")},
- {src:"DIETRO_2022gruppo.jpg",tag:X("Set di Citerone, 2022","Citerone set, 2022"),lite:"dietro/2022-gruppo",ar:1.5,date:"",who:X("Dopo le riprese del cortometraggio Citerone, 2022","After filming the Citerone short film, 2022"),where:X("Pausa pranzo? O era dopo le prove?","Lunch break? Or was it after rehearsal?")},
- {src:"DIETRO_Sopralluoghi_Bormio_-_Luglio_2022__28_.jpg",tag:X("Bormio, 2022","Bormio, 2022"),lite:"dietro/2022-bormio",ar:1.7778,date:"",who:X("Sopralluoghi a Bormio, luglio 2022","Location scouting in Bormio, July 2022"),where:X("Si cercava il monte giusto","Looking for the right mountain")},
- {src:"DIETRO_proiezione_cinema_armunia_cortometraggio_citerone_shortfilm.jpg",tag:X("Nuovo Armenia, Milano, 2022","Nuovo Armenia, Milan, 2022"),lite:"dietro/2022-armunia-proiezione",ar:1.4998,date:"",who:X("Proiezione del cortometraggio Citerone al Cinema Nuovo Armenia, Milano, 2022","Screening of the Citerone short film at Cinema Nuovo Armenia, Milan, 2022"),where:X("Il corto sotto gli alberi, di sera","The short film under the trees, at night")},
- {src:"DIETRO_Fote_gruppo-prove_citerone_2022.jpg",tag:X("Fattoria Vittadini, 2022","Fattoria Vittadini, 2022"),lite:"dietro/2022-citerone-prove",ar:1.4997,date:"",who:X("Prove di compagnia alla Fattoria Vittadini, 2022","Company rehearsals at Fattoria Vittadini, 2022"),where:X("Chi ha fatto la faccia più strana?","Who pulled the strangest face?")},
- {src:"DIETRO_Amadriadi_prove_triennale_fog.jpg",tag:X("Triennale, Milano, 2022","Triennale, Milan, 2022"),lite:"dietro/amadriadi-prove-fog",ar:1.5,date:"",who:X("Prove di Amadriadi alla Triennale di Milano, 2022","Amadriadi rehearsals at Triennale Milano, 2022"),where:X("Tra gli alberi, prima del FOG","Among the trees, before FOG")},
- {src:"b.jpeg",tag:X("CLAPS, Brescia, 2024","CLAPS, Brescia, 2024"),date:"",who:X("Prove e ricerca per Atteone a CLAPS, Brescia, 2024","Rehearsals and research for Atteone at CLAPS, Brescia, 2024")},
- {src:"c.jpeg",tag:X("CLAPS, Brescia, 2024","CLAPS, Brescia, 2024"),date:"",who:X("Ricerca in sala per Atteone a CLAPS, Brescia, 2024","Studio research for Atteone at CLAPS, Brescia, 2024")},
- {src:"a.jpeg",tag:X("NAO Performing Festival, 2025","NAO Performing Festival, 2025"),date:"",who:X("Presentazione di «Atteone, Prologo» al NAO Performing Festival, Fabbrica del Vapore, Milano, 2025","Presentation of “Atteone, Prologo” at NAO Performing Festival, Fabbrica del Vapore, Milan, 2025")},
- {src:"1.jpeg",tag:X("Fabbrica del Vapore, Milano, 2025","Fabbrica del Vapore, Milan, 2025"),date:"",who:X("Primo incontro per YTI alla Fabbrica del Vapore, Milano, 2025","First meeting for YTI at Fabbrica del Vapore, Milan, 2025")},
- {src:"5.jpg",tag:X("PARC, Firenze, 2025","PARC, Florence, 2025"),date:"",who:X("Prove di YTI al PARC, Firenze, 2025","YTI rehearsals at PARC, Florence, 2025")},
- {src:"DIETRO_DSCF5705.jpg",tag:X("YTI, Anghiari, 2026","YTI, Anghiari, 2026"),lite:"dietro/sala-riprese",ar:1.5004,date:"",who:X("Prove di YTI ad Anghiari, febbraio 2026","YTI rehearsals in Anghiari, February 2026"),where:X("C’era sempre una camera accesa","There was always a camera on")},
- {src:"2.jpeg",tag:X("YTI, Anghiari, 2026","YTI, Anghiari, 2026"),date:"",who:X("Prove di YTI, con YoY Performing Arts e IVONA, Anghiari, febbraio 2026","YTI rehearsals with YoY Performing Arts and IVONA, Anghiari, February 2026")},
- {src:"3.jpeg",tag:X("YTI, Anghiari, 2026","YTI, Anghiari, 2026"),date:"",who:X("Prove di YTI ad Anghiari, febbraio 2026","YTI rehearsals in Anghiari, February 2026")},
- {src:"4.jpeg",tag:X("YTI, Anghiari, 2026","YTI, Anghiari, 2026"),date:"",who:X("Prove di YTI ad Anghiari, febbraio 2026","YTI rehearsals in Anghiari, February 2026")},
- {src:"d.jpeg",tag:X("Contemporanea-26, Prato, 2026","Contemporanea-26, Prato, 2026"),date:"",who:X("Cuma al Teatro Fabbricone di Prato, per Contemporanea-26 / Focus Danza del Teatro Metastasio, 12 giugno 2026","Cuma at Teatro Fabbricone, Prato, for Teatro Metastasio’s Contemporanea-26 / Focus Danza, 12 June 2026")},
- {spread:["rivista.jpg","rivista1.jpg"],zoom:1.07,tag:X("La Falena, 2023","La Falena, 2023"),who:X("«La Falena» n. 2/2023, speciale «I Novissimi»: intervista di Alessandro Iachino","“La Falena” no. 2/2023, “I Novissimi” special issue: interview by Alessandro Iachino"),url:"https://iris.uniroma1.it/retrieve/f9efc635-7c53-429b-8981-ba2eed14c4f8/FALENA%206_02-2023.pdf#page=47",link:X("Leggi l’articolo, pp. 47–49","Read the article, pp. 47–49")}
+var BACKSTAGE={span:X("2019 — oggi","2019 — now","2019 — aujourd’hui"),frames:[
+ {src:"DIETRO_Cònia_2019_classe_I.jpg",tag:X("Scuola Cònia, 2019","Scuola Cònia, 2019","Scuola Cònia, 2019"),lite:"dietro/2019-conia",ar:1.4976,date:"",who:X("Scuola Cònia, primo anno, intorno al 2019: dove tutto è cominciato","Scuola Cònia, first year, around 2019: where it all began","Scuola Cònia, première année, vers 2019 : là où tout a commencé"),where:X("Quanti eravamo? Qualcuno ricorda ancora tutti i nomi?","How many of us were there? Does anyone still remember all the names?","Combien étions-nous ? Quelqu’un se souvient-il encore de tous les noms ?")},
+ {src:"DIETRO_cITERONE_PROVE_2020.jpg",tag:X("Ipercorpo, Forlì, 2021","Ipercorpo, Forlì, 2021","Ipercorpo, Forlì, 2021"),lite:"dietro/2020-citerone-prove",ar:1.4997,date:"",who:X("Prove di Citerone a Ipercorpo, Forlì, 2021: una delle nostre prime date","Citerone rehearsals at Ipercorpo, Forlì, 2021: one of our first dates","Répétitions de Citerone à Ipercorpo, Forlì, 2021 : l’une de nos premières dates"),where:X("Quel muro scrostato","That peeling wall","Ce mur écaillé")},
+ {src:"DIETRO_Foto__gruppo_riprese_Cuma_2021.jpg",tag:X("Riprese di Cuma, 2021","Filming Cuma, 2021","Tournage de Cuma, 2021"),lite:"dietro/2021-cuma-riprese",ar:1.2501,date:"",who:X("Sul set di Cuma, 2021","On the set of Cuma, 2021","Sur le tournage de Cuma, 2021"),where:X("La luce che entrava di lato","The light coming in from the side","La lumière qui entrait de côté")},
+ {src:"DIETRO_2022gruppo.jpg",tag:X("Set di Citerone, 2022","Citerone set, 2022","Tournage de Citerone, 2022"),lite:"dietro/2022-gruppo",ar:1.5,date:"",who:X("Dopo le riprese del cortometraggio Citerone, 2022","After filming the Citerone short film, 2022","Après le tournage du court métrage Citerone, 2022"),where:X("Pausa pranzo? O era dopo le prove?","Lunch break? Or was it after rehearsal?","Pause déjeuner ? Ou était-ce après la répétition ?")},
+ {src:"DIETRO_Sopralluoghi_Bormio_-_Luglio_2022__28_.jpg",tag:X("Bormio, 2022","Bormio, 2022","Bormio, 2022"),lite:"dietro/2022-bormio",ar:1.7778,date:"",who:X("Sopralluoghi a Bormio, luglio 2022","Location scouting in Bormio, July 2022","Repérages à Bormio, juillet 2022"),where:X("Si cercava il monte giusto","Looking for the right mountain","On cherchait la bonne montagne")},
+ {src:"DIETRO_proiezione_cinema_armunia_cortometraggio_citerone_shortfilm.jpg",tag:X("Nuovo Armenia, Milano, 2022","Nuovo Armenia, Milan, 2022","Nuovo Armenia, Milan, 2022"),lite:"dietro/2022-armunia-proiezione",ar:1.4998,date:"",who:X("Proiezione del cortometraggio Citerone al Cinema Nuovo Armenia, Milano, 2022","Screening of the Citerone short film at Cinema Nuovo Armenia, Milan, 2022","Projection du court métrage Citerone au Cinema Nuovo Armenia, Milan, 2022"),where:X("Il corto sotto gli alberi, di sera","The short film under the trees, at night","Le court métrage sous les arbres, le soir")},
+ {src:"DIETRO_Fote_gruppo-prove_citerone_2022.jpg",tag:X("Fattoria Vittadini, 2022","Fattoria Vittadini, 2022","Fattoria Vittadini, 2022"),lite:"dietro/2022-citerone-prove",ar:1.4997,date:"",who:X("Prove di compagnia alla Fattoria Vittadini, 2022","Company rehearsals at Fattoria Vittadini, 2022","Répétitions de la compagnie à la Fattoria Vittadini, 2022"),where:X("Chi ha fatto la faccia più strana?","Who pulled the strangest face?","Qui a fait la grimace la plus étrange ?")},
+ {src:"DIETRO_Amadriadi_prove_triennale_fog.jpg",tag:X("Triennale, Milano, 2022","Triennale, Milan, 2022","Triennale, Milan, 2022"),lite:"dietro/amadriadi-prove-fog",ar:1.5,date:"",who:X("Prove di Amadriadi alla Triennale di Milano, 2022","Amadriadi rehearsals at Triennale Milano, 2022","Répétitions d’Amadriadi à la Triennale de Milan, 2022"),where:X("Tra gli alberi, prima del FOG","Among the trees, before FOG","Parmi les arbres, avant le FOG")},
+ {src:"b.jpeg",tag:X("CLAPS, Brescia, 2024","CLAPS, Brescia, 2024","CLAPS, Brescia, 2024"),date:"",who:X("Prove e ricerca per Atteone a CLAPS, Brescia, 2024","Rehearsals and research for Atteone at CLAPS, Brescia, 2024","Répétitions et recherche pour Atteone à CLAPS, Brescia, 2024")},
+ {src:"c.jpeg",tag:X("CLAPS, Brescia, 2024","CLAPS, Brescia, 2024","CLAPS, Brescia, 2024"),date:"",who:X("Ricerca in sala per Atteone a CLAPS, Brescia, 2024","Studio research for Atteone at CLAPS, Brescia, 2024","Recherche en studio pour Atteone à CLAPS, Brescia, 2024")},
+ {src:"a.jpeg",tag:X("NAO Performing Festival, 2025","NAO Performing Festival, 2025","NAO Performing Festival, 2025"),date:"",who:X("Presentazione di «Atteone, Prologo» al NAO Performing Festival, Fabbrica del Vapore, Milano, 2025","Presentation of “Atteone, Prologo” at NAO Performing Festival, Fabbrica del Vapore, Milan, 2025","Présentation d’« Atteone, Prologo » au NAO Performing Festival, Fabbrica del Vapore, Milan, 2025")},
+ {src:"1.jpeg",tag:X("Fabbrica del Vapore, Milano, 2025","Fabbrica del Vapore, Milan, 2025","Fabbrica del Vapore, Milan, 2025"),date:"",who:X("Primo incontro per YTI alla Fabbrica del Vapore, Milano, 2025","First meeting for YTI at Fabbrica del Vapore, Milan, 2025","Première rencontre pour YTI à la Fabbrica del Vapore, Milan, 2025")},
+ {src:"5.jpg",tag:X("PARC, Firenze, 2025","PARC, Florence, 2025","PARC, Florence, 2025"),date:"",who:X("Prove di YTI al PARC, Firenze, 2025","YTI rehearsals at PARC, Florence, 2025","Répétitions de YTI au PARC, Florence, 2025")},
+ {src:"DIETRO_DSCF5705.jpg",tag:X("YTI, Anghiari, 2026","YTI, Anghiari, 2026","YTI, Anghiari, 2026"),lite:"dietro/sala-riprese",ar:1.5004,date:"",who:X("Prove di YTI ad Anghiari, febbraio 2026","YTI rehearsals in Anghiari, February 2026","Répétitions de YTI à Anghiari, février 2026"),where:X("C’era sempre una camera accesa","There was always a camera on","Il y avait toujours une caméra allumée")},
+ {src:"2.jpeg",tag:X("YTI, Anghiari, 2026","YTI, Anghiari, 2026","YTI, Anghiari, 2026"),date:"",who:X("Prove di YTI, con YoY Performing Arts e IVONA, Anghiari, febbraio 2026","YTI rehearsals with YoY Performing Arts and IVONA, Anghiari, February 2026","Répétitions de YTI avec YoY Performing Arts et IVONA, Anghiari, février 2026")},
+ {src:"3.jpeg",tag:X("YTI, Anghiari, 2026","YTI, Anghiari, 2026","YTI, Anghiari, 2026"),date:"",who:X("Prove di YTI ad Anghiari, febbraio 2026","YTI rehearsals in Anghiari, February 2026","Répétitions de YTI à Anghiari, février 2026")},
+ {src:"4.jpeg",tag:X("YTI, Anghiari, 2026","YTI, Anghiari, 2026","YTI, Anghiari, 2026"),date:"",who:X("Prove di YTI ad Anghiari, febbraio 2026","YTI rehearsals in Anghiari, February 2026","Répétitions de YTI à Anghiari, février 2026")},
+ {src:"d.jpeg",tag:X("Contemporanea-26, Prato, 2026","Contemporanea-26, Prato, 2026","Contemporanea-26, Prato, 2026"),date:"",who:X("Cuma al Teatro Fabbricone di Prato, per Contemporanea-26 / Focus Danza del Teatro Metastasio, 12 giugno 2026","Cuma at Teatro Fabbricone, Prato, for Teatro Metastasio’s Contemporanea-26 / Focus Danza, 12 June 2026","Cuma au Teatro Fabbricone de Prato, pour Contemporanea-26 / Focus Danza du Teatro Metastasio, 12 juin 2026")},
+ {spread:["rivista.jpg","rivista1.jpg"],zoom:1.07,tag:X("La Falena, 2023","La Falena, 2023","La Falena, 2023"),who:X("«La Falena» n. 2/2023, speciale «I Novissimi»: intervista di Alessandro Iachino","“La Falena” no. 2/2023, “I Novissimi” special issue: interview by Alessandro Iachino","« La Falena » n° 2/2023, numéro spécial « I Novissimi » : entretien avec Alessandro Iachino"),url:"https://iris.uniroma1.it/retrieve/f9efc635-7c53-429b-8981-ba2eed14c4f8/FALENA%206_02-2023.pdf#page=47",link:X("Leggi l’articolo, pp. 47–49","Read the article, pp. 47–49","Lire l’article, p. 47–49")}
 ]};
 var bsEl=document.getElementById("bs"), bsIO=null;
 function bsAr(im){ im.classList.add("ld"); if(rec(im.getAttribute("data-full"))||!im.naturalWidth) return; im.parentNode.style.setProperty("--ar",(im.naturalWidth/im.naturalHeight).toFixed(4)); }
@@ -1611,8 +1608,9 @@ var ALL=PERF.concat(SHORT,COLLABS);
 
 /* ============ LINGUA ============ */
 function renderAll(){
-  var bh=document.getElementById("bs-home"); if(bh){ var t=LANG==="en"?"Back to home":"Torna alla home"; bh.title=t; bh.setAttribute("aria-label",t); }
+  var bh=document.getElementById("bs-home"); if(bh){ var t=LANG==="en"?"Back to home":LANG==="fr"?"Retour à l’accueil":"Torna alla home"; bh.title=t; bh.setAttribute("aria-label",t); }
   document.documentElement.lang=LANG;
+  document.querySelectorAll(".door").forEach(function(d){ d.title=ui("bs_t"); });   /* fiori e sole: suggerimento "Dietro le quinte" nella lingua scelta */
   var cu=document.getElementById("cue"); if(cu) cu.setAttribute("aria-label",ui("scroll"));
   document.querySelectorAll("[data-i]").forEach(function(el){ el.textContent=ui(el.dataset.i); });
   document.getElementById("bio").textContent=BIO[LANG];

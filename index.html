@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<!-- VERSIONE 25-09 leggera-78 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
+<!-- VERSIONE 25-09 leggera-80 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Michele Ifigenia / Tyche</title>
@@ -176,14 +176,16 @@ html.cvlogo .tyche-logo{visibility:hidden}
 .me-door .kube{width:var(--fw);margin:0}
 .me-n{font-size:.92rem}
 /* telefono: sole, freccina e pupazzetto scendono sotto la barra in alto (che occupa circa 75 px), cosi' si vedono interi */
-@media(max-width:640px){#about{--fw:64px;--ht:198px}.me-door{left:calc(var(--sl) + var(--sun) + 62px)}}
+@media(max-width:640px){#about{--fw:112px;--ht:198px}.me-door{left:calc(var(--sl) + var(--sun) + 58px)}}
 /* PAGINA DEL COREOGRAFO: su carta chiara come "Dietro le quinte"; pupazzetto grande a sinistra, testo a destra */
 #me{display:none;position:fixed;inset:0;z-index:86;background:var(--paper) var(--gp);background-size:240px 240px;color:var(--ink);overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
 #me.on{display:block;animation:bsIn .45s cubic-bezier(.22,.61,.36,1) both}
 .seen #me.on{animation:bsIn .45s cubic-bezier(.22,.61,.36,1) both!important}
 #me .d-top{background:var(--paper) var(--gp);background-size:240px 240px;color:var(--ink)}
 .me-wrap{max-width:1320px;margin:0 auto;padding:64px 24px 90px;display:grid;grid-template-columns:repeat(12,1fr);gap:0 24px;align-items:start}
-.me-fig{grid-column:1 / span 4;width:clamp(150px,16vw,240px);aspect-ratio:200/220;mix-blend-mode:multiply}
+/* nella pagina del coreografo il pupazzetto sta fermo; toccandolo si torna fuori (come il fiorellino azzurro di "Dietro le quinte") */
+.me-fig{grid-column:1 / span 4;width:clamp(150px,16vw,240px);aspect-ratio:200/220;mix-blend-mode:multiply;cursor:pointer;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;user-select:none}
+.me-fig:focus-visible{outline:1px solid var(--ink);outline-offset:6px}
 .me-fig img{display:block;width:100%;height:100%;pointer-events:none;-webkit-user-drag:none}
 .me-txt{grid-column:5 / span 7}
 .me-txt .me-k{display:block;margin:0 0 8px}
@@ -462,7 +464,7 @@ body.bs-open main,body.bs-open footer,body.bs-open #top-bar{visibility:hidden}
 }
 @media(max-width:640px){
 :root{--gp:none;--gb:none}
-#about{--sl:16px;--st:94px;--sun:80px}
+#about{--sl:16px;--st:96px;--sun:64px}
 #top-bar{display:grid;grid-template-columns:1fr auto;grid-template-areas:"b l" "n n";gap:0 12px;padding:8px 16px 6px;font-size:.82rem}
 .brand{grid-area:b}
 .lang{grid-area:l}
@@ -609,7 +611,7 @@ footer{padding:0 16px 26px}
     <div class="lang"><button data-l="it">IT</button> / <button data-l="en">EN</button> / <button data-l="fr">FR</button></div>
   </div>
   <div class="me-wrap">
-    <div class="me-fig" id="me-fig" aria-hidden="true"></div>
+    <button class="me-fig" id="me-fig" type="button" aria-label="← Indietro"></button>
     <div class="me-txt"><span class="me-k" data-i="p_me">Il coreografo</span><h1 id="me-h">Michele Ifigenia Colturi</h1><div id="me-bio"></div></div>
   </div>
 </div>
@@ -623,7 +625,7 @@ footer{padding:0 16px 26px}
   <div class="lb-cap"><span id="lb-cn"></span><span id="lb-t"></span></div>
 </div><script src="photos.js"></script>
 <script>
-console.info("Tyche index: versione 25-09 leggera-78");
+console.info("Tyche index: versione 25-09 leggera-80");
 /* coda "al via": i ricami compaiono solo quando parte l'animazione iniziale (vedi ATTESA) */
 var STARTED=false, startQ=[];
 function onStart(f){ if(STARTED) f(); else startQ.push(f); }
@@ -1773,11 +1775,11 @@ document.addEventListener("keydown",function(e){
 /* ============ PAGINA DEL COREOGRAFO ============
    Si apre toccando il pupazzetto (o la scritta sotto). Indirizzo diretto: sito/#michele. Il tasto Indietro del browser la chiude. */
 var meEl=document.getElementById("me");
-function fillMe(){ document.getElementById("me-bio").innerHTML=BIO_ME[LANG].map(function(p){ return "<p>"+p+"</p>"; }).join(""); document.getElementById("me-back").textContent=ui("back"); }
+function fillMe(){ document.getElementById("me-fig").setAttribute("aria-label",ui("back")); document.getElementById("me-bio").innerHTML=BIO_ME[LANG].map(function(p){ return "<p>"+p+"</p>"; }).join(""); document.getElementById("me-back").textContent=ui("back"); }
 function openMe(nohist){
   fillMe();
   var fg=document.getElementById("me-fig");
-  if(!fg.firstChild){ var im=new Image(); im.alt=""; im.decoding="async"; im.draggable=false; im.src=URL.createObjectURL(new Blob([KID.figure()],{type:"image/svg+xml"})); fg.appendChild(im); }
+  if(!fg.firstChild){ var im=new Image(); im.alt=""; im.decoding="async"; im.draggable=false; im.src=URL.createObjectURL(new Blob([KID.figure().replace(/<style>[\s\S]*?<\/style>/,"")],{type:"image/svg+xml"})); fg.appendChild(im); }   /* versione ferma: senza animazione */
   meEl.classList.add("on"); meEl.scrollTop=0; document.body.style.overflow="hidden";
   try{ if(nohist!==true && location.hash!=="#michele") history.pushState({tyche:"me"},"","#michele"); }catch(e){}
 }
@@ -1789,6 +1791,7 @@ function closeMe(fromPop){
 }
 document.getElementById("me-door").onclick=function(){ try{ if(navigator.vibrate) navigator.vibrate(8); }catch(e){} openMe(); };
 document.getElementById("me-back").onclick=function(){ closeMe(); };
+document.getElementById("me-fig").onclick=function(){ try{ if(navigator.vibrate) navigator.vibrate(8); }catch(e){} closeMe(); };   /* tocco sul pupazzetto: si esce */
 document.addEventListener("keydown",function(e){ if(e.key==="Escape"&&meEl.classList.contains("on")) closeMe(); });
 window.addEventListener("popstate",function(){ if(location.hash==="#michele"){ if(!meEl.classList.contains("on")) openMe(true); } else if(meEl.classList.contains("on")) closeMe(true); });
 var PERF=WORKS.filter(function(w){ return w.cat==="perf"; }), SHORT=WORKS.filter(function(w){ return w.cat==="short"; });

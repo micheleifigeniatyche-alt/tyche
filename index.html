@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<!-- VERSIONE 25-09 leggera-96 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
+<!-- VERSIONE 25-09 leggera-97 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Michele Ifigenia / Tyche</title>
@@ -189,7 +189,10 @@ html.cvlogo .tyche-logo{visibility:hidden}
 .me-n{font-size:.92rem}
 /* telefono: sole, freccina e pupazzetto scendono sotto la barra in alto (che occupa circa 75 px), cosi' si vedono interi */
 /* telefono: il pupazzetto sta in fondo alla pagina al posto del fiore rosso, accanto alla margherita bianca (tutti e due portano all'autore) (lo sposta lo script, vedi PUPAZZETTO IN FONDO) */
-@media(max-width:640px){footer .fl[data-k="3"]{display:none}footer .fl[data-k="4"]{display:none}footer .me-door{position:absolute;left:auto;top:auto;right:4px;bottom:-5px;z-index:2}footer .me-door .kube{width:80px}#about{padding-top:184px}}
+/* computer e telefono: in fondo resta solo il pupazzetto, al posto del fiore rosso (i due fiori non ci sono piu') */
+footer .fl{display:none!important}
+footer .me-door{position:absolute;left:auto;top:auto;right:calc(15% - 64px);bottom:-5px;z-index:2}footer .me-door .kube{width:96px}
+@media(max-width:640px){footer .me-door{position:absolute;left:auto;top:auto;right:4px;bottom:-5px;z-index:2}footer .me-door .kube{width:80px}#about{padding-top:184px}}
 @media(max-width:640px){#about{--fw:84px;--ht:198px}.me-door{left:calc(var(--sl) + var(--sun) + 62px)}}
 /* PAGINA DEL COREOGRAFO: su carta chiara come "Dietro le quinte"; pupazzetto grande a sinistra, testo a destra */
 #me{display:none;position:fixed;inset:0;z-index:86;background:var(--paper) var(--gp);background-size:240px 240px;color:var(--ink);overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
@@ -659,7 +662,7 @@ footer{padding:0 16px 26px}
   el.addEventListener("animationend",function(){ var w=el.querySelector(".lw"); if(w){ w.style.willChange="auto"; if(w.firstChild) w.firstChild.style.willChange="auto"; } });
   var rt=0; window.addEventListener("resize",function(){ clearTimeout(rt); rt=setTimeout(draw,200); });
 })();
-console.info("Tyche index: versione 25-09 leggera-96");
+console.info("Tyche index: versione 25-09 leggera-97");
 /* coda "al via": i ricami compaiono solo quando parte l'animazione iniziale (vedi ATTESA) */
 var STARTED=false, startQ=[];
 function onStart(f){ if(STARTED) f(); else startQ.push(f); }
@@ -868,6 +871,7 @@ window.addEventListener("resize",function(){ if(CVL && document.documentElement.
 /* intro solo la prima volta della sessione (o con connessione lenta) */
 (function(){
   var seen=false; try{ seen = sessionStorage.getItem("seen")==="1"; sessionStorage.setItem("seen","1"); }catch(e){}
+  if(/[?&]intro\b/.test(location.search)) seen=false;   /* indirizzo con ?intro: l'animazione iniziale si vede sempre (per provarla) */
   if(seen || slow) document.documentElement.classList.add("seen");
   /* telefono: niente disegno animato del logo (maschera animata, pesante); nome e linea restano */
   if(window.matchMedia && matchMedia("(max-width:640px)").matches){ document.documentElement.classList.add("lite"); if(!(seen||slow)) document.documentElement.classList.add("cvlogo"); }
@@ -1857,7 +1861,7 @@ document.getElementById("me-back").onclick=function(){ closeMe(); };
   var md=document.getElementById("me-door"), abt=document.getElementById("about"), ft=document.querySelector("footer");
   if(!md||!abt||!ft||!window.matchMedia) return;
   var mq=matchMedia("(max-width:640px)");
-  function place(){ if(mq.matches){ if(md.parentNode!==ft) ft.appendChild(md); } else if(md.parentNode!==abt) abt.insertBefore(md,abt.querySelector(".about-body")); }
+  function place(){ if(md.parentNode!==ft) ft.appendChild(md); }   /* ora su tutti gli schermi il pupazzetto sta in fondo */
   place(); if(mq.addEventListener) mq.addEventListener("change",place); else if(mq.addListener) mq.addListener(place);
 })();
 document.getElementById("me-fig").onclick=function(){ try{ if(navigator.vibrate) navigator.vibrate(8); }catch(e){} closeMe(); };   /* tocco sul pupazzetto: si esce */

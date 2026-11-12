@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<!-- VERSIONE 25-09 leggera-88 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
+<!-- VERSIONE 25-09 leggera-91 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Michele Ifigenia / Tyche</title>
@@ -181,12 +181,12 @@ html.cvlogo .tyche-logo{visibility:hidden}
 @media(max-width:640px){#about{--fw:84px;--ht:198px}.me-door{left:calc(var(--sl) + var(--sun) + 62px)}}
 /* PAGINA DEL COREOGRAFO: su carta chiara come "Dietro le quinte"; pupazzetto grande a sinistra, testo a destra */
 #me{display:none;position:fixed;inset:0;z-index:86;background:var(--paper) var(--gp);background-size:240px 240px;color:var(--ink);overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
-#me.on{display:block;animation:bsIn .45s cubic-bezier(.22,.61,.36,1) both}
+#me.on{display:flex;flex-direction:column;animation:bsIn .45s cubic-bezier(.22,.61,.36,1) both}
 .seen #me.on{animation:bsIn .45s cubic-bezier(.22,.61,.36,1) both!important}
 #me .d-top{background:var(--paper) var(--gp);background-size:240px 240px;color:var(--ink)}
-.me-wrap{max-width:1320px;margin:0 auto;padding:64px 24px 90px;display:grid;grid-template-columns:repeat(12,1fr);gap:0 24px;align-items:start}
+.me-wrap{position:relative;flex:1 0 auto;width:100%;max-width:1320px;margin:0 auto;padding:64px 24px 120px;display:grid;grid-template-columns:repeat(12,1fr);gap:0 24px;align-items:start}
 /* nella pagina del coreografo il pupazzetto sta fermo; toccandolo si torna fuori (come il fiorellino azzurro di "Dietro le quinte") */
-.me-fig{grid-column:1 / span 4;width:clamp(124px,13vw,196px);aspect-ratio:200/220;cursor:pointer;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;user-select:none}
+.me-fig{position:absolute;left:calc(24px - max(0px,(100vw - 1320px)/2));bottom:0;width:clamp(54px,4.6vw,70px);aspect-ratio:110/113;cursor:pointer;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;user-select:none}
 .me-fig:focus-visible{outline:1px solid var(--ink);outline-offset:6px}
 .me-fig img{display:block;width:100%;height:100%;pointer-events:none;-webkit-user-drag:none}
 .me-txt{grid-column:5 / span 7}
@@ -194,8 +194,8 @@ html.cvlogo .tyche-logo{visibility:hidden}
 .me-txt h1{margin:0 0 30px;font-size:clamp(1.55rem,3vw,2.5rem);font-weight:600;letter-spacing:-.045em;line-height:1}
 .me-txt p{margin:0 0 16px;font-size:.92rem;line-height:1.6;max-width:62ch}
 .me-txt i{font-style:italic}
-@media(max-width:900px){.me-fig{grid-column:1 / -1;width:100px;margin-bottom:28px}.me-txt{grid-column:1 / -1}}
-@media(max-width:640px){.me-wrap{padding:36px 16px 70px}}
+@media(max-width:900px){.me-fig{left:16px;width:52px}.me-txt{grid-column:1 / -1}}
+@media(max-width:640px){.me-wrap{padding:36px 16px 96px}}
 @media(prefers-reduced-motion:reduce){.kube{transition:none}#me.on{animation:none!important}}
 footer{position:relative;overflow:hidden;min-height:210px;align-content:flex-start;padding:0 24px 34px;font-size:.8rem;color:var(--mute);font-weight:600;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 footer>span{position:relative;z-index:1}
@@ -627,7 +627,7 @@ footer{padding:0 16px 26px}
   <div class="lb-cap"><span id="lb-cn"></span><span id="lb-t"></span></div>
 </div><script src="photos.js"></script>
 <script>
-console.info("Tyche index: versione 25-09 leggera-88");
+console.info("Tyche index: versione 25-09 leggera-91");
 /* coda "al via": i ricami compaiono solo quando parte l'animazione iniziale (vedi ATTESA) */
 var STARTED=false, startQ=[];
 function onStart(f){ if(STARTED) f(); else startQ.push(f); }
@@ -1055,7 +1055,7 @@ var KID=(function(){
     g.push('<g class="lu">'+pencilLine([[100,77],[76,59]],3.8,gr,7)+'<g class="lf">'+pencilLine([[77,60],[62,27]],3.8,gr,7)+'</g></g>');   /* braccio alzato che saluta */
     g.push('<g class="ro">'+pencilLine([[100,79],[130,91],[160,83]],3.8,gr,9)+'</g>');                 /* braccio aperto */
     g.push('<g class="ls">'+pencilLine([[97,134],[88,170],[80,206],[66,210]],4,gr,10)+'</g>');         /* gamba d'appoggio + piede */
-    g.push('<g class="lk">'+pencilLine([[97,134],[132,160],[166,174]],4,gr,10)+'</g>');                /* gamba slanciata */
+    var legStr=pencilLine([[97,134],[132,160],[166,174]],4,gr,10); g.push('<g class="lk">'+legStr+'</g>');                /* gamba slanciata */
     out.push('<g'+FL+' fill="none" stroke-linecap="round" stroke-linejoin="round">'+g.join("")+'</g>');
     /* capelli biondi a raggi di sole: trattini di matita colorata in piu' toni, ognuno fatto di 3 passate */
     var hair=[], cols=["#e9b520","#d29a12","#f2c63a","#c88d10"];
@@ -1111,13 +1111,21 @@ var KID=(function(){
       +'.figa .ro{transform-origin:100px 79px;animation-name:fg-ro;animation-duration:6.6s}'
       +'.figa .ls{transform-origin:97px 134px;animation-name:fg-ls;animation-duration:8.3s}'
       +'.figa .lk{transform-origin:97px 134px;animation-name:fg-lk;animation-duration:7.46s}'
-      +'@keyframes fg-lu{from{transform:rotate(-5deg)}to{transform:rotate(6deg)}}'
-      +'@keyframes fg-lf{from{transform:rotate(-16deg)}to{transform:rotate(14deg)}}'
-      +'@keyframes fg-ro{from{transform:rotate(-6deg)}to{transform:rotate(7deg)}}'
+      +'@keyframes fg-lu{from{transform:rotate(-8deg)}to{transform:rotate(9deg)}}'
+      +'@keyframes fg-lf{from{transform:rotate(-26deg)}to{transform:rotate(20deg)}}'
+      +'@keyframes fg-ro{from{transform:rotate(-9deg)}to{transform:rotate(10deg)}}'
       +'@keyframes fg-ls{from{transform:rotate(-1.4deg)}to{transform:rotate(1.4deg)}}'
-      +'@keyframes fg-lk{from{transform:rotate(-7deg)}to{transform:rotate(5deg)}}'
+      +'@keyframes fg-lk{from{transform:rotate(-10deg)}to{transform:rotate(7deg)}}'
       +'@media(prefers-reduced-motion:reduce){.figa .lu,.figa .lf,.figa .ro,.figa .ls,.figa .lk{animation:none}}'
       +'</style>':'';
+    /* SOLO LA GAMBA (pagina del coreografo): la gamba con il fiore e le foglioline, piantata nel terreno come un fiore, il fiore in alto */
+    if(opt&&opt.legOnly){
+      var gnd=pencilLine([[70,135.5],[84,134.6],[97,135.2],[111,134.4],[125,135.6]],2.8,"#4a3423",4,1.1);
+      for(var gi=0;gi<7;gi++){ var gx=76+gi*7.5+(R()-.5)*3; gnd+=pencilLine([[gx,135],[gx+(R()-.5)*5,128-R()*6]],2,"#2f8a4c",2,1.1); }
+      return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="42 24 110 113" width="100%" height="100%" aria-hidden="true" focusable="false">'
+        +'<g transform="rotate(-120 97 134)"><g fill="none" stroke-linecap="round" stroke-linejoin="round">'+legStr+fl.join("")+'</g></g>'
+        +'<g fill="none" stroke-linecap="round" stroke-linejoin="round">'+gnd+'</g></svg>';
+    }
     return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 220" width="100%" height="100%"'+(mv?' class="figa"':'')+' aria-hidden="true" focusable="false">'+(CR?'':'<defs>'+pg+'</defs>')+mv+out.join("")+'</svg>';
   }
   return {flower:flower,sun:sun,cube:cube,figure:figure};
@@ -1799,7 +1807,7 @@ function fillMe(){ document.getElementById("me-fig").setAttribute("aria-label",u
 function openMe(nohist){
   fillMe();
   var fg=document.getElementById("me-fig");
-  if(!fg.firstChild) fg.innerHTML=KID.figure({crisp:true});   /* versione ferma (senza movimento), nitida */
+  if(!fg.firstChild) fg.innerHTML=KID.figure({crisp:true,legOnly:true});   /* nella pagina del coreografo: solo la gamba-fiore piantata */   /* versione ferma (senza movimento), nitida */
   meEl.classList.add("on"); meEl.scrollTop=0; document.body.style.overflow="hidden";
   try{ if(nohist!==true && location.hash!=="#michele") history.pushState({tyche:"me"},"","#michele"); }catch(e){}
 }

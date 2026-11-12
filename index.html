@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<!-- VERSIONE 25-09 leggera-84 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
+<!-- VERSIONE 25-09 leggera-85 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Michele Ifigenia / Tyche</title>
@@ -176,6 +176,8 @@ html.cvlogo .tyche-logo{visibility:hidden}
 .me-door .kube{width:var(--fw);margin:0}
 .me-n{font-size:.92rem}
 /* telefono: sole, freccina e pupazzetto scendono sotto la barra in alto (che occupa circa 75 px), cosi' si vedono interi */
+/* telefono: il pupazzetto sta in fondo alla pagina, in piedi accanto ai due fiori (lo sposta lo script, vedi PUPAZZETTO IN FONDO) */
+@media(max-width:640px){footer .me-door{position:absolute;left:auto;top:auto;right:33%;bottom:-5px;z-index:2}footer .me-door .kube{width:80px}#about{padding-top:184px}}
 @media(max-width:640px){#about{--fw:84px;--ht:198px}.me-door{left:calc(var(--sl) + var(--sun) + 62px)}}
 /* PAGINA DEL COREOGRAFO: su carta chiara come "Dietro le quinte"; pupazzetto grande a sinistra, testo a destra */
 #me{display:none;position:fixed;inset:0;z-index:86;background:var(--paper) var(--gp);background-size:240px 240px;color:var(--ink);overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
@@ -464,7 +466,7 @@ body.bs-open main,body.bs-open footer,body.bs-open #top-bar{visibility:hidden}
 }
 @media(max-width:640px){
 :root{--gp:none;--gb:none}
-#about{--sl:16px;--st:96px;--sun:64px}
+#about{--sl:16px;--st:88px;--sun:72px}
 #top-bar{display:grid;grid-template-columns:1fr auto;grid-template-areas:"b l" "n n";gap:0 12px;padding:8px 16px 6px;font-size:.82rem}
 .brand{grid-area:b}
 .lang{grid-area:l}
@@ -625,7 +627,7 @@ footer{padding:0 16px 26px}
   <div class="lb-cap"><span id="lb-cn"></span><span id="lb-t"></span></div>
 </div><script src="photos.js"></script>
 <script>
-console.info("Tyche index: versione 25-09 leggera-84");
+console.info("Tyche index: versione 25-09 leggera-85");
 /* coda "al via": i ricami compaiono solo quando parte l'animazione iniziale (vedi ATTESA) */
 var STARTED=false, startQ=[];
 function onStart(f){ if(STARTED) f(); else startQ.push(f); }
@@ -1104,11 +1106,11 @@ var KID=(function(){
        Chi ha chiesto meno movimento nel sistema lo vede fermo. */
     var mv=(opt&&opt.anim)?'<style>'
       +'.figa .lu,.figa .lf,.figa .ro,.figa .ls,.figa .lk{transform-box:view-box;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-direction:alternate}'
-      +'.figa .lu{transform-origin:100px 77px;animation-name:fg-lu;animation-duration:4s}'
-      +'.figa .lf{transform-origin:77px 60px;animation-name:fg-lf;animation-duration:1.05s}'
-      +'.figa .ro{transform-origin:100px 79px;animation-name:fg-ro;animation-duration:5.75s}'
-      +'.figa .ls{transform-origin:97px 134px;animation-name:fg-ls;animation-duration:7.25s}'
-      +'.figa .lk{transform-origin:97px 134px;animation-name:fg-lk;animation-duration:6.5s}'
+      +'.figa .lu{transform-origin:100px 77px;animation-name:fg-lu;animation-duration:5.4s}'
+      +'.figa .lf{transform-origin:77px 60px;animation-name:fg-lf;animation-duration:1.42s}'
+      +'.figa .ro{transform-origin:100px 79px;animation-name:fg-ro;animation-duration:7.76s}'
+      +'.figa .ls{transform-origin:97px 134px;animation-name:fg-ls;animation-duration:9.8s}'
+      +'.figa .lk{transform-origin:97px 134px;animation-name:fg-lk;animation-duration:8.78s}'
       +'@keyframes fg-lu{from{transform:rotate(-5deg)}to{transform:rotate(6deg)}}'
       +'@keyframes fg-lf{from{transform:rotate(-16deg)}to{transform:rotate(14deg)}}'
       +'@keyframes fg-ro{from{transform:rotate(-6deg)}to{transform:rotate(7deg)}}'
@@ -1809,6 +1811,14 @@ function closeMe(fromPop){
 }
 document.getElementById("me-door").onclick=function(){ try{ if(navigator.vibrate) navigator.vibrate(8); }catch(e){} openMe(); };
 document.getElementById("me-back").onclick=function(){ closeMe(); };
+/* PUPAZZETTO IN FONDO sul telefono: lo stesso pulsante passa nel footer accanto ai fiori; sul computer torna sulle lettere del titolo */
+(function(){
+  var md=document.getElementById("me-door"), abt=document.getElementById("about"), ft=document.querySelector("footer");
+  if(!md||!abt||!ft||!window.matchMedia) return;
+  var mq=matchMedia("(max-width:640px)");
+  function place(){ if(mq.matches){ if(md.parentNode!==ft) ft.appendChild(md); } else if(md.parentNode!==abt) abt.insertBefore(md,abt.querySelector(".about-body")); }
+  place(); if(mq.addEventListener) mq.addEventListener("change",place); else if(mq.addListener) mq.addListener(place);
+})();
 document.getElementById("me-fig").onclick=function(){ try{ if(navigator.vibrate) navigator.vibrate(8); }catch(e){} closeMe(); };   /* tocco sul pupazzetto: si esce */
 document.addEventListener("keydown",function(e){ if(e.key==="Escape"&&meEl.classList.contains("on")) closeMe(); });
 window.addEventListener("popstate",function(){ if(location.hash==="#michele"){ if(!meEl.classList.contains("on")) openMe(true); } else if(meEl.classList.contains("on")) closeMe(true); });

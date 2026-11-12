@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<!-- VERSIONE 25-09 leggera-82 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
+<!-- VERSIONE 25-09 leggera-84 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Michele Ifigenia / Tyche</title>
@@ -160,9 +160,9 @@ html.cvlogo .tyche-logo{visibility:hidden}
 .links a{font-weight:600;font-size:1rem;text-decoration:none;border-bottom:1px solid currentColor}
 /* PUPAZZETTO a matita sotto "Percorso e contatti" (stesso stile di fiori e sole), con la scritta Autore / nome sotto.
    E' un pulsante: toccandolo si apre la pagina con la biografia del coreografo (#me). Per riavere il cubo: KID.cube al posto di KID.figure. */
-.kube{position:relative;display:block;pointer-events:none;opacity:0;mix-blend-mode:multiply;-webkit-user-select:none;user-select:none;transform-origin:50% 95%;transition:opacity 1.8s cubic-bezier(.3,.6,.3,1) .35s,rotate 1.4s cubic-bezier(.35,0,.2,1)}
+.kube{position:relative;display:block;pointer-events:none;opacity:0;-webkit-user-select:none;user-select:none;transform-origin:50% 95%;transition:opacity 1.8s cubic-bezier(.3,.6,.3,1) .35s,rotate 1.4s cubic-bezier(.35,0,.2,1)}
 .kube.on{opacity:1}
-.kube img{display:block;width:100%;height:100%;pointer-events:none}
+.kube svg,.me-fig svg{display:block;width:100%;height:100%;overflow:visible;pointer-events:none}
 .me-door{position:absolute;left:calc(var(--sl) + 6px);top:calc(150px + clamp(1.5rem,3.1vw,2.3rem) + 56px);display:flex;flex-direction:column;align-items:flex-start;text-align:left;color:var(--ink);-webkit-tap-highlight-color:transparent}
 .me-door .kube{width:clamp(76px,6.6vw,104px);aspect-ratio:200/220;margin-bottom:10px}
 .me-lbl{display:flex;flex-direction:column;gap:4px}
@@ -176,7 +176,7 @@ html.cvlogo .tyche-logo{visibility:hidden}
 .me-door .kube{width:var(--fw);margin:0}
 .me-n{font-size:.92rem}
 /* telefono: sole, freccina e pupazzetto scendono sotto la barra in alto (che occupa circa 75 px), cosi' si vedono interi */
-@media(max-width:640px){#about{--fw:84px;--ht:198px}.me-door{left:calc(var(--sl) + var(--sun) + 62px)}.kube{mix-blend-mode:normal}}
+@media(max-width:640px){#about{--fw:84px;--ht:198px}.me-door{left:calc(var(--sl) + var(--sun) + 62px)}}
 /* PAGINA DEL COREOGRAFO: su carta chiara come "Dietro le quinte"; pupazzetto grande a sinistra, testo a destra */
 #me{display:none;position:fixed;inset:0;z-index:86;background:var(--paper) var(--gp);background-size:240px 240px;color:var(--ink);overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
 #me.on{display:block;animation:bsIn .45s cubic-bezier(.22,.61,.36,1) both}
@@ -184,7 +184,7 @@ html.cvlogo .tyche-logo{visibility:hidden}
 #me .d-top{background:var(--paper) var(--gp);background-size:240px 240px;color:var(--ink)}
 .me-wrap{max-width:1320px;margin:0 auto;padding:64px 24px 90px;display:grid;grid-template-columns:repeat(12,1fr);gap:0 24px;align-items:start}
 /* nella pagina del coreografo il pupazzetto sta fermo; toccandolo si torna fuori (come il fiorellino azzurro di "Dietro le quinte") */
-.me-fig{grid-column:1 / span 4;width:clamp(150px,16vw,240px);aspect-ratio:200/220;mix-blend-mode:multiply;cursor:pointer;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;user-select:none}
+.me-fig{grid-column:1 / span 4;width:clamp(150px,16vw,240px);aspect-ratio:200/220;cursor:pointer;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;user-select:none}
 .me-fig:focus-visible{outline:1px solid var(--ink);outline-offset:6px}
 .me-fig img{display:block;width:100%;height:100%;pointer-events:none;-webkit-user-drag:none}
 .me-txt{grid-column:5 / span 7}
@@ -625,7 +625,7 @@ footer{padding:0 16px 26px}
   <div class="lb-cap"><span id="lb-cn"></span><span id="lb-t"></span></div>
 </div><script src="photos.js"></script>
 <script>
-console.info("Tyche index: versione 25-09 leggera-82");
+console.info("Tyche index: versione 25-09 leggera-84");
 /* coda "al via": i ricami compaiono solo quando parte l'animazione iniziale (vedi ATTESA) */
 var STARTED=false, startQ=[];
 function onStart(f){ if(STARTED) f(); else startQ.push(f); }
@@ -1063,18 +1063,29 @@ var KID=(function(){
       hair.push(pencilLine([[x0,y0],[x1,y1]],2.6,cols[j%4],3,1.25));
     }
     out.push('<g'+FL+' fill="none" stroke-linecap="round">'+hair.join("")+'</g>');
-    /* fiorellino sul piede slanciato: gambo cortissimo verde, cinque petali rossi a matita (contorno + tratteggio), centro giallo */
-    var FX=172, FY=165, fl=[];
-    fl.push(pencilLine([[166.5,173.5],[169,169.5],[FX,FY+1]],2.4,"#1f8a4c",3,1.3));
+    /* la gamba slanciata finisce in un fiorellino al posto del piede (cinque petali rossi a matita, centro giallo)
+       e lungo la gamba spuntano due foglioline verdi, una per lato, come sul gambo di un fiore */
+    var KX=132, KY=160, EX=166, EY=174, dl=Math.hypot(EX-KX,EY-KY), ux=(EX-KX)/dl, uy=(EY-KY)/dl;
+    var FX=EX+ux*5.5, FY=EY+uy*5.5, fl=[];
+    function leaf(bx,by,ang,len,wd){
+      var tx=bx+Math.cos(ang)*len, ty=by+Math.sin(ang)*len, nx=-Math.sin(ang), ny=Math.cos(ang), L1=[], L2=[];
+      for(var u=0;u<=8;u++){ var t=u/8, bw=Math.sin(t*Math.PI)*wd*(1-t*.25), px=bx+(tx-bx)*t, py=by+(ty-by)*t; L1.push([px+nx*bw,py+ny*bw]); L2.unshift([px-nx*bw,py-ny*bw]); }
+      var o=pencilLine(L1.concat(L2),1.8,"#17703e",3,1.3)+pencilLine([[bx,by],[bx+(tx-bx)*.85,by+(ty-by)*.85]],1.4,"#17703e",2,1);
+      for(var h=1;h<=4;h++){ var t=h/5, bw=Math.sin(t*Math.PI)*wd*.75, px=bx+(tx-bx)*t, py=by+(ty-by)*t; o+=pencilLine([[px-nx*bw,py-ny*bw],[px+nx*bw+Math.cos(ang)*1.5,py+ny*bw+Math.sin(ang)*1.5]],2.2,"#2fa35f",2,.9); }
+      return o;
+    }
+    var la=Math.atan2(uy,ux), hx=(KX-97)/Math.hypot(KX-97,KY-134), hy=(KY-134)/Math.hypot(KX-97,KY-134), ha=Math.atan2(hy,hx);
+    fl.push(leaf(KX+(EX-KX)*.42, KY+(EY-KY)*.42, la-1.05, 13, 4.3));          /* fogliolina sopra, verso l'alto */
+    fl.push(leaf(97+(KX-97)*.58, 134+(KY-134)*.58, ha+1.1, 12.5, 4.1));        /* fogliolina sotto, sulla coscia */
     var a0=R()*6.3;
     for(var q=0;q<5;q++){
-      var pa=a0+q/5*2*Math.PI+(R()-.5)*.2, pcx=FX+Math.cos(pa)*5.2, pcy=FY+Math.sin(pa)*5.2, lp=[];
-      for(var u=0;u<=10;u++){ var t=u/10*2*Math.PI*1.08, ex=Math.cos(t)*4.4, ey=Math.sin(t)*2.9; lp.push([pcx+ex*Math.cos(pa)-ey*Math.sin(pa), pcy+ex*Math.sin(pa)+ey*Math.cos(pa)]); }
+      var pa=a0+q/5*2*Math.PI+(R()-.5)*.2, pcx=FX+Math.cos(pa)*5.8, pcy=FY+Math.sin(pa)*5.8, lp=[];
+      for(var u=0;u<=10;u++){ var t=u/10*2*Math.PI*1.08, ex=Math.cos(t)*4.9, ey=Math.sin(t)*3.2; lp.push([pcx+ex*Math.cos(pa)-ey*Math.sin(pa), pcy+ex*Math.sin(pa)+ey*Math.cos(pa)]); }
       fl.push(pencilLine(lp,1.9,"#d4231a",3,1.3));
-      fl.push(pencilLine([[pcx-Math.cos(pa)*2.6,pcy-Math.sin(pa)*2.6],[pcx+Math.cos(pa)*3,pcy+Math.sin(pa)*3]],3.4,"#ea3a24",3,.9));
+      fl.push(pencilLine([[pcx-Math.cos(pa)*2.8,pcy-Math.sin(pa)*2.8],[pcx+Math.cos(pa)*3.3,pcy+Math.sin(pa)*3.3]],3.6,"#ea3a24",3,.9));
     }
-    var cp=[]; for(var u=0;u<=9;u++){ var t=u/9*2*Math.PI*1.1; cp.push([FX+Math.cos(t)*2.1, FY+Math.sin(t)*2.1]); }
-    fl.push(pencilLine(cp,2.4,"#f0b81c",3,1.4));
+    var cp=[]; for(var u=0;u<=9;u++){ var t=u/9*2*Math.PI*1.1; cp.push([FX+Math.cos(t)*2.3, FY+Math.sin(t)*2.3]); }
+    fl.push(pencilLine(cp,2.5,"#f0b81c",3,1.4));
     out.push('<g class="lk"><g'+FL+' fill="none" stroke-linecap="round" stroke-linejoin="round">'+fl.join("")+'</g></g>');   /* il fiore segue la gamba */
     /* occhi azzurri: due trattini di matita azzurra */
     out.push('<g'+FL+' fill="none" stroke-linecap="round">'+pencilLine([[94.4,41.2],[96.6,41.6]],3,"#2f7fe0",4,1.5)+pencilLine([[105.3,41.5],[107.5,41.1]],3,"#2f7fe0",4,1.5)+'</g>');
@@ -1087,21 +1098,25 @@ var KID=(function(){
     /* MOVIMENTO continuo e leggero (animazione dentro il disegno, nessuno script): l'avambraccio saluta dal gomito,
        il braccio alzato e quello aperto ondeggiano dalla spalla, la gamba slanciata (con il fiore) dall'anca,
        la gamba d'appoggio quasi ferma cosi' il piede resta sulle lettere. Chi ha chiesto meno movimento nel sistema lo vede fermo. */
-    var mv='<style>'
-      +'.lu,.lf,.ro,.ls,.lk{transform-box:view-box;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-direction:alternate}'
-      +'.lu{transform-origin:100px 77px;animation-name:lu;animation-duration:2.67s}'
-      +'.lf{transform-origin:77px 60px;animation-name:lf;animation-duration:.7s}'
-      +'.ro{transform-origin:100px 79px;animation-name:ro;animation-duration:3.83s}'
-      +'.ls{transform-origin:97px 134px;animation-name:ls;animation-duration:4.83s}'
-      +'.lk{transform-origin:97px 134px;animation-name:lk;animation-duration:4.33s}'
-      +'@keyframes lu{from{transform:rotate(-5deg)}to{transform:rotate(6deg)}}'
-      +'@keyframes lf{from{transform:rotate(-16deg)}to{transform:rotate(14deg)}}'
-      +'@keyframes ro{from{transform:rotate(-6deg)}to{transform:rotate(7deg)}}'
-      +'@keyframes ls{from{transform:rotate(-1.4deg)}to{transform:rotate(1.4deg)}}'
-      +'@keyframes lk{from{transform:rotate(-7deg)}to{transform:rotate(5deg)}}'
-      +'@media(prefers-reduced-motion:reduce){.lu,.lf,.ro,.ls,.lk{animation:none}}'
-      +'</style>';
-    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 220"><defs>'+pg+'</defs>'+mv+out.join("")+'</svg>';
+    /* MOVIMENTO lento e continuo (solo con opt.anim): l'avambraccio saluta dal gomito, le braccia ondeggiano dalla spalla,
+       la gamba slanciata (con il fiore) dall'anca, la gamba d'appoggio quasi ferma cosi' il piede resta sulle lettere.
+       Nomi con "fg-" e regole limitate a .figa: il disegno ora e' DENTRO la pagina (non piu' un'immagine), cosi' e' sempre nitido.
+       Chi ha chiesto meno movimento nel sistema lo vede fermo. */
+    var mv=(opt&&opt.anim)?'<style>'
+      +'.figa .lu,.figa .lf,.figa .ro,.figa .ls,.figa .lk{transform-box:view-box;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-direction:alternate}'
+      +'.figa .lu{transform-origin:100px 77px;animation-name:fg-lu;animation-duration:4s}'
+      +'.figa .lf{transform-origin:77px 60px;animation-name:fg-lf;animation-duration:1.05s}'
+      +'.figa .ro{transform-origin:100px 79px;animation-name:fg-ro;animation-duration:5.75s}'
+      +'.figa .ls{transform-origin:97px 134px;animation-name:fg-ls;animation-duration:7.25s}'
+      +'.figa .lk{transform-origin:97px 134px;animation-name:fg-lk;animation-duration:6.5s}'
+      +'@keyframes fg-lu{from{transform:rotate(-5deg)}to{transform:rotate(6deg)}}'
+      +'@keyframes fg-lf{from{transform:rotate(-16deg)}to{transform:rotate(14deg)}}'
+      +'@keyframes fg-ro{from{transform:rotate(-6deg)}to{transform:rotate(7deg)}}'
+      +'@keyframes fg-ls{from{transform:rotate(-1.4deg)}to{transform:rotate(1.4deg)}}'
+      +'@keyframes fg-lk{from{transform:rotate(-7deg)}to{transform:rotate(5deg)}}'
+      +'@media(prefers-reduced-motion:reduce){.figa .lu,.figa .lf,.figa .ro,.figa .ls,.figa .lk{animation:none}}'
+      +'</style>':'';
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 220" width="100%" height="100%"'+(mv?' class="figa"':'')+' aria-hidden="true" focusable="false">'+(CR?'':'<defs>'+pg+'</defs>')+mv+out.join("")+'</svg>';
   }
   return {flower:flower,sun:sun,cube:cube,figure:figure};
 })();
@@ -1182,8 +1197,8 @@ var KID=(function(){
   }
   /* sole, in "Percorso e contatti" (in alto a sinistra); come i fiori del footer si costruisce con largo anticipo (1600 px prima), cosi' quando ci arrivi e' gia' li' */
   var abt=document.getElementById("about");
-  var FIGCRISP=!!(window.matchMedia&&matchMedia("(hover:none),(max-width:900px)").matches);
-  var kb=document.getElementById("kube"); if(kb){ FQ.push(function(){ put(kb,function(){ return KID.figure({crisp:FIGCRISP}); },false,""); }); }
+  /* pupazzetto: disegnato direttamente nella pagina (vettoriale vero, nitido su Mac, iPhone e con lo zoom), con il movimento */
+  var kb=document.getElementById("kube"); if(kb){ FQ.push(function(){ kb.innerHTML=KID.figure({crisp:true,anim:true}); requestAnimationFrame(function(){ kb.classList.add("on"); }); }); }
   if(abt){ var sun=document.createElement("div"); sun.className="sun"; abt.appendChild(sun); FQ.push(function(){ put(sun,KID.sun,false,"sun"); }); }
   /* freccia-suggerimento accanto al sole (vedi .bs-hint): si traccia fotogramma per fotogramma con la stessa curva del logo,
      quando la freccia stessa e' ben dentro lo schermo; si ridisegna a ogni visita (sparisce solo dopo aver aperto "Dietro le quinte") */
@@ -1782,7 +1797,7 @@ function fillMe(){ document.getElementById("me-fig").setAttribute("aria-label",u
 function openMe(nohist){
   fillMe();
   var fg=document.getElementById("me-fig");
-  if(!fg.firstChild){ var im=new Image(); im.alt=""; im.decoding="async"; im.draggable=false; im.src=URL.createObjectURL(new Blob([KID.figure({crisp:!!(window.matchMedia&&matchMedia("(hover:none),(max-width:900px)").matches)}).replace(/<style>[\s\S]*?<\/style>/,"")],{type:"image/svg+xml"})); fg.appendChild(im); }   /* versione ferma: senza animazione */
+  if(!fg.firstChild) fg.innerHTML=KID.figure({crisp:true});   /* versione ferma (senza movimento), nitida */
   meEl.classList.add("on"); meEl.scrollTop=0; document.body.style.overflow="hidden";
   try{ if(nohist!==true && location.hash!=="#michele") history.pushState({tyche:"me"},"","#michele"); }catch(e){}
 }

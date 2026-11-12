@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<!-- VERSIONE 25-09 leggera-80 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
+<!-- VERSIONE 25-09 leggera-82 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Michele Ifigenia / Tyche</title>
@@ -176,7 +176,7 @@ html.cvlogo .tyche-logo{visibility:hidden}
 .me-door .kube{width:var(--fw);margin:0}
 .me-n{font-size:.92rem}
 /* telefono: sole, freccina e pupazzetto scendono sotto la barra in alto (che occupa circa 75 px), cosi' si vedono interi */
-@media(max-width:640px){#about{--fw:112px;--ht:198px}.me-door{left:calc(var(--sl) + var(--sun) + 58px)}}
+@media(max-width:640px){#about{--fw:84px;--ht:198px}.me-door{left:calc(var(--sl) + var(--sun) + 62px)}.kube{mix-blend-mode:normal}}
 /* PAGINA DEL COREOGRAFO: su carta chiara come "Dietro le quinte"; pupazzetto grande a sinistra, testo a destra */
 #me{display:none;position:fixed;inset:0;z-index:86;background:var(--paper) var(--gp);background-size:240px 240px;color:var(--ink);overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
 #me.on{display:block;animation:bsIn .45s cubic-bezier(.22,.61,.36,1) both}
@@ -557,7 +557,7 @@ footer{padding:0 16px 26px}
 
 <section id="about">
   <h2 data-i="about">Percorso e contatti</h2>
-  <button class="me-door" id="me-door" type="button"><span class="kube" id="kube" aria-hidden="true"></span></button>
+  <button class="me-door" id="me-door" type="button" title="Autore"><span class="kube" id="kube" aria-hidden="true"></span></button>
   <div class="about-body">
     <p id="bio"></p>
     <div class="links">
@@ -625,7 +625,7 @@ footer{padding:0 16px 26px}
   <div class="lb-cap"><span id="lb-cn"></span><span id="lb-t"></span></div>
 </div><script src="photos.js"></script>
 <script>
-console.info("Tyche index: versione 25-09 leggera-80");
+console.info("Tyche index: versione 25-09 leggera-82");
 /* coda "al via": i ricami compaiono solo quando parte l'animazione iniziale (vedi ATTESA) */
 var STARTED=false, startQ=[];
 function onStart(f){ if(STARTED) f(); else startQ.push(f); }
@@ -1011,7 +1011,8 @@ var KID=(function(){
      (dove la matita si appoggia e si stacca il segno e' piu' leggero); sopra c'e' la grana della carta (filtro "pg"),
      che lascia piccoli vuoti dentro il tratto come sulla carta ruvida. Tutto vettoriale: nitido anche ingrandito.
      Testa vuota, capelli corti biondi a matita colorata, occhi azzurri a due trattini. */
-  function figure(){
+  function figure(opt){
+    var CR=!!(opt&&opt.crisp), FL=CR?'':' filter="url(#pg)"';   /* crisp: telefono/tablet, nessun filtro (su iPhone sfocava), grana fatta con tratti spezzati */
     var R=rng(53), out=[];
     /* punti fitti lungo la linea che passa per i punti dati, con una leggera curvatura casuale per ogni tratto */
     function dense(P){
@@ -1034,7 +1035,8 @@ var KID=(function(){
           pts.push(f(D[i][0]-ty/tl*d)+" "+f(D[i][1]+tx/tl*d));
         }
         if(pts.length<2) continue;
-        o+='<path d="M'+pts.join(" L")+'" stroke="'+col+'" stroke-width="'+f(w*(.2+R()*.18))+'" opacity="'+Math.min(.97,(op||1)*(.55+R()*.4)).toFixed(2)+'"/>';
+        var da=CR&&p>0?' stroke-dasharray="'+f(2+R()*5)+' '+f(.4+R()*.8)+'" stroke-dashoffset="'+f(R()*6)+'"':'';
+        o+='<path d="M'+pts.join(" L")+'" stroke="'+col+'" stroke-width="'+f(w*(.2+R()*.18))+'" opacity="'+Math.min(.97,(op||1)*(.55+R()*.4)).toFixed(2)+'"'+da+'/>';
       }
       return o;
     }
@@ -1052,7 +1054,7 @@ var KID=(function(){
     g.push('<g class="ro">'+pencilLine([[100,79],[130,91],[160,83]],3.8,gr,9)+'</g>');                 /* braccio aperto */
     g.push('<g class="ls">'+pencilLine([[97,134],[88,170],[80,206],[66,210]],4,gr,10)+'</g>');         /* gamba d'appoggio + piede */
     g.push('<g class="lk">'+pencilLine([[97,134],[132,160],[166,174]],4,gr,10)+'</g>');                /* gamba slanciata */
-    out.push('<g filter="url(#pg)" fill="none" stroke-linecap="round" stroke-linejoin="round">'+g.join("")+'</g>');
+    out.push('<g'+FL+' fill="none" stroke-linecap="round" stroke-linejoin="round">'+g.join("")+'</g>');
     /* capelli biondi a raggi di sole: trattini di matita colorata in piu' toni, ognuno fatto di 3 passate */
     var hair=[], cols=["#e9b520","#d29a12","#f2c63a","#c88d10"];
     for(var j=0;j<30;j++){   /* raggi tutto intorno al viso, come un sole; libero solo sotto il mento (collo) */
@@ -1060,7 +1062,7 @@ var KID=(function(){
       var x0=CX+Math.cos(an)*r0, y0=CY+Math.sin(an)*r0*1.08, x1=CX+Math.cos(an)*r1, y1=CY+Math.sin(an)*r1*1.08;
       hair.push(pencilLine([[x0,y0],[x1,y1]],2.6,cols[j%4],3,1.25));
     }
-    out.push('<g filter="url(#pg)" fill="none" stroke-linecap="round">'+hair.join("")+'</g>');
+    out.push('<g'+FL+' fill="none" stroke-linecap="round">'+hair.join("")+'</g>');
     /* fiorellino sul piede slanciato: gambo cortissimo verde, cinque petali rossi a matita (contorno + tratteggio), centro giallo */
     var FX=172, FY=165, fl=[];
     fl.push(pencilLine([[166.5,173.5],[169,169.5],[FX,FY+1]],2.4,"#1f8a4c",3,1.3));
@@ -1073,9 +1075,9 @@ var KID=(function(){
     }
     var cp=[]; for(var u=0;u<=9;u++){ var t=u/9*2*Math.PI*1.1; cp.push([FX+Math.cos(t)*2.1, FY+Math.sin(t)*2.1]); }
     fl.push(pencilLine(cp,2.4,"#f0b81c",3,1.4));
-    out.push('<g class="lk"><g filter="url(#pg)" fill="none" stroke-linecap="round" stroke-linejoin="round">'+fl.join("")+'</g></g>');   /* il fiore segue la gamba */
+    out.push('<g class="lk"><g'+FL+' fill="none" stroke-linecap="round" stroke-linejoin="round">'+fl.join("")+'</g></g>');   /* il fiore segue la gamba */
     /* occhi azzurri: due trattini di matita azzurra */
-    out.push('<g filter="url(#pg)" fill="none" stroke-linecap="round">'+pencilLine([[94.4,41.2],[96.6,41.6]],3,"#2f7fe0",4,1.5)+pencilLine([[105.3,41.5],[107.5,41.1]],3,"#2f7fe0",4,1.5)+'</g>');
+    out.push('<g'+FL+' fill="none" stroke-linecap="round">'+pencilLine([[94.4,41.2],[96.6,41.6]],3,"#2f7fe0",4,1.5)+pencilLine([[105.3,41.5],[107.5,41.1]],3,"#2f7fe0",4,1.5)+'</g>');
     var pg='<filter id="pg" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">'
       +'<feTurbulence type="fractalNoise" baseFrequency="1.15" numOctaves="2" seed="61" result="n"/>'
       +'<feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -2 0 0 0 1.85" result="m"/>'
@@ -1087,11 +1089,11 @@ var KID=(function(){
        la gamba d'appoggio quasi ferma cosi' il piede resta sulle lettere. Chi ha chiesto meno movimento nel sistema lo vede fermo. */
     var mv='<style>'
       +'.lu,.lf,.ro,.ls,.lk{transform-box:view-box;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-direction:alternate}'
-      +'.lu{transform-origin:100px 77px;animation-name:lu;animation-duration:1.6s}'
-      +'.lf{transform-origin:77px 60px;animation-name:lf;animation-duration:.42s}'
-      +'.ro{transform-origin:100px 79px;animation-name:ro;animation-duration:2.3s}'
-      +'.ls{transform-origin:97px 134px;animation-name:ls;animation-duration:2.9s}'
-      +'.lk{transform-origin:97px 134px;animation-name:lk;animation-duration:2.6s}'
+      +'.lu{transform-origin:100px 77px;animation-name:lu;animation-duration:2.67s}'
+      +'.lf{transform-origin:77px 60px;animation-name:lf;animation-duration:.7s}'
+      +'.ro{transform-origin:100px 79px;animation-name:ro;animation-duration:3.83s}'
+      +'.ls{transform-origin:97px 134px;animation-name:ls;animation-duration:4.83s}'
+      +'.lk{transform-origin:97px 134px;animation-name:lk;animation-duration:4.33s}'
       +'@keyframes lu{from{transform:rotate(-5deg)}to{transform:rotate(6deg)}}'
       +'@keyframes lf{from{transform:rotate(-16deg)}to{transform:rotate(14deg)}}'
       +'@keyframes ro{from{transform:rotate(-6deg)}to{transform:rotate(7deg)}}'
@@ -1180,7 +1182,8 @@ var KID=(function(){
   }
   /* sole, in "Percorso e contatti" (in alto a sinistra); come i fiori del footer si costruisce con largo anticipo (1600 px prima), cosi' quando ci arrivi e' gia' li' */
   var abt=document.getElementById("about");
-  var kb=document.getElementById("kube"); if(kb){ FQ.push(function(){ put(kb,KID.figure,false,""); }); }
+  var FIGCRISP=!!(window.matchMedia&&matchMedia("(hover:none),(max-width:900px)").matches);
+  var kb=document.getElementById("kube"); if(kb){ FQ.push(function(){ put(kb,function(){ return KID.figure({crisp:FIGCRISP}); },false,""); }); }
   if(abt){ var sun=document.createElement("div"); sun.className="sun"; abt.appendChild(sun); FQ.push(function(){ put(sun,KID.sun,false,"sun"); }); }
   /* freccia-suggerimento accanto al sole (vedi .bs-hint): si traccia fotogramma per fotogramma con la stessa curva del logo,
      quando la freccia stessa e' ben dentro lo schermo; si ridisegna a ogni visita (sparisce solo dopo aver aperto "Dietro le quinte") */
@@ -1779,7 +1782,7 @@ function fillMe(){ document.getElementById("me-fig").setAttribute("aria-label",u
 function openMe(nohist){
   fillMe();
   var fg=document.getElementById("me-fig");
-  if(!fg.firstChild){ var im=new Image(); im.alt=""; im.decoding="async"; im.draggable=false; im.src=URL.createObjectURL(new Blob([KID.figure().replace(/<style>[\s\S]*?<\/style>/,"")],{type:"image/svg+xml"})); fg.appendChild(im); }   /* versione ferma: senza animazione */
+  if(!fg.firstChild){ var im=new Image(); im.alt=""; im.decoding="async"; im.draggable=false; im.src=URL.createObjectURL(new Blob([KID.figure({crisp:!!(window.matchMedia&&matchMedia("(hover:none),(max-width:900px)").matches)}).replace(/<style>[\s\S]*?<\/style>/,"")],{type:"image/svg+xml"})); fg.appendChild(im); }   /* versione ferma: senza animazione */
   meEl.classList.add("on"); meEl.scrollTop=0; document.body.style.overflow="hidden";
   try{ if(nohist!==true && location.hash!=="#michele") history.pushState({tyche:"me"},"","#michele"); }catch(e){}
 }
@@ -1806,7 +1809,7 @@ function renderAll(){
   document.querySelectorAll("[data-i]").forEach(function(el){ el.textContent=ui(el.dataset.i); });
   document.getElementById("bio").textContent=BIO[LANG];
   if(meEl.classList.contains("on")) fillMe();
-  var md=document.getElementById("me-door"); if(md) md.setAttribute("aria-label",ui("author")+" – Michele Ifigenia Colturi");
+  var md=document.getElementById("me-door"); if(md){ md.setAttribute("aria-label",ui("author")+" – Michele Ifigenia Colturi"); md.title=ui("author"); }   /* "Autore" passando con il mouse, come "Dietro le quinte" sul sole */
   document.querySelectorAll(".lang button").forEach(function(b){ b.classList.toggle("on",b.dataset.l===LANG); });
   reelP.build(); reelS.build(); reelC.build();
   document.getElementById("count-perf").textContent=cnt(PERF.length);

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<!-- VERSIONE 25-09 leggera-94 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
+<!-- VERSIONE 25-09 leggera-96 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Michele Ifigenia / Tyche</title>
@@ -76,7 +76,7 @@ body,#top-bar{background-size:240px 240px}
 .tyche-logo .d{stroke-dasharray:1 1;stroke-dashoffset:1;animation:dr var(--t) var(--d) cubic-bezier(.45,.05,.3,1) both}
 /* FRECCINA IN BASSO (al posto della scritta "Scorri"): tracciata a mano come quella accanto al sole; si disegna una volta
    quando la pagina si sblocca, poi resta ferma. Solo CSS (nessuno script): non pesa. Toccandola si scende ai lavori. */
-.cue{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);width:17px;height:31px;padding:0;color:var(--ink);opacity:0;pointer-events:none;transition:opacity .8s;-webkit-tap-highlight-color:transparent}
+.cue{display:none!important;position:absolute;left:50%;bottom:16px;transform:translateX(-50%);width:17px;height:31px;padding:0;color:var(--ink);opacity:0;pointer-events:none;transition:opacity .8s;-webkit-tap-highlight-color:transparent}
 html.go .cue{opacity:.8;pointer-events:auto}
 .cue:hover,.cue:focus-visible{opacity:1;outline:none}
 .cue svg{display:block;width:100%;height:100%;overflow:visible}
@@ -94,10 +94,16 @@ html.wait #nav{pointer-events:none;opacity:.35}
 @keyframes line{to{transform:scaleX(1)}}
 /* LINEA NERA SUL NOME a biro/matita: tante passate sottili piene, disegnate dallo script (vedi LINEA SUL NOME);
    si "scopre" da sinistra a destra come se venisse tirata a mano. Se lo script non parte resta la linea rossa di prima. */
-.lance.tx{background:none;box-shadow:none;border-radius:0;height:18px;margin-top:-9px;transform:none;clip-path:inset(-40% 100% -40% 0);animation:lineclip 1.4s .5s cubic-bezier(.65,0,.25,1) both}
+.lance.tx{background:none;box-shadow:none;border-radius:0;height:18px;margin-top:-9px;transform:none;overflow:hidden;animation:none}
+/* scorrimento fluido: una "tendina" che si apre verso destra (solo spostamenti, fatti dalla scheda grafica: niente scatti) */
+.lance.tx .lw{display:block;width:100%;height:100%;overflow:hidden;animation:lwin 1.6s .5s cubic-bezier(.55,0,.3,1) both;will-change:transform}
+.lance.tx .lw svg{animation:lwout 1.6s .5s cubic-bezier(.55,0,.3,1) both;will-change:transform}
+/* (finita l'animazione i livelli si spengono da soli: vedi script) */
+@keyframes lwin{from{transform:translate3d(-100%,0,0)}to{transform:translate3d(0,0,0)}}
+@keyframes lwout{from{transform:translate3d(100%,0,0)}to{transform:translate3d(0,0,0)}}
+html.pre .lance.tx .lw,html.pre .lance.tx .lw svg{animation-play-state:paused}
 .lance.tx svg{display:block;width:100%;height:100%;overflow:visible}
-@keyframes lineclip{to{clip-path:inset(-40% 0 -40% 0)}}
-.seen .lance.tx{clip-path:none}
+.seen .lance.tx .lw,.seen .lance.tx .lw svg{transform:none;will-change:auto}
 @keyframes dr{to{stroke-dashoffset:0}}
 /* prima del via (sito ancora in caricamento) linea e logo restano fermi all'inizio */
 html.pre .lance,html.pre .tyche-logo .d{animation-play-state:paused}
@@ -183,7 +189,7 @@ html.cvlogo .tyche-logo{visibility:hidden}
 .me-n{font-size:.92rem}
 /* telefono: sole, freccina e pupazzetto scendono sotto la barra in alto (che occupa circa 75 px), cosi' si vedono interi */
 /* telefono: il pupazzetto sta in fondo alla pagina al posto del fiore rosso, accanto alla margherita bianca (tutti e due portano all'autore) (lo sposta lo script, vedi PUPAZZETTO IN FONDO) */
-@media(max-width:640px){footer .fl[data-k="3"]{display:none}footer .fl[data-k="4"]{scale:.66}footer .me-door{position:absolute;left:auto;top:auto;right:4px;bottom:-5px;z-index:2}footer .me-door .kube{width:80px}#about{padding-top:184px}}
+@media(max-width:640px){footer .fl[data-k="3"]{display:none}footer .fl[data-k="4"]{display:none}footer .me-door{position:absolute;left:auto;top:auto;right:4px;bottom:-5px;z-index:2}footer .me-door .kube{width:80px}#about{padding-top:184px}}
 @media(max-width:640px){#about{--fw:84px;--ht:198px}.me-door{left:calc(var(--sl) + var(--sun) + 62px)}}
 /* PAGINA DEL COREOGRAFO: su carta chiara come "Dietro le quinte"; pupazzetto grande a sinistra, testo a destra */
 #me{display:none;position:fixed;inset:0;z-index:86;background:var(--paper) var(--gp);background-size:240px 240px;color:var(--ink);overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
@@ -200,7 +206,7 @@ html.cvlogo .tyche-logo{visibility:hidden}
 .me-txt h1{margin:0 0 30px;font-size:clamp(1.55rem,3vw,2.5rem);font-weight:600;letter-spacing:-.045em;line-height:1}
 .me-txt p{margin:0 0 16px;font-size:.92rem;line-height:1.6;max-width:62ch}
 .me-txt i{font-style:italic}
-@media(max-width:900px){.me-fig{left:16px;width:52px}.me-txt{grid-column:1 / -1}}
+@media(max-width:900px){.me-fig{left:50%;transform:translateX(-50%);width:52px}.me-txt{grid-column:1 / -1}}
 @media(max-width:640px){.me-wrap{padding:36px 16px 96px}}
 @media(prefers-reduced-motion:reduce){.kube{transition:none}#me.on{animation:none!important}}
 footer{position:relative;overflow:hidden;min-height:210px;align-content:flex-start;padding:0 24px 34px;font-size:.8rem;color:var(--mute);font-weight:600;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
@@ -647,12 +653,13 @@ footer{padding:0 16px 26px}
       for(var x=x0;x<=x1;x+=5) pts.push(f(x)+" "+f(cy+off+Math.sin(x/W*Math.PI*k+ph)*.7+(R()-.5)*.35));
       out.push('<path d="M'+pts.join(" L")+'" stroke="'+cols[p%3]+'" stroke-width="'+f(.75+R()*.5)+'" opacity="'+(.78+R()*.17).toFixed(2)+'" fill="none" stroke-linecap="round" stroke-linejoin="round"/>');
     }
-    el.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+W+' '+H+'" width="'+W+'" height="'+H+'" aria-hidden="true">'+out.join("")+'</svg>';
+    el.innerHTML='<span class="lw"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+W+' '+H+'" width="'+W+'" height="'+H+'" aria-hidden="true">'+out.join("")+'</svg></span>';
   }
   draw();
+  el.addEventListener("animationend",function(){ var w=el.querySelector(".lw"); if(w){ w.style.willChange="auto"; if(w.firstChild) w.firstChild.style.willChange="auto"; } });
   var rt=0; window.addEventListener("resize",function(){ clearTimeout(rt); rt=setTimeout(draw,200); });
 })();
-console.info("Tyche index: versione 25-09 leggera-94");
+console.info("Tyche index: versione 25-09 leggera-96");
 /* coda "al via": i ricami compaiono solo quando parte l'animazione iniziale (vedi ATTESA) */
 var STARTED=false, startQ=[];
 function onStart(f){ if(STARTED) f(); else startQ.push(f); }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<!-- VERSIONE 25-09 leggera-115 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
+<!-- VERSIONE 25-09 leggera-116 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Michele Ifigenia / Tyche</title>
@@ -214,6 +214,8 @@ html.cvlogo .tyche-logo{visibility:hidden}
 /* RADICI: livello fisso sopra lo schermo, invisibile; compare solo nello spazio dell'"elastico" sotto la fine della pagina (vedi RADICI) */
 .roots{position:fixed;left:0;top:0;width:100%;z-index:55;pointer-events:none;visibility:hidden;will-change:transform;-webkit-user-select:none;user-select:none}
 .roots svg{display:block}
+/* pagina ingrandita con due dita: la barra in alto si nasconde (ricompare tornando alla misura normale) */
+html.zoomed #top-bar{opacity:0!important;pointer-events:none}
 footer{position:relative;overflow:hidden;min-height:210px;align-content:flex-start;padding:0 24px 34px;font-size:.8rem;color:var(--mute);font-weight:600;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 footer>span{position:relative;z-index:1}
 #about{--sl:24px;--st:30px;--sun:clamp(60px,5.6vw,92px)}
@@ -697,7 +699,7 @@ footer{padding:0 16px 26px}
   var lastW=el.offsetWidth, rt=0;
   window.addEventListener("resize",function(){ clearTimeout(rt); rt=setTimeout(function(){ var w=el.offsetWidth; if(Math.abs(w-lastW)<2) return; lastW=w; el.classList.add("done"); draw(); },200); });
 })();
-console.info("Tyche index: versione 25-09 leggera-115");
+console.info("Tyche index: versione 25-09 leggera-116");
 /* coda "al via": i ricami compaiono solo quando parte l'animazione iniziale (vedi ATTESA) */
 var STARTED=false, startQ=[];
 function onStart(f){ if(STARTED) f(); else startQ.push(f); }
@@ -1406,10 +1408,15 @@ var KID=(function(){
   }
   /* iPhone/iPad: tirando oltre il fondo, Safari porta la posizione di scorrimento OLTRE il massimo: quel "di piu'" e' lo spazio
      dell'elastico. Le radici si mettono esattamente li', attaccate sotto la fine della pagina, e spariscono appena si torna. */
-  var RH=0, q=0;
+  var RH=0, q=0, PINCH=false;
+  /* ZOOM CON DUE DITA: appena si appoggiano due dita le radici si nascondono e restano nascoste finche' la pagina non torna
+     alla misura normale; la barra in alto svanisce mentre la pagina e' ingrandita (su iPhone, ingrandendo, "scivolava" sul testo) */
+  window.addEventListener("touchstart",function(e){ if(e.touches.length>1){ PINCH=true; box.style.visibility="hidden"; } },{passive:true});
+  window.addEventListener("touchend",function(e){ if(!e.touches.length) setTimeout(function(){ PINCH=!!(window.visualViewport&&visualViewport.scale>1.001); follow(); },350); },{passive:true});
+  if(window.visualViewport){ var vz=function(){ var z=visualViewport.scale>1.02; de.classList.toggle("zoomed",z); if(z){ box.style.visibility="hidden"; } }; visualViewport.addEventListener("resize",vz); visualViewport.addEventListener("scroll",vz); }
   function follow(){ q=0;
     var over=(window.pageYOffset||de.scrollTop)+window.innerHeight-Math.max(de.scrollHeight,document.body.scrollHeight);
-    var zoomed=window.visualViewport && visualViewport.scale>1.02;   /* pagina ingrandita con due dita: niente radici */
+    var zoomed=PINCH || (window.visualViewport && visualViewport.scale>1.001);   /* due dita sullo schermo o pagina ingrandita: niente radici */
     if(typeof DESK!=="undefined" && DESK) return;
     if(over>0.5 && RH && !zoomed){ box.style.visibility="visible"; box.style.transform="translate3d(0,"+Math.round(window.innerHeight-over)+"px,0)"; }
     else if(box.style.visibility!=="hidden"){ box.style.visibility="hidden"; }

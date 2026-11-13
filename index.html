@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<!-- VERSIONE 25-09 leggera-117 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
+<!-- VERSIONE 25-09 leggera-118 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Michele Ifigenia / Tyche</title>
@@ -214,6 +214,8 @@ html.cvlogo .tyche-logo{visibility:hidden}
 /* RADICI: livello fisso sopra lo schermo, invisibile; compare solo nello spazio dell'"elastico" sotto la fine della pagina (vedi RADICI) */
 .roots{position:fixed;left:0;top:0;width:100%;z-index:55;pointer-events:none;visibility:hidden;will-change:transform;-webkit-user-select:none;user-select:none}
 .roots svg{display:block}
+/* telefono: il fondo della pagina copre l'attacco delle radici, che continuano sotto il bordo: niente vuoti ne' tremolii all'attacco */
+@media(hover:none){footer{z-index:56;background:var(--paper)}.roots{z-index:54}}
 /* pagina ingrandita con due dita: la barra in alto si nasconde (ricompare tornando alla misura normale) */
 html.zoomed #top-bar{opacity:0!important;pointer-events:none}
 footer{position:relative;overflow:hidden;min-height:210px;align-content:flex-start;padding:0 24px 34px;font-size:.8rem;color:var(--mute);font-weight:600;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
@@ -699,7 +701,7 @@ footer{padding:0 16px 26px}
   var lastW=el.offsetWidth, rt=0;
   window.addEventListener("resize",function(){ clearTimeout(rt); rt=setTimeout(function(){ var w=el.offsetWidth; if(Math.abs(w-lastW)<2) return; lastW=w; el.classList.add("done"); draw(); },200); });
 })();
-console.info("Tyche index: versione 25-09 leggera-117");
+console.info("Tyche index: versione 25-09 leggera-118");
 /* coda "al via": i ricami compaiono solo quando parte l'animazione iniziale (vedi ATTESA) */
 var STARTED=false, startQ=[];
 function onStart(f){ if(STARTED) f(); else startQ.push(f); }
@@ -1369,6 +1371,7 @@ var KID=(function(){
   function draw(){
     var fl=[].slice.call(ft.querySelectorAll(".fl[data-bx]")); if(!fl.length) return;
     var W=de.clientWidth, H=window.matchMedia&&matchMedia("(max-width:640px)").matches?180:230; if(!W) return; lastW=W;
+    OV=TOUCHR?46:0; H+=OV;   /* OV: pezzo di radice/gambo nascosto sotto il bordo (coperto dal fondo della pagina) */
     var out=[], cols=["#5e4129","#6f4e31","#82603f","#4f3622"];
     /* una radice: linea che scende serpeggiando, piu' passate sottili, sempre piu' sottile verso la punta */
     function root(R,x,y,ang,len,w,depth){
@@ -1414,8 +1417,10 @@ var KID=(function(){
     fl.forEach(function(el,i){
       if(getComputedStyle(el).display==="none") return;
       var st=stemAt(el), bx=st?st.x:parseFloat(el.getAttribute("data-bx")), a0=st?st.ang:Math.PI/2, R=rng(311+i*97), main=H*(.72+R()*.18);
-      root(R,bx,-2,a0,main,2.6,2);
-      root(R,bx,-2,Math.PI/2+(i?.45:-.45),main*.55,1.6,1);   /* una seconda radice obliqua */
+      if(OV){ var ex=bx-Math.cos(a0)*OV, ey=OV-Math.sin(a0)*OV;   /* prolungamento verde del gambo, nascosto sotto il bordo */
+        var gc=["#22a45a","#138043","#2fa35f"]; for(var gk=0;gk<3;gk++){ var go=(gk-1)*.55; out.push('<path d="M'+f(ex+go)+' '+f(ey-2)+' L'+f(bx+go)+' '+f(OV)+'" stroke="'+gc[gk]+'" stroke-width="'+(gk===1?1.1:.8)+'" opacity=".8"/>'); } }   /* a matita, come il gambo */
+      root(R,bx,OV-1,a0,main,2.6,2);
+      root(R,bx,OV-1,Math.PI/2+(i?.45:-.45),main*.55,1.6,1);   /* una seconda radice obliqua */
     });
     if(missing && (draw.tries=(draw.tries||0)+1)<12) setTimeout(draw,900);   /* disegni dei fiori non ancora pronti: si riprova */
     var svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+W+'" height="'+H+'" viewBox="0 0 '+W+' '+H+'"><g fill="none" stroke-linecap="round" stroke-linejoin="round">'+out.join("")+'</g></svg>';
@@ -1425,7 +1430,7 @@ var KID=(function(){
   }
   /* iPhone/iPad: tirando oltre il fondo, Safari porta la posizione di scorrimento OLTRE il massimo: quel "di piu'" e' lo spazio
      dell'elastico. Le radici si mettono esattamente li', attaccate sotto la fine della pagina, e spariscono appena si torna. */
-  var RH=0, q=0, PINCH=false;
+  var RH=0, q=0, PINCH=false, OV=0, TOUCHR=!!(window.matchMedia&&matchMedia("(hover:none)").matches);
   /* ZOOM CON DUE DITA: appena si appoggiano due dita le radici si nascondono e restano nascoste finche' la pagina non torna
      alla misura normale; la barra in alto svanisce mentre la pagina e' ingrandita (su iPhone, ingrandendo, "scivolava" sul testo) */
   window.addEventListener("touchstart",function(e){ if(e.touches.length>1){ PINCH=true; box.style.visibility="hidden"; } },{passive:true});
@@ -1435,7 +1440,7 @@ var KID=(function(){
     var over=(window.pageYOffset||de.scrollTop)+window.innerHeight-Math.max(de.scrollHeight,document.body.scrollHeight);
     var zoomed=PINCH || (window.visualViewport && visualViewport.scale>1.001);   /* due dita sullo schermo o pagina ingrandita: niente radici */
     if(typeof DESK!=="undefined" && DESK) return;
-    if(over>0.5 && RH && !zoomed){ box.style.visibility="visible"; box.style.transform="translate3d(0,"+Math.round(window.innerHeight-over)+"px,0)"; }
+    if(over>0.5 && RH && !zoomed){ box.style.visibility="visible"; box.style.transform="translate3d(0,"+(window.innerHeight-over-OV).toFixed(2)+"px,0)"; }
     else if(box.style.visibility!=="hidden"){ box.style.visibility="hidden"; }
   }
   window.addEventListener("scroll",function(){ if(!q) q=requestAnimationFrame(follow); },{passive:true});

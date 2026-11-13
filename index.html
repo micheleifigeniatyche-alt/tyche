@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<!-- VERSIONE 25-09 leggera-97 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
+<!-- VERSIONE 25-09 leggera-99 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Michele Ifigenia / Tyche</title>
@@ -191,8 +191,8 @@ html.cvlogo .tyche-logo{visibility:hidden}
 /* telefono: il pupazzetto sta in fondo alla pagina al posto del fiore rosso, accanto alla margherita bianca (tutti e due portano all'autore) (lo sposta lo script, vedi PUPAZZETTO IN FONDO) */
 /* computer e telefono: in fondo resta solo il pupazzetto, al posto del fiore rosso (i due fiori non ci sono piu') */
 footer .fl{display:none!important}
-footer .me-door{position:absolute;left:auto;top:auto;right:calc(15% - 64px);bottom:-5px;z-index:2}footer .me-door .kube{width:96px}
-@media(max-width:640px){footer .me-door{position:absolute;left:auto;top:auto;right:4px;bottom:-5px;z-index:2}footer .me-door .kube{width:80px}#about{padding-top:184px}}
+footer .me-door{position:absolute;left:auto;top:auto;right:10px;bottom:0;z-index:2}footer .me-door .kube{width:84px}
+@media(max-width:640px){footer .me-door{position:absolute;left:auto;top:auto;right:4px;bottom:0;z-index:2}footer .me-door .kube{width:70px}#about{padding-top:184px}}
 @media(max-width:640px){#about{--fw:84px;--ht:198px}.me-door{left:calc(var(--sl) + var(--sun) + 62px)}}
 /* PAGINA DEL COREOGRAFO: su carta chiara come "Dietro le quinte"; pupazzetto grande a sinistra, testo a destra */
 #me{display:none;position:fixed;inset:0;z-index:86;background:var(--paper) var(--gp);background-size:240px 240px;color:var(--ink);overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
@@ -662,7 +662,7 @@ footer{padding:0 16px 26px}
   el.addEventListener("animationend",function(){ var w=el.querySelector(".lw"); if(w){ w.style.willChange="auto"; if(w.firstChild) w.firstChild.style.willChange="auto"; } });
   var rt=0; window.addEventListener("resize",function(){ clearTimeout(rt); rt=setTimeout(draw,200); });
 })();
-console.info("Tyche index: versione 25-09 leggera-97");
+console.info("Tyche index: versione 25-09 leggera-99");
 /* coda "al via": i ricami compaiono solo quando parte l'animazione iniziale (vedi ATTESA) */
 var STARTED=false, startQ=[];
 function onStart(f){ if(STARTED) f(); else startQ.push(f); }
@@ -1080,30 +1080,31 @@ var KID=(function(){
     }
     var gr="#0c0c0d", g=[];
     /* testa: tre giri a mano libera che non combaciano */
-    var CX=101, CY=40;
+    var CX=101, CY=45;   /* posa da pittura rupestre: testa piccola, braccia alzate a V, ginocchia piegate */
     for(var k=0;k<3;k++){
-      var hp=[], st=-2+R()*.7, n=18, rr=17.5+(R()-.5)*1.4;
+      var hp=[], st=-2+R()*.7, n=18, rr=13.2+(R()-.5)*1.1;
       for(var i=0;i<=n;i++){ var an=st+i/n*2*Math.PI*(1.03+R()*.07); hp.push([CX+Math.cos(an)*rr*(1+(R()-.5)*.05), CY+Math.sin(an)*rr*1.08*(1+(R()-.5)*.05)]); }
       g.push(pencilLine(hp,3.2,gr,3,.95));
     }
-    g.push(pencilLine([[101,60],[99,97],[97,134]],4.2,gr,10));             /* corpo */
-    /* arti in gruppi separati, cosi' si muovono (vedi MOVIMENTO in fondo): braccio alzato = braccio + avambraccio che saluta */
-    g.push('<g class="lu">'+pencilLine([[100,77],[76,59]],3.8,gr,7)+'<g class="lf">'+pencilLine([[77,60],[62,27]],3.8,gr,7)+'</g></g>');   /* braccio alzato che saluta */
-    g.push('<g class="ro">'+pencilLine([[100,79],[130,91],[160,83]],3.8,gr,9)+'</g>');                 /* braccio aperto */
-    g.push('<g class="ls">'+pencilLine([[97,134],[88,170],[80,206],[66,210]],4,gr,10)+'</g>');         /* gamba d'appoggio + piede */
-    var legStr=pencilLine([[97,134],[132,160],[166,174]],4,gr,10); g.push('<g class="lk">'+legStr+'</g>');                /* gamba slanciata */
+    g.push(pencilLine([[101,60],[100,82],[99,108],[97,134]],5.6,gr,13));    /* corpo: un po' piu' pieno, come nelle figure dipinte sulla roccia */
+    /* arti in gruppi separati, cosi' si muovono (vedi MOVIMENTO in fondo). Braccia alzate a V con i gomiti piegati (gesto da danza rupestre);
+       l'avambraccio sinistro saluta */
+    g.push('<g class="lu">'+pencilLine([[99,75],[75,70]],4.2,gr,8)+'<g class="lf">'+pencilLine([[76,70],[64,40]],4,gr,8)+'</g></g>');   /* braccio sinistro alzato che saluta */
+    g.push('<g class="ro">'+pencilLine([[103,75],[127,69],[137,40]],4.2,gr,9)+'</g>');                 /* braccio destro alzato */
+    g.push('<g class="ls">'+pencilLine([[97,134],[80,166],[88,204],[74,208]],4.6,gr,11)+'</g>');       /* gamba d'appoggio piegata + piede */
+    var legStr=pencilLine([[97,134],[128,152],[150,180]],4.6,gr,11); g.push('<g class="lk">'+legStr+'</g>');                /* gamba sollevata, finisce nel fiore */
     out.push('<g'+FL+' fill="none" stroke-linecap="round" stroke-linejoin="round">'+g.join("")+'</g>');
     /* capelli biondi a raggi di sole: trattini di matita colorata in piu' toni, ognuno fatto di 3 passate */
     var hair=[], cols=["#e9b520","#d29a12","#f2c63a","#c88d10"];
     for(var j=0;j<30;j++){   /* raggi tutto intorno al viso, come un sole; libero solo sotto il mento (collo) */
-      var an=Math.PI*(.63+j/29*1.74)+(R()-.5)*.08, r0=20.5+R()*2, r1=r0+(j%2?5:9)+R()*3;
+      var an=Math.PI*(.63+j/29*1.74)+(R()-.5)*.08, r0=16+R()*1.6, r1=r0+(j%2?4:7)+R()*2.4;
       var x0=CX+Math.cos(an)*r0, y0=CY+Math.sin(an)*r0*1.08, x1=CX+Math.cos(an)*r1, y1=CY+Math.sin(an)*r1*1.08;
       hair.push(pencilLine([[x0,y0],[x1,y1]],2.6,cols[j%4],3,1.25));
     }
     out.push('<g'+FL+' fill="none" stroke-linecap="round">'+hair.join("")+'</g>');
     /* la gamba slanciata finisce in un fiorellino al posto del piede (cinque petali rossi a matita, centro giallo)
        e lungo la gamba spuntano due foglioline verdi, una per lato, come sul gambo di un fiore */
-    var KX=132, KY=160, EX=166, EY=174, dl=Math.hypot(EX-KX,EY-KY), ux=(EX-KX)/dl, uy=(EY-KY)/dl;
+    var KX=128, KY=152, EX=150, EY=180, dl=Math.hypot(EX-KX,EY-KY), ux=(EX-KX)/dl, uy=(EY-KY)/dl;
     var FX=EX+ux*5.5, FY=EY+uy*5.5, fl=[];
     function leaf(bx,by,ang,len,wd){
       var tx=bx+Math.cos(ang)*len, ty=by+Math.sin(ang)*len, nx=-Math.sin(ang), ny=Math.cos(ang), L1=[], L2=[];
@@ -1125,8 +1126,17 @@ var KID=(function(){
     var cp=[]; for(var u=0;u<=9;u++){ var t=u/9*2*Math.PI*1.1; cp.push([FX+Math.cos(t)*2.3, FY+Math.sin(t)*2.3]); }
     fl.push(pencilLine(cp,2.5,"#f0b81c",3,1.4));
     out.push('<g class="lk"><g'+FL+' fill="none" stroke-linecap="round" stroke-linejoin="round">'+fl.join("")+'</g></g>');   /* il fiore segue la gamba */
+    /* erbetta sotto i piedi (solo per il pupazzetto in fondo alla pagina): fili d'erba a matita verde, alti e bassi, un po' piegati */
+    if(opt&&opt.anim){
+      var gs=[], gc=["#2f8a4c","#3a9a57","#25763f","#4aa864"];
+      for(var gi=0;gi<26;gi++){
+        var gx=46+gi*4.4+(R()-.5)*3, gh=8+R()*12, lean=(R()-.5)*7;
+        gs.push(pencilLine([[gx,219],[gx+lean*.4,219-gh*.55],[gx+lean,219-gh]],2.4,gc[gi%4],2,1.2));
+      }
+      out.push('<g'+FL+' fill="none" stroke-linecap="round" stroke-linejoin="round">'+gs.join("")+'</g>');
+    }
     /* occhi azzurri: due trattini di matita azzurra */
-    out.push('<g'+FL+' fill="none" stroke-linecap="round">'+pencilLine([[94.4,41.2],[96.6,41.6]],3,"#2f7fe0",4,1.5)+pencilLine([[105.3,41.5],[107.5,41.1]],3,"#2f7fe0",4,1.5)+'</g>');
+    out.push('<g'+FL+' fill="none" stroke-linecap="round">'+pencilLine([[95.6,45.6],[97.4,45.9]],2.6,"#2f7fe0",4,1.5)+pencilLine([[104.6,45.9],[106.4,45.6]],2.6,"#2f7fe0",4,1.5)+'</g>');
     var pg='<filter id="pg" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB">'
       +'<feTurbulence type="fractalNoise" baseFrequency="1.15" numOctaves="2" seed="61" result="n"/>'
       +'<feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -2 0 0 0 1.85" result="m"/>'
@@ -1142,9 +1152,9 @@ var KID=(function(){
        Chi ha chiesto meno movimento nel sistema lo vede fermo. */
     var mv=(opt&&opt.anim)?'<style>'
       +'.figa .lu,.figa .lf,.figa .ro,.figa .ls,.figa .lk{transform-box:view-box;animation-timing-function:ease-in-out;animation-iteration-count:infinite;animation-direction:alternate}'
-      +'.figa .lu{transform-origin:100px 77px;animation-name:fg-lu;animation-duration:4.6s}'
-      +'.figa .lf{transform-origin:77px 60px;animation-name:fg-lf;animation-duration:1.2s}'
-      +'.figa .ro{transform-origin:100px 79px;animation-name:fg-ro;animation-duration:6.6s}'
+      +'.figa .lu{transform-origin:99px 75px;animation-name:fg-lu;animation-duration:4.6s}'
+      +'.figa .lf{transform-origin:76px 70px;animation-name:fg-lf;animation-duration:1.2s}'
+      +'.figa .ro{transform-origin:103px 75px;animation-name:fg-ro;animation-duration:6.6s}'
       +'.figa .ls{transform-origin:97px 134px;animation-name:fg-ls;animation-duration:8.3s}'
       +'.figa .lk{transform-origin:97px 134px;animation-name:fg-lk;animation-duration:7.46s}'
       +'@keyframes fg-lu{from{transform:rotate(-8deg)}to{transform:rotate(9deg)}}'
@@ -1158,8 +1168,8 @@ var KID=(function(){
     if(opt&&opt.legOnly){
       var gnd=pencilLine([[70,135.5],[84,134.6],[97,135.2],[111,134.4],[125,135.6]],2.8,"#4a3423",4,1.1);
       for(var gi=0;gi<7;gi++){ var gx=76+gi*7.5+(R()-.5)*3; gnd+=pencilLine([[gx,135],[gx+(R()-.5)*5,128-R()*6]],2,"#2f8a4c",2,1.1); }
-      return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="42 24 110 113" width="100%" height="100%" aria-hidden="true" focusable="false">'
-        +'<g transform="rotate(-120 97 134)"><g fill="none" stroke-linecap="round" stroke-linejoin="round">'+legStr+fl.join("")+'</g></g>'
+      return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="52 46 90 92.5" width="100%" height="100%" aria-hidden="true" focusable="false">'
+        +'<g transform="rotate('+(-90-Math.atan2(EY-134,EX-97)*180/Math.PI).toFixed(1)+' 97 134)"><g fill="none" stroke-linecap="round" stroke-linejoin="round">'+legStr+fl.join("")+'</g></g>'
         +'<g fill="none" stroke-linecap="round" stroke-linejoin="round">'+gnd+'</g></svg>';
     }
     return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 220" width="100%" height="100%"'+(mv?' class="figa"':'')+' aria-hidden="true" focusable="false">'+(CR?'':'<defs>'+pg+'</defs>')+mv+out.join("")+'</svg>';

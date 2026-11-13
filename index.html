@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<!-- VERSIONE 25-09 leggera-113 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
+<!-- VERSIONE 25-09 leggera-114 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Michele Ifigenia / Tyche</title>
@@ -697,7 +697,7 @@ footer{padding:0 16px 26px}
   var lastW=el.offsetWidth, rt=0;
   window.addEventListener("resize",function(){ clearTimeout(rt); rt=setTimeout(function(){ var w=el.offsetWidth; if(Math.abs(w-lastW)<2) return; lastW=w; el.classList.add("done"); draw(); },200); });
 })();
-console.info("Tyche index: versione 25-09 leggera-113");
+console.info("Tyche index: versione 25-09 leggera-114");
 /* coda "al via": i ricami compaiono solo quando parte l'animazione iniziale (vedi ATTESA) */
 var STARTED=false, startQ=[];
 function onStart(f){ if(STARTED) f(); else startQ.push(f); }
@@ -1409,12 +1409,35 @@ var KID=(function(){
   var RH=0, q=0;
   function follow(){ q=0;
     var over=(window.pageYOffset||de.scrollTop)+window.innerHeight-Math.max(de.scrollHeight,document.body.scrollHeight);
-    if(over>0.5 && RH){ box.style.visibility="visible"; box.style.transform="translate3d(0,"+Math.round(window.innerHeight-over)+"px,0)"; }
+    var zoomed=window.visualViewport && visualViewport.scale>1.02;   /* pagina ingrandita con due dita: niente radici */
+    if(typeof DESK!=="undefined" && DESK) return;
+    if(over>0.5 && RH && !zoomed){ box.style.visibility="visible"; box.style.transform="translate3d(0,"+Math.round(window.innerHeight-over)+"px,0)"; }
     else if(box.style.visibility!=="hidden"){ box.style.visibility="hidden"; }
   }
   window.addEventListener("scroll",function(){ if(!q) q=requestAnimationFrame(follow); },{passive:true});
   window.addEventListener("touchmove",function(){ if(!q) q=requestAnimationFrame(follow); },{passive:true});
   window.addEventListener("touchend",function(){ setTimeout(follow,50); setTimeout(follow,400); },{passive:true});
+  /* COMPUTER: arrivati in fondo, se si continua a scorrere giu' con la rotella o il trackpad la pagina sale un poco
+     (con resistenza, come un elastico) e da sotto escono le radici; smettendo di scorrere torna giu' morbida. */
+  var DESK=!!(window.matchMedia&&matchMedia("(hover:hover) and (pointer:fine)").matches);
+  if(DESK){
+    de.style.overscrollBehaviorY="none";   /* niente elastico del browser: lo facciamo noi, cosi' le radici sono al posto giusto */
+    var pull=0, rel=0, MAXP=0, movers=[document.querySelector("main"),ft];
+    var setT=function(on){ movers.concat([box]).forEach(function(el){ if(el) el.style.transition=on?"transform .55s cubic-bezier(.22,.61,.36,1)":"none"; }); };
+    var apply=function(){
+      movers.forEach(function(el){ if(el) el.style.transform=pull?"translate3d(0,"+(-pull).toFixed(1)+"px,0)":""; });
+      if(pull>0.5){ box.style.visibility="visible"; box.style.transform="translate3d(0,"+(de.clientHeight-pull).toFixed(1)+"px,0)"; }
+      else { box.style.transform="translate3d(0,"+de.clientHeight+"px,0)"; }
+    };
+    var release=function(){ setT(true); pull=0; apply(); setTimeout(function(){ if(!pull){ setT(false); box.style.visibility="hidden"; } },600); };
+    window.addEventListener("wheel",function(e){
+      if(document.body.style.overflow==="hidden"||!RH) return;   /* scheda o altra pagina aperta sopra */
+      var atBottom=(window.pageYOffset||de.scrollTop)+de.clientHeight>=Math.max(de.scrollHeight,document.body.scrollHeight)-2;
+      MAXP=RH;
+      if(e.deltaY>0 && atBottom){ setT(false); pull=Math.min(MAXP,pull+e.deltaY*.45*(1-pull/MAXP)); apply(); clearTimeout(rel); rel=setTimeout(release,180); }
+      else if(e.deltaY<0 && pull>0){ setT(false); pull=Math.max(0,pull+e.deltaY*.6); apply(); clearTimeout(rel); rel=setTimeout(release,180); }
+    },{passive:true});
+  }
   draw(); setTimeout(draw,600);
   var rt=0; window.addEventListener("resize",function(){ clearTimeout(rt); rt=setTimeout(function(){ if(Math.abs(de.clientWidth-lastW)>1) draw(); },250); });
 })();

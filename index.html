@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<!-- VERSIONE 25-09 leggera-116 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
+<!-- VERSIONE 25-09 leggera-117 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Michele Ifigenia / Tyche</title>
@@ -699,7 +699,7 @@ footer{padding:0 16px 26px}
   var lastW=el.offsetWidth, rt=0;
   window.addEventListener("resize",function(){ clearTimeout(rt); rt=setTimeout(function(){ var w=el.offsetWidth; if(Math.abs(w-lastW)<2) return; lastW=w; el.classList.add("done"); draw(); },200); });
 })();
-console.info("Tyche index: versione 25-09 leggera-116");
+console.info("Tyche index: versione 25-09 leggera-117");
 /* coda "al via": i ricami compaiono solo quando parte l'animazione iniziale (vedi ATTESA) */
 var STARTED=false, startQ=[];
 function onStart(f){ if(STARTED) f(); else startQ.push(f); }
@@ -1373,7 +1373,7 @@ var KID=(function(){
     /* una radice: linea che scende serpeggiando, piu' passate sottili, sempre piu' sottile verso la punta */
     function root(R,x,y,ang,len,w,depth){
       var pts=[[x,y]], a=ang, step=len/14;
-      for(var i=1;i<=14;i++){ a+= (R()-.5)*.38; a=a*.85+Math.PI/2*.15; x+=Math.cos(a)*step; y+=Math.sin(a)*step; pts.push([x,y]); }
+      for(var i=1;i<=14;i++){ if(i>2){ a+= (R()-.5)*.38; a=a*.85+Math.PI/2*.15; } x+=Math.cos(a)*step; y+=Math.sin(a)*step; pts.push([x,y]); }   /* i primi due passi proseguono dritti il gambo */
       for(var k=0;k<3;k++){
         var off=(R()-.5)*w*.5, seg=[];
         for(var i=0;i<pts.length;i++){ var t=i/(pts.length-1); seg.push([pts[i][0]+off*(1-t)+(R()-.5)*.4, pts[i][1]+(R()-.5)*.4, t]); }
@@ -1395,12 +1395,29 @@ var KID=(function(){
       var tip=pts[pts.length-1];
       for(var h=0;h<3;h++){ var ha=a+(R()-.5)*1.6, hl=3+R()*5; out.push('<path d="M'+f(tip[0])+' '+f(tip[1])+' L'+f(tip[0]+Math.cos(ha)*hl)+' '+f(tip[1]+Math.sin(ha)*hl)+'" stroke="#82603f" stroke-width=".45" opacity=".5"/>'); }
     }
+    /* PUNTO ESATTO DEL GAMBO: si legge il disegno del fiore e si trova dove il gambo verde tocca il bordo della pagina
+       (e con che inclinazione arriva), cosi' la radice parte proprio li' e prosegue nella stessa direzione */
+    var FH=ft.clientHeight, missing=false;
+    function stemAt(el){
+      var im=el.querySelector("img"); if(!im||!im.complete||!im.naturalWidth){ missing=true; return null; }
+      try{
+        var nw=im.naturalWidth, nh=im.naturalHeight, ew=el.offsetWidth, eh=el.offsetHeight, top=parseFloat(el.style.top)||0, left=parseFloat(el.style.left)||0;
+        var c=document.createElement("canvas"); c.width=nw; c.height=nh; var x=c.getContext("2d",{willReadFrequently:true}); x.drawImage(im,0,0,nw,nh);
+        var row=function(py){ var y=Math.round((py-top)/eh*nh); if(y<0||y>=nh) return null; var d=x.getImageData(0,y,nw,1).data, sx=0, n=0;
+          for(var k=0;k<nw;k++){ var r=d[k*4],g=d[k*4+1],b=d[k*4+2],a=d[k*4+3]; if(a>90 && g>r+18 && g>=b-10){ sx+=k; n++; } }
+          return n? left+(sx/n)/nw*ew : null; };
+        var x0=row(FH-1.5), x1=row(FH-14);
+        if(x0==null) return null;
+        return {x:x0, ang:(x1==null)?Math.PI/2:Math.atan2(12.5,x0-x1)};
+      }catch(e){ return null; }
+    }
     fl.forEach(function(el,i){
       if(getComputedStyle(el).display==="none") return;
-      var bx=parseFloat(el.getAttribute("data-bx")), R=rng(311+i*97), main=H*(.72+R()*.18);
-      root(R,bx,-2,Math.PI/2+(R()-.5)*.25,main,2.6,2);
+      var st=stemAt(el), bx=st?st.x:parseFloat(el.getAttribute("data-bx")), a0=st?st.ang:Math.PI/2, R=rng(311+i*97), main=H*(.72+R()*.18);
+      root(R,bx,-2,a0,main,2.6,2);
       root(R,bx,-2,Math.PI/2+(i?.45:-.45),main*.55,1.6,1);   /* una seconda radice obliqua */
     });
+    if(missing && (draw.tries=(draw.tries||0)+1)<12) setTimeout(draw,900);   /* disegni dei fiori non ancora pronti: si riprova */
     var svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+W+'" height="'+H+'" viewBox="0 0 '+W+' '+H+'"><g fill="none" stroke-linecap="round" stroke-linejoin="round">'+out.join("")+'</g></svg>';
     /* sfondo della pagina (html): l'immagine sta appena SOTTO la fine del sito, quindi non si vede mai scorrendo normalmente;
        compare solo nello spazio che si apre tirando la pagina oltre il fondo (l'"elastico" di iPhone, iPad e Mac) */

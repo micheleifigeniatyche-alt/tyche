@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<!-- VERSIONE 25-09 leggera-110 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
+<!-- VERSIONE 25-09 leggera-111 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Michele Ifigenia / Tyche</title>
@@ -211,6 +211,9 @@ html.cvlogo .tyche-logo{visibility:hidden}
 @media(max-width:900px){.me-fig{left:50%;transform:translateX(-50%);width:52px}.me-txt{grid-column:1 / -1}}
 @media(max-width:640px){.me-wrap{padding:36px 16px 96px}}
 @media(prefers-reduced-motion:reduce){.kube{transition:none}#me.on{animation:none!important}}
+.roots{position:relative;height:230px;overflow:hidden;pointer-events:none;-webkit-user-select:none;user-select:none}
+.roots svg{display:block;position:absolute;left:0;top:0}
+@media(max-width:640px){.roots{height:180px}}
 footer{position:relative;overflow:hidden;min-height:210px;align-content:flex-start;padding:0 24px 34px;font-size:.8rem;color:var(--mute);font-weight:600;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 footer>span{position:relative;z-index:1}
 #about{--sl:24px;--st:30px;--sun:clamp(60px,5.6vw,92px)}
@@ -613,6 +616,7 @@ footer{padding:0 16px 26px}
 </section>
 </main>
 <footer></footer>
+<div class="roots" id="roots" aria-hidden="true"></div>
 
 <div id="detail" role="dialog" aria-modal="true" aria-label="Scheda del lavoro">
   <div class="d-top">
@@ -693,7 +697,7 @@ footer{padding:0 16px 26px}
   var lastW=el.offsetWidth, rt=0;
   window.addEventListener("resize",function(){ clearTimeout(rt); rt=setTimeout(function(){ var w=el.offsetWidth; if(Math.abs(w-lastW)<2) return; lastW=w; el.classList.add("done"); draw(); },200); });
 })();
-console.info("Tyche index: versione 25-09 leggera-110");
+console.info("Tyche index: versione 25-09 leggera-111");
 /* coda "al via": i ricami compaiono solo quando parte l'animazione iniziale (vedi ATTESA) */
 var STARTED=false, startQ=[];
 function onStart(f){ if(STARTED) f(); else startQ.push(f); }
@@ -1248,7 +1252,7 @@ var KID=(function(){
   function place(el,sp,x,baseY,w){
     var flip=!!sp.flip, vh=246+sp.ext, eh=w*vh/200, fr=(234+sp.ext)/vh, bx=(flip?105:95)/200*w;
     el.style.width=w+"px"; el.style.height=Math.round(eh)+"px";
-    el.style.left=Math.round(x-bx)+"px"; el.style.top=Math.round(baseY-fr*eh)+"px";
+    el.style.left=Math.round(x-bx)+"px"; el.style.top=Math.round(baseY-fr*eh)+"px"; el.setAttribute("data-bx",Math.round(x));   /* data-bx: dove il gambo tocca terra (serve alle radici) */
     el.style.transformOrigin=(bx/w*100).toFixed(1)+"% "+(fr*100).toFixed(1)+"%";
     el.style.transform="rotate("+(sp.rot||0)+"deg)";
   }
@@ -1349,6 +1353,56 @@ var KID=(function(){
     setTimeout(function(){ d.classList.add("sway"); setTimeout(function(){ d.classList.remove("sway"); },1900); },500);
   }); },{threshold:.6});
   doors.forEach(function(d){ io.observe(d); });
+})();
+
+/* ============ RADICI SOTTO I FIORI ============
+   Scorrendo fino in fondo, sotto il bordo della pagina, si scoprono le radici dei due fiori: partono esattamente da dove
+   finisce ogni gambo e scendono nella "terra" (la striscia sotto il footer), a matita marrone, con rami e radichette.
+   Si ridisegnano solo se cambia la larghezza. */
+(function(){
+  var box=document.getElementById("roots"), ft=document.querySelector("footer"); if(!box||!ft) return;
+  function rng(seed){ return function(){ seed=seed+0x6D2B79F5|0; var t=Math.imul(seed^seed>>>15,1|seed); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+  function f(n){ return n.toFixed(1); }
+  var lastW=0;
+  function draw(){
+    var fl=[].slice.call(ft.querySelectorAll(".fl[data-bx]")); if(!fl.length) return;
+    var W=box.clientWidth, H=box.clientHeight; if(!W||!H) return; lastW=W;
+    var out=[], cols=["#5e4129","#6f4e31","#82603f","#4f3622"];
+    /* una radice: linea che scende serpeggiando, piu' passate sottili, sempre piu' sottile verso la punta */
+    function root(R,x,y,ang,len,w,depth){
+      var pts=[[x,y]], a=ang, step=len/14;
+      for(var i=1;i<=14;i++){ a+= (R()-.5)*.38; a=a*.85+Math.PI/2*.15; x+=Math.cos(a)*step; y+=Math.sin(a)*step; pts.push([x,y]); }
+      for(var k=0;k<3;k++){
+        var off=(R()-.5)*w*.5, seg=[];
+        for(var i=0;i<pts.length;i++){ var t=i/(pts.length-1); seg.push([pts[i][0]+off*(1-t)+(R()-.5)*.4, pts[i][1]+(R()-.5)*.4, t]); }
+        /* tre pezzi con spessore che cala */
+        for(var j=0;j<3;j++){
+          var a0=Math.floor(j*(seg.length-1)/3), a1=Math.floor((j+1)*(seg.length-1)/3);
+          var d="M"+seg.slice(a0,a1+1).map(function(q){ return f(q[0])+" "+f(q[1]); }).join(" L");
+          out.push('<path d="'+d+'" stroke="'+cols[(k+j)%4]+'" stroke-width="'+f(Math.max(.35,w*(1-j*.32)*(.45+R()*.3)))+'" opacity="'+(.45+R()*.4).toFixed(2)+'"/>');
+        }
+      }
+      if(depth>0){
+        var nb=depth===2?4+Math.floor(R()*2):2+Math.floor(R()*2);
+        for(var b=0;b<nb;b++){
+          var idx=2+Math.floor(R()*(pts.length-5)), side=R()<.5?-1:1, p=pts[idx];
+          root(R,p[0],p[1],Math.PI/2+side*(.55+R()*.6),len*(.32+R()*.3)*(1-idx/pts.length*.5),w*.55,depth-1);
+        }
+      }
+      /* peletti radicali in punta */
+      var tip=pts[pts.length-1];
+      for(var h=0;h<3;h++){ var ha=a+(R()-.5)*1.6, hl=3+R()*5; out.push('<path d="M'+f(tip[0])+' '+f(tip[1])+' L'+f(tip[0]+Math.cos(ha)*hl)+' '+f(tip[1]+Math.sin(ha)*hl)+'" stroke="#82603f" stroke-width=".45" opacity=".5"/>'); }
+    }
+    fl.forEach(function(el,i){
+      if(getComputedStyle(el).display==="none") return;
+      var bx=parseFloat(el.getAttribute("data-bx")), R=rng(311+i*97), main=H*(.72+R()*.18);
+      root(R,bx,-2,Math.PI/2+(R()-.5)*.25,main,2.6,2);
+      root(R,bx,-2,Math.PI/2+(i?.45:-.45),main*.55,1.6,1);   /* una seconda radice obliqua */
+    });
+    box.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" width="'+W+'" height="'+H+'" viewBox="0 0 '+W+' '+H+'"><g fill="none" stroke-linecap="round" stroke-linejoin="round">'+out.join("")+'</g></svg>';
+  }
+  draw(); setTimeout(draw,600);
+  var rt=0; window.addEventListener("resize",function(){ clearTimeout(rt); rt=setTimeout(function(){ if(Math.abs(box.clientWidth-lastW)>1) draw(); },250); });
 })();
 /* niente menu dell'immagine (tasto destro o dito tenuto premuto) e niente trascinamento sui disegni */
 ["contextmenu","dragstart","selectstart"].forEach(function(ev){ document.addEventListener(ev,function(e){ if(e.target.closest&&e.target.closest(".fl,.sun,.bs-home")) e.preventDefault(); }); });

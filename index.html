@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<!-- VERSIONE 25-09 leggera-101 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
+<!-- VERSIONE 25-09 leggera-106 (la cronologia completa e' in CHANGELOG.txt). Se nel codice sorgente della pagina non trovi questa riga, il sito mostra ancora un file vecchio. -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Michele Ifigenia / Tyche</title>
@@ -661,7 +661,7 @@ footer{padding:0 16px 26px}
   el.addEventListener("animationend",function(){ var w=el.querySelector(".lw"); if(w){ w.style.willChange="auto"; if(w.firstChild) w.firstChild.style.willChange="auto"; } });
   var rt=0; window.addEventListener("resize",function(){ clearTimeout(rt); rt=setTimeout(draw,200); });
 })();
-console.info("Tyche index: versione 25-09 leggera-101");
+console.info("Tyche index: versione 25-09 leggera-106");
 /* coda "al via": i ricami compaiono solo quando parte l'animazione iniziale (vedi ATTESA) */
 var STARTED=false, startQ=[];
 function onStart(f){ if(STARTED) f(); else startQ.push(f); }
@@ -766,8 +766,10 @@ var WORKS=[
   credits:["Autore / Coreografo: Michele Ifigenia Colturi","Interprete: Federica D’Aversa","Musiche: Tarek Bouguerra","Filmmaker: Lorenzo Basili"]}
 ];
 var COLLABS=[
- {cat:"collab",title:"YTI — Your Tactile Identity",cover:"yti.png",extra:[],
-  tag:X("Con YoY Performing Arts, IVONA","With YoY Performing Arts, IVONA","Avec YoY Performing Arts, IVONA"),dur:X("Kilowatt Festival · 24 luglio 2026","Kilowatt Festival · 24 July 2026","Kilowatt Festival · 24 juillet 2026"),
+ {cat:"collab",title:"YTI — Your Tactile Identity",thumb:"yti-schiena.jpg",thumbPos:"55% 50%",cover:"yti-terra.jpg",extra:["yti-schiena.jpg"],video:"video/yti-estratto.mp4",videoRatio:16/9,videoLabel:X("Estratto","Excerpt","Extrait"),   /* estratto di 1 minuto, come i teaser degli altri lavori */
+     /* foto di scena 2026: anteprima nella pellicola = lui da solo (la schiena); in scheda il passaggio a terra e, in galleria, la schiena grande */
+  
+  tag:X("Con YoY Performing Arts, IVONA","With YoY Performing Arts, IVONA","Avec YoY Performing Arts, IVONA"),dur:X("Debutto · Kilowatt Festival, 24 luglio 2026","Premiere · Kilowatt Festival, 24 July 2026","Création · Kilowatt Festival, 24 juillet 2026"),
   desc:X("YTI è insieme un progetto di ricerca e un manifesto artistico, nato dall’incontro tra tre compagnie: YoY Performing Arts, IVONA e Michele Ifigenia / Tyche. In un tempo segnato da distanze e polarizzazioni, il lavoro sceglie la vicinanza: abitare le differenze e farne materia di creazione collettiva. Tre linguaggi coreografici si intrecciano in un unico tessuto, dove il movimento diventa ascolto e la contaminazione un atto insieme politico e creativo.","YTI is both a research project and an artistic manifesto, born from the meeting of three companies: YoY Performing Arts, IVONA and Michele Ifigenia / Tyche. In a time marked by distance and polarization, the work chooses proximity: inhabiting differences and making them the matter of collective creation. Three choreographic languages are woven into a single fabric, where movement becomes listening and contamination becomes an act at once political and creative.","YTI est à la fois un projet de recherche et un manifeste artistique, né de la rencontre entre trois compagnies : YoY Performing Arts, IVONA et Michele Ifigenia / Tyche. À une époque marquée par les distances et les polarisations, la pièce choisit la proximité : habiter les différences et en faire la matière d’une création collective. Trois langages chorégraphiques s’entrelacent en un seul tissu, où le mouvement devient écoute et le métissage un geste à la fois politique et créatif."),
   credits:["Di: YoY Performing Arts, IVONA, Michele Ifigenia/Tyche","Interpreti: Emma Zani, Roberto Doveri, Pablo Girolami, Guilherme Leal, Federica D’Aversa","Dramaturg: Riccardo Vanetta","Musiche: Tarek Bouguerra, Timoteo Carbone","Disegno luci: Gianni Staropoli","Costumi: Patricia Villirillo","Progetto vincitore di: Giovane Danza Italiana 2025, Bando CURA 2025","Con il sostegno di: MiC e SIAE – Per Chi Crea"]}
 ];
